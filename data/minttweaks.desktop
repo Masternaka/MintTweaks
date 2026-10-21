@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Name=MintTweaks
+GenericName=System Tweaks
+GenericName[fr]=Réglages système
+Comment=Tune Linux Mint: cleanup, services and Samba sharing
+Comment[fr]=Régler Linux Mint : entretien, services et partage Samba
+Exec=minttweaks
+Icon=minttweaks
+Terminal=false
+Categories=GTK;System;Settings;X-GNOME-Settings-Panel;X-XFCE-SettingsDialog;
+Keywords=tweak;cleanup;maintenance;systemd;service;journal;samba;share;smb;
+Keywords[fr]=nettoyage;entretien;service;journal;samba;partage;smb;
+StartupNotify=true

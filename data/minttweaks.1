@@ -1,0 +1,84 @@
+.TH MINTTWEAKS 1 "2026-10-21" "minttweaks 0.1.0" "User Commands"
+.SH NAME
+minttweaks \- maintenance, services and Samba management for Linux Mint
+.SH SYNOPSIS
+.B minttweaks
+[\fIOPTIONS\fR]
+.SH DESCRIPTION
+.B MintTweaks
+is a GTK 3 application that gives Linux Mint one window for the system chores
+that otherwise go through
+.BR apt ,
+.BR systemctl ,
+.BR journalctl
+and
+.BR smb.conf .
+.PP
+It covers three areas: disk usage and cleanup, with a preview of what
+.B apt-get
+would remove and a careful removal of old kernels; systemd services with their
+journals and a boot analysis; and complete Samba management, with share and
+account administration, validation of the configuration by
+.BR testparm ,
+and automatic backups.
+.PP
+The application runs as the desktop user. The few actions that need
+administrator rights are executed through
+.BR pkexec (1),
+so the usual polkit password dialog is used. No command is ever run through a
+shell.
+.SH OPTIONS
+.TP
+.B \-h, \-\-help
+Show a usage message and exit.
+.TP
+.B \-v, \-\-version
+Show the version and exit.
+.TP
+.BI \-\-lang " CODE"
+Force the interface language, for example \fB\-\-lang fr\fR. Without this
+option the language comes from the usual
+.BR locale (7)
+environment variables.
+.TP
+.B \-\-dry-run
+Print every command that would be run instead of running it. Also enabled by
+setting \fBMTK_DRY_RUN=1\fR in the environment.
+.SH ENVIRONMENT
+.TP
+.B MTK_LOCALEDIR
+Directory holding the compiled translation catalogues, in the usual
+\fI<lang>/LC_MESSAGES/minttweaks.mo\fR layout.
+.TP
+.B MTK_ROOT_CMD
+Replace the command used for privilege escalation (default:
+.BR pkexec ).
+Set it to an empty string to disable escalation entirely.
+.TP
+.B MTK_DRY_RUN
+When set to \fB1\fR, no command is executed.
+.SH FILES
+.TP
+.I /etc/samba/smb.conf
+The Samba configuration edited by the Samba module.
+.TP
+.I ~/.local/share/minttweaks/backups/
+Timestamped copies of \fIsmb.conf\fR taken before every save.
+.TP
+.I ~/.local/share/minttweaks/logs/minttweaks.log
+Application log, rotated at 512 kB.
+.TP
+.I /var/backups/samba/
+Last twenty copies kept by the privileged helper.
+.TP
+.I /usr/lib/minttweaks/mtk-root
+The only program run as root; it installs \fIsmb.conf\fR after re-running
+.BR testparm .
+.SH SEE ALSO
+.BR apt-get (8),
+.BR journalctl (1),
+.BR pkexec (1),
+.BR smb.conf (5),
+.BR smbpasswd (8),
+.BR systemctl (1),
+.BR testparm (1)

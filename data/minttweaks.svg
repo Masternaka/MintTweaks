@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MintTweaks icon: sliders on a Linux Mint green tile. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="MintTweaks">
+  <defs>
+    <linearGradient id="mint" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9ccc4f"/>
+      <stop offset="1" stop-color="#5d9c2e"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="4" y="4" width="120" height="120" rx="26" ry="26" fill="url(#mint)"/>
+  <rect x="4" y="4" width="120" height="120" rx="26" ry="26" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="2"/>
+
+  <!-- three sliders -->
+  <g stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-opacity="0.55">
+    <line x1="26" y1="42" x2="102" y2="42"/>
+    <line x1="26" y1="64" x2="102" y2="64"/>
+    <line x1="26" y1="86" x2="102" y2="86"/>
+  </g>
+
+  <g fill="#ffffff">
+    <circle cx="46" cy="42" r="12"/>
+    <circle cx="84" cy="64" r="12"/>
+    <circle cx="56" cy="86" r="12"/>
+  </g>
+</svg>

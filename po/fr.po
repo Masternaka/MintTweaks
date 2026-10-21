@@ -1,0 +1,982 @@
+# French translations for MintTweaks.
+# Copyright (C) 2024 MintTweaks contributors
+# This file is distributed under the same licence as the MintTweaks package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: minttweaks 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: MintTweaks contributors\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: minttweaks\n"
+
+#: minttweaks/modules/samba/page.py:746
+msgid "\n\nSamba already ignores every value but the last one."
+msgstr "\n\nDe toute façon, Samba ignore toutes les valeurs sauf la dernière."
+
+#: minttweaks/modules/maintenance/page.py:209
+msgid "\n\nThis cannot be undone from MintTweaks."
+msgstr "\n\nCette action est irréversible depuis MintTweaks."
+
+#: minttweaks/modules/samba/page.py:718
+msgid "\n\nWarnings:\n"
+msgstr "\n\nAvertissements :\n"
+
+#: minttweaks/modules/samba/page.py:743
+msgid "\n… and {count} more"
+msgstr "\n… et {count} de plus"
+
+#: minttweaks/core/smbconf.py:371
+msgid "'{name}' is a reserved Samba section name."
+msgstr "« {name} » est un nom de section réservé par Samba."
+
+#: minttweaks/modules/services/page.py:307
+msgid "(not available)"
+msgstr "(non disponible)"
+
+#: minttweaks/modules/maintenance/page.py:136
+msgid ", … (+{count})"
+msgstr ", … (+{count})"
+
+#: minttweaks/modules/maintenance/page.py:51
+msgid "/var/cache/apt/archives - downloaded .deb files"
+msgstr "/var/cache/apt/archives — fichiers .deb téléchargés"
+
+#: minttweaks/modules/samba/page.py:240
+msgid "A Samba account needs an existing Unix account: sharing a folder does not work without one. Passwords are sent to smbpasswd on its standard input, never on a command line."
+msgstr "Un compte Samba a besoin d'un compte Unix existant : sans lui, le partage ne fonctionne pas. Les mots de passe sont transmis à smbpasswd sur son entrée standard, jamais sur une ligne de commande."
+
+#: minttweaks/modules/samba/page.py:833
+msgid "A save is already in progress."
+msgstr "Un enregistrement est déjà en cours."
+
+#: minttweaks/core/smbconf.py:380
+msgid "A section named '{name}' already exists."
+msgstr "Une section nommée « {name} » existe déjà."
+
+#: minttweaks/ui/window.py:91
+msgid "About"
+msgstr "À propos"
+
+#: minttweaks/modules/samba/page.py:378
+msgid "absent"
+msgstr "absent"
+
+#: minttweaks/modules/samba/page.py:591
+msgid "Account {user} {state}."
+msgstr "Compte {user} : {state}."
+
+#: minttweaks/modules/samba/page.py:383
+#: minttweaks/modules/services/backend.py:49
+msgid "active"
+msgstr "actif"
+
+#: minttweaks/modules/samba/page.py:684
+msgid "Active Samba connections:"
+msgstr "Connexions Samba actives :"
+
+#: minttweaks/modules/samba/page.py:108
+msgid "Adds the Samba application profile to ufw."
+msgstr "Ajoute le profil applicatif Samba à ufw."
+
+#: minttweaks/modules/samba/page.py:810
+msgid "Administrator rights are required"
+msgstr "Droits d'administration requis"
+
+#: minttweaks/modules/samba/page.py:117
+msgid "Administrator rights are unavailable in this session."
+msgstr "Les droits d'administration ne sont pas disponibles dans cette session."
+
+#: minttweaks/modules/services/page.py:67
+msgid "Administrator rights are unavailable in this session: services can be inspected but not changed."
+msgstr "Les droits d'administration ne sont pas disponibles dans cette session : les services peuvent être consultés mais pas modifiés."
+
+#: minttweaks/modules/samba/page.py:150
+msgid "Advanced parameters"
+msgstr "Paramètres avancés"
+
+#: minttweaks/modules/samba/page.py:99
+msgid "All of these need administrator rights."
+msgstr "Toutes ces actions exigent les droits d'administration."
+
+#: minttweaks/modules/samba/page.py:103
+msgid "Allow Samba in the firewall"
+msgstr "Autoriser Samba dans le pare-feu"
+
+#: minttweaks/modules/samba/page.py:669
+msgid "Allow Samba through the firewall?"
+msgstr "Autoriser Samba à travers le pare-feu ?"
+
+#: minttweaks/modules/services/page.py:157
+msgid "Analyse boot"
+msgstr "Analyser le démarrage"
+
+#: minttweaks/modules/maintenance/page.py:117
+msgid "Analysing the system, one moment…"
+msgstr "Analyse du système, un instant…"
+
+#: minttweaks/modules/maintenance/page.py:148
+msgid "Analysis finished."
+msgstr "Analyse terminée."
+
+#: minttweaks/modules/samba/page.py:107
+msgid "Apply configuration"
+msgstr "Appliquer la configuration"
+
+#: minttweaks/modules/samba/page.py:260
+msgid "at least 8 characters"
+msgstr "au moins 8 caractères"
+
+#: minttweaks/modules/services/page.py:160
+msgid "Boot"
+msgstr "Démarrage"
+
+#: minttweaks/modules/services/page.py:309
+msgid "Boot analysis updated."
+msgstr "Analyse du démarrage mise à jour."
+
+#: minttweaks/modules/services/page.py:154
+msgid "Boot time"
+msgstr "Temps de démarrage"
+
+#: minttweaks/modules/samba/page.py:197
+msgid "Browseable"
+msgstr "Parcourable"
+
+#: minttweaks/modules/samba/page.py:194
+msgid "Browse…"
+msgstr "Parcourir…"
+
+#: minttweaks/modules/samba/page.py:569
+msgid "Choose the Unix account to give a Samba password to."
+msgstr "Choisissez le compte Unix auquel attribuer un mot de passe Samba."
+
+#: minttweaks/modules/samba/page.py:319
+msgid "Clean up duplicates"
+msgstr "Nettoyer les doublons"
+
+#: minttweaks/modules/maintenance/page.py:88
+msgid "Cleanup tasks"
+msgstr "Tâches de nettoyage"
+
+#: minttweaks/ui/window.py:142
+msgid "Clear"
+msgstr "Effacer"
+
+#: minttweaks/ui/window.py:90
+msgid "Clear output"
+msgstr "Effacer la sortie"
+
+#: minttweaks/modules/maintenance/backend.py:237
+msgid "Clear the thumbnail cache"
+msgstr "Vider le cache des miniatures"
+
+#: minttweaks/modules/samba/page.py:196
+msgid "Comment"
+msgstr "Commentaire"
+
+#: minttweaks/modules/samba/page.py:720
+msgid "Configuration is valid"
+msgstr "Configuration valide"
+
+#: minttweaks/modules/samba/page.py:716
+msgid "Configuration is valid."
+msgstr "La configuration est valide."
+
+#: minttweaks/modules/samba/page.py:728
+msgid "Configuration saved."
+msgstr "Configuration enregistrée."
+
+#: minttweaks/modules/samba/page.py:271
+msgid "Create / change password"
+msgstr "Créer / modifier le mot de passe"
+
+#: minttweaks/modules/samba/backend.py:426
+#: minttweaks/modules/samba/page.py:157
+msgid "Create mask"
+msgstr "Masque de création"
+
+#: minttweaks/modules/services/page.py:307
+msgid "Critical chain:"
+msgstr "Chaîne critique :"
+
+#: minttweaks/modules/services/backend.py:53
+msgid "deactivating"
+msgstr "en cours d'arrêt"
+
+#: minttweaks/modules/samba/page.py:275
+msgid "Delete account"
+msgstr "Supprimer le compte"
+
+#: minttweaks/modules/maintenance/backend.py:202
+msgid "Delete downloaded package files"
+msgstr "Supprimer les fichiers de paquets téléchargés"
+
+#: minttweaks/modules/maintenance/backend.py:209
+msgid "Delete obsolete package files"
+msgstr "Supprimer les fichiers de paquets obsolètes"
+
+#: minttweaks/modules/samba/page.py:165
+msgid "Delete share"
+msgstr "Supprimer le partage"
+
+#: minttweaks/modules/samba/page.py:603
+msgid "Delete the Samba account '{user}'?"
+msgstr "Supprimer le compte Samba « {user} » ?"
+
+#: minttweaks/modules/samba/page.py:536
+msgid "Delete the share '{name}'?"
+msgstr "Supprimer le partage « {name} » ?"
+
+#: minttweaks/modules/maintenance/backend.py:189
+msgid "Deletes packages that were installed automatically and are no longer needed by anything. The list is shown before you confirm."
+msgstr "Supprime les paquets installés automatiquement dont plus rien ne dépend. La liste est affichée avant votre confirmation."
+
+#: minttweaks/modules/samba/page.py:109
+msgid "Diagnostics"
+msgstr "Diagnostic"
+
+#: minttweaks/modules/samba/backend.py:426
+#: minttweaks/modules/samba/page.py:158
+msgid "Directory mask"
+msgstr "Masque de répertoire"
+
+#: minttweaks/modules/samba/page.py:274
+#: minttweaks/modules/services/page.py:121
+msgid "Disable"
+msgstr "Désactiver"
+
+#: minttweaks/modules/samba/page.py:417
+#: minttweaks/modules/samba/page.py:592
+msgid "disabled"
+msgstr "désactivé"
+
+#: minttweaks/modules/samba/page.py:759
+msgid "Discard your changes?"
+msgstr "Abandonner vos modifications ?"
+
+#: minttweaks/modules/maintenance/page.py:47
+msgid "Disk usage"
+msgstr "Occupation disque"
+
+#: minttweaks/modules/samba/page.py:693
+msgid "Done."
+msgstr "Terminé."
+
+#: minttweaks/modules/maintenance/backend.py:230
+msgid "Drop journal entries older than two weeks"
+msgstr "Supprimer les entrées du journal de plus de deux semaines"
+
+#: minttweaks/modules/maintenance/page.py:88
+msgid "Each task shows exactly what it will run."
+msgstr "Chaque tâche affiche exactement la commande qu'elle exécute."
+
+#: minttweaks/modules/maintenance/backend.py:203
+msgid "Empties /var/cache/apt/archives. Re-downloading is the only consequence."
+msgstr "Vide /var/cache/apt/archives. Le seul effet de bord est de devoir retélécharger."
+
+#: minttweaks/modules/maintenance/backend.py:246
+msgid "Empty the trash"
+msgstr "Vider la corbeille"
+
+#: minttweaks/modules/samba/page.py:273
+#: minttweaks/modules/services/page.py:120
+msgid "Enable"
+msgstr "Activer"
+
+#: minttweaks/modules/samba/page.py:101
+msgid "Enable and start sharing"
+msgstr "Activer et démarrer le partage"
+
+#: minttweaks/modules/samba/page.py:417
+#: minttweaks/modules/samba/page.py:592
+msgid "enabled"
+msgstr "activé"
+
+#: minttweaks/modules/samba/page.py:106
+msgid "Enables smbd and nmbd, then starts them."
+msgstr "Active smbd et nmbd, puis les démarre."
+
+#: minttweaks/modules/services/backend.py:47
+msgid "failed"
+msgstr "en échec"
+
+#: minttweaks/modules/services/page.py:59
+msgid "Failed only"
+msgstr "En échec uniquement"
+
+#: minttweaks/modules/samba/page.py:497
+msgid "Fill in a name and pick an existing folder, then save."
+msgstr "Saisissez un nom, choisissez un dossier existant, puis enregistrez."
+
+#: minttweaks/modules/services/page.py:51
+msgid "Filter by name or description"
+msgstr "Filtrer par nom ou description"
+
+#: minttweaks/modules/samba/page.py:108
+msgid "Firewall"
+msgstr "Pare-feu"
+
+#: minttweaks/modules/maintenance/backend.py:216
+msgid "Fix broken dependencies"
+msgstr "Réparer les dépendances cassées"
+
+#: minttweaks/modules/samba/page.py:195
+msgid "Folder"
+msgstr "Dossier"
+
+#: minttweaks/modules/services/page.py:132
+msgid "Follow"
+msgstr "Suivre"
+
+#: minttweaks/modules/samba/page.py:159
+msgid "Force group"
+msgstr "Groupe forcé"
+
+#: minttweaks/modules/samba/page.py:199
+msgid "Guest access"
+msgstr "Accès invité"
+
+#: minttweaks/ui/window.py:141
+msgid "Hide"
+msgstr "Masquer"
+
+#: minttweaks/modules/samba/page.py:383
+#: minttweaks/modules/services/backend.py:51
+msgid "inactive"
+msgstr "inactif"
+
+#: minttweaks/modules/samba/page.py:78
+msgid "Install Samba"
+msgstr "Installer Samba"
+
+#: minttweaks/modules/samba/page.py:629
+msgid "Install Samba?"
+msgstr "Installer Samba ?"
+
+#: minttweaks/modules/samba/page.py:366
+msgid "installed"
+msgstr "installé"
+
+#: minttweaks/modules/maintenance/page.py:104
+msgid "Installed kernels"
+msgstr "Noyaux installés"
+
+#: minttweaks/modules/services/page.py:131
+msgid "Journal"
+msgstr "Journal"
+
+#: minttweaks/modules/maintenance/page.py:52
+msgid "journald logs, shrinkable without losing the last weeks"
+msgstr "journaux journald, réductibles sans perdre les dernières semaines"
+
+#: minttweaks/modules/maintenance/backend.py:224
+msgid "Keeps the most recent entries and drops the rest. Log history is lost."
+msgstr "Conserve les entrées les plus récentes et supprime le reste. L'historique est perdu."
+
+#: minttweaks/modules/maintenance/page.py:162
+msgid "kept"
+msgstr "conservé"
+
+#: minttweaks/modules/samba/page.py:109
+msgid "Lists who is connected right now."
+msgstr "Liste les personnes connectées en ce moment."
+
+#: minttweaks/ui/window.py:52
+msgid "Maintenance, services and Samba for Linux Mint"
+msgstr "Entretien, services et Samba pour Linux Mint"
+
+#: minttweaks/ui/window.py:224
+msgid "Maintenance, services and Samba management for Linux Mint.\nInspired by the ArchLinux Tweak Tool."
+msgstr "Entretien, services et gestion de Samba pour Linux Mint.\nInspiré par l'ArchLinux Tweak Tool."
+
+#: minttweaks/ui/window.py:80
+msgid "Menu"
+msgstr "Menu"
+
+#: minttweaks/modules/samba/page.py:771
+msgid "MintTweaks keeps its backups in {folder}."
+msgstr "MintTweaks conserve ses sauvegardes dans {folder}."
+
+#: minttweaks/modules/samba/page.py:366
+msgid "missing: {packages}"
+msgstr "manquants : {packages}"
+
+#: minttweaks/modules/samba/page.py:191
+msgid "Name"
+msgstr "Nom"
+
+#: minttweaks/modules/samba/page.py:135
+msgid "New share"
+msgstr "Nouveau partage"
+
+#: minttweaks/modules/samba/page.py:569
+#: minttweaks/modules/samba/page.py:584
+#: minttweaks/modules/samba/page.py:599
+msgid "No account selected"
+msgstr "Aucun compte sélectionné"
+
+#: minttweaks/modules/samba/page.py:770
+msgid "No backup found"
+msgstr "Aucune sauvegarde trouvée"
+
+#: minttweaks/modules/samba/page.py:806
+msgid "No configuration loaded"
+msgstr "Aucune configuration chargée"
+
+#: minttweaks/modules/samba/page.py:737
+msgid "No duplicate parameter"
+msgstr "Aucun paramètre en double"
+
+#: minttweaks/modules/services/page.py:271
+msgid "No journal entry for this service."
+msgstr "Aucune entrée de journal pour ce service."
+
+#: minttweaks/modules/maintenance/page.py:157
+msgid "No linux-image package found."
+msgstr "Aucun paquet linux-image trouvé."
+
+#: minttweaks/core/privilege.py:82
+msgid "No polkit authentication agent answered. Make sure a keyring/polkit agent is running in your desktop session."
+msgstr "Aucun agent d'authentification polkit n'a répondu. Vérifiez qu'un agent keyring/polkit tourne dans votre session de bureau."
+
+#: minttweaks/modules/samba/page.py:738
+msgid "No section of this configuration repeats the same key, so there is nothing to clean up."
+msgstr "Aucune section de cette configuration ne répète la même clé : il n'y a rien à nettoyer."
+
+#: minttweaks/modules/samba/page.py:419
+msgid "no Unix account"
+msgstr "aucun compte Unix"
+
+#: minttweaks/modules/samba/backend.py:551
+msgid "No Unix account named '{user}'. Create the system account first."
+msgstr "Aucun compte Unix nommé « {user} ». Créez d'abord le compte système."
+
+#: minttweaks/modules/maintenance/page.py:76
+msgid "Not analysed yet."
+msgstr "Pas encore analysé."
+
+#: minttweaks/modules/samba/page.py:369
+msgid "not installed"
+msgstr "non installé"
+
+#: minttweaks/modules/maintenance/page.py:142
+msgid "Nothing to remove: every installed package is still needed."
+msgstr "Rien à supprimer : tous les paquets installés sont encore utiles."
+
+#: minttweaks/modules/maintenance/backend.py:254
+msgid "Only available when Flatpak is installed. Frees runtimes no app references any more."
+msgstr "Disponible seulement si Flatpak est installé. Libère les runtimes qu'aucune application n'utilise plus."
+
+#: minttweaks/modules/maintenance/page.py:73
+msgid "Orphaned packages"
+msgstr "Paquets orphelins"
+
+#: minttweaks/ui/window.py:140
+#: minttweaks/ui/window.py:160
+msgid "Output"
+msgstr "Sortie"
+
+#: minttweaks/modules/samba/page.py:58
+msgid "Overview"
+msgstr "Vue d'ensemble"
+
+#: minttweaks/modules/maintenance/page.py:51
+msgid "Package cache"
+msgstr "Cache des paquets"
+
+#: minttweaks/modules/maintenance/page.py:74
+msgid "Packages installed automatically that nothing depends on any more."
+msgstr "Paquets installés automatiquement dont plus rien ne dépend."
+
+#: minttweaks/modules/samba/page.py:573
+msgid "Password rejected"
+msgstr "Mot de passe refusé"
+
+#: minttweaks/modules/maintenance/backend.py:247
+msgid "Permanently deletes everything currently in your user trash."
+msgstr "Supprime définitivement tout le contenu de votre corbeille."
+
+#: minttweaks/modules/samba/page.py:584
+#: minttweaks/modules/samba/page.py:599
+msgid "Pick a Samba account in the list first."
+msgstr "Choisissez d'abord un compte Samba dans la liste."
+
+#: minttweaks/modules/samba/page.py:378
+msgid "present"
+msgstr "présent"
+
+#: minttweaks/core/privilege.py:78
+msgid "Privilege escalation is unavailable: 'pkexec' (polkit) is not installed. Install the 'policykit-1' package to enable administrative actions."
+msgstr "L'élévation de privilèges est indisponible : 'pkexec' (polkit) n'est pas installé. Installez le paquet 'policykit-1' pour activer les actions d'administration."
+
+#: minttweaks/modules/maintenance/page.py:110
+msgid "Purge selected kernels"
+msgstr "Purger les noyaux sélectionnés"
+
+#: minttweaks/modules/maintenance/page.py:184
+msgid "Purge these kernels?"
+msgstr "Purger ces noyaux ?"
+
+#: minttweaks/modules/maintenance/page.py:63
+msgid "Re-analyse"
+msgstr "Réanalyser"
+
+#: minttweaks/modules/services/page.py:136
+msgid "Read as administrator"
+msgstr "Lire en administrateur"
+
+#: minttweaks/modules/samba/page.py:198
+msgid "Read only"
+msgstr "Lecture seule"
+
+#: minttweaks/ui/window.py:157
+msgid "Ready."
+msgstr "Prêt."
+
+#: minttweaks/modules/maintenance/page.py:53
+msgid "rebuilt automatically by the file manager"
+msgstr "reconstruit automatiquement par le gestionnaire de fichiers"
+
+#: minttweaks/modules/samba/page.py:806
+msgid "Refresh the page and try again."
+msgstr "Rechargez la page et réessayez."
+
+#: minttweaks/ui/window.py:88
+msgid "Refresh this page"
+msgstr "Recharger cette page"
+
+#: minttweaks/core/smbconf.py:398
+msgid "Refusing to export a system path ({path})."
+msgstr "Refus d'exporter un chemin système ({path})."
+
+#: minttweaks/core/smbconf.py:395
+msgid "Refusing to export the filesystem root."
+msgstr "Refus d'exporter la racine du système de fichiers."
+
+#: minttweaks/modules/services/page.py:63
+#: minttweaks/modules/services/page.py:135
+msgid "Reload"
+msgstr "Recharger"
+
+#: minttweaks/modules/samba/page.py:102
+msgid "Reload configuration"
+msgstr "Recharger la configuration"
+
+#: minttweaks/modules/samba/page.py:107
+msgid "Reloads smbd so new shares are served at once."
+msgstr "Recharge smbd pour que les nouveaux partages soient servis immédiatement."
+
+#: minttweaks/modules/maintenance/page.py:162
+msgid "removable"
+msgstr "supprimable"
+
+#: minttweaks/modules/maintenance/backend.py:187
+#: minttweaks/modules/maintenance/page.py:79
+#: minttweaks/modules/maintenance/page.py:144
+msgid "Remove orphaned packages"
+msgstr "Supprimer les paquets orphelins"
+
+#: minttweaks/modules/maintenance/page.py:200
+msgid "Remove orphaned packages?"
+msgstr "Supprimer les paquets orphelins ?"
+
+#: minttweaks/modules/maintenance/backend.py:253
+msgid "Remove unused Flatpak runtimes"
+msgstr "Supprimer les runtimes Flatpak inutilisés"
+
+#: minttweaks/modules/samba/page.py:745
+msgid "Remove {count} duplicate parameter(s)?"
+msgstr "Supprimer {count} paramètre(s) en double ?"
+
+#: minttweaks/modules/maintenance/page.py:139
+msgid "Remove {count} package(s)"
+msgstr "Supprimer {count} paquet(s)"
+
+#: minttweaks/modules/samba/page.py:751
+msgid "Removed {count} duplicate parameter(s)."
+msgstr "{count} paramètre(s) en double supprimé(s)."
+
+#: minttweaks/modules/maintenance/backend.py:210
+msgid "Removes cached .deb files that can no longer be downloaded."
+msgstr "Supprime les fichiers .deb en cache qui ne peuvent plus être téléchargés."
+
+#: minttweaks/modules/maintenance/page.py:97
+msgid "Requires administrator rights, and privilege escalation is unavailable."
+msgstr "Nécessite les droits d'administration, et l'élévation de privilèges est indisponible."
+
+#: minttweaks/modules/services/page.py:119
+msgid "Restart"
+msgstr "Redémarrer"
+
+#: minttweaks/modules/samba/page.py:774
+msgid "Restore a backup"
+msgstr "Restaurer une sauvegarde"
+
+#: minttweaks/modules/samba/page.py:320
+msgid "Restore a backup…"
+msgstr "Restaurer une sauvegarde…"
+
+#: minttweaks/modules/samba/page.py:318
+msgid "Revert"
+msgstr "Annuler les modifications"
+
+#: minttweaks/modules/maintenance/page.py:92
+msgid "Run"
+msgstr "Exécuter"
+
+#: minttweaks/modules/maintenance/page.py:161
+#: minttweaks/modules/services/backend.py:49
+msgid "running"
+msgstr "en cours"
+
+#: minttweaks/core/privilege.py:76
+msgid "Running as root."
+msgstr "Exécution en root."
+
+#: minttweaks/modules/services/page.py:55
+msgid "Running only"
+msgstr "En cours uniquement"
+
+#: minttweaks/modules/maintenance/backend.py:217
+msgid "Runs 'apt-get -f install', the usual cure for a half-configured system."
+msgstr "Lance 'apt-get -f install', le remède habituel à un système à moitié configuré."
+
+#: minttweaks/modules/samba/page.py:611
+msgid "Samba account {user} deleted."
+msgstr "Compte Samba {user} supprimé."
+
+#: minttweaks/modules/samba/page.py:226
+msgid "Samba accounts"
+msgstr "Comptes Samba"
+
+#: minttweaks/modules/samba/page.py:384
+msgid "Samba allowed"
+msgstr "Samba autorisé"
+
+#: minttweaks/modules/samba/page.py:645
+msgid "Samba could not be installed"
+msgstr "Samba n'a pas pu être installé"
+
+#: minttweaks/modules/samba/page.py:642
+msgid "Samba installed."
+msgstr "Samba installé."
+
+#: minttweaks/modules/samba/page.py:76
+msgid "Samba is not installed on this system."
+msgstr "Samba n'est pas installé sur ce système."
+
+#: minttweaks/modules/samba/backend.py:575
+msgid "Samba is not installed. Install it first."
+msgstr "Samba n'est pas installé. Installez-le d'abord."
+
+#: minttweaks/modules/samba/page.py:384
+msgid "Samba not allowed"
+msgstr "Samba non autorisé"
+
+#: minttweaks/modules/samba/page.py:266
+msgid "Samba password"
+msgstr "Mot de passe Samba"
+
+#: minttweaks/modules/samba/page.py:578
+msgid "Samba password set for {user}."
+msgstr "Mot de passe Samba défini pour {user}."
+
+#: minttweaks/modules/samba/page.py:360
+msgid "Samba status refreshed."
+msgstr "État de Samba actualisé."
+
+#: minttweaks/modules/samba/page.py:317
+msgid "Save"
+msgstr "Enregistrer"
+
+#: minttweaks/modules/samba/page.py:164
+msgid "Save share"
+msgstr "Enregistrer le partage"
+
+#: minttweaks/modules/services/page.py:109
+#: minttweaks/modules/services/page.py:205
+msgid "Select a service"
+msgstr "Sélectionnez un service"
+
+#: minttweaks/modules/samba/page.py:99
+msgid "Serve files on the network"
+msgstr "Partager des fichiers sur le réseau"
+
+#: minttweaks/modules/services/page.py:146
+msgid "Service"
+msgstr "Service"
+
+#: minttweaks/modules/samba/page.py:545
+msgid "Share '{name}' deleted."
+msgstr "Partage « {name} » supprimé."
+
+#: minttweaks/modules/samba/page.py:544
+msgid "Share '{name}' not found."
+msgstr "Partage « {name} » introuvable."
+
+#: minttweaks/modules/samba/page.py:529
+msgid "Share '{name}' saved."
+msgstr "Partage « {name} » enregistré."
+
+#: minttweaks/modules/samba/page.py:130
+#: minttweaks/modules/samba/page.py:59
+msgid "Shares"
+msgstr "Partages"
+
+#: minttweaks/modules/samba/page.py:261
+msgid "Show"
+msgstr "Afficher"
+
+#: minttweaks/ui/window.py:89
+msgid "Show / hide output"
+msgstr "Afficher / masquer la sortie"
+
+#: minttweaks/modules/samba/page.py:104
+msgid "Show active connections"
+msgstr "Afficher les connexions actives"
+
+#: minttweaks/modules/maintenance/backend.py:223
+msgid "Shrink the system journal to 200 MB"
+msgstr "Réduire le journal système à 200 Mo"
+
+#: minttweaks/modules/maintenance/page.py:48
+msgid "Sizes are measured, not estimated. Nothing is removed from this card."
+msgstr "Les tailles sont mesurées, pas estimées. Rien n'est supprimé depuis cette carte."
+
+#: minttweaks/modules/services/page.py:304
+msgid "Slowest units:"
+msgstr "Unités les plus lentes :"
+
+#: minttweaks/modules/samba/page.py:659
+msgid "smbd and nmbd are enabled and running."
+msgstr "smbd et nmbd sont activés et démarrés."
+
+#: minttweaks/modules/services/page.py:117
+msgid "Start"
+msgstr "Démarrer"
+
+#: minttweaks/modules/samba/page.py:106
+msgid "Start sharing"
+msgstr "Démarrer le partage"
+
+#: minttweaks/modules/samba/page.py:83
+msgid "Status"
+msgstr "État"
+
+#: minttweaks/modules/services/page.py:118
+msgid "Stop"
+msgstr "Arrêter"
+
+#: minttweaks/modules/maintenance/page.py:52
+msgid "System journal"
+msgstr "Journal système"
+
+#: minttweaks/modules/services/page.py:303
+msgid "systemd-analyze returned nothing."
+msgstr "systemd-analyze n'a rien renvoyé."
+
+#: minttweaks/modules/samba/page.py:723
+msgid "testparm rejected the configuration."
+msgstr "testparm a rejeté la configuration."
+
+#: minttweaks/modules/samba/page.py:724
+msgid "testparm rejected this configuration"
+msgstr "testparm a rejeté cette configuration"
+
+#: minttweaks/modules/samba/page.py:799
+msgid "The backup could not be restored"
+msgstr "La sauvegarde n'a pas pu être restaurée"
+
+#: minttweaks/modules/samba/page.py:851
+#: minttweaks/modules/samba/page.py:866
+msgid "The configuration was not saved"
+msgstr "La configuration n'a pas été enregistrée"
+
+#: minttweaks/modules/samba/page.py:427
+msgid "The editor has unsaved changes; the file on disk has changed since."
+msgstr "L'éditeur contient des modifications non enregistrées ; le fichier sur disque a changé depuis."
+
+#: minttweaks/modules/samba/page.py:759
+msgid "The editor is reloaded from the file on disk."
+msgstr "L'éditeur est rechargé depuis le fichier sur disque."
+
+#: minttweaks/modules/maintenance/backend.py:238
+msgid "The file manager rebuilds it as you browse. Safe, and it frees a surprising amount of space."
+msgstr "Le gestionnaire de fichiers le reconstruit au fil de la navigation. Sans risque, et cela libère souvent une place surprenante."
+
+#: minttweaks/modules/samba/page.py:537
+msgid "The folder and its files are kept; only the Samba share is removed."
+msgstr "Le dossier et ses fichiers sont conservés ; seul le partage Samba est retiré."
+
+#: minttweaks/core/smbconf.py:400
+msgid "The folder does not exist: {path}"
+msgstr "Le dossier n'existe pas : {path}"
+
+#: minttweaks/core/smbconf.py:388
+msgid "The folder path cannot be empty."
+msgstr "Le chemin du dossier ne peut pas être vide."
+
+#: minttweaks/core/smbconf.py:392
+msgid "The folder path must be absolute (start with '/')."
+msgstr "Le chemin du dossier doit être absolu (commencer par '/')."
+
+#: minttweaks/core/smbconf.py:390
+msgid "The folder path must not contain control characters."
+msgstr "Le chemin du dossier ne doit pas contenir de caractères de contrôle."
+
+#: minttweaks/modules/services/page.py:274
+msgid "The journal is not readable without administrator rights."
+msgstr "Le journal n'est pas lisible sans les droits d'administration."
+
+#: minttweaks/modules/samba/page.py:630
+msgid "The packages samba, smbclient and cifs-utils are installed with apt."
+msgstr "Les paquets samba, smbclient et cifs-utils sont installés avec apt."
+
+#: minttweaks/modules/samba/backend.py:558
+msgid "The password cannot be empty."
+msgstr "Le mot de passe ne peut pas être vide."
+
+#: minttweaks/modules/samba/backend.py:562
+msgid "The password must not start or end with a space."
+msgstr "Le mot de passe ne doit pas commencer ni finir par un espace."
+
+#: minttweaks/modules/maintenance/page.py:105
+msgid "The running kernel and the newest one are always kept. Linux Mint's Update Manager can also remove kernels; both tools are safe to use."
+msgstr "Le noyau en cours d'exécution et le plus récent sont toujours conservés. Le gestionnaire de mises à jour de Linux Mint sait aussi supprimer des noyaux ; les deux outils peuvent être utilisés sans risque."
+
+#: minttweaks/modules/samba/page.py:622
+msgid "The Samba account could not be updated"
+msgstr "Le compte Samba n'a pas pu être mis à jour"
+
+#: minttweaks/core/smbconf.py:369
+msgid "The share name cannot be empty."
+msgstr "Le nom du partage ne peut pas être vide."
+
+#: minttweaks/core/smbconf.py:378
+msgid "The share name must not end with a space."
+msgstr "Le nom du partage ne doit pas finir par un espace."
+
+#: minttweaks/modules/samba/page.py:604
+msgid "The Unix account and its files are kept."
+msgstr "Le compte Unix et ses fichiers sont conservés."
+
+#: minttweaks/modules/samba/page.py:563
+msgid "This account has no Unix user behind it."
+msgstr "Ce compte n'a pas d'utilisateur Unix associé."
+
+#: minttweaks/modules/services/page.py:225
+msgid "This changes the running system immediately."
+msgstr "Cela modifie immédiatement le système en cours."
+
+#: minttweaks/modules/samba/page.py:669
+msgid "This runs 'ufw allow Samba'."
+msgstr "Cela exécute 'ufw allow Samba'."
+
+#: minttweaks/modules/samba/page.py:818
+msgid "This share cannot be saved"
+msgstr "Ce partage ne peut pas être enregistré"
+
+#: minttweaks/modules/maintenance/page.py:53
+msgid "Thumbnail cache"
+msgstr "Cache des miniatures"
+
+#: minttweaks/modules/maintenance/backend.py:231
+msgid "Time-based vacuum, usually the better choice on a laptop."
+msgstr "Purge basée sur le temps, généralement le meilleur choix sur un portable."
+
+#: minttweaks/modules/maintenance/page.py:54
+msgid "Trash"
+msgstr "Corbeille"
+
+#: minttweaks/modules/samba/page.py:381
+msgid "ufw not installed"
+msgstr "ufw non installé"
+
+#: minttweaks/modules/samba/page.py:256
+msgid "Unix account"
+msgstr "Compte Unix"
+
+#: minttweaks/modules/maintenance/backend.py:38
+#: minttweaks/modules/samba/page.py:375
+#: minttweaks/modules/services/backend.py:54
+msgid "unknown"
+msgstr "inconnu"
+
+#: minttweaks/modules/services/page.py:276
+msgid "Use 'Read as administrator' to read the entries: a password prompt will appear."
+msgstr "Utilisez « Lire en administrateur » pour consulter les entrées : une demande de mot de passe apparaîtra."
+
+#: minttweaks/core/smbconf.py:373
+msgid "Use 1-80 characters from letters, digits, spaces, '.', '_', '-' or a trailing '$'. The name must start with a letter or a digit."
+msgstr "Utilisez 1 à 80 caractères parmi lettres, chiffres, espaces, '.', '_', '-' ou un '$' final. Le nom doit commencer par une lettre ou un chiffre."
+
+#: minttweaks/modules/samba/backend.py:549
+msgid "Use a lowercase Unix user name (letters, digits, '_', '-')."
+msgstr "Utilisez un nom d'utilisateur Unix en minuscules (lettres, chiffres, '_', '-')."
+
+#: minttweaks/modules/samba/backend.py:560
+msgid "Use at least 8 characters."
+msgstr "Utilisez au moins 8 caractères."
+
+#: minttweaks/modules/samba/page.py:300
+msgid "user"
+msgstr "utilisateur"
+
+#: minttweaks/modules/samba/page.py:60
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: minttweaks/modules/samba/page.py:155
+msgid "Valid users"
+msgstr "Utilisateurs autorisés"
+
+#: minttweaks/modules/samba/page.py:316
+msgid "Validate"
+msgstr "Valider"
+
+#: minttweaks/modules/samba/page.py:438
+msgid "Validated with testparm before every save."
+msgstr "Validée par testparm avant chaque enregistrement."
+
+#: minttweaks/modules/samba/page.py:837
+msgid "Validating and installing the configuration…"
+msgstr "Validation et installation de la configuration…"
+
+#: minttweaks/ui/window.py:122
+msgid "version {version}"
+msgstr "version {version}"
+
+#: minttweaks/modules/samba/page.py:434
+msgid "Warning: these sections are defined twice and Samba merges them: "
+msgstr "Attention : ces sections sont définies deux fois et Samba les fusionne : "
+
+#: minttweaks/modules/samba/page.py:156
+msgid "Write list"
+msgstr "Liste d'écriture"
+
+#: minttweaks/modules/maintenance/page.py:54
+msgid "your user trash"
+msgstr "votre corbeille"
+
+#: minttweaks/modules/maintenance/page.py:137
+msgid "{count} package(s) can be removed."
+msgstr "{count} paquet(s) peuvent être supprimés."
+
+#: minttweaks/modules/maintenance/page.py:183
+msgid "{kernels}\n\nEvery related package is removed (about 300 MB each)."
+msgstr "{kernels}\n\nTous les paquets liés sont supprimés (environ 300 Mo par noyau)."
+
+#: minttweaks/modules/samba/backend.py:428
+msgid "{label} must be an octal mode such as 0664 or 2775."
+msgstr "Le champ « {label} » doit être un mode octal comme 0664 ou 2775."
+
+#: minttweaks/modules/services/page.py:211
+msgid "{state} · startup: {enabled}"
+msgstr "{state} · démarrage : {enabled}"

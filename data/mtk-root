@@ -1,0 +1,225 @@
+#!/usr/bin/python3
+"""Privileged helper for MintTweaks - only ever meant to run through pkexec.
+
+It exists so that the one dangerous operation, replacing ``/etc/samba/smb.conf``,
+happens with a tiny, auditable surface instead of giving the GUI a general
+"write this file as root" primitive.
+
+    pkexec /usr/lib/minttweaks/mtk-root install-smbconf /tmp/candidate
+    pkexec /usr/lib/minttweaks/mtk-root check-smbconf   /tmp/candidate
+
+Guarantees:
+
+* the candidate must be a regular file, owned by the invoking user, smaller
+  than 1 MiB;
+* it is validated with ``testparm`` *as root* before anything is replaced;
+* the current file is copied to ``/var/backups/samba/`` with a timestamp;
+* ownership and mode of the installed file are forced to root:root 0644.
+"""
+
+import os
+import shutil
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+SMB_CONF = Path("/etc/samba/smb.conf")
+BACKUP_DIR = Path("/var/backups/samba")
+MAX_SIZE = 1024 * 1024
+KEEP_BACKUPS = 20
+
+EXIT_OK = 0
+EXIT_USAGE = 1
+EXIT_REJECTED = 2
+EXIT_REFUSED = 3
+EXIT_IO = 4
+
+
+def log(message):
+    print(f"mtk-root: {message}", flush=True)
+
+
+def warn(message):
+    print(f"mtk-root: {message}", file=sys.stderr, flush=True)
+
+
+def _invoking_uid():
+    raw = os.environ.get("PKEXEC_UID", "").strip()
+    if raw.isdigit():
+        return int(raw)
+    return None
+
+
+def check_source(path):
+    """Return (ok, reason). Never trusts the caller."""
+    try:
+        stat = Path(path).stat()
+    except OSError as exc:
+        return False, f"cannot stat {path}: {exc}"
+
+    import stat as stat_module
+
+    if not stat_module.S_ISREG(stat.st_mode):
+        return False, "the candidate is not a regular file"
+    if stat.st_size > MAX_SIZE:
+        return False, f"the candidate is larger than {MAX_SIZE} bytes"
+
+    expected = _invoking_uid()
+    if expected is not None and stat.st_uid != expected:
+        return False, f"the candidate is not owned by uid {expected}"
+
+    try:
+        content = Path(path).read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        return False, f"cannot read the candidate: {exc}"
+    if "\x00" in content:
+        return False, "the candidate contains NUL bytes"
+    if "[" not in content.lower():
+        return False, "the candidate does not look like an smb.conf (no section header)"
+    return True, ""
+
+
+def run_testparm(path):
+    """Validate with testparm. Returns (ok, output)."""
+    try:
+        completed = subprocess.run(
+            ["/usr/bin/testparm", "-s", str(path)],
+            capture_output=True,
+            text=True,
+            timeout=60,
+            env={"PATH": "/usr/sbin:/usr/bin:/sbin:/bin", "LC_ALL": "C", "LANG": "C"},
+        )
+    except FileNotFoundError:
+        return False, "testparm is not installed (package samba-common-bin)"
+    except subprocess.TimeoutExpired:
+        return False, "testparm timed out"
+
+    output = (completed.stdout or "") + (completed.stderr or "")
+    problems = [
+        line.strip()
+        for line in output.splitlines()
+        if line.strip().lower().startswith(("error", "badly formed")) or "unknown parameter" in line.lower()
+    ]
+    return (completed.returncode == 0 and not problems), output
+
+
+def prune_backups():
+    if not BACKUP_DIR.is_dir():
+        return
+    backups = sorted(BACKUP_DIR.glob("smb.conf.*"), key=lambda item: item.name)
+    for stale in backups[:-KEEP_BACKUPS] if len(backups) > KEEP_BACKUPS else []:
+        try:
+            stale.unlink()
+        except OSError:
+            pass
+
+
+def backup_current():
+    """Copy the live configuration aside, returning the backup path."""
+    if not SMB_CONF.is_file():
+        return None
+    BACKUP_DIR.mkdir(parents=True, exist_ok=True)
+    os.chmod(BACKUP_DIR, 0o700)
+    stamp = time.strftime("%Y%m%d-%H%M%S")
+    destination = BACKUP_DIR / f"smb.conf.{stamp}"
+    suffix = 1
+    while destination.exists():
+        destination = BACKUP_DIR / f"smb.conf.{stamp}.{suffix}"
+        suffix += 1
+    shutil.copy2(SMB_CONF, destination)
+    os.chmod(destination, 0o600)
+    prune_backups()
+    return destination
+
+
+def reload_samba():
+    """Ask systemd to reload smbd's configuration; a failure is not fatal."""
+    try:
+        completed = subprocess.run(
+            ["/usr/bin/systemctl", "reload", "smbd"],
+            capture_output=True,
+            text=True,
+            timeout=60,
+            env={"PATH": "/usr/sbin:/usr/bin:/sbin:/bin", "LC_ALL": "C", "LANG": "C"},
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        warn(f"could not reload smbd: {exc}")
+        return
+    if completed.returncode == 0:
+        log("smbd configuration reloaded")
+    else:
+        warn("smbd is not running; the new configuration will apply when it starts")
+
+
+def install_smbconf(source, reload=False):
+    ok, reason = check_source(source)
+    if not ok:
+        warn(f"refusing {source}: {reason}")
+        return EXIT_REFUSED
+
+    valid, output = run_testparm(source)
+    if not valid:
+        warn("testparm rejected the candidate configuration:")
+        for line in output.splitlines():
+            if line.strip():
+                print(f"  {line.strip()}", file=sys.stderr, flush=True)
+        return EXIT_REJECTED
+
+    try:
+        backup = backup_current()
+        if backup is not None:
+            log(f"previous configuration saved to {backup}")
+        staging = SMB_CONF.with_suffix(".conf.mtk-new")
+        shutil.copyfile(source, staging)
+        os.chown(staging, 0, 0)
+        os.chmod(staging, 0o644)
+        os.replace(staging, SMB_CONF)
+    except OSError as exc:
+        warn(f"could not install the configuration: {exc}")
+        return EXIT_IO
+
+    log(f"installed {SMB_CONF}")
+    if reload:
+        reload_samba()
+    return EXIT_OK
+
+
+def check_smbconf(source):
+    ok, reason = check_source(source)
+    if not ok:
+        warn(f"refusing {source}: {reason}")
+        return EXIT_REFUSED
+    valid, output = run_testparm(source)
+    print(output, flush=True)
+    return EXIT_OK if valid else EXIT_REJECTED
+
+
+def main(argv):
+    if os.geteuid() != 0:
+        warn("this helper must run as root, through pkexec")
+        return EXIT_REFUSED
+    if len(argv) < 2:
+        warn("usage: mtk-root install-smbconf <file> | check-smbconf <file>")
+        return EXIT_USAGE
+
+    command, args = argv[1], argv[2:]
+    if command == "install-smbconf":
+        reload = "--reload" in args
+        files = [arg for arg in args if arg != "--reload"]
+        if len(files) != 1:
+            warn("install-smbconf takes exactly one file argument")
+            return EXIT_USAGE
+        return install_smbconf(files[0], reload=reload)
+    if command == "check-smbconf":
+        if len(args) != 1:
+            warn("check-smbconf takes exactly one argument")
+            return EXIT_USAGE
+        return check_smbconf(args[0])
+
+    warn(f"unknown command: {command}")
+    return EXIT_USAGE
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

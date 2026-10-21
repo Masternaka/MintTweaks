@@ -1,0 +1,30 @@
+Source: minttweaks
+Section: admin
+Priority: optional
+Maintainer: Gabriel Chapdelaine <gabriel@localhost>
+Build-Depends: debhelper-compat (= 13), dh-python, python3
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/gabrielchapdelaine/MintTweaks
+
+Package: minttweaks
+Architecture: all
+Depends:
+ gir1.2-gtk-3.0,
+ policykit-1,
+ python3,
+ python3-gi,
+ ${misc:Depends},
+ ${python3:Depends},
+Recommends: samba, samba-common-bin, smbclient, cifs-utils
+Description: system tweaks for Linux Mint: maintenance, services and Samba
+ MintTweaks puts in one GTK 3 window the system chores that otherwise go
+ through apt, systemctl, journalctl and smb.conf.
+ .
+ It covers three areas: disk usage and cleanup (with a preview of what apt
+ would remove, and careful removal of old kernels), systemd services with
+ their journals and a boot analysis, and complete Samba management with share
+ and account administration, testparm validation and automatic backups.
+ .
+ Privileged actions go through polkit, and every command is run as an argv
+ list rather than through a shell.

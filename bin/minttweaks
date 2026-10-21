@@ -1,0 +1,36 @@
+#!/usr/bin/python3
+"""MintTweaks launcher.
+
+Installed to /usr/bin/minttweaks by ``make install``; the package itself lives in
+/usr/lib/minttweaks. Running from a source checkout works too, because the
+in-tree package directory is tried first.
+"""
+
+import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+CANDIDATES = (
+    os.path.join(HERE, "..", "lib", "minttweaks"),  # installed layout
+    os.path.join(HERE, ".."),  # in-tree: <repo>/bin/../minttweaks
+)
+
+for candidate in CANDIDATES:
+    resolved = os.path.normpath(candidate)
+    if os.path.isdir(os.path.join(resolved, "minttweaks")):
+        sys.path.insert(0, resolved)
+        break
+
+try:
+    import gi  # noqa: F401  (only used to check that the GTK bindings exist)
+except ImportError:
+    sys.stderr.write(
+        "MintTweaks needs the GTK 3 Python bindings.\n"
+        "Install them with: sudo apt install python3-gi gir1.2-gtk-3.0\n"
+    )
+    sys.exit(1)
+
+from minttweaks.app import main  # noqa: E402  (path set up above)
+
+if __name__ == "__main__":
+    sys.exit(main())

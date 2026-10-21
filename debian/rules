@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+# MintTweaks ships a self-contained Python tree in /usr/lib/minttweaks, so the
+# packaging reuses the same Makefile a source install uses: one layout, one
+# place to change it.
+#
+# Layout produced by `make install DESTDIR=... PREFIX=/usr`:
+#   /usr/bin/minttweaks                                  launcher
+#   /usr/lib/minttweaks/minttweaks/                      Python package
+#   /usr/lib/minttweaks/mtk-root                         polkit helper
+#   /usr/share/applications/minttweaks.desktop
+#   /usr/share/icons/hicolor/scalable/apps/minttweaks.svg
+#   /usr/share/man/man1/minttweaks.1
+
+export DH_VERBOSE = 1
+
+%:
+	dh $@ --with python3
+
+# Nothing to configure or compile: the Python sources are the deliverable.
+override_dh_auto_configure:
+override_dh_auto_build:
+
+override_dh_auto_test:
+	$(MAKE) test
+
+override_dh_auto_install:
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/minttweaks PREFIX=/usr

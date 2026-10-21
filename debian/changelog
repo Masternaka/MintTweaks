@@ -1,0 +1,14 @@
+minttweaks (0.1.0) unstable; urgency=medium
+
+  * Initial release.
+  * Maintenance module: measured disk usage, a preview of what apt-get
+    autoremove would delete, cleanup tasks, and kernel removal that never
+    touches the running or the newest kernel.
+  * Services module: systemd unit list with start/stop/enable/disable, the
+    per-unit journal, and a boot analysis.
+  * Samba module: installation, share and account management, an smb.conf
+    editor validated with testparm, backups, plus ufw and smbstatus helpers.
+  * Privileged writes go through a narrow polkit helper (mtk-root).
+  * French interface translation.
+
+ -- Gabriel Chapdelaine <gabriel@localhost>  Wed, 21 Oct 2026 17:07:32 -0400
