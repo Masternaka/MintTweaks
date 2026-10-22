@@ -1,6 +1,6 @@
-.TH MINTTWEAKS 1 "2026-10-21" "minttweaks 0.1.2" "Commandes utilisateur"
+.TH MINTTWEAKS 1 "2026-10-21" "minttweaks 0.1.3" "Commandes utilisateur"
 .SH NOM
-minttweaks \- entretien, services et gestion Samba pour Linux Mint
+minttweaks \- entretien, services, Samba et extensions Firefox pour Linux Mint
 .SH SYNOPSIS
 .B minttweaks
 [\fIOPTIONS\fR]
@@ -10,19 +10,25 @@ est une application GTK 3 qui regroupe les tâches système de Linux Mint
 habituellement effectuées avec
 .BR apt ,
 .BR systemctl ,
-.BR journalctl
-et
-.BR smb.conf .
+.BR journalctl ,
+.BR smb.conf
+et les politiques de Firefox.
 .PP
-Elle couvre trois domaines : l’analyse de l’espace disque et le nettoyage,
+Elle couvre quatre domaines : l’analyse de l’espace disque et le nettoyage,
 avec un aperçu des suppressions proposées par
 .B apt-get
 et une suppression prudente des anciens noyaux ; les services systemd,
-leurs journaux et l’analyse du démarrage ; et la gestion complète de Samba,
+leurs journaux et l’analyse du démarrage ; la gestion complète de Samba,
 avec l’administration des partages et des comptes, la validation de la
 configuration par
 .BR testparm
-et les sauvegardes automatiques.
+et les sauvegardes automatiques ; et l’installation d’extensions Firefox
+choisies dans un catalogue, via la politique d’entreprise de Firefox.
+.PP
+La page d’accueil présente un résumé en lecture seule de la machine et des
+diagnostics automatiques : paquets à moitié configurés, dépendances cassées,
+services en échec, erreurs du journal depuis le démarrage, espace disque,
+redémarrage requis et anciens noyaux.
 .PP
 L’application s’exécute avec le compte de l’utilisateur du bureau.
 Les actions nécessitant des droits d’administration passent par
@@ -64,6 +70,10 @@ Avec la valeur \fB1\fR, aucune commande n’est exécutée.
 .I /etc/samba/smb.conf
 Configuration Samba modifiée par le module Samba.
 .TP
+.I /etc/firefox/policies/policies.json
+Politique Firefox gérée par le module Firefox pour installer les extensions
+du catalogue.
+.TP
 .I ~/.local/share/minttweaks/backups/
 Copies horodatées de \fIsmb.conf\fR créées avant chaque enregistrement.
 .TP
@@ -73,10 +83,18 @@ Journal de l’application, avec rotation à 512 ko.
 .I /var/backups/samba/
 Vingt dernières copies conservées par l’auxiliaire privilégié.
 .TP
+.I /var/backups/minttweaks/
+Vingt dernières copies de la politique Firefox conservées par l’auxiliaire
+privilégié.
+.TP
 .I /usr/lib/minttweaks/mtk-root
-Seul programme exécuté en tant que root ; il installe \fIsmb.conf\fR
-après une nouvelle validation par
+Programme exécuté en tant que root pour installer \fIsmb.conf\fR après une
+nouvelle validation par
 .BR testparm .
+.TP
+.I /usr/lib/minttweaks/mtk-firefox
+Programme exécuté en tant que root pour fusionner la politique d’extensions
+Firefox, après vérification des identifiants et des URL officielles.
 .SH VOIR AUSSI
 .BR apt-get (8),
 .BR journalctl (1),

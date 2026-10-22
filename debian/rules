@@ -6,7 +6,8 @@
 # Layout produced by `make install DESTDIR=... PREFIX=/usr`:
 #   /usr/bin/minttweaks                                  launcher
 #   /usr/lib/minttweaks/minttweaks/                      Python package
-#   /usr/lib/minttweaks/mtk-root                         polkit helper
+#   /usr/lib/minttweaks/mtk-root                         polkit helper (Samba)
+#   /usr/lib/minttweaks/mtk-firefox                      polkit helper (Firefox)
 #   /usr/share/applications/minttweaks.desktop
 #   /usr/share/icons/hicolor/scalable/apps/minttweaks.svg
 #   /usr/share/man/man1/minttweaks.1

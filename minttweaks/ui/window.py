@@ -10,6 +10,8 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, Gtk, Pango  # noqa: E402
 
 from .. import APP_NAME, __version__  # noqa: E402
+from ..modules.firefox.page import FirefoxPage  # noqa: E402
+from ..modules.home.page import HomePage  # noqa: E402
 from ..modules.maintenance.page import MaintenancePage  # noqa: E402
 from ..modules.samba.page import SambaPage  # noqa: E402
 from ..modules.services.page import ServicesPage  # noqa: E402
@@ -17,7 +19,7 @@ from . import widgets  # noqa: E402
 from .widgets import AppContext, Page  # noqa: E402
 from ..i18n import _  # noqa: E402
 
-PAGE_CLASSES = (MaintenancePage, ServicesPage, SambaPage)
+PAGE_CLASSES = (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage)
 
 LOG_TAG_COLOURS = {
     "ok": "#1c7c3c",
@@ -49,7 +51,7 @@ class MainWindow(Gtk.ApplicationWindow):
         header = Gtk.HeaderBar()
         header.set_show_close_button(True)
         header.set_title(APP_NAME)
-        header.set_subtitle(_("Maintenance, services and Samba for Linux Mint"))
+        header.set_subtitle(_("Maintenance, services, Samba and Firefox for Linux Mint"))
         header.pack_end(self._build_menu_button())
         self.set_titlebar(header)
 
@@ -113,7 +115,7 @@ class MainWindow(Gtk.ApplicationWindow):
             box.set_border_width(8)
             icon = Gtk.Image.new_from_icon_name(page_class.page_icon, Gtk.IconSize.BUTTON)
             box.pack_start(icon, False, False, 0)
-            box.pack_start(widgets.label(page_class.page_title), False, False, 0)
+            box.pack_start(widgets.label(_(page_class.page_title)), False, False, 0)
             row.add(box)
             self.sidebar.add(row)
 
@@ -197,6 +199,12 @@ class MainWindow(Gtk.ApplicationWindow):
         if page is not None:
             page.refresh()
 
+    def show_page(self, name: str) -> None:
+        for index, page_class in enumerate(PAGE_CLASSES):
+            if page_class.page_name == name:
+                self.sidebar.select_row(self.sidebar.get_row_at_index(index))
+                return
+
     def toggle_log(self) -> None:
         self.log_revealer.set_reveal_child(not self.log_revealer.get_reveal_child())
 
@@ -222,7 +230,7 @@ class MainWindow(Gtk.ApplicationWindow):
         dialog.set_version(__version__)
         dialog.set_comments(
             _(
-                "Maintenance, services and Samba management for Linux Mint.\n"
+                "Maintenance, services, Samba and Firefox management for Linux Mint.\n"
                 "Inspired by the ArchLinux Tweak Tool."
             )
         )

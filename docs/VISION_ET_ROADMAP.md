@@ -24,15 +24,17 @@ Dépôt du projet : [Masternaka/MintTweaks](https://github.com/Masternaka/MintTw
 
 ## Base actuelle
 
-Le projet dispose déjà de trois modules :
+Le projet dispose déjà de cinq modules :
 
 | Module | Fonctions principales |
 | --- | --- |
+| Accueil | Résumé du système et diagnostics en lecture seule |
 | Entretien | Analyse de l’espace occupé, nettoyage, paquets orphelins et suppression d’anciens noyaux |
 | Services | Gestion des services systemd, consultation des journaux et analyse du démarrage |
 | Samba | Gestion des partages et des comptes, édition et validation de la configuration, sauvegardes et restauration |
+| Firefox | Détection des extensions installées et installation d’un catalogue d’extensions depuis addons.mozilla.org |
 
-Cette base donne surtout à l’application un rôle d’administration système. Les prochains modules doivent aussi développer la préparation et la personnalisation de Linux Mint.
+Cette base couvre l’administration système et une première fonction de personnalisation. Les prochains modules doivent développer la préparation et la personnalisation de Linux Mint.
 
 La présence d’une fonction dans le code ne signifie pas que son comportement a été validé dans tous les environnements pris en charge.
 
@@ -40,10 +42,11 @@ La présence d’une fonction dans le code ne signifie pas que son comportement 
 
 | Section | Contenu proposé | État ou priorité |
 | --- | --- | --- |
-| Accueil | Résumé du système, diagnostics simples et accès aux outils | À développer en priorité |
+| Accueil | Résumé du système, diagnostics simples et accès aux outils | Présent (lecture seule) |
 | Entretien | Nettoyage, espace récupérable et aperçu des suppressions | Présent, à fiabiliser |
 | Services | Gestion systemd, journaux et analyse du démarrage | Présent |
 | Réseau et partage | Samba, état du réseau et diagnostics de connexion | Samba présent ; compléments à prévoir |
+| Firefox | Détection des extensions et installation d’un catalogue depuis addons.mozilla.org | Présent |
 | Logiciels | Sélection d’applications, installation APT ou Flatpak et indication de l’état installé | Priorité haute |
 | Terminal et shells | Installation de Bash, Zsh et Fish, choix du shell, Starship et polices Nerd Fonts | Priorité moyenne |
 | Personnalisation | Profils coordonnés de thèmes, icônes, curseurs et polices | Priorité moyenne |
@@ -166,9 +169,10 @@ Les tests automatisés doivent compléter ces essais.
 
 ### Étape 2 — Créer l’accueil
 
-- [ ] Ajouter le résumé du système.
-- [ ] Ajouter les premiers diagnostics en lecture seule.
-- [ ] Organiser les accès aux modules et aux outils utiles.
+- [x] Ajouter le résumé du système.
+- [x] Ajouter les premiers diagnostics en lecture seule.
+- [x] Organiser les accès aux modules.
+- [ ] Ajouter des raccourcis vers les outils utiles de Linux Mint.
 
 ### Étape 3 — Ajouter le module Logiciels
 

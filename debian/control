@@ -17,14 +17,20 @@ Depends:
  ${misc:Depends},
  ${python3:Depends},
 Recommends: samba, samba-common-bin, smbclient, cifs-utils
-Description: system tweaks for Linux Mint: maintenance, services and Samba
+Description: system tweaks for Linux Mint: maintenance, services, Samba, Firefox
  MintTweaks puts in one GTK 3 window the system chores that otherwise go
- through apt, systemctl, journalctl and smb.conf.
+ through apt, systemctl, journalctl, smb.conf and Firefox policies.
  .
- It covers three areas: disk usage and cleanup (with a preview of what apt
+ It covers four areas: disk usage and cleanup (with a preview of what apt
  would remove, and careful removal of old kernels), systemd services with
- their journals and a boot analysis, and complete Samba management with share
- and account administration, testparm validation and automatic backups.
+ their journals and a boot analysis, complete Samba management with share
+ and account administration, testparm validation and automatic backups, and
+ a Firefox extension catalogue installed through the browser's own policy
+ mechanism.
+ .
+ A Home page shows a read-only system summary and diagnostics: half-configured
+ packages, broken dependencies, failed services, boot-time journal errors, disk
+ usage, pending restarts and old kernels.
  .
  Privileged actions go through polkit, and every command is run as an argv
  list rather than through a shell.

@@ -34,7 +34,7 @@ test:
 
 # Syntax-check everything, keep the catalogue and translations in sync.
 check:
-	PYTHONPYCACHEPREFIX=$${TMPDIR:-/tmp}/mtk-pycache $(PYTHON) -m compileall -q $(PKG) tests data/mtk-root tools
+	PYTHONPYCACHEPREFIX=$${TMPDIR:-/tmp}/mtk-pycache $(PYTHON) -m compileall -q $(PKG) tests data/mtk-root data/mtk-firefox tools
 	$(PYTHON) tools/extract_strings.py --check
 	$(PYTHON) tools/compile_mo.py --check po/fr.po
 	$(MAKE) translations
@@ -56,6 +56,7 @@ install: translations
 	$(INSTALL) -d $(LIBDIR)/$(PKG)
 	cp -r $(PKG) $(LIBDIR)/$(PKG)/
 	$(INSTALL) -m 0755 data/mtk-root $(LIBDIR)/$(PKG)/mtk-root
+	$(INSTALL) -m 0755 data/mtk-firefox $(LIBDIR)/$(PKG)/mtk-firefox
 	$(INSTALL) -d $(BINDIR)
 	$(INSTALL) -m 0755 bin/minttweaks $(BINDIR)/minttweaks
 	$(INSTALL) -d $(APPDIR)

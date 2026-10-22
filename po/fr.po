@@ -60,7 +60,7 @@ msgstr "Un enregistrement est déjà en cours."
 msgid "A section named '{name}' already exists."
 msgstr "Une section nommée « {name} » existe déjà."
 
-#: minttweaks/ui/window.py:91
+#: minttweaks/ui/window.py:93
 msgid "About"
 msgstr "À propos"
 
@@ -117,10 +117,13 @@ msgstr "Autoriser Samba à travers le pare-feu ?"
 msgid "Analyse boot"
 msgstr "Analyser le démarrage"
 
+#: minttweaks/modules/home/page.py:71
+#: minttweaks/modules/home/page.py:100
 #: minttweaks/modules/maintenance/page.py:117
 msgid "Analysing the system, one moment…"
 msgstr "Analyse du système, un instant…"
 
+#: minttweaks/modules/home/page.py:145
 #: minttweaks/modules/maintenance/page.py:148
 msgid "Analysis finished."
 msgstr "Analyse terminée."
@@ -165,11 +168,11 @@ msgstr "Nettoyer les doublons"
 msgid "Cleanup tasks"
 msgstr "Tâches de nettoyage"
 
-#: minttweaks/ui/window.py:142
+#: minttweaks/ui/window.py:144
 msgid "Clear"
 msgstr "Effacer"
 
-#: minttweaks/ui/window.py:90
+#: minttweaks/ui/window.py:92
 msgid "Clear output"
 msgstr "Effacer la sortie"
 
@@ -238,6 +241,7 @@ msgstr "Supprimer le partage « {name} » ?"
 msgid "Deletes packages that were installed automatically and are no longer needed by anything. The list is shown before you confirm."
 msgstr "Supprime les paquets installés automatiquement dont plus rien ne dépend. La liste est affichée avant votre confirmation."
 
+#: minttweaks/modules/home/page.py:68
 #: minttweaks/modules/samba/page.py:109
 msgid "Diagnostics"
 msgstr "Diagnostic"
@@ -343,7 +347,7 @@ msgstr "Groupe forcé"
 msgid "Guest access"
 msgstr "Accès invité"
 
-#: minttweaks/ui/window.py:141
+#: minttweaks/ui/window.py:143
 msgid "Hide"
 msgstr "Masquer"
 
@@ -388,15 +392,7 @@ msgstr "conservé"
 msgid "Lists who is connected right now."
 msgstr "Liste les personnes connectées en ce moment."
 
-#: minttweaks/ui/window.py:52
-msgid "Maintenance, services and Samba for Linux Mint"
-msgstr "Entretien, services et Samba pour Linux Mint"
-
-#: minttweaks/ui/window.py:224
-msgid "Maintenance, services and Samba management for Linux Mint.\nInspired by the ArchLinux Tweak Tool."
-msgstr "Entretien, services et gestion de Samba pour Linux Mint.\nInspiré par l'ArchLinux Tweak Tool."
-
-#: minttweaks/ui/window.py:80
+#: minttweaks/ui/window.py:82
 msgid "Menu"
 msgstr "Menu"
 
@@ -478,8 +474,8 @@ msgstr "Disponible seulement si Flatpak est installé. Libère les runtimes qu'a
 msgid "Orphaned packages"
 msgstr "Paquets orphelins"
 
-#: minttweaks/ui/window.py:140
-#: minttweaks/ui/window.py:160
+#: minttweaks/ui/window.py:142
+#: minttweaks/ui/window.py:162
 msgid "Output"
 msgstr "Sortie"
 
@@ -524,6 +520,8 @@ msgstr "Purger les noyaux sélectionnés"
 msgid "Purge these kernels?"
 msgstr "Purger ces noyaux ?"
 
+#: minttweaks/modules/firefox/page.py:72
+#: minttweaks/modules/home/page.py:77
 #: minttweaks/modules/maintenance/page.py:63
 msgid "Re-analyse"
 msgstr "Réanalyser"
@@ -536,7 +534,7 @@ msgstr "Lire en administrateur"
 msgid "Read only"
 msgstr "Lecture seule"
 
-#: minttweaks/ui/window.py:157
+#: minttweaks/ui/window.py:159
 msgid "Ready."
 msgstr "Prêt."
 
@@ -548,7 +546,7 @@ msgstr "reconstruit automatiquement par le gestionnaire de fichiers"
 msgid "Refresh the page and try again."
 msgstr "Rechargez la page et réessayez."
 
-#: minttweaks/ui/window.py:88
+#: minttweaks/ui/window.py:90
 msgid "Refresh this page"
 msgstr "Recharger cette page"
 
@@ -734,7 +732,7 @@ msgstr "Partages"
 msgid "Show"
 msgstr "Afficher"
 
-#: minttweaks/ui/window.py:89
+#: minttweaks/ui/window.py:91
 msgid "Show / hide output"
 msgstr "Afficher / masquer la sortie"
 
@@ -831,6 +829,7 @@ msgstr "Le chemin du dossier doit être absolu (commencer par '/')."
 msgid "The folder path must not contain control characters."
 msgstr "Le chemin du dossier ne doit pas contenir de caractères de contrôle."
 
+#: minttweaks/modules/home/backend.py:299
 #: minttweaks/modules/services/page.py:274
 msgid "The journal is not readable without administrator rights."
 msgstr "Le journal n'est pas lisible sans les droits d'administration."
@@ -903,9 +902,10 @@ msgstr "ufw non installé"
 msgid "Unix account"
 msgstr "Compte Unix"
 
-#: minttweaks/modules/maintenance/backend.py:38
-#: minttweaks/modules/samba/page.py:375
-#: minttweaks/modules/services/backend.py:54
+#: minttweaks/modules/home/backend.py:124
+#: minttweaks/modules/home/backend.py:151
+#: minttweaks/modules/home/backend.py:152
+#: … (+13)
 msgid "unknown"
 msgstr "inconnu"
 
@@ -949,7 +949,7 @@ msgstr "Validée par testparm avant chaque enregistrement."
 msgid "Validating and installing the configuration…"
 msgstr "Validation et installation de la configuration…"
 
-#: minttweaks/ui/window.py:122
+#: minttweaks/ui/window.py:124
 msgid "version {version}"
 msgstr "version {version}"
 
@@ -980,3 +980,401 @@ msgstr "Le champ « {label} » doit être un mode octal comme 0664 ou 2775."
 #: minttweaks/modules/services/page.py:211
 msgid "{state} · startup: {enabled}"
 msgstr "{state} · démarrage : {enabled}"
+
+#: minttweaks/modules/firefox/backend.py:127
+msgid "Adds playback and appearance controls to YouTube."
+msgstr "Ajoute des contrôles de lecture et d'apparence à YouTube."
+
+#: minttweaks/modules/firefox/page.py:45
+msgid "Administrator rights are unavailable in this session: extensions can be inspected but not installed."
+msgstr "Les droits d'administrateur ne sont pas disponibles dans cette session : les extensions peuvent être inspectées, mais pas installées."
+
+#: minttweaks/modules/firefox/backend.py:67
+msgid "Blocks trackers that follow you across sites."
+msgstr "Bloque les traqueurs qui vous suivent d'un site à l'autre."
+
+#: minttweaks/modules/firefox/backend.py:92
+msgid "Bookmark manager for links, articles and files."
+msgstr "Gestionnaire de favoris pour liens, articles et fichiers."
+
+#: minttweaks/modules/firefox/backend.py:62
+msgid "Content blocker for ads, trackers and malware domains."
+msgstr "Bloqueur de contenus pour publicités, traqueurs et domaines malveillants."
+
+#: minttweaks/modules/firefox/page.py:251
+msgid "Could not update the Firefox policy."
+msgstr "Impossible de mettre à jour la politique Firefox."
+
+#: minttweaks/modules/firefox/backend.py:87
+msgid "Creates and applies custom Firefox colour themes."
+msgstr "Crée et applique des thèmes de couleurs personnalisés pour Firefox."
+
+#: minttweaks/modules/firefox/page.py:63
+#: minttweaks/modules/firefox/page.py:107
+msgid "Detecting Firefox profiles…"
+msgstr "Détection des profils Firefox…"
+
+#: minttweaks/modules/firefox/backend.py:132
+msgid "Downloads videos and audio from web pages."
+msgstr "Télécharge des vidéos et de l'audio depuis les pages web."
+
+#: minttweaks/modules/firefox/page.py:55
+msgid "Extensions"
+msgstr "Extensions"
+
+#: minttweaks/modules/firefox/page.py:123
+msgid "Firefox does not appear to be installed."
+msgstr "Firefox ne semble pas être installé."
+
+#: minttweaks/modules/firefox/backend.py:82
+msgid "Generates dark themes for every website."
+msgstr "Génère des thèmes sombres pour tous les sites."
+
+#: minttweaks/modules/firefox/page.py:92
+msgid "Install selected extensions"
+msgstr "Installer les extensions sélectionnées"
+
+#: minttweaks/modules/firefox/page.py:212
+msgid "Install these Firefox extensions?"
+msgstr "Installer ces extensions Firefox ?"
+
+#: minttweaks/modules/firefox/page.py:148
+msgid "Installed."
+msgstr "Installée."
+
+#: minttweaks/ui/window.py:54
+msgid "Maintenance, services, Samba and Firefox for Linux Mint"
+msgstr "Entretien, services, Samba et Firefox pour Linux Mint"
+
+#: minttweaks/ui/window.py:232
+msgid "Maintenance, services, Samba and Firefox management for Linux Mint.\nInspired by the ArchLinux Tweak Tool."
+msgstr "Gestion de l'entretien, des services, de Samba et de Firefox pour Linux Mint.\nInspiré d'ArchLinux Tweak Tool."
+
+#: minttweaks/modules/firefox/page.py:132
+msgid "MintTweaks currently manages {count} extension(s) in the Firefox policy."
+msgstr "MintTweaks gère actuellement {count} extension(s) dans la politique Firefox."
+
+#: minttweaks/modules/firefox/page.py:120
+msgid "No Firefox profile was found. Start Firefox once so MintTweaks can detect installed extensions."
+msgstr "Aucun profil Firefox n'a été trouvé. Lancez Firefox une fois pour que MintTweaks puisse détecter les extensions installées."
+
+#: minttweaks/modules/firefox/page.py:156
+msgid "Not installed."
+msgstr "Non installée."
+
+#: minttweaks/modules/firefox/backend.py:77
+msgid "Open-source password manager."
+msgstr "Gestionnaire de mots de passe libre."
+
+#: minttweaks/modules/firefox/backend.py:112
+msgid "Opens a page in a sidebar next to the current one."
+msgstr "Ouvre une page dans un panneau latéral à côté de la page actuelle."
+
+#: minttweaks/modules/firefox/page.py:245
+msgid "Policy updated. Restart Firefox to install the selected extensions."
+msgstr "Politique mise à jour. Redémarrez Firefox pour installer les extensions sélectionnées."
+
+#: minttweaks/modules/firefox/backend.py:117
+msgid "Previews links in a popup without leaving the page."
+msgstr "Affiche un aperçu des liens dans une fenêtre contextuelle sans quitter la page."
+
+#: minttweaks/modules/firefox/backend.py:72
+msgid "Removes tracking parameters from links before pages load."
+msgstr "Supprime les paramètres de suivi des liens avant le chargement des pages."
+
+#: minttweaks/modules/firefox/backend.py:107
+msgid "Saves a complete web page as a single HTML file."
+msgstr "Enregistre une page web complète dans un seul fichier HTML."
+
+#: minttweaks/modules/firefox/backend.py:97
+msgid "Saves web pages to an Obsidian vault."
+msgstr "Enregistre des pages web dans un coffre Obsidian."
+
+#: minttweaks/modules/firefox/page.py:69
+msgid "Select all missing extensions"
+msgstr "Sélectionner toutes les extensions manquantes"
+
+#: minttweaks/modules/firefox/page.py:56
+msgid "Selected add-ons are downloaded from addons.mozilla.org and installed the next time Firefox starts. Installing an extension grants it the permissions listed on its addons.mozilla.org page."
+msgstr "Les modules sélectionnés sont téléchargés depuis addons.mozilla.org et installés au prochain démarrage de Firefox. L'installation d'une extension lui accorde les autorisations indiquées sur sa page addons.mozilla.org."
+
+#: minttweaks/modules/firefox/backend.py:137
+msgid "Shows Amazon price history and alerts."
+msgstr "Affiche l'historique des prix Amazon et des alertes."
+
+#: minttweaks/modules/firefox/backend.py:122
+msgid "Skips sponsor segments in YouTube videos."
+msgstr "Saute les segments sponsorisés dans les vidéos YouTube."
+
+#: minttweaks/modules/firefox/backend.py:102
+msgid "Stashes tabs into a list you can restore later."
+msgstr "Met des onglets de côté dans une liste à restaurer plus tard."
+
+#: minttweaks/modules/firefox/page.py:128
+msgid "The existing Firefox policy could not be read: {error}"
+msgstr "Impossible de lire la politique Firefox existante : {error}"
+
+#: minttweaks/modules/firefox/page.py:152
+msgid "Will be installed the next time Firefox starts."
+msgstr "Sera installée au prochain démarrage de Firefox."
+
+#: minttweaks/modules/firefox/page.py:218
+msgid "Writing the Firefox extension policy…"
+msgstr "Écriture de la politique d'extensions Firefox…"
+
+#: minttweaks/modules/firefox/page.py:187
+msgid "{count} extension(s) selected."
+msgstr "{count} extension(s) sélectionnée(s)."
+
+#: minttweaks/modules/firefox/page.py:116
+msgid "{count} Firefox profile(s) detected."
+msgstr "{count} profil(s) Firefox détecté(s)."
+
+#: minttweaks/modules/firefox/page.py:208
+msgid "{names}\n\nFirefox must be restarted after this. The add-ons are downloaded from addons.mozilla.org."
+msgstr "{names}\n\nFirefox devra être redémarré ensuite. Les modules sont téléchargés depuis addons.mozilla.org."
+
+#: minttweaks/modules/firefox/page.py:97
+msgid "Remove MintTweaks policy"
+msgstr "Supprimer la politique MintTweaks"
+
+#: minttweaks/modules/firefox/page.py:226
+msgid "Remove the MintTweaks Firefox policy?"
+msgstr "Supprimer la politique Firefox de MintTweaks ?"
+
+#: minttweaks/modules/firefox/page.py:227
+msgid "Extensions already installed in Firefox are kept. Only the policy entries written by MintTweaks are removed."
+msgstr "Les extensions déjà installées dans Firefox sont conservées. Seules les entrées de politique écrites par MintTweaks sont supprimées."
+
+#: minttweaks/modules/firefox/page.py:234
+msgid "Removing the MintTweaks Firefox policy…"
+msgstr "Suppression de la politique Firefox de MintTweaks…"
+
+#: minttweaks/modules/firefox/page.py:248
+msgid "The MintTweaks Firefox policy entries were removed."
+msgstr "Les entrées de politique Firefox de MintTweaks ont été supprimées."
+
+#: minttweaks/modules/home/page.py:142
+msgid "All {count} checks passed."
+msgstr "Les {count} vérifications ont réussi."
+
+#: minttweaks/modules/home/backend.py:230
+msgid "apt-get check found no broken dependency."
+msgstr "apt-get check n'a trouvé aucune dépendance cassée."
+
+#: minttweaks/modules/home/backend.py:234
+msgid "apt-get check reported a problem: {sample}"
+msgstr "apt-get check a signalé un problème : {sample}"
+
+#: minttweaks/modules/home/backend.py:228
+msgid "apt-get is not available on this system."
+msgstr "apt-get n'est pas disponible sur ce système."
+
+#: minttweaks/modules/home/backend.py:302
+#: minttweaks/modules/home/backend.py:281
+#: minttweaks/modules/home/backend.py:290
+#: … (+1)
+msgid "Boot errors"
+msgstr "Erreurs de démarrage"
+
+#: minttweaks/modules/home/backend.py:233
+#: minttweaks/modules/home/backend.py:228
+#: minttweaks/modules/home/backend.py:230
+msgid "Dependencies"
+msgstr "Dépendances"
+
+#: minttweaks/modules/home/page.py:58
+msgid "Disk (/)"
+msgstr "Disque (/)"
+
+#: minttweaks/modules/home/backend.py:327
+#: minttweaks/modules/home/backend.py:307
+#: minttweaks/modules/home/backend.py:312
+#: … (+1)
+msgid "Disk space"
+msgstr "Espace disque"
+
+#: minttweaks/modules/home/backend.py:307
+msgid "Disk usage could not be measured."
+msgstr "L'utilisation du disque n'a pas pu être mesurée."
+
+#: minttweaks/modules/home/backend.py:218
+msgid "dpkg --audit failed: {sample}"
+msgstr "dpkg --audit a échoué : {sample}"
+
+#: minttweaks/modules/home/backend.py:210
+msgid "dpkg --audit reported: {sample}"
+msgstr "dpkg --audit a signalé : {sample}"
+
+#: minttweaks/modules/home/backend.py:204
+msgid "dpkg is not available on this system."
+msgstr "dpkg n'est pas disponible sur ce système."
+
+#: minttweaks/modules/home/backend.py:272
+#: minttweaks/modules/home/backend.py:253
+#: minttweaks/modules/home/backend.py:259
+#: … (+1)
+msgid "Failed services"
+msgstr "Services en échec"
+
+#: minttweaks/modules/home/page.py:87
+msgid "Firefox"
+msgstr "Firefox"
+
+#: minttweaks/modules/home/page.py:27
+msgid "Home"
+msgstr "Accueil"
+
+#: minttweaks/modules/home/page.py:55
+msgid "Host name"
+msgstr "Nom de l'hôte"
+
+#: minttweaks/modules/home/backend.py:281
+msgid "journalctl is not available on this system."
+msgstr "journalctl n'est pas disponible sur ce système."
+
+#: minttweaks/modules/home/page.py:81
+msgid "Jump to a section."
+msgstr "Accéder directement à une section."
+
+#: minttweaks/modules/home/page.py:54
+msgid "Kernel"
+msgstr "Noyau"
+
+#: minttweaks/modules/home/page.py:84
+msgid "Maintenance"
+msgstr "Entretien"
+
+#: minttweaks/modules/home/page.py:57
+msgid "Memory"
+msgstr "Mémoire"
+
+#: minttweaks/modules/home/page.py:81
+msgid "Modules"
+msgstr "Modules"
+
+#: minttweaks/modules/home/page.py:152
+msgid "No check was run."
+msgstr "Aucune vérification n'a été exécutée."
+
+#: minttweaks/modules/home/backend.py:302
+msgid "No error was logged since the last boot."
+msgstr "Aucune erreur n'a été journalisée depuis le dernier démarrage."
+
+#: minttweaks/modules/home/backend.py:222
+msgid "No half-configured package was found."
+msgstr "Aucun paquet à moitié configuré n'a été trouvé."
+
+#: minttweaks/modules/home/backend.py:358
+msgid "No old kernel is waiting for removal."
+msgstr "Aucun ancien noyau n'attend d'être supprimé."
+
+#: minttweaks/modules/home/backend.py:341
+msgid "No restart is pending."
+msgstr "Aucun redémarrage n'est requis."
+
+#: minttweaks/modules/home/backend.py:272
+msgid "No service has failed."
+msgstr "Aucun service n'a échoué."
+
+#: minttweaks/modules/home/backend.py:358
+#: minttweaks/modules/home/backend.py:347
+#: minttweaks/modules/home/backend.py:353
+msgid "Old kernels"
+msgstr "Anciens noyaux"
+
+#: minttweaks/modules/home/page.py:175
+msgid "Open"
+msgstr "Ouvrir"
+
+#: minttweaks/modules/home/page.py:53
+msgid "Operating system"
+msgstr "Système d'exploitation"
+
+#: minttweaks/modules/home/backend.py:222
+#: minttweaks/modules/home/backend.py:204
+#: minttweaks/modules/home/backend.py:209
+#: … (+1)
+msgid "Package database"
+msgstr "Base de paquets"
+
+#: minttweaks/modules/home/page.py:69
+msgid "Read-only checks. Nothing is changed."
+msgstr "Vérifications en lecture seule. Rien n'est modifié."
+
+#: minttweaks/modules/home/page.py:51
+msgid "Read-only snapshot of this machine."
+msgstr "Instantané en lecture seule de cette machine."
+
+#: minttweaks/modules/home/backend.py:341
+#: minttweaks/modules/home/backend.py:338
+msgid "Restart required"
+msgstr "Redémarrage requis"
+
+#: minttweaks/modules/home/page.py:86
+msgid "Samba sharing"
+msgstr "Partage Samba"
+
+#: minttweaks/modules/home/page.py:85
+msgid "Services"
+msgstr "Services"
+
+#: minttweaks/modules/home/page.py:51
+msgid "System"
+msgstr "Système"
+
+#: minttweaks/modules/home/backend.py:253
+msgid "systemctl is not available on this system."
+msgstr "systemctl n'est pas disponible sur ce système."
+
+#: minttweaks/modules/home/backend.py:347
+msgid "The kernel list could not be read."
+msgstr "La liste des noyaux n'a pas pu être lue."
+
+#: minttweaks/modules/home/backend.py:313
+msgid "The root filesystem is almost full: {percent}% used, {free} free."
+msgstr "Le système de fichiers racine est presque plein : {percent} % utilisé, {free} libres."
+
+#: minttweaks/modules/home/backend.py:321
+msgid "The root filesystem is filling up: {percent}% used, {free} free."
+msgstr "Le système de fichiers racine se remplit : {percent} % utilisé, {free} libres."
+
+#: minttweaks/modules/home/backend.py:328
+msgid "The root filesystem is {percent}% used, {free} free."
+msgstr "Le système de fichiers racine est utilisé à {percent} %, {free} libres."
+
+#: minttweaks/modules/home/backend.py:268
+msgid "The service state could not be read: {sample}"
+msgstr "L'état des services n'a pas pu être lu : {sample}"
+
+#: minttweaks/modules/home/backend.py:339
+msgid "The system must restart to finish applying updates."
+msgstr "Le système doit redémarrer pour terminer l'application des mises à jour."
+
+#: minttweaks/modules/home/page.py:56
+msgid "Uptime"
+msgstr "Temps de fonctionnement"
+
+#: minttweaks/modules/home/backend.py:291
+msgid "{count} error line(s) since the last boot. First entry: {sample}"
+msgstr "{count} ligne(s) d'erreur depuis le dernier démarrage. Première entrée : {sample}"
+
+#: minttweaks/modules/home/backend.py:354
+msgid "{count} old kernel(s) can be removed: {versions}"
+msgstr "{count} ancien(s) noyau(x) peuvent être supprimés : {versions}"
+
+#: minttweaks/modules/home/backend.py:260
+msgid "{count} service(s) failed: {names}"
+msgstr "{count} service(s) en échec : {names}"
+
+#: minttweaks/modules/home/page.py:135
+msgid "{errors} error(s), {warnings} warning(s), {ok} check(s) passed."
+msgstr "{errors} erreur(s), {warnings} avertissement(s), {ok} vérification(s) réussie(s)."
+
+#: minttweaks/modules/home/page.py:112
+msgid "{used} / {total} ({percent}% used)"
+msgstr "{used} / {total} ({percent} % utilisés)"
+
+#: minttweaks/modules/home/page.py:122
+msgid "{used} / {total} ({percent}% used, {free} free)"
+msgstr "{used} / {total} ({percent} % utilisés, {free} libres)"

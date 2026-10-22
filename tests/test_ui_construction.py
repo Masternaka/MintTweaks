@@ -15,6 +15,10 @@ from tests import fakegi
 
 fakegi.install()
 
+from minttweaks.modules.firefox import backend as firefox  # noqa: E402
+from minttweaks.modules.firefox.page import FirefoxPage  # noqa: E402
+from minttweaks.modules.home import backend as home  # noqa: E402
+from minttweaks.modules.home.page import HomePage  # noqa: E402
 from minttweaks.modules.maintenance import backend as maint  # noqa: E402
 from minttweaks.modules.maintenance.page import MaintenancePage  # noqa: E402
 from minttweaks.modules.samba import backend as samba  # noqa: E402
@@ -47,17 +51,17 @@ class ConstructionTests(unittest.TestCase):
         self.ctx = widgets.AppContext(make_runner())
 
     def test_pages_can_be_built(self):
-        for page_class in (MaintenancePage, ServicesPage, SambaPage):
+        for page_class in (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage):
             page = page_class(self.ctx)
             self.assertIsInstance(page, widgets.Page)
 
     def test_window_can_be_built(self):
         context = widgets.AppContext(make_runner())
         window = MainWindow(None, context)
-        self.assertEqual(len(window.pages), 3)
+        self.assertEqual(len(window.pages), 5)
         self.assertEqual(
             [page.page_name for page in window.pages],
-            ["maintenance", "services", "samba"],
+            ["home", "maintenance", "services", "samba", "firefox"],
         )
 
     def test_pages_start_empty_and_load_lazily(self):
@@ -114,6 +118,65 @@ class ServicesStateTests(unittest.TestCase):
         result = self.page.ctx.runner.run(["journalctl"])
         self.page._apply_logs("smbd.service", result)
         self.assertTrue(self.page.log_hint)
+
+
+class HomeStateTests(unittest.TestCase):
+    def setUp(self):
+        self.ctx = widgets.AppContext(make_runner())
+        self.page = HomePage(self.ctx)
+
+    def test_report_updates_the_summary_and_findings(self):
+        report = home.HomeReport(
+            summary=home.SystemSummary(
+                os_name="Linux Mint 22.1",
+                kernel="6.8.0-45-generic",
+                hostname="mintbox",
+                uptime="1 h 2 min",
+                memory_used="1.0 GB",
+                memory_total="8.0 GB",
+                memory_percent=12,
+                disk_used="10.0 GB",
+                disk_total="100.0 GB",
+                disk_free="90.0 GB",
+                disk_percent=10,
+            ),
+            findings=[
+                home.Finding("ok", "Package database", "No half-configured package was found."),
+                home.Finding("warn", "Old kernels", "2 old kernel(s) can be removed: 6.8.0-40"),
+            ],
+        )
+        self.page._apply_report(report)
+        self.assertEqual(self.page.report, report)
+
+    def test_empty_report_is_handled(self):
+        report = home.HomeReport(summary=home.SystemSummary(), findings=[])
+        self.page._apply_report(report)
+        self.assertIs(self.page.report, report)
+
+
+class FirefoxStateTests(unittest.TestCase):
+    def setUp(self):
+        self.ctx = widgets.AppContext(make_runner())
+        self.page = FirefoxPage(self.ctx)
+
+    def test_status_with_installed_and_managed_extensions_renders(self):
+        status = firefox.FirefoxStatus(
+            profiles=1,
+            installed_ids={"uBlock0@raymondhill.net"},
+            policy_ids={"addon@darkreader.org"},
+            firefox_found=True,
+        )
+        self.page._apply_status(status)
+        self.assertEqual(self.page.status, status)
+
+    def test_a_policy_read_error_disables_the_apply_button(self):
+        status = firefox.FirefoxStatus(
+            profiles=1,
+            firefox_found=True,
+            policy_error="permission denied",
+        )
+        self.page._apply_status(status)
+        self.assertEqual(self.page.status.policy_error, "permission denied")
 
 
 class SambaStateTests(unittest.TestCase):

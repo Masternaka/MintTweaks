@@ -1,12 +1,18 @@
 # MintTweaks
 
-Un outil de réglages pour **Linux Mint**, inspiré d’[ArchLinux Tweak Tool](https://github.com/kirodubes/archlinux-tweak-tool) : une seule fenêtre pour les tâches système que Mint répartit entre `apt`, `systemctl`, `journalctl` et `smb.conf`.
+Un outil de réglages pour **Linux Mint**, inspiré d’[ArchLinux Tweak Tool](https://github.com/kirodubes/archlinux-tweak-tool) : une seule fenêtre pour les tâches système que Mint répartit entre `apt`, `systemctl`, `journalctl`, `smb.conf` et les extensions Firefox.
 
 MintTweaks utilise **Python 3 + GTK 3** : Cinnamon utilise déjà GTK 3, installé par défaut sur les versions de Mint prises en charge. L’application reprend le thème Mint-Y pour s’intégrer aux panneaux de réglages de Cinnamon.
 
 Linux Mint fournit déjà d’excellents outils : gestionnaire de mises à jour, gestionnaire de pilotes, Timeshift et outil de sauvegarde. MintTweaks les complète avec des fonctions qui n’ont pas encore d’interface graphique dédiée.
 
 ## Fonctionnalités actuelles (v0.1)
+
+### Accueil
+
+- Résumé en lecture seule de la machine : distribution, noyau, nom d’hôte, temps de fonctionnement, mémoire et occupation du disque racine.
+- Diagnostics automatiques : paquets à moitié configurés, dépendances cassées, services systemd en échec, erreurs journalisées depuis le démarrage, espace disque, redémarrage requis et anciens noyaux.
+- Accès direct aux autres modules depuis la page d’accueil.
 
 ### Entretien
 
@@ -32,6 +38,16 @@ Linux Mint fournit déjà d’excellents outils : gestionnaire de mises à jour,
 
 L’interface est **traduite en français** et suit la langue du système ; `--lang fr` permet de la forcer. Voir [Langues](#langues).
 
+### Firefox
+
+- Catalogue de 16 extensions courantes (uBlock Origin, Privacy Badger, ClearURLs, Bitwarden, Dark Reader, SponsorBlock, etc.) avec une case à cocher par extension.
+- Détection en lecture seule des extensions déjà installées dans le profil Firefox natif.
+- Installation des extensions cochées via la politique d’entreprise `ExtensionSettings` : Firefox les télécharge lui-même depuis `addons.mozilla.org` à son prochain démarrage, ce qui garantit la vérification des signatures.
+- Fusion prudente de `/etc/firefox/policies/policies.json` : les autres politiques et les extensions gérées par un administrateur sont conservées ; une entrée existante avec un autre mode ou une autre URL est refusée plutôt que remplacée.
+- Sauvegarde root de la politique précédente dans `/var/backups/minttweaks/` avant chaque écriture.
+
+La politique s’applique au Firefox natif fourni par Linux Mint.
+
 ## Prérequis
 
 | Élément | Prérequis |
@@ -40,6 +56,7 @@ L’interface est **traduite en français** et suit la langue du système ; `--l
 | Exécution | `python3` ≥ 3.8, `python3-gi`, `gir1.2-gtk-3.0` (installés par défaut) |
 | Privilèges | `pkexec` / polkit (`policykit-1`, installé par défaut) |
 | Module Samba | `samba`, `smbclient`, `cifs-utils` (installables depuis l’application) |
+| Module Firefox | `firefox` (installé par défaut sur Linux Mint) |
 
 ## Installation
 
@@ -47,12 +64,12 @@ L’interface est **traduite en français** et suit la langue du système ; `--l
 sudo apt install python3-gi gir1.2-gtk-3.0 policykit-1
 git clone https://github.com/Masternaka/MintTweaks.git
 cd MintTweaks
-make test          # 185 tests, sans affichage graphique
+make test          # suite de tests, sans affichage graphique
 sudo make install
 minttweaks
 ```
 
-`make install` place le paquet et les traductions compilées dans `/usr/lib/minttweaks`, le lanceur dans `/usr/bin/minttweaks`, l’auxiliaire privilégié à côté du paquet, et l’entrée de menu, l’icône et la page de manuel dans `/usr/share`.
+`make install` place le paquet et les traductions compilées dans `/usr/lib/minttweaks`, le lanceur dans `/usr/bin/minttweaks`, les auxiliaires privilégiés à côté du paquet, et l’entrée de menu, l’icône et la page de manuel dans `/usr/share`.
 `sudo make uninstall` les supprime tout en conservant vos sauvegardes et journaux.
 
 Pour lancer l’application depuis le dépôt sans l’installer : `./bin/minttweaks`.
@@ -119,12 +136,19 @@ Le remplacement de `/etc/samba/smb.conf` passe par l’auxiliaire `data/mtk-root
 - il copie le fichier courant dans `/var/backups/samba/smb.conf.<timestamp>`, conserve les 20 dernières sauvegardes et impose `root:root 0644` au résultat ;
 - il recharge `smbd` dans le même appel privilégié : une seule autorisation est nécessaire par enregistrement.
 
+Les extensions Firefox passent par l’auxiliaire `data/mtk-firefox`, limité à `/etc/firefox/policies/policies.json` :
+
+- il n’accepte que les identifiants du catalogue et une politique `normal_installed` pointant vers le téléchargement officiel `addons.mozilla.org` ;
+- il fusionne la sélection dans le fichier existant, sans toucher aux autres politiques ni aux entrées qu’il n’a pas écrites ;
+- il sauvegarde le fichier courant dans `/var/backups/minttweaks/` et force `root:root 0644`.
+
 ## Modèle de sécurité
 
 - **Aucun shell.** Chaque commande est une liste d’arguments transmise à `subprocess` sans `shell=True`, ce qu’un test vérifie. Les noms de partage, chemins et noms d’unité sont validés selon des règles strictes avant toute commande.
 - **Validation avant écriture.** `smb.conf` passe deux fois par `testparm`, dans l’interface et dans l’auxiliaire root. Une configuration refusée laisse la mémoire et le disque inchangés.
 - **Sauvegarde avant modification.** La configuration Samba est copiée dans `~/.local/share/minttweaks/backups/` avant chaque enregistrement ; ces sauvegardes sont lisibles par l’utilisateur et restaurables depuis l’interface.
 - **Aperçu des actions destructives.** `apt-get -s` simule la suppression des paquets orphelins avant toute action ; chaque noyau proposé dispose d’une case de sélection.
+- **Installation d’extensions depuis la source officielle.** Firefox télécharge lui-même les modules depuis `addons.mozilla.org` ; MintTweaks n’installe jamais un fichier XPI fourni par l’utilisateur.
 - **Données personnelles traitées avec votre compte.** Les miniatures et la corbeille sont nettoyées sans droits root. Les liens symboliques sont supprimés sans être suivis.
 - **Refus explicites.** Le noyau en cours d’utilisation ne peut pas être purgé, la racine du système de fichiers ne peut pas être partagée et les unités inconnues ne peuvent pas être pilotées.
 
@@ -151,11 +175,13 @@ minttweaks/
 │   ├── smbconf.py             Modèle smb.conf préservant le contenu à la réécriture
 │   ├── logs.py, paths.py
 ├── modules/
+│   ├── home/                  backend.py + page.py
 │   ├── maintenance/           backend.py + page.py
 │   ├── services/              backend.py + page.py
-│   └── samba/                 backend.py + page.py
+│   ├── samba/                 backend.py + page.py
+│   └── firefox/               backend.py + page.py
 └── ui/                        window.py, widgets.py, style.css
-data/                          Entrée .desktop, icône, manuel, auxiliaire mtk-root
+data/                          Entrée .desktop, icône, manuel, auxiliaires mtk-root et mtk-firefox
 po/                            minttweaks.pot + fr.po
 tools/                         extract_strings.py, compile_mo.py
 debian/                        Empaquetage avec debhelper
@@ -169,7 +195,7 @@ Chaque module conserve sa logique dans `backend.py`, sans import GTK et entière
 
 Les idées détaillées et priorisées figurent dans [docs/ideas.md](docs/ideas.md). La [vision et la feuille de route](docs/VISION_ET_ROADMAP.md) présentent l’orientation proposée du projet. Les prochaines pistes comprennent :
 
-- [ ] **Diagnostic de santé du système** : un bouton pour analyser la machine et proposer des corrections.
+- [x] **Diagnostic de santé du système** : la page Accueil analyse la machine et signale les problèmes en lecture seule.
 - [ ] **Timeshift dans Entretien** : un point de restauration avant un nettoyage destructif.
 - [ ] **Journal agrégé** : erreurs depuis le démarrage et messages du noyau.
 - [ ] **Réglages `sysctl`** : fichier dédié, affichage de la valeur initiale et retour aux valeurs par défaut.

@@ -14,6 +14,8 @@ from tests import fakegi
 
 HAS_REAL_GI = not fakegi.install()
 
+from minttweaks.modules.firefox import page as firefox_page  # noqa: E402
+from minttweaks.modules.home import page as home_page  # noqa: E402
 from minttweaks.modules.maintenance import page as maintenance_page  # noqa: E402
 from minttweaks.modules.samba import page as samba_page  # noqa: E402
 from minttweaks.modules.services import page as services_page  # noqa: E402
@@ -24,7 +26,13 @@ from tests.fakes import FakeRunner  # noqa: E402
 
 class PageContractTests(unittest.TestCase):
     def test_every_page_declares_metadata(self):
-        for page_class in (maintenance_page.MaintenancePage, services_page.ServicesPage, samba_page.SambaPage):
+        for page_class in (
+            home_page.HomePage,
+            maintenance_page.MaintenancePage,
+            services_page.ServicesPage,
+            samba_page.SambaPage,
+            firefox_page.FirefoxPage,
+        ):
             self.assertTrue(page_class.page_name, page_class)
             self.assertTrue(page_class.page_title, page_class)
             self.assertTrue(page_class.page_icon, page_class)
@@ -37,7 +45,7 @@ class PageContractTests(unittest.TestCase):
     def test_every_page_class_is_registered_in_the_window(self):
         self.assertEqual(
             set(window.PAGE_CLASSES),
-            {maintenance_page.MaintenancePage, services_page.ServicesPage, samba_page.SambaPage},
+            {home_page.HomePage, maintenance_page.MaintenancePage, services_page.ServicesPage, samba_page.SambaPage, firefox_page.FirefoxPage},
         )
 
     def test_pages_use_known_context(self):

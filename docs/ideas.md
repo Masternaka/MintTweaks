@@ -75,7 +75,7 @@ bouton d'action quand la correction est sûre.
 | Entrées `.desktop` cassées | scan `Exec=` → binaire absent |
 | Noyaux installés inutiles | déjà dans l'Entretien |
 
-**Intégration.** `modules/diagnostic/backend.py` renvoie une liste de
+**Intégration.** `modules/home/backend.py` renvoie une liste de
 `Finding(severity, title, detail, action)` ; la page n'est qu'un rendu. Les
 contrôles sont indépendants les uns des autres : un contrôle qui plante n'invalide
 pas le rapport.
@@ -83,7 +83,7 @@ pas le rapport.
 **Extras.** Bouton **« Exporter le rapport »** (texte lisible) et option `--json`
 pour coller dans un ticket sans capture d'écran.
 
-- [ ] Implémenter
+- [x] Implémenté (page Accueil, diagnostics en lecture seule ; export et option `--json` restent à faire)
 
 ---
 

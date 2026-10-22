@@ -1,0 +1,279 @@
+#!/usr/bin/python3
+"""Privileged helper for MintTweaks - Firefox extension policy only.
+
+Firefox reads ``/etc/firefox/policies/policies.json`` once at startup.  The
+``ExtensionSettings`` policy lets an administrator pre-install add-ons from
+addons.mozilla.org without asking for a click in the browser.  This helper is
+deliberately narrower than that mechanism:
+
+    pkexec /usr/lib/minttweaks/mtk-firefox install-policy /tmp/candidate.json
+
+Guarantees:
+
+* the candidate must be a regular file, owned by the invoking user, smaller
+  than 256 KiB, and contain only add-ons from the fixed allow-list below;
+* every entry must be exactly a ``normal_installed`` policy pointing at the
+  add-on's official addons.mozilla.org download URL;
+* the live policy is merged, never replaced: unrelated policies and extension
+  entries are preserved, and an existing entry with another mode or URL is left
+  untouched and reported as a conflict;
+* the previous file is copied to /var/backups/minttweaks/ before a write;
+* the installed file is forced to root:root 0644.
+"""
+
+import json
+import os
+import shutil
+import stat
+import sys
+import time
+from pathlib import Path
+
+POLICY = Path("/etc/firefox/policies/policies.json")
+BACKUP_DIR = Path("/var/backups/minttweaks")
+MAX_SIZE = 256 * 1024
+KEEP_BACKUPS = 20
+INSTALLATION_MODE = "normal_installed"
+AMO_LATEST = "https://addons.mozilla.org/firefox/downloads/latest/{addon}/latest.xpi"
+
+# Keep this list in sync with minttweaks/modules/firefox/backend.py:CATALOG.
+ALLOWED = (
+    "uBlock0@raymondhill.net",
+    "jid1-MnnxcxisBPnSXQ@jetpack",
+    "{74145f27-f039-47ce-a470-a662b129930a}",
+    "{446900e4-71c2-419f-a6a7-df9c091e268b}",
+    "addon@darkreader.org",
+    "FirefoxColor@mozilla.com",
+    "jid0-adyhmvsP91nUO8pRv0Mn2VKeB84@jetpack",
+    "clipper@obsidian.md",
+    "tab-stash@condordes.net",
+    "{531906d3-e22f-4a6c-a102-8057b88a1a63}",
+    "side-view@mozilla.org",
+    "drag_to_privew@uxer",
+    "sponsorBlocker@ajay.app",
+    "enhancerforyoutube@maximerf.addons.mozilla.org",
+    "{b9db16a4-6edc-47ec-a1f4-b86292ed211d}",
+    "amptra@keepa.com",
+)
+
+EXIT_OK = 0
+EXIT_USAGE = 1
+EXIT_REJECTED = 2
+EXIT_REFUSED = 3
+EXIT_IO = 4
+
+
+def log(message):
+    print(f"mtk-firefox: {message}", flush=True)
+
+
+def warn(message):
+    print(f"mtk-firefox: {message}", file=sys.stderr, flush=True)
+
+
+def invoking_uid():
+    raw = os.environ.get("PKEXEC_UID", "").strip()
+    if raw.isdigit():
+        return int(raw)
+    return None
+
+
+def entry_for(identifier):
+    return {
+        "installation_mode": INSTALLATION_MODE,
+        "install_url": AMO_LATEST.format(addon=identifier),
+    }
+
+
+def check_source(path):
+    """Return (ok, reason). Never trusts the caller."""
+    try:
+        source = Path(path).lstat()
+    except OSError as exc:
+        return False, f"cannot stat {path}: {exc}"
+
+    if not stat.S_ISREG(source.st_mode):
+        return False, "the candidate is not a regular file"
+    if source.st_size > MAX_SIZE:
+        return False, f"the candidate is larger than {MAX_SIZE} bytes"
+
+    expected = invoking_uid()
+    if expected is not None and source.st_uid != expected:
+        return False, f"the candidate is not owned by uid {expected}"
+
+    try:
+        content = Path(path).read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        return False, f"cannot read the candidate: {exc}"
+    if "\x00" in content:
+        return False, "the candidate contains NUL bytes"
+    return True, ""
+
+
+def validate_candidate(candidate):
+    """Return an error message, or None when the candidate is acceptable."""
+    if not isinstance(candidate, dict):
+        return "the candidate must be a JSON object mapping add-on IDs to policies"
+    unknown = set(candidate) - set(ALLOWED)
+    if unknown:
+        return f"unknown add-on(s): {', '.join(sorted(unknown))}"
+    for identifier, policy in candidate.items():
+        if policy != entry_for(identifier):
+            return f"invalid policy for {identifier}"
+    return None
+
+
+def load_existing():
+    """Return (document, error). A missing or empty file is an empty document."""
+    if not POLICY.is_file():
+        return {"policies": {}}, None
+    try:
+        text = POLICY.read_text(encoding="utf-8")
+    except OSError as exc:
+        return None, f"cannot read {POLICY}: {exc}"
+    if not text.strip():
+        return {"policies": {}}, None
+    try:
+        data = json.loads(text)
+    except ValueError as exc:
+        return None, f"{POLICY} is not valid JSON: {exc}"
+    if not isinstance(data, dict):
+        return None, "the Firefox policy file must contain a JSON object"
+    policies = data.get("policies", {})
+    if not isinstance(policies, dict):
+        return None, "the 'policies' entry is not an object"
+    settings = policies.get("ExtensionSettings", {})
+    if not isinstance(settings, dict):
+        return None, "the 'ExtensionSettings' entry is not an object"
+    return data, None
+
+
+def merge(existing, candidate):
+    """Merge the selected entries into an existing policy document."""
+    data = json.loads(json.dumps(existing))
+    policies = data.setdefault("policies", {})
+    settings = policies.setdefault("ExtensionSettings", {})
+
+    for identifier in ALLOWED:
+        current = settings.get(identifier)
+        wanted = entry_for(identifier)
+        if identifier in candidate:
+            if current is not None and current != wanted:
+                raise ValueError(f"{identifier} already has a different policy; refusing to overwrite it")
+            settings[identifier] = wanted
+        elif current == wanted:
+            del settings[identifier]
+
+    if not settings:
+        policies.pop("ExtensionSettings", None)
+    if not policies:
+        data.pop("policies", None)
+    return data
+
+
+def prune_backups():
+    if not BACKUP_DIR.is_dir():
+        return
+    backups = sorted(BACKUP_DIR.glob("firefox-policies.json.*"), key=lambda item: item.name)
+    for stale in backups[:-KEEP_BACKUPS] if len(backups) > KEEP_BACKUPS else []:
+        try:
+            stale.unlink()
+        except OSError:
+            pass
+
+
+def backup_current():
+    if not POLICY.is_file():
+        return None
+    BACKUP_DIR.mkdir(parents=True, exist_ok=True)
+    os.chmod(BACKUP_DIR, 0o700)
+    stamp = time.strftime("%Y%m%d-%H%M%S")
+    destination = BACKUP_DIR / f"firefox-policies.json.{stamp}"
+    suffix = 1
+    while destination.exists():
+        destination = BACKUP_DIR / f"firefox-policies.json.{stamp}.{suffix}"
+        suffix += 1
+    shutil.copy2(POLICY, destination)
+    os.chmod(destination, 0o600)
+    prune_backups()
+    return destination
+
+
+def install_policy(source):
+    ok, reason = check_source(source)
+    if not ok:
+        warn(f"refusing {source}: {reason}")
+        return EXIT_REFUSED
+
+    try:
+        candidate = json.loads(Path(source).read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, ValueError) as exc:
+        warn(f"cannot parse the candidate: {exc}")
+        return EXIT_REJECTED
+
+    problem = validate_candidate(candidate)
+    if problem:
+        warn(problem)
+        return EXIT_REJECTED
+
+    existing, error = load_existing()
+    if error:
+        warn(error)
+        return EXIT_REJECTED
+
+    try:
+        merged = merge(existing, candidate)
+    except ValueError as exc:
+        warn(str(exc))
+        return EXIT_REJECTED
+
+    new_text = json.dumps(merged, indent=2) + "\n"
+    try:
+        previous_text = POLICY.read_text(encoding="utf-8") if POLICY.is_file() else None
+    except OSError as exc:
+        warn(f"cannot read the current policy: {exc}")
+        return EXIT_IO
+
+    if previous_text == new_text:
+        log("the policy is already up to date")
+        return EXIT_OK
+
+    staging = None
+    try:
+        backup = backup_current()
+        if backup is not None:
+            log(f"previous policy saved to {backup}")
+        existed = POLICY.parent.is_dir()
+        POLICY.parent.mkdir(parents=True, exist_ok=True)
+        if not existed:
+            os.chmod(POLICY.parent, 0o755)
+        staging = POLICY.with_name(f"policies.json.mtk-new.{os.getpid()}")
+        staging.write_text(new_text, encoding="utf-8")
+        os.chown(staging, 0, 0)
+        os.chmod(staging, 0o644)
+        os.replace(staging, POLICY)
+    except OSError as exc:
+        warn(f"could not install the policy: {exc}")
+        if staging is not None:
+            try:
+                staging.unlink()
+            except OSError:
+                pass
+        return EXIT_IO
+
+    log(f"installed {len(candidate)} extension policy entry/entries in {POLICY}")
+    return EXIT_OK
+
+
+def main(argv):
+    if os.geteuid() != 0:
+        warn("this helper must run as root, through pkexec")
+        return EXIT_REFUSED
+    if len(argv) != 3 or argv[1] != "install-policy":
+        warn("usage: mtk-firefox install-policy <candidate.json>")
+        return EXIT_USAGE
+    return install_policy(argv[2])
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

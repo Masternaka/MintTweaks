@@ -170,6 +170,7 @@ class MakefileTests(unittest.TestCase):
         for asset in (
             "bin/minttweaks",
             "data/mtk-root",
+            "data/mtk-firefox",
             "data/minttweaks.desktop",
             "data/minttweaks.svg",
             "data/minttweaks.1",
@@ -190,7 +191,9 @@ class MakefileTests(unittest.TestCase):
         self.assertRegex(MAKEFILE, r"(?m)^install: translations$")
 
     def test_helper_keeps_its_executable_mode(self):
-        self.assertIn("-m 0755 data/mtk-root", makefile_target("install"))
+        recipe = makefile_target("install")
+        for helper in ("data/mtk-root", "data/mtk-firefox"):
+            self.assertIn(f"-m 0755 {helper}", recipe)
 
 
 class ManPageTests(unittest.TestCase):
@@ -214,16 +217,27 @@ class ManPageTests(unittest.TestCase):
 
 
 class PrivilegedHelperTests(unittest.TestCase):
-    def test_helper_is_shipped_executable_and_starts_with_python(self):
-        helper = ROOT / "data" / "mtk-root"
-        self.assertTrue(helper.stat().st_mode & 0o111)
-        self.assertEqual(helper.read_text(encoding="utf-8").splitlines()[0], "#!/usr/bin/python3")
+    def test_helpers_are_shipped_executable_and_start_with_python(self):
+        for name in ("mtk-root", "mtk-firefox"):
+            helper = ROOT / "data" / name
+            self.assertTrue(helper.stat().st_mode & 0o111, f"{name} is not executable")
+            self.assertEqual(
+                helper.read_text(encoding="utf-8").splitlines()[0],
+                "#!/usr/bin/python3",
+                f"{name} does not use the expected interpreter",
+            )
 
-    def test_helper_documents_the_commands_the_backend_calls(self):
-        helper = (ROOT / "data" / "mtk-root").read_text(encoding="utf-8")
-        backend = (ROOT / "minttweaks" / "modules" / "samba" / "backend.py").read_text(encoding="utf-8")
-        self.assertIn("install-smbconf", helper)
-        self.assertIn("install-smbconf", backend)
+    def test_helpers_document_the_commands_the_backends_call(self):
+        for helper_name, command, backend_name in (
+            ("mtk-root", "install-smbconf", "samba"),
+            ("mtk-firefox", "install-policy", "firefox"),
+        ):
+            helper = (ROOT / "data" / helper_name).read_text(encoding="utf-8")
+            backend = (
+                ROOT / "minttweaks" / "modules" / backend_name / "backend.py"
+            ).read_text(encoding="utf-8")
+            self.assertIn(command, helper)
+            self.assertIn(command, backend)
 
 
 class LauncherTests(unittest.TestCase):
