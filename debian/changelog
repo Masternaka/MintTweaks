@@ -1,4 +1,4 @@
-minttweaks (0.1.1) unstable; urgency=medium
+minttweaks (0.1.2) unstable; urgency=medium
 
   * Initial release.
   * Maintenance module: measured disk usage, a preview of what apt-get

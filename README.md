@@ -57,9 +57,9 @@ minttweaks
 
 Pour lancer l’application depuis le dépôt sans l’installer : `./bin/minttweaks`.
 
-## Préversions Debian automatiques
+## Publications Debian automatiques
 
-Chaque envoi sur `main` exécute `make test` et `make check`, construit un paquet `.deb` indépendant de l’architecture sur Ubuntu 22.04, puis publie une **préversion** GitHub dans l’onglet **Releases** du dépôt. Les pull requests vers `main` exécutent uniquement les validations. Le workflow Actions peut aussi être lancé manuellement ; la publication est limitée à `main`.
+Chaque envoi sur `main` exécute `make test` et `make check`, construit un paquet `.deb` indépendant de l’architecture sur Ubuntu 22.04, puis crée une **publication standard** GitHub dans l’onglet **Releases** du dépôt et la désigne comme dernière publication (*Latest*). Les pull requests vers `main` exécutent uniquement les validations. Le workflow Actions peut aussi être lancé manuellement ; la publication est limitée à `main`.
 
 Téléchargez le `.deb` et `SHA256SUMS` de la même publication, puis exécutez :
 
@@ -68,9 +68,9 @@ sha256sum --ignore-missing --check SHA256SUMS
 sudo apt install ./minttweaks_*_all.deb
 ```
 
-Chaque construction possède une version Debian unique, par exemple `0.1.1+git12.1.abcdef123456`, et une étiquette de publication telle que `v0.1.1-build.12.1` (numéro d’exécution et tentative). Relancer tous les travaux crée une nouvelle préversion ; relancer uniquement une publication échouée téléverse à nouveau les fichiers dans la publication existante. L’application, le manuel et le paquet portent la version de construction ; la version de base du dépôt reste inchangée. Chaque publication inclut aussi une archive des sources correspondantes avec ces mises à jour de version et les sommes de contrôle SHA-256. Ses notes identifient le commit source.
+Chaque construction possède une version Debian unique, par exemple `0.1.1+git12.1.abcdef123456`, et une étiquette de publication telle que `v0.1.1-build.12.1` (numéro d’exécution et tentative). Relancer tous les travaux crée une nouvelle publication ; relancer uniquement une publication échouée téléverse à nouveau les fichiers dans la publication existante. L’application, le manuel et le paquet portent la version de construction ; la version de base du dépôt reste inchangée. Chaque publication inclut aussi une archive des sources correspondantes avec ces mises à jour de version et les sommes de contrôle SHA-256. Ses notes identifient le commit source.
 
-Les paquets sont distribués comme **fichiers joints aux GitHub Releases** : GitHub Packages ne propose pas de registre Debian/APT. Ces préversions sont des instantanés de développement, pas des versions stables ni un dépôt APT configuré. Le workflow utilise le `GITHUB_TOKEN` automatique, avec les droits d’écriture limités au travail de publication ; aucun jeton d’accès personnel n’est nécessaire. L’automatisation démarre une fois le workflow envoyé sur `main`, si GitHub Actions est activé pour le dépôt.
+Les paquets sont distribués comme **fichiers joints aux GitHub Releases** : GitHub Packages ne propose pas de registre Debian/APT. Ces constructions automatiques restent des instantanés de développement ; leur publication standard ne garantit pas leur stabilité ni leur validation réelle sous Linux Mint. Elles ne constituent pas un dépôt APT configuré. Le workflow utilise le `GITHUB_TOKEN` automatique, avec les droits d’écriture limités au travail de publication ; aucun jeton d’accès personnel n’est nécessaire. L’automatisation démarre une fois le workflow envoyé sur `main`, si GitHub Actions est activé pour le dépôt.
 
 ## Construction d’un paquet Debian
 
