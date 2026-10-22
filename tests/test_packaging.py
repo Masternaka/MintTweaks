@@ -267,6 +267,33 @@ class LauncherTests(unittest.TestCase):
     def test_launcher_is_executable(self):
         self.assertTrue((ROOT / "bin" / "minttweaks").stat().st_mode & 0o111)
 
+    def test_launcher_explains_missing_gtk_namespace_when_gi_is_installed(self):
+        # Reproduce a minimal Ubuntu installation: PyGObject is available,
+        # but the Gtk typelib is not. Use a fresh process, independent of GTK
+        # and of the UI stubs imported by the rest of the test suite.
+        script = """
+import runpy
+import sys
+import types
+
+gi = types.ModuleType('gi')
+def require_version(namespace, version):
+    assert (namespace, version) == ('Gtk', '3.0')
+    raise ValueError('Namespace Gtk not available')
+gi.require_version = require_version
+sys.modules['gi'] = gi
+runpy.run_path(sys.argv[1], run_name='__main__')
+"""
+        result = subprocess.run(
+            [sys.executable, "-c", script, str(ROOT / "bin" / "minttweaks")],
+            capture_output=True,
+            text=True,
+            cwd=str(ROOT),
+        )
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertNotIn("Traceback", result.stderr)
+        self.assertIn("sudo apt install python3-gi gir1.2-gtk-3.0", result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

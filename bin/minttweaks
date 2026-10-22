@@ -22,8 +22,11 @@ for candidate in CANDIDATES:
         break
 
 try:
-    import gi  # noqa: F401  (only used to check that the GTK bindings exist)
-except ImportError:
+    import gi
+
+    gi.require_version("Gtk", "3.0")
+    from gi.repository import Gtk  # noqa: F401  (check the GTK typelib too)
+except (ImportError, ValueError):
     sys.stderr.write(
         "MintTweaks needs the GTK 3 Python bindings.\n"
         "Install them with: sudo apt install python3-gi gir1.2-gtk-3.0\n"
