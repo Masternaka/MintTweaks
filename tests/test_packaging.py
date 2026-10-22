@@ -200,7 +200,7 @@ class ManPageTests(unittest.TestCase):
         self.assertTrue(first.startswith('.TH MINTTWEAKS 1 '), first)
         self.assertIn(f"minttweaks {__version__}", first)
         self.assertIn(".SH OPTIONS", text)
-        self.assertIn(".SH FILES", text)
+        self.assertIn(".SH FICHIERS", text)
 
     def test_man_page_documents_the_documented_flags(self):
         from minttweaks import app

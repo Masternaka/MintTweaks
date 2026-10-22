@@ -1,80 +1,83 @@
-.TH MINTTWEAKS 1 "2026-10-21" "minttweaks 0.1.0" "User Commands"
-.SH NAME
-minttweaks \- maintenance, services and Samba management for Linux Mint
+.TH MINTTWEAKS 1 "2026-10-21" "minttweaks 0.1.1" "Commandes utilisateur"
+.SH NOM
+minttweaks \- entretien, services et gestion Samba pour Linux Mint
 .SH SYNOPSIS
 .B minttweaks
 [\fIOPTIONS\fR]
 .SH DESCRIPTION
 .B MintTweaks
-is a GTK 3 application that gives Linux Mint one window for the system chores
-that otherwise go through
+est une application GTK 3 qui regroupe les tâches système de Linux Mint
+habituellement effectuées avec
 .BR apt ,
 .BR systemctl ,
 .BR journalctl
-and
+et
 .BR smb.conf .
 .PP
-It covers three areas: disk usage and cleanup, with a preview of what
+Elle couvre trois domaines : l’analyse de l’espace disque et le nettoyage,
+avec un aperçu des suppressions proposées par
 .B apt-get
-would remove and a careful removal of old kernels; systemd services with their
-journals and a boot analysis; and complete Samba management, with share and
-account administration, validation of the configuration by
-.BR testparm ,
-and automatic backups.
+et une suppression prudente des anciens noyaux ; les services systemd,
+leurs journaux et l’analyse du démarrage ; et la gestion complète de Samba,
+avec l’administration des partages et des comptes, la validation de la
+configuration par
+.BR testparm
+et les sauvegardes automatiques.
 .PP
-The application runs as the desktop user. The few actions that need
-administrator rights are executed through
+L’application s’exécute avec le compte de l’utilisateur du bureau.
+Les actions nécessitant des droits d’administration passent par
 .BR pkexec (1),
-so the usual polkit password dialog is used. No command is ever run through a
-shell.
+avec la boîte de dialogue polkit habituelle. Aucune commande ne passe
+par un shell.
 .SH OPTIONS
 .TP
 .B \-h, \-\-help
-Show a usage message and exit.
+Afficher l’aide et quitter.
 .TP
 .B \-v, \-\-version
-Show the version and exit.
+Afficher la version et quitter.
 .TP
 .BI \-\-lang " CODE"
-Force the interface language, for example \fB\-\-lang fr\fR. Without this
-option the language comes from the usual
-.BR locale (7)
-environment variables.
+Forcer la langue de l’interface, par exemple \fB\-\-lang fr\fR.
+Sans cette option, la langue est déterminée par les variables
+d’environnement habituelles de
+.BR locale (7).
 .TP
 .B \-\-dry-run
-Print every command that would be run instead of running it. Also enabled by
-setting \fBMTK_DRY_RUN=1\fR in the environment.
-.SH ENVIRONMENT
+Afficher chaque commande prévue sans l’exécuter. Également activé avec
+\fBMTK_DRY_RUN=1\fR dans l’environnement.
+.SH ENVIRONNEMENT
 .TP
 .B MTK_LOCALEDIR
-Directory holding the compiled translation catalogues, in the usual
-\fI<lang>/LC_MESSAGES/minttweaks.mo\fR layout.
+Répertoire des catalogues de traduction compilés, selon l’organisation habituelle
+\fI<lang>/LC_MESSAGES/minttweaks.mo\fR.
 .TP
 .B MTK_ROOT_CMD
-Replace the command used for privilege escalation (default:
+Remplacer la commande d’élévation des privilèges (par défaut :
 .BR pkexec ).
-Set it to an empty string to disable escalation entirely.
+Une chaîne vide désactive entièrement l’élévation.
 .TP
 .B MTK_DRY_RUN
-When set to \fB1\fR, no command is executed.
-.SH FILES
+Avec la valeur \fB1\fR, aucune commande n’est exécutée.
+.SH FICHIERS
 .TP
 .I /etc/samba/smb.conf
-The Samba configuration edited by the Samba module.
+Configuration Samba modifiée par le module Samba.
 .TP
 .I ~/.local/share/minttweaks/backups/
-Timestamped copies of \fIsmb.conf\fR taken before every save.
+Copies horodatées de \fIsmb.conf\fR créées avant chaque enregistrement.
 .TP
 .I ~/.local/share/minttweaks/logs/minttweaks.log
-Application log, rotated at 512 kB.
+Journal de l’application, avec rotation à 512 ko.
 .TP
 .I /var/backups/samba/
-Last twenty copies kept by the privileged helper.
+Vingt dernières copies conservées par l’auxiliaire privilégié.
 .TP
 .I /usr/lib/minttweaks/mtk-root
-The only program run as root; it installs \fIsmb.conf\fR after re-running
+Seul programme exécuté en tant que root ; il installe \fIsmb.conf\fR
+après une nouvelle validation par
 .BR testparm .
-.SH SEE ALSO
+.SH VOIR AUSSI
 .BR apt-get (8),
 .BR journalctl (1),
 .BR pkexec (1),

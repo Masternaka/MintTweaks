@@ -1,0 +1,106 @@
+name: Validate and release Debian package
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate source
+        run: |
+          make test
+          make check
+      - name: Install packaging tools
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends debhelper dh-python devscripts
+      - name: Set build version
+        id: version
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          base=$(python3 -c 'from minttweaks import __version__; print(__version__)')
+          version="${base}+git${GITHUB_RUN_NUMBER}.${GITHUB_RUN_ATTEMPT}.${GITHUB_SHA:0:12}"
+          tag="v${base}-build.${GITHUB_RUN_NUMBER}.${GITHUB_RUN_ATTEMPT}"
+          export BUILD_BASE="$base" BUILD_VERSION="$version"
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+
+          base, version = os.environ['BUILD_BASE'], os.environ['BUILD_VERSION']
+          replacements = {
+              'debian/changelog': (f'minttweaks ({base})', f'minttweaks ({version})'),
+              'minttweaks/__init__.py': (f'__version__ = "{base}"', f'__version__ = "{version}"'),
+              'data/minttweaks.1': (f'"minttweaks {base}"', f'"minttweaks {version}"'),
+          }
+          for name, (old, new) in replacements.items():
+              path = Path(name)
+              text = path.read_text()
+              if text.count(old) != 1:
+                  raise SystemExit(f'Expected exactly one version marker in {name}')
+              path.write_text(text.replace(old, new, 1))
+          PY
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Build package and source archive
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          dpkg-buildpackage -us -uc -b
+          mkdir -p dist
+          cp "../minttweaks_${VERSION}_all.deb" dist/
+          git ls-files -z | tar --null --files-from=- \
+            --transform="s,^,minttweaks-${VERSION}/," \
+            -czf "dist/minttweaks_${VERSION}_source.tar.gz"
+          (cd dist && sha256sum ./*.deb ./*.tar.gz > SHA256SUMS)
+      - name: Save release assets
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-assets
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-assets
+          path: dist
+      - name: Publish prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ needs.build.outputs.tag }}
+          VERSION: ${{ needs.build.outputs.version }}
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" dist/* --clobber
+            exit 0
+          fi
+          gh release create "$RELEASE_TAG" dist/* \
+            --target "$GITHUB_SHA" \
+            --title "MintTweaks $VERSION" \
+            --prerelease \
+            --notes "Automatic main build from commit $GITHUB_SHA. Includes the Debian package, matching source archive with build version metadata, and SHA256SUMS."
