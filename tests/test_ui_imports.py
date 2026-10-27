@@ -15,6 +15,10 @@ from tests import fakegi
 HAS_REAL_GI = not fakegi.install()
 
 from minttweaks.modules.firefox import page as firefox_page  # noqa: E402
+from minttweaks.modules.cinnamon import page as cinnamon_page  # noqa: E402
+from minttweaks.modules.setup import page as setup_page  # noqa: E402
+from minttweaks.modules.software import page as software_page  # noqa: E402
+from minttweaks.modules.terminal import page as terminal_page  # noqa: E402
 from minttweaks.modules.home import page as home_page  # noqa: E402
 from minttweaks.modules.maintenance import page as maintenance_page  # noqa: E402
 from minttweaks.modules.samba import page as samba_page  # noqa: E402
@@ -32,6 +36,10 @@ class PageContractTests(unittest.TestCase):
             services_page.ServicesPage,
             samba_page.SambaPage,
             firefox_page.FirefoxPage,
+            cinnamon_page.CinnamonPage,
+            setup_page.SetupPage,
+            software_page.SoftwarePage,
+            terminal_page.TerminalPage,
         ):
             self.assertTrue(page_class.page_name, page_class)
             self.assertTrue(page_class.page_title, page_class)
@@ -45,7 +53,7 @@ class PageContractTests(unittest.TestCase):
     def test_every_page_class_is_registered_in_the_window(self):
         self.assertEqual(
             set(window.PAGE_CLASSES),
-            {home_page.HomePage, maintenance_page.MaintenancePage, services_page.ServicesPage, samba_page.SambaPage, firefox_page.FirefoxPage},
+            {home_page.HomePage, maintenance_page.MaintenancePage, services_page.ServicesPage, samba_page.SambaPage, firefox_page.FirefoxPage, cinnamon_page.CinnamonPage, setup_page.SetupPage, software_page.SoftwarePage, terminal_page.TerminalPage},
         )
 
     def test_pages_use_known_context(self):

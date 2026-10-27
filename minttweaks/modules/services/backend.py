@@ -9,10 +9,10 @@ the UI can never smuggle in an extra argument.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Callable, Dict, List, Optional
 
-from ...core.runner import BaseRunner, Result, cmd
+from ...core.runner import BaseRunner, ReadError, Result, cmd, read_command
 from ...i18n import _
 
 #: A systemd unit name we are willing to hand to ``systemctl``.
@@ -107,7 +107,7 @@ def parse_unit_files(text: str) -> Dict[str, str]:
 
 def list_units(runner: BaseRunner) -> List[Unit]:
     """All service units, merging runtime state with enablement state."""
-    runtime = runner.run(
+    runtime = read_command(runner,
         cmd(
             "systemctl",
             "list-units",
@@ -119,12 +119,12 @@ def list_units(runner: BaseRunner) -> List[Unit]:
         ),
         timeout=45,
     )
-    files = runner.run(
+    files = read_command(runner,
         cmd("systemctl", "list-unit-files", "--type=service", "--no-pager", "--no-legend", "--plain"),
         timeout=45,
     )
 
-    units = parse_list_units(runtime.stdout) if runtime.ok or runtime.stdout else {}
+    units = parse_list_units(runtime.stdout)
     for name, state in parse_unit_files(files.stdout).items():
         if name in units:
             units[name].enabled = state
@@ -134,7 +134,7 @@ def list_units(runner: BaseRunner) -> List[Unit]:
 
 
 def failed_units(runner: BaseRunner) -> List[Unit]:
-    result = runner.run(
+    result = read_command(runner,
         cmd("systemctl", "--failed", "--type=service", "--no-pager", "--no-legend", "--plain"),
         timeout=30,
     )
@@ -169,7 +169,7 @@ def control(
         return Result(f"systemctl {action} {unit}", 2, stderr=f"Unsupported action '{action}'.")
     command = cmd("systemctl", action, unit, root=True)
     if on_line is not None:
-        return runner.stream(command, on_line=on_line)
+        return runner.stream(command, on_line=on_line, timeout=120)
     return runner.run(command, timeout=120)
 
 
@@ -189,15 +189,12 @@ def journal(
 
 
 def boot_summary(runner: BaseRunner) -> str:
-    result = runner.run(cmd("systemd-analyze"), timeout=30)
-    return result.stdout.strip() if result.ok else ""
+    return read_command(runner, cmd("systemd-analyze"), timeout=30).stdout.strip()
 
 
 def boot_blame(runner: BaseRunner, lines: int = 15) -> List[tuple]:
     """``[(duration_text, unit), ...]`` slowest first."""
-    result = runner.run(cmd("systemd-analyze", "blame", "--no-pager"), timeout=60)
-    if not result.ok:
-        return []
+    result = read_command(runner, cmd("systemd-analyze", "blame", "--no-pager"), timeout=60)
     rows: List[tuple] = []
     for raw in result.stdout.splitlines()[: max(1, lines)]:
         parts = raw.strip().split(None, 1)
@@ -207,6 +204,23 @@ def boot_blame(runner: BaseRunner, lines: int = 15) -> List[tuple]:
 
 
 def critical_chain(runner: BaseRunner) -> str:
-    result = runner.run(cmd("systemd-analyze", "critical-chain", "--no-pager"), timeout=60)
-    return result.stdout if result.ok else ""
+    return read_command(runner, cmd("systemd-analyze", "critical-chain", "--no-pager"), timeout=60).stdout
+
+
+@dataclass
+class BootReport:
+    summary: str = ""
+    blame: List[tuple] = field(default_factory=list)
+    chain: str = ""
+    errors: Dict[str, str] = field(default_factory=dict)
+
+
+def collect_boot_report(runner: BaseRunner) -> BootReport:
+    report = BootReport()
+    for key, check in (("summary", boot_summary), ("blame", boot_blame), ("chain", critical_chain)):
+        try:
+            setattr(report, key, check(runner))
+        except Exception as exc:
+            report.errors[key] = str(exc)
+    return report
 

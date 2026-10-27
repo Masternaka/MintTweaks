@@ -38,9 +38,11 @@ Environment:
 
 
 class MintTweaksApp(Gtk.Application):
-    def __init__(self) -> None:
-        super().__init__(application_id=APP_ID, flags=Gio.ApplicationFlags.FLAGS_NONE)
-        runner = SubprocessRunner(escalator=Escalator())
+    def __init__(self, dry_run: bool = False) -> None:
+        runner = SubprocessRunner(escalator=Escalator(), dry_run=dry_run)
+        # A simulation must never activate an already-running live instance.
+        application_id = APP_ID + ".Simulation" if runner.dry_run else APP_ID
+        super().__init__(application_id=application_id, flags=Gio.ApplicationFlags.FLAGS_NONE)
         self.ctx = AppContext(runner)
 
     # -- lifecycle ---------------------------------------------------------
@@ -68,9 +70,15 @@ class MintTweaksApp(Gtk.Application):
             self.add_action(action)
 
         quit_action = Gio.SimpleAction.new("quit", None)
-        quit_action.connect("activate", lambda *_: self.quit())
+        quit_action.connect("activate", lambda *_: self._request_quit())
         self.add_action(quit_action)
         self.set_accels_for_action("app.quit", ["<Primary>q"])
+
+    def _request_quit(self) -> None:
+        if self.ctx.operation_name is not None:
+            self._call_window("show_operation_in_progress")
+            return
+        self.quit()
 
     def _call_window(self, method: str) -> None:
         window = self.props.active_window
@@ -128,7 +136,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         sys.stderr.write(f"{APP_NAME} needs a graphical session (DISPLAY or WAYLAND_DISPLAY).\n")
         return 1
 
-    application = MintTweaksApp()
+    application = MintTweaksApp(dry_run="--dry-run" in argv)
     return application.run(_strip_own_flags(argv))
 
 

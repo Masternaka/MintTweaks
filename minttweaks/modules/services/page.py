@@ -31,6 +31,7 @@ class ServicesPage(Page):
         self._log_busy = False
         self._want_root_logs = False
         self._can_escalate = widgets.escalation_available(ctx.runner)
+        self._units_current = True
 
         self.store = Gtk.ListStore(str, str, str, str, object)
         self.filter = self.store.filter_new()
@@ -61,6 +62,10 @@ class ServicesPage(Page):
         toolbar.pack_start(self.failed_only, False, False, 0)
 
         toolbar.pack_start(widgets.button(_("Reload"), self.refresh), False, False, 0)
+
+        self.units_hint = widgets.label("", wrap=True)
+        self.units_hint.set_no_show_all(True)
+        self.pack_start(self.units_hint, False, False, 0)
 
         if not self._can_escalate:
             warning = widgets.info_bar(
@@ -191,9 +196,19 @@ class ServicesPage(Page):
 
     # -- data loading ------------------------------------------------------
     def refresh(self) -> None:
-        self.ctx.run_async(lambda: svc.list_units(self.ctx.runner), on_done=self._apply_units)
+        self.ctx.run_async(lambda: svc.list_units(self.ctx.runner), on_done=self._apply_units, on_error=self._units_failed)
+
+    def _units_failed(self, exc: BaseException) -> None:
+        self._units_current = False
+        self.units_hint.set_text(_("Service state unavailable. Previous results, if any, have not been updated.\n{error}").format(error=exc))
+        self.units_hint.show()
+        self.selected = None
+        self._restore_action_buttons()
+        self.ctx.log(str(exc), "warn")
 
     def _apply_units(self, units: List[svc.Unit]) -> None:
+        self._units_current = True
+        self.units_hint.hide()
         self.units = units
         self._refill()
         self.ctx.log(f"{len(units)} service units loaded.", "ok")
@@ -213,12 +228,12 @@ class ServicesPage(Page):
             subtitle += f" · {unit.description}"
         self.unit_subtitle.set_text(subtitle)
         for action_button in self.action_buttons.values():
-            action_button.set_sensitive(self._can_escalate)
+            action_button.set_sensitive(self._can_escalate and self._units_current)
         self._reload_logs()
 
     # -- actions -----------------------------------------------------------
     def _control(self, action: str) -> None:
-        if self.selected is None:
+        if self.selected is None or not self._units_current:
             return
         unit = self.selected.name
         if action in ("stop", "disable") and not self.confirm(
@@ -228,12 +243,23 @@ class ServicesPage(Page):
         self.ctx.log(f"systemctl {action} {unit}")
         for widget in self.action_buttons.values():
             widget.set_sensitive(False)
-        self.ctx.run_async(
+        self.run_operation(
             lambda: svc.control(self.ctx.runner, unit, action, on_line=self.ctx.log),
             on_done=lambda result: self._after_control(unit, action, result),
+            on_error=self._control_failed,
+            name=f"{action} {unit}",
         )
 
+    def _restore_action_buttons(self) -> None:
+        for widget in self.action_buttons.values():
+            widget.set_sensitive(self._can_escalate and self._units_current and self.selected is not None)
+
+    def _control_failed(self, exc: BaseException) -> None:
+        self._restore_action_buttons()
+        self.error(_("The operation failed."), str(exc))
+
     def _after_control(self, unit: str, action: str, result) -> None:
+        self._restore_action_buttons()
         if result.ok:
             self.ctx.log(f"{action} {unit}: done.", "ok")
         else:
@@ -252,7 +278,13 @@ class ServicesPage(Page):
         self.ctx.run_async(
             lambda: svc.journal(self.ctx.runner, unit, as_root=as_root),
             on_done=lambda result: self._apply_logs(unit, result),
+            on_error=self._logs_failed,
         )
+
+    def _logs_failed(self, exc: BaseException) -> None:
+        self._log_busy = False
+        self.log_hint.set_text(_("The journal could not be read: {error}").format(error=exc))
+        self.ctx.log(str(exc), "warn")
 
     def _reload_logs_as_root(self) -> None:
         self._want_root_logs = True
@@ -264,17 +296,16 @@ class ServicesPage(Page):
             return
         text = (result.stdout or "").strip()
         self.log_buffer.set_text("")
-        if text:
+        if not result.ok or result.stderr.strip():
+            self.log_buffer.insert_at_cursor(text or _("No journal entries could be verified."))
+            detail = result.stderr.strip() or result.output or f"rc={result.returncode}"
+            self.log_hint.set_text(_("The journal may be incomplete: {error}").format(error=detail))
+        elif text:
             self.log_buffer.insert_at_cursor(text)
             self.log_hint.set_text("")
         elif result.ok:
             self.log_buffer.insert_at_cursor(_("No journal entry for this service."))
             self.log_hint.set_text("")
-        else:
-            self.log_buffer.insert_at_cursor(_("The journal is not readable without administrator rights."))
-            first_line = result.output.strip().splitlines()[0] if result.output.strip() else ""
-            hint = _("Use 'Read as administrator' to read the entries: a password prompt will appear.")
-            self.log_hint.set_text(f"{hint}\n{first_line}" if first_line else hint)
 
     def _on_follow_toggled(self, toggle: Gtk.CheckButton) -> None:
         if toggle.get_active():
@@ -290,20 +321,19 @@ class ServicesPage(Page):
         return True
 
     def _analyse_boot(self) -> None:
-        def work():
-            summary = svc.boot_summary(self.ctx.runner)
-            blame = svc.boot_blame(self.ctx.runner, lines=20)
-            chain = svc.critical_chain(self.ctx.runner)
-            return summary, blame, chain
+        self.ctx.run_async(lambda: svc.collect_boot_report(self.ctx.runner), on_done=self._apply_boot)
 
-        self.ctx.run_async(work, on_done=self._apply_boot)
-
-    def _apply_boot(self, payload) -> None:
-        summary, blame, chain = payload
-        self.boot_summary.set_text(summary or _("systemd-analyze returned nothing."))
+    def _apply_boot(self, report: svc.BootReport) -> None:
+        summary, blame, chain = report.summary, report.blame, report.chain
+        self.boot_summary.set_text(
+            _("Could not verify {part}: {error}").format(part="summary", error=report.errors["summary"])
+            if "summary" in report.errors else summary or _("systemd-analyze returned nothing.")
+        )
         lines = [_("Slowest units:"), ""]
         for duration, unit in blame:
             lines.append(f"  {duration:>10}  {unit}")
         lines += ["", _("Critical chain:"), "", chain.strip() or "  " + _("(not available)")]
+        for part, error in report.errors.items():
+            lines += ["", _("Could not verify {part}: {error}").format(part=part, error=error)]
         self.boot_buffer.set_text("\n".join(lines))
-        self.ctx.log(_("Boot analysis updated."), "ok")
+        self.ctx.log(_("Boot analysis updated."), "warn" if report.errors else "ok")

@@ -17,11 +17,12 @@ from __future__ import annotations
 import os
 import re
 import shutil
+import stat
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, Dict, List, Optional, Sequence, Tuple
 
-from ...core.runner import BaseRunner, Command, Result, cmd
+from ...core.runner import BaseRunner, Command, ReadError, Result, cmd, read_command
 from ...i18n import _
 
 THUMBNAILS = Path(".cache/thumbnails")
@@ -44,26 +45,34 @@ def human_bytes(size: Optional[float]) -> str:
     return f"{value:.1f} TB"
 
 
-def directory_size(path: Path) -> int:
-    """Total size in bytes, or 0 when the path does not exist.
+def directory_size(path: Path) -> Optional[int]:
+    """Bytes, 0 when absent, or None when the measurement is incomplete.
 
     Symlinks are measured but never followed: a symlink planted in a cache
     folder must not make us walk (or delete) something else entirely.
     """
     total = 0
-    if not path.exists():
+    try:
+        metadata = path.lstat()
+    except FileNotFoundError:
         return 0
-    if path.is_file() or path.is_symlink():
-        try:
-            return path.lstat().st_size
-        except OSError:
-            return 0
-    for root, dirs, files in os.walk(path, followlinks=False):
-        for name in files:
-            try:
-                total += os.lstat(os.path.join(root, name)).st_size
-            except OSError:
-                continue
+    except OSError:
+        return None
+    if stat.S_ISREG(metadata.st_mode) or stat.S_ISLNK(metadata.st_mode):
+        return metadata.st_size
+
+    def unreadable(exc):
+        raise exc
+
+    try:
+        for root, dirs, files in os.walk(path, followlinks=False, onerror=unreadable):
+            for name in files:
+                try:
+                    total += os.lstat(os.path.join(root, name)).st_size
+                except FileNotFoundError:
+                    continue
+    except OSError:
+        return None
     return total
 
 
@@ -141,6 +150,11 @@ class Step:
 
     def run(self, runner: BaseRunner, on_line=None) -> Result:
         if self.action is not None:
+            if runner.dry_run:
+                output = f"[dry-run] {self.description}"
+                if on_line is not None:
+                    on_line(output)
+                return Result(self.description, 0, stdout=output)
             return self.action()
         assert self.command is not None
         if on_line is not None:
@@ -282,9 +296,11 @@ def available_tasks(runner: BaseRunner) -> List[Task]:
 class Probe:
     apt_archives_bytes: Optional[int] = None
     journal_bytes: Optional[int] = None
-    thumbnails_bytes: int = 0
-    trash_bytes: int = 0
+    thumbnails_bytes: Optional[int] = 0
+    trash_bytes: Optional[int] = 0
     autoremove_packages: List[str] = field(default_factory=list)
+    autoremove_error: str = ""
+    kernel_error: str = ""
 
     @property
     def autoremove_count(self) -> int:
@@ -330,21 +346,31 @@ def parse_autoremove_preview(text: str) -> List[str]:
     return packages
 
 
+class PreviewError(RuntimeError):
+    """APT could not provide a successful removal simulation."""
+
+
 def autoremove_preview(runner: BaseRunner) -> List[str]:
-    result = runner.run(cmd("apt-get", "-s", "autoremove", "--purge"), timeout=120)
-    if not result.ok and not result.stdout:
-        return []
-    return parse_autoremove_preview(result.stdout + "\n" + result.stderr)
+    try:
+        result = read_command(runner, cmd("apt-get", "-s", "autoremove", "--purge"), timeout=120)
+    except ReadError as exc:
+        raise PreviewError(str(exc)) from exc
+    return parse_autoremove_preview(result.stdout)
 
 
 def collect_probe(runner: BaseRunner, home: Optional[Path] = None) -> Probe:
     base = Path(home) if home is not None else Path.home()
+    try:
+        packages, preview_error = autoremove_preview(runner), ""
+    except PreviewError as exc:
+        packages, preview_error = [], str(exc)
     return Probe(
         apt_archives_bytes=_du_bytes(runner, APT_ARCHIVES),
         journal_bytes=_du_bytes(runner, JOURNAL_DIR),
         thumbnails_bytes=directory_size(base / THUMBNAILS),
         trash_bytes=directory_size(base / TRASH),
-        autoremove_packages=autoremove_preview(runner),
+        autoremove_packages=packages,
+        autoremove_error=preview_error,
     )
 
 
@@ -381,8 +407,23 @@ def run_task(
     runner: BaseRunner,
     task: Task,
     on_line: Optional[Callable[[str], None]] = None,
+    approved_packages: Optional[Sequence[str]] = None,
 ) -> TaskOutcome:
     outcome = TaskOutcome(task.id, task.title)
+    if task.id == "apt_autoremove" and not runner.dry_run:
+        error = ""
+        if not approved_packages:
+            error = "A complete removal preview must be confirmed before removing orphaned packages."
+        else:
+            try:
+                current = autoremove_preview(runner)
+                if set(current) != set(approved_packages):
+                    error = "The removal plan changed. Review and confirm a new preview before trying again."
+            except PreviewError as exc:
+                error = f"Removal preview failed; no packages were removed: {exc}"
+        if error:
+            outcome.steps.append(StepOutcome("Check removal preview", Result("autoremove preview", 2, stderr=error)))
+            return outcome
     for step in task.steps:
         result = step.run(runner, on_line=on_line)
         outcome.steps.append(StepOutcome(step.description, result))
@@ -425,7 +466,7 @@ def parse_dpkg_listing(text: str) -> List[str]:
 
 
 def installed_packages(runner: BaseRunner, pattern: str = "linux-*") -> List[str]:
-    result = runner.run(
+    result = read_command(runner,
         cmd("dpkg-query", "-W", "-f=${Package}\t${Version}\t${Status}\n", pattern),
         timeout=60,
     )
@@ -435,8 +476,22 @@ def installed_packages(runner: BaseRunner, pattern: str = "linux-*") -> List[str
 
 
 def running_kernel(runner: BaseRunner) -> str:
-    result = runner.run(cmd("uname", "-r"), timeout=10)
-    return result.stdout.strip()
+    result = read_command(runner, cmd("uname", "-r"), timeout=10)
+    version = result.stdout.strip()
+    if not version:
+        raise ReadError("The running kernel could not be identified.")
+    return version
+
+
+def collect_maintenance(runner: BaseRunner):
+    """A failed kernel query must not hide successful space and APT checks."""
+    probe = collect_probe(runner)
+    try:
+        kernels = installed_kernels(runner)
+    except Exception as exc:
+        kernels = []
+        probe.kernel_error = str(exc)
+    return probe, kernels
 
 
 def installed_kernels(runner: BaseRunner) -> List[Kernel]:

@@ -18,6 +18,11 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk  # noqa: E402  (must follow require_version)
 
 from ..core.runner import BaseRunner  # noqa: E402
+from ..i18n import _  # noqa: E402
+
+
+class OperationBusy(RuntimeError):
+    """Another page already owns the application-wide modification slot."""
 
 def _once(callback: Callable, *args) -> bool:
     """Adapt a callback for ``GLib.idle_add`` (returning False = do not repeat)."""
@@ -45,6 +50,60 @@ class AppContext:
     def __init__(self, runner: BaseRunner) -> None:
         self.runner = runner
         self._sinks: List[Callable[[str, str], None]] = []
+        self._operation_lock = threading.Lock()
+        self.operation_name: Optional[str] = None
+        self._operation_sinks: List[Callable[[Optional[str]], None]] = []
+
+    def add_operation_sink(self, sink: Callable[[Optional[str]], None]) -> None:
+        self._operation_sinks.append(sink)
+
+    def _operation_changed(self) -> None:
+        for sink in list(self._operation_sinks):
+            try:
+                sink(self.operation_name)
+            except Exception:
+                traceback.print_exc()
+
+    def run_operation(self, name, work, on_done=None, on_error=None) -> threading.Thread:
+        """Reserve before spawning; hold through completion on the GTK loop.
+
+        Reject competing modifications instead of queueing a confirmation which
+        could be stale by the time it executes. Read-only run_async stays free.
+        """
+        if not self._operation_lock.acquire(blocking=False):
+            raise OperationBusy(_("An operation is already running: {operation}. Wait for it to finish.").format(
+                operation=self.operation_name or name
+            ))
+        self.operation_name = name
+        self._operation_changed()
+
+        def release():
+            self.operation_name = None
+            self._operation_lock.release()
+            self._operation_changed()
+
+        def finish(callback, value):
+            try:
+                if callback is not None:
+                    callback(value)
+            finally:
+                release()
+
+        def failed(exc):
+            if on_error is not None:
+                on_error(exc)
+            else:
+                self.log(str(exc), "error")
+
+        try:
+            return self.run_async(
+                work,
+                on_done=lambda value: finish(on_done, value),
+                on_error=lambda exc: finish(failed, exc),
+            )
+        except BaseException:
+            release()
+            raise
 
     # -- output ------------------------------------------------------------
     def add_sink(self, sink: Callable[[str, str], None]) -> None:
@@ -227,6 +286,26 @@ def show_info(parent: Optional[Gtk.Window], heading: str, detail: str = "") -> N
     dialog.destroy()
 
 
+def confirm_list(parent: Optional[Gtk.Window], heading: str, items: List[str], detail: str) -> bool:
+    """Keep the entire plan readable, including lists too long for a message box."""
+    dialog = Gtk.Dialog(title=heading, transient_for=parent, modal=True)
+    dialog.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK)
+    dialog.set_default_response(Gtk.ResponseType.CANCEL)
+    dialog.set_default_size(640, 480)
+    dialog.get_widget_for_response(Gtk.ResponseType.OK).get_style_context().add_class("destructive-action")
+    content = dialog.get_content_area()
+    content.set_spacing(12)
+    content.set_border_width(12)
+    content.pack_start(label(detail, wrap=True), False, False, 0)
+    scroller, _view, buffer = text_view(height=240)
+    buffer.set_text("\n".join(items))
+    content.pack_start(scroller, True, True, 0)
+    dialog.show_all()
+    response = dialog.run()
+    dialog.destroy()
+    return response == Gtk.ResponseType.OK
+
+
 def show_error(parent: Optional[Gtk.Window], heading: str, detail: str = "") -> None:
     dialog = Gtk.MessageDialog(
         transient_for=parent,
@@ -286,3 +365,17 @@ class Page(Gtk.Box):
 
     def info(self, heading: str, detail: str = "") -> None:
         show_info(self.window, heading, detail)
+
+    def run_operation(self, work, on_done=None, on_error=None, name=None):
+        """All page mutations use the same slot and a visible error path."""
+        def failed(exc):
+            if on_error is not None:
+                on_error(exc)
+            else:
+                self.error(_("The operation failed."), str(exc))
+
+        try:
+            return self.ctx.run_operation(name or _(self.page_title), work, on_done, failed)
+        except OperationBusy as exc:
+            failed(exc)
+            return None

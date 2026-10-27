@@ -572,7 +572,7 @@ class SambaPage(Page):
         if problem:
             self.error(_("Password rejected"), problem)
             return
-        self.ctx.run_async(
+        self.run_operation(
             lambda: backend.add_user(self.ctx.runner, username, password),
             on_done=lambda result: self._after_user_action(
                 result, _("Samba password set for {user}.").format(user=username)
@@ -584,7 +584,7 @@ class SambaPage(Page):
             self.error(_("No account selected"), _("Pick a Samba account in the list first."))
             return
         username = self.selected_user.name
-        self.ctx.run_async(
+        self.run_operation(
             lambda: backend.set_user_enabled(self.ctx.runner, username, enabled),
             on_done=lambda result: self._after_user_action(
                 result,
@@ -605,7 +605,7 @@ class SambaPage(Page):
             destructive=True,
         ):
             return
-        self.ctx.run_async(
+        self.run_operation(
             lambda: backend.delete_user(self.ctx.runner, username),
             on_done=lambda result: self._after_user_action(
                 result, _("Samba account {user} deleted.").format(user=username)
@@ -631,10 +631,15 @@ class SambaPage(Page):
         ):
             return
         self.install_button.set_sensitive(False)
-        self.ctx.run_async(
+        self.run_operation(
             lambda: backend.install_packages(self.ctx.runner, on_line=self.ctx.log),
             on_done=self._after_install,
+            on_error=self._install_failed,
         )
+
+    def _install_failed(self, exc: BaseException) -> None:
+        self.install_button.set_sensitive(self._can_escalate)
+        self.error(_("Samba could not be installed"), str(exc))
 
     def _after_install(self, result) -> None:
         self.install_button.set_sensitive(self._can_escalate)
@@ -646,7 +651,7 @@ class SambaPage(Page):
         self.refresh()
 
     def _on_enable_sharing(self) -> None:
-        self.ctx.run_async(
+        self.run_operation(
             lambda: backend.enable_and_start_sharing(self.ctx.runner, on_line=self.ctx.log),
             on_done=self._after_enable_sharing,
         )
@@ -660,7 +665,7 @@ class SambaPage(Page):
         self.refresh()
 
     def _on_reload(self) -> None:
-        self.ctx.run_async(
+        self.run_operation(
             lambda: backend.restart_after_change(self.ctx.runner, on_line=self.ctx.log),
             on_done=lambda results: self._report_simple(results),
         )
@@ -668,7 +673,7 @@ class SambaPage(Page):
     def _on_firewall(self) -> None:
         if not self.confirm(_("Allow Samba through the firewall?"), _("This runs 'ufw allow Samba'.")):
             return
-        self.ctx.run_async(
+        self.run_operation(
             lambda: backend.allow_samba_in_firewall(self.ctx.runner),
             on_done=lambda result: self._report_simple([result]),
         )
@@ -784,7 +789,7 @@ class SambaPage(Page):
         dialog.destroy()
         if response != Gtk.ResponseType.OK or not selected:
             return
-        self.ctx.run_async(
+        self.run_operation(
             lambda: backend.restore_backup(self.ctx.runner, Path(selected)),
             on_done=self._after_restore,
         )
@@ -839,7 +844,7 @@ class SambaPage(Page):
         def work():
             return backend.save_document(self.ctx.runner, doc, text=text)
 
-        self.ctx.run_async(
+        self.run_operation(
             work,
             on_done=lambda outcome: self._after_save(outcome, text, new_conf, success_message),
             on_error=self._save_failed,

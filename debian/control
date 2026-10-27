@@ -32,5 +32,19 @@ Description: system tweaks for Linux Mint: maintenance, services, Samba, Firefox
  packages, broken dependencies, failed services, boot-time journal errors, disk
  usage, pending restarts and old kernels.
  .
+ A Cinnamon profiles page reads seven appearance settings and saves named
+ local snapshots. Applying and restoring profiles use a change preview, a
+ prior backup, verified writes and recovery attempts after partial failures.
+ .
+ A post-installation guide opens the available modules and keeps an optional
+ checklist with user-reported progress and notes. It does not run bulk changes.
+ .
+ A native third-party software page installs Helium, Brave and Zen from
+ expected preconfigured APT repositories, with a full plan preview and
+ post-installation version checks. Zen uses an unofficial Debian package.
+ .
+ A shells and terminals page manages APT tools, the current user login shell,
+ Starship and separate Kitty/Alacritty profiles with previews and file backups.
+ .
  Privileged actions go through polkit, and every command is run as an argv
  list rather than through a shell.

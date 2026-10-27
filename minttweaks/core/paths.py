@@ -25,6 +25,10 @@ DATA_DIR = _xdg("XDG_DATA_HOME", "~/.local/share")
 CONFIG_DIR = _xdg("XDG_CONFIG_HOME", "~/.config")
 
 BACKUP_DIR = DATA_DIR / "backups"
+PROFILE_DIR = DATA_DIR / "cinnamon-profiles"
+PROFILE_BACKUP_DIR = DATA_DIR / "cinnamon-backups"
+SETUP_PLAN = DATA_DIR / "setup-plan.json"
+TERMINAL_BACKUP_DIR = DATA_DIR / "terminal-backups"
 LOG_DIR = DATA_DIR / "logs"
 LOG_FILE = LOG_DIR / "minttweaks.log"
 

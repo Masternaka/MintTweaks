@@ -3,6 +3,7 @@
 import os
 import subprocess
 import sys
+import time
 import unittest
 from unittest import mock
 
@@ -10,6 +11,7 @@ from minttweaks.core.privilege import ENV_OVERRIDE, Escalator, is_root
 from minttweaks.core.runner import (
     RC_NOT_ALLOWED,
     RC_NOT_FOUND,
+    RC_TIMEOUT,
     Command,
     SubprocessRunner,
     cmd,
@@ -101,11 +103,78 @@ class ExecutionTests(unittest.TestCase):
         result = self.runner.stream(cmd("definitely-not-a-program-xyz"))
         self.assertEqual(result.returncode, RC_NOT_FOUND)
 
+    def test_stream_deadline_covers_silence_and_partial_lines(self):
+        scripts = (
+            "import time; time.sleep(10)",
+            "import time; print('partial', end='', flush=True); time.sleep(10)",
+            "import os, time; os.close(1); os.close(2); time.sleep(10)",
+        )
+        for script in scripts:
+            with self.subTest(script=script):
+                start = time.monotonic()
+                result = self.runner.stream(cmd(PYTHON, "-c", script), timeout=0.15)
+                self.assertEqual(result.returncode, RC_TIMEOUT)
+                self.assertLess(time.monotonic() - start, 3)
+                self.assertIn("Timed out", result.stderr)
+
+    def test_stream_keeps_output_on_timeout(self):
+        result = self.runner.stream(cmd(PYTHON, "-c", "import time; print('before', flush=True); time.sleep(10)"), timeout=0.2)
+        self.assertEqual(result.returncode, RC_TIMEOUT)
+        self.assertIn("before", result.stdout)
+
+    def test_stream_deadline_is_not_reset_by_continuous_output(self):
+        result = self.runner.stream(cmd(PYTHON, "-c", "import time\nwhile True:\n print('tick', flush=True)\n time.sleep(.02)"), timeout=0.2)
+        self.assertEqual(result.returncode, RC_TIMEOUT)
+        self.assertIn("tick", result.stdout)
+
+    def test_stream_decodes_unicode_newlines_and_an_unterminated_last_line(self):
+        result = self.runner.stream(cmd(PYTHON, "-c", "import os; os.write(1, 'été\\r\\nlast'.encode())"), timeout=2)
+        self.assertTrue(result.ok)
+        self.assertEqual(result.stdout, "été\nlast")
+
+    def test_administrative_stream_reports_deadline_without_killing_the_command(self):
+        runner = SubprocessRunner()
+        with mock.patch.object(runner, "_build", side_effect=lambda command: list(command.argv)), \
+                mock.patch("minttweaks.core.runner.os.killpg") as kill:
+            lines = []
+            result = runner.stream(cmd(PYTHON, "-c", "import time; time.sleep(.25); print('completed')", root=True),
+                                   on_line=lines.append, timeout=.05)
+        kill.assert_not_called()
+        self.assertEqual(result.returncode, RC_TIMEOUT)
+        self.assertIn("completed", result.stdout)
+        self.assertTrue(any("still monitored" in line for line in lines))
+
+    def test_administrative_stream_keeps_draining_after_callback_failure(self):
+        runner = SubprocessRunner()
+        script = "print('first', flush=True)\nfor i in range(10000): print('output' * 20)"
+        with mock.patch.object(runner, "_build", side_effect=lambda command: list(command.argv)):
+            with self.assertRaisesRegex(ValueError, "callback failed"):
+                runner.stream(cmd(PYTHON, "-c", script, root=True),
+                              on_line=mock.Mock(side_effect=ValueError("callback failed")), timeout=2)
+
+    def test_stream_deadline_stops_descendants_holding_the_pipe(self):
+        # The parent exits immediately; its child inherits the output pipe.
+        script = "import subprocess, sys; subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(10)'])"
+        start = time.monotonic()
+        result = self.runner.stream(cmd(PYTHON, "-c", script), timeout=.2)
+        self.assertEqual(result.returncode, RC_TIMEOUT)
+        self.assertLess(time.monotonic() - start, 3)
+
     def test_dry_run_runs_nothing(self):
         runner = SubprocessRunner(escalator=Escalator(prefix=[]), dry_run=True)
         result = runner.run(cmd("this-would-fail-if-executed"))
         self.assertTrue(result.ok)
         self.assertIn("dry-run", result.stdout)
+
+    def test_dry_run_does_not_attempt_privilege_escalation(self):
+        runner = SubprocessRunner(dry_run=True)
+        with mock.patch.object(runner.escalator, "wrap", side_effect=AssertionError("must not escalate")), \
+                mock.patch("subprocess.run", side_effect=AssertionError("must not execute")), \
+                mock.patch("subprocess.Popen", side_effect=AssertionError("must not execute")):
+            self.assertTrue(runner.run(cmd("apt-get", "clean", root=True)).ok)
+            lines = []
+            self.assertTrue(runner.stream(cmd("apt-get", "clean", root=True), on_line=lines.append).ok)
+        self.assertIn("dry-run", lines[0])
 
 
 class EscalationTests(unittest.TestCase):

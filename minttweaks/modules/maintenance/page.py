@@ -25,6 +25,8 @@ class MaintenancePage(Page):
         self.selected_kernels: List[maint.Kernel] = []
         self._size_labels: Dict[str, Gtk.Label] = {}
         self._task_buttons: Dict[str, Gtk.Button] = {}
+        self._busy = False
+        self._autoremove_packages: List[str] = []
 
         scroller = widgets.scrolled(self._build(), min_height=400)
         self.pack_start(scroller, True, True, 0)
@@ -118,19 +120,35 @@ class MaintenancePage(Page):
         for value in self._size_labels.values():
             value.set_text("…")
         self.ctx.run_async(
-            lambda: (maint.collect_probe(self.ctx.runner), maint.installed_kernels(self.ctx.runner)),
+            lambda: maint.collect_maintenance(self.ctx.runner),
             on_done=self._apply_refresh,
+            on_error=self._on_analysis_error,
         )
+
+    def _on_analysis_error(self, exc: BaseException) -> None:
+        self._autoremove_packages = []
+        self._rebuild_kernels([])
+        for value in self._size_labels.values():
+            value.set_text(_("unknown"))
+        self._set_busy(self._busy)
+        self.autoremove_label.set_text(_("The removal preview could not be read. Re-analyse before removing packages."))
+        self.autoremove_detail.set_text(str(exc))
+        self.ctx.log(str(exc), "error")
 
     def _apply_refresh(self, payload) -> None:
         probe, kernels = payload
+        self._autoremove_packages = list(probe.autoremove_packages)
         self._size_labels["apt"].set_text(maint.human_bytes(probe.apt_archives_bytes))
         self._size_labels["journal"].set_text(maint.human_bytes(probe.journal_bytes))
         self._size_labels["thumbnails"].set_text(maint.human_bytes(probe.thumbnails_bytes))
         self._size_labels["trash"].set_text(maint.human_bytes(probe.trash_bytes))
 
         count = probe.autoremove_count
-        if count:
+        if probe.autoremove_error:
+            self.autoremove_label.set_text(_("The removal preview could not be read. Re-analyse before removing packages."))
+            self.autoremove_detail.set_text(probe.autoremove_error)
+            self.autoremove_button.set_sensitive(False)
+        elif count:
             preview = ", ".join(probe.autoremove_packages[:8])
             if count > 8:
                 preview += _(", … (+{count})").format(count=count - 8)
@@ -145,7 +163,15 @@ class MaintenancePage(Page):
             self.autoremove_button.set_sensitive(False)
 
         self._rebuild_kernels(kernels)
-        self.ctx.log(_("Analysis finished."), "ok")
+        if probe.kernel_error:
+            for child in self.kernel_box.get_children():
+                self.kernel_box.remove(child)
+            self.kernel_box.pack_start(widgets.label(
+                _("The kernel list could not be read: {error}").format(error=probe.kernel_error), wrap=True,
+            ), False, False, 0)
+            self.kernel_box.show_all()
+        self._set_busy(self._busy)
+        self.ctx.log(_("Analysis finished."), "warn" if probe.autoremove_error or probe.kernel_error else "ok")
 
     def _rebuild_kernels(self, kernels: List[maint.Kernel]) -> None:
         for child in self.kernel_box.get_children():
@@ -174,36 +200,66 @@ class MaintenancePage(Page):
                 self.selected_kernels.append(kernel)
         else:
             self.selected_kernels = [item for item in self.selected_kernels if item.version != kernel.version]
-        self.kernel_button.set_sensitive(bool(self.selected_kernels))
+        self.kernel_button.set_sensitive(
+            not self._busy and widgets.escalation_available(self.ctx.runner) and bool(self.selected_kernels)
+        )
 
     def _on_purge(self) -> None:
-        if not self.selected_kernels:
+        if self._busy or not self.selected_kernels:
             return
         names = "\n".join(kernel.version for kernel in self.selected_kernels)
         detail = _("{kernels}\n\nEvery related package is removed (about 300 MB each).").format(kernels=names)
         if not self.confirm(_("Purge these kernels?"), detail, destructive=True):
             return
         selected = list(self.selected_kernels)
-        self.ctx.run_async(
+        self._set_busy(True)
+        self.run_operation(
             lambda: maint.purge_kernels(self.ctx.runner, selected, on_line=self.ctx.log),
             on_done=self._after_purge,
+            on_error=self._on_operation_error,
+            name=_("Purge selected kernels"),
         )
 
     def _after_purge(self, result) -> None:
+        self._set_busy(False)
         self._report(result, "Kernels purged.", "Purging kernels failed.")
         self.refresh()
 
     def _on_autoremove(self) -> None:
-        task = maint.TASK_BY_ID["apt_autoremove"]
-        packages = self.autoremove_detail.get_text()
-        if not self.confirm(
-            _("Remove orphaned packages?"),
-            f"{packages}\n\nOnly the packages listed above are removed.",
-        ):
+        if self._busy:
             return
-        self._execute(task)
+        self._set_busy(True)
+        self.ctx.run_async(
+            lambda: maint.autoremove_preview(self.ctx.runner),
+            on_done=self._confirm_autoremove,
+            on_error=self._on_operation_error,
+        )
+
+    def _confirm_autoremove(self, packages: List[str]) -> None:
+        if not packages:
+            self._autoremove_packages = []
+            self._set_busy(False)
+            self.info(_("Nothing to remove: every installed package is still needed."))
+            self.refresh()
+            return
+        accepted = widgets.confirm_list(
+            self.window,
+            _("Remove orphaned packages?"),
+            packages,
+            _("{count} package(s) are proposed for removal. The complete list is shown below. "
+              "APT will be checked again before execution; if the list changes, removal will be refused.").format(count=len(packages)),
+        )
+        if not accepted:
+            self._set_busy(False)
+            return
+        self._execute(maint.TASK_BY_ID["apt_autoremove"], approved_packages=packages)
 
     def _run_task(self, task: maint.Task) -> None:
+        if self._busy:
+            return
+        if task.id == "apt_autoremove":
+            self._on_autoremove()
+            return
         if task.danger >= 1 and not self.confirm(
             task.title,
             task.detail + _("\n\nThis cannot be undone from MintTweaks."),
@@ -212,12 +268,14 @@ class MaintenancePage(Page):
             return
         self._execute(task)
 
-    def _execute(self, task: maint.Task) -> None:
+    def _execute(self, task: maint.Task, approved_packages=None) -> None:
         self._set_busy(True)
         self.ctx.log(f"Running: {task.title}")
-        self.ctx.run_async(
-            lambda: maint.run_task(self.ctx.runner, task, on_line=self.ctx.log),
+        self.run_operation(
+            lambda: maint.run_task(self.ctx.runner, task, on_line=self.ctx.log, approved_packages=approved_packages),
             on_done=self._after_task,
+            on_error=self._on_operation_error,
+            name=task.title,
         )
 
     def _after_task(self, outcome) -> None:
@@ -227,9 +285,18 @@ class MaintenancePage(Page):
         self.refresh()
 
     def _set_busy(self, busy: bool) -> None:
-        for button in self._task_buttons.values():
-            button.set_sensitive(not busy)
-        self.autoremove_button.set_sensitive(not busy and bool(self.autoremove_detail.get_text()))
+        self._busy = busy
+        can_escalate = widgets.escalation_available(self.ctx.runner)
+        for task_id, button in self._task_buttons.items():
+            allowed = not maint.TASK_BY_ID[task_id].needs_root or can_escalate
+            button.set_sensitive(not busy and allowed)
+        self.autoremove_button.set_sensitive(not busy and can_escalate and bool(self._autoremove_packages))
+        self.kernel_button.set_sensitive(not busy and can_escalate and bool(self.selected_kernels))
+
+    def _on_operation_error(self, exc: BaseException) -> None:
+        self._set_busy(False)
+        self.ctx.log(str(exc), "error")
+        self.error(_("The operation failed."), str(exc))
 
     def _report(self, result, success: str, failure: str) -> None:
         if result is not None and getattr(result, "ok", True):

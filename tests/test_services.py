@@ -7,6 +7,26 @@ from tests.fakes import LIST_UNIT_FILES, LIST_UNITS, FakeRunner
 
 
 class ParseTests(unittest.TestCase):
+    def test_incomplete_service_queries_are_rejected_even_with_partial_rows(self):
+        for failed in ("list-units", "list-unit-files"):
+            with self.subTest(failed=failed):
+                runner = FakeRunner().add(["systemctl", "list-units"], stdout=LIST_UNITS)
+                runner.add(["systemctl", "list-unit-files"], stdout=LIST_UNIT_FILES)
+                runner.rules = [(prefix, reply) for prefix, reply in runner.rules if prefix != ("systemctl", failed)]
+                runner.add(["systemctl", failed], stdout=LIST_UNITS, returncode=124, stderr="Timeout")
+                with self.assertRaisesRegex(backend.ReadError, "Timeout"):
+                    backend.list_units(runner)
+
+    def test_successful_empty_queries_remain_valid(self):
+        runner = FakeRunner().add(["systemctl"], stdout="")
+        self.assertEqual(backend.list_units(runner), [])
+        self.assertEqual(backend.failed_units(runner), [])
+
+    def test_failed_service_query_is_not_an_empty_success(self):
+        runner = FakeRunner().add(["systemctl"], returncode=1, stderr="D-Bus unavailable")
+        with self.assertRaisesRegex(backend.ReadError, "D-Bus unavailable"):
+            backend.failed_units(runner)
+
     def test_parse_list_units_skips_the_failure_bullet(self):
         units = backend.parse_list_units(LIST_UNITS)
         self.assertIn("weird-fail.service", units)
@@ -82,6 +102,16 @@ class ActionTests(unittest.TestCase):
 
 
 class AnalysisTests(unittest.TestCase):
+    def test_boot_report_preserves_successful_parts_and_identifies_failures(self):
+        runner = FakeRunner().add(["systemd-analyze"], stdout="Startup finished in 5s")
+        runner.add(["systemd-analyze", "blame"], returncode=124, stderr="Timeout")
+        runner.add(["systemd-analyze", "critical-chain"], stdout="graphical.target")
+        report = backend.collect_boot_report(runner)
+        self.assertEqual(report.summary, "Startup finished in 5s")
+        self.assertEqual(report.chain, "graphical.target")
+        self.assertEqual(report.blame, [])
+        self.assertEqual(report.errors, {"blame": "Timeout"})
+
     def test_boot_blame(self):
         runner = FakeRunner().add(
             ["systemd-analyze", "blame"],
@@ -92,8 +122,9 @@ class AnalysisTests(unittest.TestCase):
             [("5.123s", "NetworkManager-wait-online.service"), ("1.001s", "apt-daily.service")],
         )
 
-    def test_boot_blame_returns_nothing_when_unavailable(self):
-        self.assertEqual(backend.boot_blame(FakeRunner()), [])
+    def test_boot_blame_reports_unavailable_instead_of_an_empty_list(self):
+        with self.assertRaises(backend.ReadError):
+            backend.boot_blame(FakeRunner())
 
 
 if __name__ == "__main__":

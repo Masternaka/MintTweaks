@@ -216,9 +216,10 @@ class FirefoxPage(Page):
         self._last_selection = True
         self._update_apply()
         self.ctx.log(_("Writing the Firefox extension policy…"))
-        self.ctx.run_async(
+        self.run_operation(
             lambda: firefox.apply_policy(self.ctx.runner, selected),
             on_done=self._after_apply,
+            on_error=self._operation_failed,
         )
 
     def _on_clear_policy(self) -> None:
@@ -232,10 +233,16 @@ class FirefoxPage(Page):
         self._last_selection = False
         self._update_apply()
         self.ctx.log(_("Removing the MintTweaks Firefox policy…"))
-        self.ctx.run_async(
+        self.run_operation(
             lambda: firefox.apply_policy(self.ctx.runner, []),
             on_done=self._after_apply,
+            on_error=self._operation_failed,
         )
+
+    def _operation_failed(self, exc: BaseException) -> None:
+        self._busy = False
+        self._update_apply()
+        self.error(_("Could not update the Firefox policy."), str(exc))
 
     def _after_apply(self, outcome: firefox.ApplyOutcome) -> None:
         self._busy = False

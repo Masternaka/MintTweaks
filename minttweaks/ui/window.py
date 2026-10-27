@@ -10,16 +10,20 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, Gtk, Pango  # noqa: E402
 
 from .. import APP_NAME, __version__  # noqa: E402
+from ..modules.cinnamon.page import CinnamonPage  # noqa: E402
 from ..modules.firefox.page import FirefoxPage  # noqa: E402
 from ..modules.home.page import HomePage  # noqa: E402
 from ..modules.maintenance.page import MaintenancePage  # noqa: E402
 from ..modules.samba.page import SambaPage  # noqa: E402
 from ..modules.services.page import ServicesPage  # noqa: E402
+from ..modules.setup.page import SetupPage  # noqa: E402
+from ..modules.software.page import SoftwarePage  # noqa: E402
+from ..modules.terminal.page import TerminalPage  # noqa: E402
 from . import widgets  # noqa: E402
 from .widgets import AppContext, Page  # noqa: E402
 from ..i18n import _  # noqa: E402
 
-PAGE_CLASSES = (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage)
+PAGE_CLASSES = (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage, CinnamonPage, SetupPage, SoftwarePage, TerminalPage)
 
 LOG_TAG_COLOURS = {
     "ok": "#1c7c3c",
@@ -40,6 +44,8 @@ class MainWindow(Gtk.ApplicationWindow):
         self.pages: List[Page] = []
         self._build()
         ctx.add_sink(self._on_log)
+        ctx.add_operation_sink(self._on_operation_changed)
+        self.connect("delete-event", self._on_delete_event)
         self._install_css()
 
         self.show_all()
@@ -51,7 +57,10 @@ class MainWindow(Gtk.ApplicationWindow):
         header = Gtk.HeaderBar()
         header.set_show_close_button(True)
         header.set_title(APP_NAME)
-        header.set_subtitle(_("Maintenance, services, Samba and Firefox for Linux Mint"))
+        if self.ctx.runner.dry_run:
+            header.set_subtitle(_("Simulation: no commands or cleanup actions will be executed."))
+        else:
+            header.set_subtitle(_("Maintenance, services, Samba and Firefox for Linux Mint"))
         header.pack_end(self._build_menu_button())
         self.set_titlebar(header)
 
@@ -159,6 +168,11 @@ class MainWindow(Gtk.ApplicationWindow):
         self.status_label = widgets.label(_("Ready."), dim=True)
         self.status_label.set_ellipsize(Pango.EllipsizeMode.END)
         bar.pack_start(self.status_label, True, True, 0)
+        self.operation_label = widgets.label("", dim=True)
+        self.operation_label.set_ellipsize(Pango.EllipsizeMode.END)
+        bar.pack_start(self.operation_label, False, False, 0)
+        self.operation_spinner = Gtk.Spinner()
+        bar.pack_start(self.operation_spinner, False, False, 0)
         bar.pack_end(widgets.button(_("Output"), self.toggle_log), False, False, 0)
         return bar
 
@@ -177,6 +191,26 @@ class MainWindow(Gtk.ApplicationWindow):
             )
 
     # -- behaviour ---------------------------------------------------------
+    def _on_operation_changed(self, name: Optional[str]) -> None:
+        self.operation_label.set_text(_("In progress: {operation}").format(operation=name) if name else "")
+        if name:
+            self.operation_spinner.start()
+        else:
+            self.operation_spinner.stop()
+
+    def show_operation_in_progress(self) -> None:
+        widgets.show_info(
+            self,
+            _("An operation is still running."),
+            _("Wait for {operation} to finish before closing MintTweaks.").format(operation=self.ctx.operation_name),
+        )
+
+    def _on_delete_event(self, _window, _event) -> bool:
+        if self.ctx.operation_name is not None:
+            self.show_operation_in_progress()
+            return True
+        return False
+
     def _on_row_selected(self, listbox: Gtk.ListBox, row: Optional[Gtk.ListBoxRow]) -> None:
         if row is None:
             return

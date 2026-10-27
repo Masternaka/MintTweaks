@@ -3,7 +3,9 @@
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
+from minttweaks.core.runner import SubprocessRunner
 from minttweaks.modules.maintenance import backend
 from tests.fakes import FakeRunner
 
@@ -30,6 +32,39 @@ DPKG = (
 
 
 class AutoremovePreviewTests(unittest.TestCase):
+    def test_failed_preview_with_partial_output_is_rejected(self):
+        runner = FakeRunner().add(["apt-get", "-s"], stdout=AUTOREMOVE, returncode=100, stderr="APT locked")
+        with self.assertRaises(backend.PreviewError):
+            backend.autoremove_preview(runner)
+
+    def test_autoremove_requires_an_approved_plan(self):
+        runner = FakeRunner()
+        outcome = backend.run_task(runner, backend.TASK_BY_ID["apt_autoremove"])
+        self.assertFalse(outcome.ok)
+        self.assertEqual(runner.commands(), [])
+
+    def test_changed_plan_does_not_remove_any_package(self):
+        runner = FakeRunner().add(["apt-get", "-s"], stdout="Remv unexpected [1]\n")
+        outcome = backend.run_task(runner, backend.TASK_BY_ID["apt_autoremove"], approved_packages=["approved"])
+        self.assertFalse(outcome.ok)
+        self.assertFalse(runner.ran(["apt-get", "autoremove"]))
+
+    def test_failed_recheck_does_not_remove_any_package(self):
+        runner = FakeRunner().add(["apt-get", "-s"], stdout="Remv approved [1]\n", returncode=100)
+        outcome = backend.run_task(runner, backend.TASK_BY_ID["apt_autoremove"], approved_packages=["approved"])
+        self.assertFalse(outcome.ok)
+        self.assertFalse(runner.ran(["apt-get", "autoremove"]))
+
+    def test_matching_plan_is_checked_before_removal(self):
+        runner = FakeRunner().add(["apt-get", "-s"], stdout="Remv approved [1]\n")
+        runner.add(["apt-get", "autoremove"], stdout="Removed")
+        outcome = backend.run_task(runner, backend.TASK_BY_ID["apt_autoremove"], approved_packages=["approved"])
+        self.assertTrue(outcome.ok)
+        self.assertEqual(runner.commands(), [
+            ("apt-get", "-s", "autoremove", "--purge"),
+            ("apt-get", "autoremove", "--purge", "-y"),
+        ])
+
     def test_reads_both_the_summary_and_the_remv_lines(self):
         self.assertEqual(
             backend.parse_autoremove_preview(AUTOREMOVE),
@@ -126,6 +161,26 @@ class KernelTests(unittest.TestCase):
 
 
 class UserCleanupTests(unittest.TestCase):
+    def test_dry_run_preserves_trash_and_thumbnails(self):
+        for environment in (False, True):
+            with self.subTest(environment=environment), tempfile.TemporaryDirectory() as tmp:
+                home = Path(tmp)
+                thumbnail = home / ".cache/thumbnails/normal/a.png"
+                trash = home / ".local/share/Trash/files/precious.txt"
+                for path in (thumbnail, trash):
+                    path.parent.mkdir(parents=True)
+                    path.write_text("preserve me")
+                with patch.dict("os.environ", {"MTK_DRY_RUN": "1" if environment else "0"}):
+                    runner = SubprocessRunner(dry_run=not environment)
+                    with patch.object(backend.Path, "home", return_value=home):
+                        for task_id in ("thumbnails", "trash"):
+                            lines = []
+                            outcome = backend.run_task(runner, backend.TASK_BY_ID[task_id], on_line=lines.append)
+                            self.assertTrue(outcome.ok)
+                            self.assertIn("[dry-run]", lines[0])
+                for path in (thumbnail, trash):
+                    self.assertEqual(path.read_text(), "preserve me")
+
     def test_clear_thumbnails_and_keep_neighbours(self):
         with tempfile.TemporaryDirectory() as tmp:
             home = Path(tmp)
@@ -235,6 +290,30 @@ class RegistryTests(unittest.TestCase):
 
 
 class ProbeTests(unittest.TestCase):
+    def test_unreadable_cache_size_is_unknown_not_zero(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(backend.os, "walk", side_effect=PermissionError("denied")):
+                self.assertIsNone(backend.directory_size(Path(tmp)))
+        self.assertEqual(backend.human_bytes(None), "unknown")
+
+    def test_failed_kernel_query_does_not_hide_the_space_and_apt_probe(self):
+        runner = FakeRunner().add(["apt-get", "-s"], stdout=AUTOREMOVE)
+        runner.add(["du"], stdout="2048\t/cache\n")
+        runner.add(["dpkg-query"], returncode=124, stderr="kernel query timeout")
+        with tempfile.TemporaryDirectory() as tmp, patch.object(backend.Path, "home", return_value=Path(tmp)):
+            probe, kernels = backend.collect_maintenance(runner)
+        self.assertEqual(probe.apt_archives_bytes, 2048)
+        self.assertEqual(probe.autoremove_count, 3)
+        self.assertEqual(kernels, [])
+        self.assertIn("kernel query timeout", probe.kernel_error)
+
+    def test_failed_preview_is_distinct_from_no_orphans(self):
+        runner = FakeRunner().add(["apt-get", "-s"], returncode=100, stderr="APT locked")
+        with tempfile.TemporaryDirectory() as tmp:
+            probe = backend.collect_probe(runner, Path(tmp))
+        self.assertEqual(probe.autoremove_packages, [])
+        self.assertIn("APT locked", probe.autoremove_error)
+
     def test_probe_collects_sizes(self):
         runner = FakeRunner()
         runner.add(["du", "-sb", "/var/cache/apt/archives"], stdout="2048\t/var/cache/apt/archives\n")

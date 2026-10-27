@@ -17,19 +17,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Domain: minttweaks\n"
 
-#: minttweaks/modules/samba/page.py:746
+#: minttweaks/modules/samba/page.py:751
 msgid "\n\nSamba already ignores every value but the last one."
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:209
+#: minttweaks/modules/maintenance/page.py:265
 msgid "\n\nThis cannot be undone from MintTweaks."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:718
+#: minttweaks/modules/samba/page.py:723
 msgid "\n\nWarnings:\n"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:743
+#: minttweaks/modules/samba/page.py:748
 msgid "\n… and {count} more"
 msgstr ""
 
@@ -37,23 +37,54 @@ msgstr ""
 msgid "'{name}' is a reserved Samba section name."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:307
+#: minttweaks/modules/cinnamon/page.py:122
+#: minttweaks/modules/cinnamon/page.py:167
+msgid "(empty value)"
+msgstr ""
+
+#: minttweaks/modules/services/page.py:335
 msgid "(not available)"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:136
+#: minttweaks/modules/maintenance/page.py:154
 msgid ", … (+{count})"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:51
+#: minttweaks/modules/maintenance/page.py:53
 msgid "/var/cache/apt/archives - downloaded .deb files"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:67
+msgid "A backup is saved before every change, including restoration."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:196
+msgid "A backup will be saved before changing these values. The referenced themes and fonts must already be installed. If settings changed since this preview, the operation will be refused."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:192
+#: minttweaks/modules/terminal/configuration.py:180
+#: minttweaks/modules/terminal/integrations.py:141
+msgid "A custom ZDOTDIR is in use. Manage its initialization manually."
+msgstr ""
+
+#: minttweaks/modules/terminal/configuration.py:201
+msgid "A manual alias or function already uses this name: {name}"
+msgstr ""
+
+#: minttweaks/modules/terminal/integrations.py:168
+msgid "A manual integration already exists for {tool}. The startup file was preserved."
+msgstr ""
+
+#: minttweaks/modules/terminal/integrations.py:64
+msgid "A required shell integration script is unavailable: {path}"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:240
 msgid "A Samba account needs an existing Unix account: sharing a folder does not work without one. Passwords are sent to smbpasswd on its standard input, never on a command line."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:833
+#: minttweaks/modules/samba/page.py:838
 msgid "A save is already in progress."
 msgstr ""
 
@@ -61,7 +92,11 @@ msgstr ""
 msgid "A section named '{name}' already exists."
 msgstr ""
 
-#: minttweaks/ui/window.py:93
+#: minttweaks/modules/cinnamon/backend.py:302
+msgid "A setting changed during application: {setting}"
+msgstr ""
+
+#: minttweaks/ui/window.py:102
 msgid "About"
 msgstr ""
 
@@ -78,8 +113,16 @@ msgstr ""
 msgid "active"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:684
+#: minttweaks/modules/samba/page.py:689
 msgid "Active Samba connections:"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:130
+msgid "Add, edit or remove your own shortcuts for one shell. Commands are displayed for review and are never executed by MintTweaks."
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:52
+msgid "Additional Bash command completions. Managed activation is available for Bash."
 msgstr ""
 
 #: minttweaks/modules/firefox/backend.py:127
@@ -90,7 +133,11 @@ msgstr ""
 msgid "Adds the Samba application profile to ufw."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:810
+#: minttweaks/modules/software/page.py:31
+msgid "Administrator authorization is unavailable: package state can be read, but installation is disabled."
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:815
 msgid "Administrator rights are required"
 msgstr ""
 
@@ -102,7 +149,7 @@ msgstr ""
 msgid "Administrator rights are unavailable in this session: extensions can be inspected but not installed."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:67
+#: minttweaks/modules/services/page.py:72
 msgid "Administrator rights are unavailable in this session: services can be inspected but not changed."
 msgstr ""
 
@@ -110,11 +157,40 @@ msgstr ""
 msgid "Advanced parameters"
 msgstr ""
 
+#: minttweaks/modules/setup/page.py:56
+msgid "After checking the result in the module, mark the step as verified by you or keep it for another attempt. Opening a page never completes a step."
+msgstr ""
+
+#: minttweaks/modules/home/page.py:94
+#: minttweaks/modules/setup/page.py:22
+msgid "After installation"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:246
+msgid "After installation: a separate configuration preview for {shell}. Cancelling it keeps the installed packages."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:136
+msgid "Alias name"
+msgstr ""
+
+#: minttweaks/modules/terminal/configuration.py:203
+msgid "Alias {name} will shadow an installed command in {shell}."
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:99
 msgid "All of these need administrator rights."
 msgstr ""
 
-#: minttweaks/modules/home/page.py:142
+#: minttweaks/modules/cinnamon/page.py:126
+msgid "All settings were read. Saving will capture them again."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:25
+msgid "All tools"
+msgstr ""
+
+#: minttweaks/modules/home/page.py:158
 msgid "All {count} checks passed."
 msgstr ""
 
@@ -122,43 +198,133 @@ msgstr ""
 msgid "Allow Samba in the firewall"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:669
+#: minttweaks/modules/samba/page.py:674
 msgid "Allow Samba through the firewall?"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:157
+#: minttweaks/modules/terminal/integrations.py:44
+#: minttweaks/modules/terminal/integrations.py:49
+msgid "An integration block is malformed. The startup file was preserved."
+msgstr ""
+
+#: minttweaks/ui/widgets.py:74
+msgid "An operation is already running: {operation}. Wait for it to finish."
+msgstr ""
+
+#: minttweaks/ui/window.py:204
+msgid "An operation is still running."
+msgstr ""
+
+#: minttweaks/modules/services/page.py:162
 msgid "Analyse boot"
 msgstr ""
 
 #: minttweaks/modules/home/page.py:71
-#: minttweaks/modules/home/page.py:100
-#: minttweaks/modules/maintenance/page.py:117
+#: minttweaks/modules/home/page.py:104
+#: minttweaks/modules/maintenance/page.py:119
 msgid "Analysing the system, one moment…"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:145
-#: minttweaks/modules/maintenance/page.py:148
+#: minttweaks/modules/home/page.py:161
+#: minttweaks/modules/maintenance/page.py:174
 msgid "Analysis finished."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:328
+msgid "Application failed; recovery is incomplete. The backup was preserved."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:329
+msgid "Application failed; the values changed by this operation were restored."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:43
+msgid "Application theme"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:206
+msgid "Apply Cinnamon profile"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:107
 msgid "Apply configuration"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:230
+#: minttweaks/modules/terminal/page.py:320
+msgid "Apply these configuration changes?"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:124
+msgid "Apply these personal settings?"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:280
+msgid "Apply these shell integrations?"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:195
+msgid "Apply this appearance?"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:210
+msgid "APT candidate: {version}"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:80
+msgid "APT package installed: {version}"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:82
+msgid "APT package not installed. Candidate from the expected source: {version}"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:96
+msgid "APT package: {package}"
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:176
+#: minttweaks/modules/terminal/backend.py:130
+msgid "APT proposed removals. Installation was refused."
+msgstr ""
+
+#: minttweaks/modules/home/backend.py:238
 msgid "apt-get check found no broken dependency."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:234
+#: minttweaks/modules/home/backend.py:244
 msgid "apt-get check reported a problem: {sample}"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:228
+#: minttweaks/modules/home/backend.py:236
 msgid "apt-get is not available on this system."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:260
 msgid "at least 8 characters"
+msgstr ""
+
+#: minttweaks/modules/terminal/integrations.py:203
+msgid "Atuin records new command history locally and takes Ctrl+R after fzf. No account, sync or history import is configured."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:26
+msgid "Available to install"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:213
+msgid "Backup: {id}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:146
+msgid "Backups could not be read: {error}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:297
+msgid "Before changing Cinnamon appearance"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:67
+msgid "Blank line before the prompt"
 msgstr ""
 
 #: minttweaks/modules/firefox/backend.py:67
@@ -169,83 +335,214 @@ msgstr ""
 msgid "Bookmark manager for links, articles and files."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:160
+#: minttweaks/modules/services/page.py:165
 msgid "Boot"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:309
+#: minttweaks/modules/services/page.py:339
 msgid "Boot analysis updated."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:302
-#: minttweaks/modules/home/backend.py:281
-#: minttweaks/modules/home/backend.py:290
-#: … (+1)
+#: minttweaks/modules/home/backend.py:305
+#: minttweaks/modules/home/backend.py:285
+#: minttweaks/modules/home/backend.py:287
+#: … (+3)
 msgid "Boot errors"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:154
+#: minttweaks/modules/services/page.py:159
 msgid "Boot time"
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:39
+msgid "Brave's official stable APT repository."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:197
 msgid "Browseable"
 msgstr ""
 
+#: minttweaks/modules/software/page.py:32
+msgid "Browsers outside Mint's official repositories"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:194
 msgid "Browse…"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:185
+msgid "Cancel"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:300
+msgid "Change login shell"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:296
+msgid "Change your login shell?"
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:40
+msgid "Check the system"
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:144
+msgid "Checklist progress is not saved in simulation mode."
+msgstr ""
+
+#: minttweaks/modules/terminal/transfer.py:89
+msgid "Choose a new export filename; existing files are preserved."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:293
+msgid "Choose an executable shell listed in /etc/shells."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:169
+msgid "Choose an existing managed alias to remove."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:247
+msgid "Choose an installed font from the list."
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:43
+msgid "Choose extensions from addons.mozilla.org in the Firefox module. Its system policy requires administrator approval and a Firefox restart."
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:41
+msgid "Choose Helium, Brave or Zen from their indicated APT sources. Review the package and dependency plan before administrator approval."
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:35
+msgid "Choose optional steps"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:569
 msgid "Choose the Unix account to give a Samba password to."
 msgstr ""
 
+#: minttweaks/modules/terminal/page.py:64
+msgid "Choose tools and a target shell. After package installation, review and confirm their supported integrations and configuration backups."
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:44
+msgid "Choose your appearance"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:20
+#: minttweaks/modules/home/page.py:93
+msgid "Cinnamon profiles"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:42
+msgid "Cinnamon theme"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:319
 msgid "Clean up duplicates"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:88
+#: minttweaks/modules/maintenance/page.py:90
 msgid "Cleanup tasks"
 msgstr ""
 
-#: minttweaks/ui/window.py:144
+#: minttweaks/ui/window.py:153
 msgid "Clear"
 msgstr ""
 
-#: minttweaks/ui/window.py:92
+#: minttweaks/ui/window.py:101
 msgid "Clear output"
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:237
+#: minttweaks/modules/terminal/page.py:74
+msgid "Clear selection"
+msgstr ""
+
+#: minttweaks/modules/maintenance/backend.py:251
 msgid "Clear the thumbnail cache"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:69
+msgid "Colors"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:137
+msgid "Command"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:196
 msgid "Comment"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:720
+#: minttweaks/modules/terminal/page.py:170
+msgid "Configuration backups"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:331
+msgid "Configuration changes failed. Check recovery details and the saved backup."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:333
+msgid "Configuration files updated and verified."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:224
+msgid "Configuration is previewed after installation. Cancelling that later preview keeps the packages."
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:725
 msgid "Configuration is valid"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:716
+#: minttweaks/modules/samba/page.py:721
 msgid "Configuration is valid."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:728
+#: minttweaks/modules/samba/page.py:733
 msgid "Configuration saved."
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:45
+msgid "Configure Samba shares and accounts only if you need network sharing. Package installation, firewall and service changes are performed in the Samba module."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:285
+msgid "Configure shell integrations"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:65
+msgid "Configure supported integrations after installation"
+msgstr ""
+
+#: minttweaks/modules/terminal/status.py:79
+msgid "Configured; verify in a new terminal."
 msgstr ""
 
 #: minttweaks/modules/firefox/backend.py:62
 msgid "Content blocker for ads, trackers and malware domains."
 msgstr ""
 
-#: minttweaks/modules/firefox/page.py:251
+#: minttweaks/modules/firefox/page.py:245
+#: minttweaks/modules/firefox/page.py:258
 msgid "Could not update the Firefox policy."
+msgstr ""
+
+#: minttweaks/modules/services/page.py:329
+#: minttweaks/modules/services/page.py:337
+msgid "Could not verify {part}: {error}"
+msgstr ""
+
+#: minttweaks/modules/home/backend.py:405
+msgid "Could not verify: {sample}"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:271
 msgid "Create / change password"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:148
+msgid "Create a separate Kitty or Alacritty profile and a MintTweaks menu entry. Your normal terminal configuration and system default terminal are not replaced."
 msgstr ""
 
 #: minttweaks/modules/samba/backend.py:426
@@ -257,8 +554,24 @@ msgstr ""
 msgid "Creates and applies custom Firefox colour themes."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:307
+#: minttweaks/modules/services/page.py:335
 msgid "Critical chain:"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:33
+msgid "Current appearance"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:46
+msgid "Cursor theme"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:55
+msgid "Customizable prompt for Bash, Zsh and Fish. Managed activation is available in Shell integrations."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:155
+msgid "Dark"
 msgstr ""
 
 #: minttweaks/modules/services/backend.py:53
@@ -269,11 +582,11 @@ msgstr ""
 msgid "Delete account"
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:202
+#: minttweaks/modules/maintenance/backend.py:216
 msgid "Delete downloaded package files"
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:209
+#: minttweaks/modules/maintenance/backend.py:223
 msgid "Delete obsolete package files"
 msgstr ""
 
@@ -289,19 +602,36 @@ msgstr ""
 msgid "Delete the share '{name}'?"
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:189
+#: minttweaks/modules/maintenance/backend.py:203
 msgid "Deletes packages that were installed automatically and are no longer needed by anything. The list is shown before you confirm."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:233
-#: minttweaks/modules/home/backend.py:228
-#: minttweaks/modules/home/backend.py:230
+#: minttweaks/modules/terminal/integrations.py:205
+msgid "Delta becomes the Git pager in this shell when GIT_PAGER is unset; Git configuration files are preserved."
+msgstr ""
+
+#: minttweaks/modules/home/backend.py:243
+#: minttweaks/modules/home/backend.py:236
+#: minttweaks/modules/home/backend.py:238
+#: … (+2)
 msgid "Dependencies"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:72
+msgid "Detailed listing"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:209
+msgid "Detected: {version}"
 msgstr ""
 
 #: minttweaks/modules/firefox/page.py:63
 #: minttweaks/modules/firefox/page.py:107
 msgid "Detecting Firefox profiles…"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:22
+msgid "Development and data"
 msgstr ""
 
 #: minttweaks/modules/home/page.py:68
@@ -315,7 +645,7 @@ msgid "Directory mask"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:274
-#: minttweaks/modules/services/page.py:121
+#: minttweaks/modules/services/page.py:126
 msgid "Disable"
 msgstr ""
 
@@ -324,7 +654,11 @@ msgstr ""
 msgid "disabled"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:759
+#: minttweaks/modules/setup/page.py:110
+msgid "Discard unsaved step selection?"
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:764
 msgid "Discard your changes?"
 msgstr ""
 
@@ -332,64 +666,80 @@ msgstr ""
 msgid "Disk (/)"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:327
-#: minttweaks/modules/home/backend.py:307
-#: minttweaks/modules/home/backend.py:312
-#: … (+1)
+#: minttweaks/modules/home/backend.py:330
+#: minttweaks/modules/home/backend.py:310
+#: minttweaks/modules/home/backend.py:315
+#: … (+2)
 msgid "Disk space"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:47
+#: minttweaks/modules/maintenance/page.py:49
 msgid "Disk usage"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:307
+#: minttweaks/modules/home/backend.py:310
 msgid "Disk usage could not be measured."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:693
+#: minttweaks/modules/terminal/catalog.py:35
+msgid "Display a directory tree."
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:48
+msgid "Display a system summary in the terminal."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:71
+msgid "Displayed information"
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:698
 msgid "Done."
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:44
+msgid "Download files from the command line."
 msgstr ""
 
 #: minttweaks/modules/firefox/backend.py:132
 msgid "Downloads videos and audio from web pages."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:218
-msgid "dpkg --audit failed: {sample}"
-msgstr ""
-
-#: minttweaks/modules/home/backend.py:210
+#: minttweaks/modules/home/backend.py:226
 msgid "dpkg --audit reported: {sample}"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:204
+#: minttweaks/modules/home/backend.py:218
 msgid "dpkg is not available on this system."
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:230
+#: minttweaks/modules/maintenance/backend.py:244
 msgid "Drop journal entries older than two weeks"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:88
+#: minttweaks/modules/maintenance/page.py:90
 msgid "Each task shows exactly what it will run."
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:203
+#: minttweaks/modules/maintenance/backend.py:217
 msgid "Empties /var/cache/apt/archives. Re-downloading is the only consequence."
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:246
+#: minttweaks/modules/maintenance/backend.py:260
 msgid "Empty the trash"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:273
-#: minttweaks/modules/services/page.py:120
+#: minttweaks/modules/services/page.py:125
 msgid "Enable"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:101
 msgid "Enable and start sharing"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:127
+msgid "Enable or remove managed integrations for installed tools. Startup files are backed up; aliases and settings outside managed blocks are preserved. No shell file is executed by MintTweaks."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:417
@@ -401,38 +751,98 @@ msgstr ""
 msgid "Enables smbd and nmbd, then starts them."
 msgstr ""
 
+#: minttweaks/modules/cinnamon/backend.py:133
+#: minttweaks/modules/cinnamon/backend.py:139
+#: minttweaks/modules/cinnamon/backend.py:142
+#: … (+1)
+msgid "Enter a profile name of 1 to 80 characters, without control characters."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:98
+msgid "Example: {command}"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:36
+msgid "Explore disk usage interactively; its delete action can remove files."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:177
+msgid "Export and import"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:179
+#: minttweaks/modules/terminal/controls.py:183
+msgid "Export personal configuration"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:214
+msgid "Export terminal configuration"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:210
+msgid "Export this personal configuration?"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:177
+msgid "Export your personal tool selection, managed integrations, settings and aliases. Import checks this machine and shows package and configuration previews separately."
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:41
+msgid "Extensible terminal text editor."
+msgstr ""
+
 #: minttweaks/modules/firefox/page.py:55
 msgid "Extensions"
 msgstr ""
 
-#: minttweaks/modules/firefox/page.py:227
+#: minttweaks/modules/firefox/page.py:228
 msgid "Extensions already installed in Firefox are kept. Only the policy entries written by MintTweaks are removed."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:94
+msgid "Eza options use mtk-eza. Tmux options use mtk-tmux on a separate server. Starship settings are shared between managed shells."
 msgstr ""
 
 #: minttweaks/modules/services/backend.py:47
 msgid "failed"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:59
+#: minttweaks/modules/services/page.py:60
 msgid "Failed only"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:272
-#: minttweaks/modules/home/backend.py:253
-#: minttweaks/modules/home/backend.py:259
-#: … (+1)
+#: minttweaks/modules/home/backend.py:276
+#: minttweaks/modules/home/backend.py:263
+#: minttweaks/modules/home/backend.py:265
+#: … (+2)
 msgid "Failed services"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:31
+msgid "Fast text search across files, respecting ignore rules."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:170
+msgid "File changes are backed up before writing. Restoring a backup has its own preview and backup. No backup is removed automatically."
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:21
+msgid "Files and disk space"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:497
 msgid "Fill in a name and pick an existing folder, then save."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:51
+#: minttweaks/modules/services/page.py:52
 msgid "Filter by name or description"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:87
+#: minttweaks/modules/terminal/catalog.py:32
+msgid "Find files by name. The Ubuntu/Mint package commonly provides fdfind."
+msgstr ""
+
+#: minttweaks/modules/home/page.py:92
 msgid "Firefox"
 msgstr ""
 
@@ -444,7 +854,7 @@ msgstr ""
 msgid "Firewall"
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:216
+#: minttweaks/modules/maintenance/backend.py:230
 msgid "Fix broken dependencies"
 msgstr ""
 
@@ -452,8 +862,12 @@ msgstr ""
 msgid "Folder"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:132
+#: minttweaks/modules/services/page.py:137
 msgid "Follow"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:165
+msgid "Font size"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:159
@@ -464,12 +878,32 @@ msgstr ""
 msgid "Generates dark themes for every website."
 msgstr ""
 
+#: minttweaks/modules/terminal/controls.py:72
+msgid "Git information"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:60
+msgid "GPU-rendered terminal application."
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:199
 msgid "Guest access"
 msgstr ""
 
-#: minttweaks/ui/window.py:143
+#: minttweaks/modules/terminal/controls.py:69
+msgid "Height (%)"
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:36
+msgid "Helium's official stable APT repository."
+msgstr ""
+
+#: minttweaks/ui/window.py:152
 msgid "Hide"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:54
+msgid "Highlight commands while typing in Zsh. Managed activation is available for Zsh."
 msgstr ""
 
 #: minttweaks/modules/home/page.py:27
@@ -480,9 +914,54 @@ msgstr ""
 msgid "Host name"
 msgstr ""
 
+#: minttweaks/modules/cinnamon/backend.py:45
+msgid "Icons"
+msgstr ""
+
+#: minttweaks/modules/terminal/transfer.py:109
+msgid "Import merges your managed choices. It does not change the login shell or remove other tools."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:180
+#: minttweaks/modules/terminal/controls.py:183
+msgid "Import personal configuration"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:249
+msgid "Import terminal configuration"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:245
+msgid "Import these personal settings?"
+msgstr ""
+
+#: minttweaks/ui/window.py:195
+msgid "In progress: {operation}"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:383
 #: minttweaks/modules/services/backend.py:51
 msgid "inactive"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:47
+msgid "Inspect and manage running processes interactively."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:228
+msgid "Install imported terminal tools"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:224
+msgid "Install missing imported tools?"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:112
+msgid "Install native software"
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:41
+msgid "Install native third-party software"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:78
@@ -497,43 +976,137 @@ msgstr ""
 msgid "Install selected extensions"
 msgstr ""
 
+#: minttweaks/modules/setup/backend.py:42
+msgid "Install shell tools, choose your login shell and customize Kitty or Alacritty with previewed, backed-up changes."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:194
+msgid "Install Starship before enabling its prompt."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:252
+msgid "Install terminal tools"
+msgstr ""
+
+#: minttweaks/modules/terminal/transfer.py:108
+msgid "Install the missing tools first; configuration gets a separate preview afterwards."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:250
+msgid "Install the selected terminal first."
+msgstr ""
+
+#: minttweaks/modules/terminal/configuration.py:182
+#: minttweaks/modules/terminal/integrations.py:143
+msgid "Install the target shell before configuring its integrations."
+msgstr ""
+
 #: minttweaks/modules/firefox/page.py:212
 msgid "Install these Firefox extensions?"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:105
+msgid "Install these native packages?"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:247
+msgid "Install these terminal tools?"
+msgstr ""
+
+#: minttweaks/modules/terminal/transfer.py:100
+msgid "Install this imported font before retrying: {font}"
+msgstr ""
+
+#: minttweaks/modules/terminal/configuration.py:195
+#: minttweaks/modules/terminal/integrations.py:158
+msgid "Install this tool before configuring it: {tool}"
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:209
+msgid "Installation failed or could not be fully verified. Check the package state; no automatic removal was performed."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:366
 msgid "installed"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:104
+#: minttweaks/modules/maintenance/page.py:106
 msgid "Installed kernels"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:25
+msgid "Installed tools"
 msgstr ""
 
 #: minttweaks/modules/firefox/page.py:148
 msgid "Installed."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:131
+#: minttweaks/modules/terminal/status.py:85
+msgid "Installed; integration not configured for this shell."
+msgstr ""
+
+#: minttweaks/modules/terminal/status.py:61
+msgid "Installed; works with its default configuration."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:26
+msgid "Integrations for the target shell"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:29
+msgid "Interactive fuzzy search for files and command output. Managed shell shortcuts are available."
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:39
+msgid "Interactive Git interface inside the terminal."
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:58
+msgid "Interactive shell with built-in suggestions and syntax highlighting."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:47
+msgid "Interface font"
+msgstr ""
+
+#: minttweaks/modules/services/page.py:136
 msgid "Journal"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:281
+#: minttweaks/modules/home/backend.py:285
 msgid "journalctl is not available on this system."
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:52
+#: minttweaks/modules/maintenance/page.py:54
 msgid "journald logs, shrinkable without losing the last weeks"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:189
+msgid "JSON files"
 msgstr ""
 
 #: minttweaks/modules/home/page.py:81
 msgid "Jump to a section."
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:224
+#: minttweaks/modules/terminal/catalog.py:30
+msgid "Jump to frequently used directories. Managed integration enables the z shortcut."
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:67
+msgid "Keep for another attempt"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:45
+msgid "Keep terminal sessions with multiple panes and windows."
+msgstr ""
+
+#: minttweaks/modules/maintenance/backend.py:238
 msgid "Keeps the most recent entries and drops the rest. Log history is lost."
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:162
+#: minttweaks/modules/maintenance/page.py:188
 msgid "kept"
 msgstr ""
 
@@ -541,27 +1114,79 @@ msgstr ""
 msgid "Kernel"
 msgstr ""
 
+#: minttweaks/modules/terminal/page.py:167
+msgid "Launch the generated Kitty — MintTweaks or Alacritty — MintTweaks entry from the Mint menu to use this profile."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:69
+msgid "Layout"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:156
+msgid "Light"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:34
+msgid "List files with colors, tree views and Git information."
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:109
 msgid "Lists who is connected right now."
 msgstr ""
 
-#: minttweaks/modules/home/page.py:84
+#: minttweaks/modules/terminal/catalog.py:50
+msgid "Load project environment variables after explicit approval. A managed shell hook is available."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:138
+msgid "Load selected alias"
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:48
+msgid "Loading the saved checklist…"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:118
+msgid "Login shell"
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:61
+msgid "Login shell changes require a normal Linux desktop user."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:312
+msgid "Login shell updated. Start a new login session to use it."
+msgstr ""
+
+#: minttweaks/modules/home/page.py:89
 msgid "Maintenance"
 msgstr ""
 
-#: minttweaks/ui/window.py:54
+#: minttweaks/ui/window.py:63
 msgid "Maintenance, services, Samba and Firefox for Linux Mint"
 msgstr ""
 
-#: minttweaks/ui/window.py:232
+#: minttweaks/ui/window.py:266
 msgid "Maintenance, services, Samba and Firefox management for Linux Mint.\nInspired by the ArchLinux Tweak Tool."
+msgstr ""
+
+#: minttweaks/modules/terminal/status.py:83
+msgid "Manual integration detected; not managed here."
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:67
+msgid "Mark to do"
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:67
+msgid "Mark verified by you"
 msgstr ""
 
 #: minttweaks/modules/home/page.py:57
 msgid "Memory"
 msgstr ""
 
-#: minttweaks/ui/window.py:82
+#: minttweaks/ui/window.py:91
 msgid "Menu"
 msgstr ""
 
@@ -569,7 +1194,7 @@ msgstr ""
 msgid "MintTweaks currently manages {count} extension(s) in the Firefox policy."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:771
+#: minttweaks/modules/samba/page.py:776
 msgid "MintTweaks keeps its backups in {folder}."
 msgstr ""
 
@@ -581,8 +1206,29 @@ msgstr ""
 msgid "Modules"
 msgstr ""
 
+#: minttweaks/modules/terminal/catalog.py:46
+msgid "Monitor CPU, memory, disks, network and processes."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:73
+msgid "Mouse support"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:191
 msgid "Name"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:33
+msgid "Native APT packages only. Configure the indicated repository first; this page does not add repositories or signing keys."
+msgstr ""
+
+#: minttweaks/modules/home/page.py:95
+#: minttweaks/modules/software/page.py:18
+msgid "Native software"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:20
+msgid "Navigation and search"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:135
@@ -595,23 +1241,35 @@ msgstr ""
 msgid "No account selected"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:770
+#: minttweaks/modules/terminal/backend.py:94
+msgid "No APT candidate. Use the project's official installation guide if needed."
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:775
 msgid "No backup found"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:152
+#: minttweaks/modules/home/page.py:148
+#: minttweaks/modules/home/page.py:168
 msgid "No check was run."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:806
+#: minttweaks/modules/terminal/controls.py:121
+#: minttweaks/modules/terminal/controls.py:243
+#: minttweaks/modules/terminal/page.py:277
+#: … (+1)
+msgid "No configuration changes are needed."
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:811
 msgid "No configuration loaded"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:737
+#: minttweaks/modules/samba/page.py:742
 msgid "No duplicate parameter"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:302
+#: minttweaks/modules/home/backend.py:305
 msgid "No error was logged since the last boot."
 msgstr ""
 
@@ -619,19 +1277,31 @@ msgstr ""
 msgid "No Firefox profile was found. Start Firefox once so MintTweaks can detect installed extensions."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:222
+#: minttweaks/modules/home/backend.py:230
 msgid "No half-configured package was found."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:271
+#: minttweaks/modules/home/backend.py:358
+msgid "No installed kernel package was found."
+msgstr ""
+
+#: minttweaks/modules/services/page.py:300
+msgid "No journal entries could be verified."
+msgstr ""
+
+#: minttweaks/modules/services/page.py:307
 msgid "No journal entry for this service."
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:157
+#: minttweaks/modules/maintenance/page.py:183
 msgid "No linux-image package found."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:358
+#: minttweaks/modules/terminal/backend.py:319
+msgid "No login shell backup is available."
+msgstr ""
+
+#: minttweaks/modules/home/backend.py:369
 msgid "No old kernel is waiting for removal."
 msgstr ""
 
@@ -643,12 +1313,20 @@ msgstr ""
 msgid "No restart is pending."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:738
+#: minttweaks/modules/samba/page.py:743
 msgid "No section of this configuration repeats the same key, so there is nothing to clean up."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:272
+#: minttweaks/modules/home/backend.py:276
 msgid "No service has failed."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:76
+msgid "No tools selected."
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:110
+msgid "No unambiguous candidate from the expected repository. Configure its source and refresh APT metadata first."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:419
@@ -659,8 +1337,15 @@ msgstr ""
 msgid "No Unix account named '{user}'. Create the system account first."
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:76
+#: minttweaks/modules/cinnamon/page.py:35
+#: minttweaks/modules/maintenance/page.py:78
+#: minttweaks/modules/software/page.py:42
+#: … (+4)
 msgid "Not analysed yet."
+msgstr ""
+
+#: minttweaks/modules/home/backend.py:394
+msgid "Not checked in simulation mode."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:369
@@ -668,25 +1353,53 @@ msgid "not installed"
 msgstr ""
 
 #: minttweaks/modules/firefox/page.py:156
+#: minttweaks/modules/terminal/status.py:50
 msgid "Not installed."
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:142
+#: minttweaks/modules/maintenance/page.py:242
+#: minttweaks/modules/maintenance/page.py:160
 msgid "Nothing to remove: every installed package is still needed."
 msgstr ""
 
+#: minttweaks/modules/home/backend.py:369
 #: minttweaks/modules/home/backend.py:358
-#: minttweaks/modules/home/backend.py:347
-#: minttweaks/modules/home/backend.py:353
+#: minttweaks/modules/home/backend.py:364
+#: … (+2)
 msgid "Old kernels"
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:254
+#: minttweaks/modules/maintenance/backend.py:268
 msgid "Only available when Flatpak is installed. Frees runtimes no app references any more."
 msgstr ""
 
-#: minttweaks/modules/home/page.py:175
+#: minttweaks/modules/terminal/controls.py:178
+msgid "Only managed choices and alias commands are exported, without startup scripts or command history. Review personal paths and sensitive values before sharing."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:41
+msgid "Only setting values are saved. Theme, icon and font files are not copied."
+msgstr ""
+
+#: minttweaks/modules/home/page.py:191
+#: minttweaks/modules/terminal/controls.py:185
 msgid "Open"
+msgstr ""
+
+#: minttweaks/modules/terminal/integrations.py:201
+msgid "Open a new interactive {shell} terminal after applying. Existing terminals are not reloaded."
+msgstr ""
+
+#: minttweaks/modules/terminal/configuration.py:231
+msgid "Open a new terminal. Use mtk-eza and mtk-tmux for their managed options; mtk-tmux uses a separate server."
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:60
+msgid "Open selected step"
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:50
+msgid "Open the next unfinished step"
 msgstr ""
 
 #: minttweaks/modules/firefox/backend.py:77
@@ -701,12 +1414,12 @@ msgstr ""
 msgid "Operating system"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:73
+#: minttweaks/modules/maintenance/page.py:75
 msgid "Orphaned packages"
 msgstr ""
 
-#: minttweaks/ui/window.py:142
-#: minttweaks/ui/window.py:162
+#: minttweaks/ui/window.py:151
+#: minttweaks/ui/window.py:176
 msgid "Output"
 msgstr ""
 
@@ -714,27 +1427,59 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:51
+#: minttweaks/modules/maintenance/page.py:53
 msgid "Package cache"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:222
-#: minttweaks/modules/home/backend.py:204
-#: minttweaks/modules/home/backend.py:209
-#: … (+1)
+#: minttweaks/modules/software/page.py:78
+msgid "Package check unavailable: {error}"
+msgstr ""
+
+#: minttweaks/modules/home/backend.py:230
+#: minttweaks/modules/home/backend.py:218
+#: minttweaks/modules/home/backend.py:220
+#: … (+2)
 msgid "Package database"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:74
+#: minttweaks/modules/terminal/page.py:281
+msgid "Packages are already installed. Confirm the startup file changes and private backup, then open a new terminal."
+msgstr ""
+
+#: minttweaks/modules/maintenance/page.py:76
 msgid "Packages installed automatically that nothing depends on any more."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:265
+msgid "Packages were installed, but their configuration could not be prepared."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:573
 msgid "Password rejected"
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:247
+#: minttweaks/modules/terminal/controls.py:245
+msgid "Paths and shell hooks are regenerated for this machine. Review all aliases and differences before confirming."
+msgstr ""
+
+#: minttweaks/modules/maintenance/backend.py:261
 msgid "Permanently deletes everything currently in your user trash."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:130
+msgid "Personal aliases"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:213
+msgid "Personal configuration exported."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:63
+msgid "Personal options only. Preview and back up changes before applying them. Open a new terminal to load them."
+msgstr ""
+
+#: minttweaks/modules/terminal/status.py:59
+msgid "Personal settings configured; verify in a new terminal."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:584
@@ -742,12 +1487,84 @@ msgstr ""
 msgid "Pick a Samba account in the list first."
 msgstr ""
 
-#: minttweaks/modules/firefox/page.py:245
+#: minttweaks/modules/firefox/page.py:252
 msgid "Policy updated. Restart Firefox to install the selected extensions."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:73
+msgid "Prefix shortcut"
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:43
+msgid "Prepare Firefox"
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:42
+msgid "Prepare shells and terminals"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:378
 msgid "present"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:140
+msgid "Preview alias removal"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:139
+msgid "Preview alias save"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:60
+msgid "Preview and apply profile"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:73
+msgid "Preview and restore backup"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:175
+msgid "Preview configuration restoration"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:70
+msgid "Preview files with head (first 100 lines)"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:145
+msgid "Preview integration removal"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:123
+msgid "Preview login shell change"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:134
+msgid "Preview managed prompt removal"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:47
+msgid "Preview selected installations"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:144
+msgid "Preview selected integrations"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:93
+msgid "Preview settings for {tool}"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:133
+msgid "Preview Starship activation"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:166
+msgid "Preview terminal profile"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:75
+msgid "Preview tool installation"
 msgstr ""
 
 #: minttweaks/modules/firefox/backend.py:117
@@ -758,26 +1575,76 @@ msgstr ""
 msgid "Privilege escalation is unavailable: 'pkexec' (polkit) is not installed. Install the 'policykit-1' package to enable administrative actions."
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:110
+#: minttweaks/modules/cinnamon/page.py:43
+msgid "Profile name"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:239
+msgid "Profile saved: {name}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:195
+msgid "Profiles are not saved in simulation mode."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:130
+msgid "Profiles could not be read. Previous results have not been updated.\n{error}"
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:185
+msgid "Progress was not updated. Reload before continuing.\n{error}"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:104
+msgid "Project documentation"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:68
+msgid "Prompt character"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:68
+msgid "Prompt color"
+msgstr ""
+
+#: minttweaks/modules/maintenance/page.py:112
+#: minttweaks/modules/maintenance/page.py:220
 msgid "Purge selected kernels"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:184
+#: minttweaks/modules/maintenance/page.py:212
 msgid "Purge these kernels?"
 msgstr ""
 
+#: minttweaks/modules/cinnamon/page.py:38
 #: minttweaks/modules/firefox/page.py:72
 #: minttweaks/modules/home/page.py:77
-#: minttweaks/modules/maintenance/page.py:63
+#: … (+3)
 msgid "Re-analyse"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:136
+#: minttweaks/modules/cinnamon/page.py:50
+msgid "Read all settings before saving a profile."
+msgstr ""
+
+#: minttweaks/modules/services/page.py:141
 msgid "Read as administrator"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:33
+msgid "Read files with syntax highlighting. The Ubuntu/Mint command is commonly batcat."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:198
 msgid "Read only"
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:40
+msgid "Read the system summary and diagnostics. This step does not change any settings."
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:42
+msgid "Read, filter and transform JSON data."
 msgstr ""
 
 #: minttweaks/modules/home/page.py:69
@@ -788,19 +1655,35 @@ msgstr ""
 msgid "Read-only snapshot of this machine."
 msgstr ""
 
-#: minttweaks/ui/window.py:159
+#: minttweaks/modules/cinnamon/page.py:33
+msgid "Read-only values. Missing settings are never replaced with defaults."
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:40
+msgid "Readable, highlighted diffs. Managed integration can make it the Git pager in your shell."
+msgstr ""
+
+#: minttweaks/ui/window.py:168
 msgid "Ready."
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:53
+#: minttweaks/modules/maintenance/page.py:55
 msgid "rebuilt automatically by the file manager"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:806
+#: minttweaks/modules/setup/page.py:56
+msgid "Record your result"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:246
+msgid "Refresh before saving another profile."
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:811
 msgid "Refresh the page and try again."
 msgstr ""
 
-#: minttweaks/ui/window.py:90
+#: minttweaks/ui/window.py:99
 msgid "Refresh this page"
 msgstr ""
 
@@ -812,8 +1695,8 @@ msgstr ""
 msgid "Refusing to export the filesystem root."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:63
-#: minttweaks/modules/services/page.py:135
+#: minttweaks/modules/services/page.py:64
+#: minttweaks/modules/services/page.py:140
 msgid "Reload"
 msgstr ""
 
@@ -821,11 +1704,15 @@ msgstr ""
 msgid "Reload configuration"
 msgstr ""
 
+#: minttweaks/modules/setup/page.py:52
+msgid "Reload saved progress"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:107
 msgid "Reloads smbd so new shares are served at once."
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:162
+#: minttweaks/modules/maintenance/page.py:188
 msgid "removable"
 msgstr ""
 
@@ -833,37 +1720,37 @@ msgstr ""
 msgid "Remove MintTweaks policy"
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:187
-#: minttweaks/modules/maintenance/page.py:79
-#: minttweaks/modules/maintenance/page.py:144
+#: minttweaks/modules/maintenance/backend.py:201
+#: minttweaks/modules/maintenance/page.py:81
+#: minttweaks/modules/maintenance/page.py:162
 msgid "Remove orphaned packages"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:200
+#: minttweaks/modules/maintenance/page.py:247
 msgid "Remove orphaned packages?"
 msgstr ""
 
-#: minttweaks/modules/firefox/page.py:226
+#: minttweaks/modules/firefox/page.py:227
 msgid "Remove the MintTweaks Firefox policy?"
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:253
+#: minttweaks/modules/maintenance/backend.py:267
 msgid "Remove unused Flatpak runtimes"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:745
+#: minttweaks/modules/samba/page.py:750
 msgid "Remove {count} duplicate parameter(s)?"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:139
+#: minttweaks/modules/maintenance/page.py:157
 msgid "Remove {count} package(s)"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:751
+#: minttweaks/modules/samba/page.py:756
 msgid "Removed {count} duplicate parameter(s)."
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:210
+#: minttweaks/modules/maintenance/backend.py:224
 msgid "Removes cached .deb files that can no longer be downloaded."
 msgstr ""
 
@@ -871,24 +1758,30 @@ msgstr ""
 msgid "Removes tracking parameters from links before pages load."
 msgstr ""
 
-#: minttweaks/modules/firefox/page.py:234
+#: minttweaks/modules/firefox/page.py:235
 msgid "Removing the MintTweaks Firefox policy…"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:97
+#: minttweaks/modules/software/page.py:44
+msgid "Repository setup instructions"
+msgstr ""
+
+#: minttweaks/modules/maintenance/page.py:99
 msgid "Requires administrator rights, and privilege escalation is unavailable."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:119
+#: minttweaks/modules/services/page.py:124
 msgid "Restart"
 msgstr ""
 
+#: minttweaks/modules/home/backend.py:347
+#: minttweaks/modules/home/backend.py:388
 #: minttweaks/modules/home/backend.py:341
-#: minttweaks/modules/home/backend.py:338
+#: … (+1)
 msgid "Restart required"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:774
+#: minttweaks/modules/samba/page.py:779
 msgid "Restore a backup"
 msgstr ""
 
@@ -896,15 +1789,55 @@ msgstr ""
 msgid "Restore a backup…"
 msgstr ""
 
+#: minttweaks/modules/cinnamon/page.py:206
+msgid "Restore Cinnamon appearance"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:67
+msgid "Restore previous appearance"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:124
+msgid "Restore the previous login shell"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:195
+msgid "Restore this appearance?"
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:64
+msgid "Result or error to remember"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:318
 msgid "Revert"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:92
+#: minttweaks/modules/terminal/page.py:248
+msgid "Review all dependencies and upgrades. Removals are refused and the plan is checked again before execution."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:124
+msgid "Review all file differences. A private backup is saved before writing."
+msgstr ""
+
+#: minttweaks/modules/software/page.py:106
+msgid "Review the complete APT simulation, including dependencies and upgrades. Removals are refused. The plan will be checked again before installation; repository configuration is not changed."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:321
+msgid "Review the full file differences. A private backup is saved before writing; close and reopen your terminal after the change."
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:45
+msgid "Review the purpose and source of each step. Exact changes are chosen in its module."
+msgstr ""
+
+#: minttweaks/modules/maintenance/page.py:94
 msgid "Run"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:161
+#: minttweaks/modules/maintenance/page.py:187
 #: minttweaks/modules/services/backend.py:49
 msgid "running"
 msgstr ""
@@ -913,11 +1846,11 @@ msgstr ""
 msgid "Running as root."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:55
+#: minttweaks/modules/services/page.py:56
 msgid "Running only"
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:217
+#: minttweaks/modules/maintenance/backend.py:231
 msgid "Runs 'apt-get -f install', the usual cure for a half-configured system."
 msgstr ""
 
@@ -933,11 +1866,12 @@ msgstr ""
 msgid "Samba allowed"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:645
+#: minttweaks/modules/samba/page.py:642
+#: minttweaks/modules/samba/page.py:650
 msgid "Samba could not be installed"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:642
+#: minttweaks/modules/samba/page.py:647
 msgid "Samba installed."
 msgstr ""
 
@@ -961,7 +1895,7 @@ msgstr ""
 msgid "Samba password set for {user}."
 msgstr ""
 
-#: minttweaks/modules/home/page.py:86
+#: minttweaks/modules/home/page.py:91
 msgid "Samba sharing"
 msgstr ""
 
@@ -970,11 +1904,40 @@ msgid "Samba status refreshed."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:317
+#: minttweaks/modules/terminal/controls.py:185
 msgid "Save"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:41
+msgid "Save a profile"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:233
+msgid "Save Cinnamon profile"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:47
+msgid "Save current appearance"
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:44
+msgid "Save or apply a Cinnamon profile. Applying changes user settings after a preview and backup; themes and fonts must already be installed."
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:179
+msgid "Save preparation progress"
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:41
+msgid "Save selected steps"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:164
 msgid "Save share"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:54
+msgid "Saved profiles"
 msgstr ""
 
 #: minttweaks/modules/firefox/backend.py:107
@@ -985,13 +1948,25 @@ msgstr ""
 msgid "Saves web pages to an Obsidian vault."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:109
-#: minttweaks/modules/services/page.py:205
+#: minttweaks/modules/terminal/controls.py:22
+msgid "Search by tool, package or description"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:51
+msgid "Search shell history. Managed local integration is available; account sync remains optional and manual."
+msgstr ""
+
+#: minttweaks/modules/services/page.py:114
+#: minttweaks/modules/services/page.py:220
 msgid "Select a service"
 msgstr ""
 
 #: minttweaks/modules/firefox/page.py:69
 msgid "Select all missing extensions"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:73
+msgid "Select starter tools"
 msgstr ""
 
 #: minttweaks/modules/firefox/page.py:56
@@ -1002,12 +1977,24 @@ msgstr ""
 msgid "Serve files on the network"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:146
+#: minttweaks/modules/services/page.py:151
 msgid "Service"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:85
+#: minttweaks/modules/services/page.py:203
+msgid "Service state unavailable. Previous results, if any, have not been updated.\n{error}"
+msgstr ""
+
+#: minttweaks/modules/home/page.py:90
 msgid "Services"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:23
+msgid "Sessions and monitoring"
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:45
+msgid "Set up sharing, if needed"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:545
@@ -1027,11 +2014,36 @@ msgstr ""
 msgid "Shares"
 msgstr ""
 
+#: minttweaks/modules/terminal/catalog.py:24
+msgid "Shell enhancements"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:127
+msgid "Shell integrations"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:57
+msgid "Shell with extensive completion and customization options."
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:25
+msgid "Shells and terminal applications"
+msgstr ""
+
+#: minttweaks/modules/home/page.py:96
+#: minttweaks/modules/terminal/page.py:21
+msgid "Shells and terminals"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:49
+msgid "Short command examples. The client may need to download its page cache."
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:261
 msgid "Show"
 msgstr ""
 
-#: minttweaks/ui/window.py:91
+#: minttweaks/ui/window.py:100
 msgid "Show / hide output"
 msgstr ""
 
@@ -1039,15 +2051,48 @@ msgstr ""
 msgid "Show active connections"
 msgstr ""
 
+#: minttweaks/modules/terminal/catalog.py:37
+msgid "Show free and used disk space in a readable table."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:67
+msgid "Show Git information"
+msgstr ""
+
 #: minttweaks/modules/firefox/backend.py:137
 msgid "Shows Amazon price history and alerts."
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:223
+#: minttweaks/modules/maintenance/backend.py:237
 msgid "Shrink the system journal to 200 MB"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:48
+#: minttweaks/modules/cinnamon/backend.py:289
+msgid "Simulation: no appearance settings or backups were written."
+msgstr ""
+
+#: minttweaks/ui/window.py:61
+msgid "Simulation: no commands or cleanup actions will be executed."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:213
+#: minttweaks/modules/terminal/page.py:332
+msgid "Simulation: no configuration files changed."
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:194
+msgid "Simulation: no software was installed."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:139
+msgid "Simulation: no terminal tools were installed."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:299
+msgid "Simulation: the login shell was not changed."
+msgstr ""
+
+#: minttweaks/modules/maintenance/page.py:50
 msgid "Sizes are measured, not estimated. Nothing is removed from this card."
 msgstr ""
 
@@ -1055,15 +2100,31 @@ msgstr ""
 msgid "Skips sponsor segments in YouTube videos."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:304
+#: minttweaks/modules/services/page.py:332
 msgid "Slowest units:"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:659
+#: minttweaks/modules/samba/page.py:664
 msgid "smbd and nmbd are enabled and running."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:117
+#: minttweaks/modules/software/backend.py:72
+msgid "Software availability is not checked in simulation mode."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:155
+msgid "Some backups could not be read and were preserved:\n{errors}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:138
+msgid "Some profile files could not be read and were preserved:\n{errors}"
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:216
+msgid "Starship is already initialized outside the managed block. The file was preserved."
+msgstr ""
+
+#: minttweaks/modules/services/page.py:122
 msgid "Start"
 msgstr ""
 
@@ -1079,48 +2140,116 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:118
+#: minttweaks/modules/terminal/controls.py:73
+msgid "Status bar position"
+msgstr ""
+
+#: minttweaks/modules/services/page.py:123
 msgid "Stop"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:53
+msgid "Suggest Zsh commands from history. Managed activation is available for Zsh."
 msgstr ""
 
 #: minttweaks/modules/home/page.py:51
 msgid "System"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:52
+#: minttweaks/modules/maintenance/page.py:54
 msgid "System journal"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:253
+#: minttweaks/modules/home/backend.py:263
 msgid "systemctl is not available on this system."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:303
+#: minttweaks/modules/services/page.py:330
 msgid "systemd-analyze returned nothing."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:723
+#: minttweaks/modules/terminal/controls.py:64
+#: minttweaks/modules/terminal/controls.py:131
+#: minttweaks/modules/terminal/page.py:72
+msgid "Target shell"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:148
+msgid "Terminal appearance"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:59
+msgid "Terminal application with tabs, layouts and GPU rendering."
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:728
 msgid "testparm rejected the configuration."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:724
+#: minttweaks/modules/samba/page.py:729
 msgid "testparm rejected this configuration"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:799
+#: minttweaks/modules/terminal/backend.py:323
+msgid "The account no longer matches the latest shell backup. Choose the shell manually."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:302
+msgid "The account shell changed. Review a new preview."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:263
+msgid "The Alacritty configuration format could not be identified."
+msgstr ""
+
+#: minttweaks/modules/home/page.py:108
+msgid "The analysis failed. Previous results, if any, have not been updated."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:292
+msgid "The appearance changed or could not be checked. Review a new preview before applying."
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:804
 msgid "The backup could not be restored"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:851
-#: minttweaks/modules/samba/page.py:866
+#: minttweaks/modules/setup/backend.py:148
+msgid "The checklist changed. Reload it before saving."
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:127
+msgid "The checklist file is a symbolic link and was left unchanged."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:248
+#: minttweaks/modules/cinnamon/page.py:218
+msgid "The Cinnamon profile operation failed."
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:179
+#: minttweaks/modules/terminal/backend.py:133
+msgid "The complete installation plan could not be read."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:333
+msgid "The configuration operation failed."
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:856
+#: minttweaks/modules/samba/page.py:871
 msgid "The configuration was not saved"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:267
+msgid "The current appearance could not all be read. Nothing was changed."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:427
 msgid "The editor has unsaved changes; the file on disk has changed since."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:759
+#: minttweaks/modules/samba/page.py:764
 msgid "The editor is reloaded from the file on disk."
 msgstr ""
 
@@ -1128,8 +2257,12 @@ msgstr ""
 msgid "The existing Firefox policy could not be read: {error}"
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:238
+#: minttweaks/modules/maintenance/backend.py:252
 msgid "The file manager rebuilds it as you browse. Safe, and it frees a surprising amount of space."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:309
+msgid "The final appearance could not be verified."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:537
@@ -1152,17 +2285,68 @@ msgstr ""
 msgid "The folder path must not contain control characters."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:299
-#: minttweaks/modules/services/page.py:274
-msgid "The journal is not readable without administrator rights."
+#: minttweaks/modules/terminal/transfer.py:186
+msgid "The imported configuration plan changed. Review a new preview."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:347
-msgid "The kernel list could not be read."
+#: minttweaks/modules/software/backend.py:197
+#: minttweaks/modules/terminal/backend.py:142
+msgid "The installation plan changed. Review a new preview before continuing."
 msgstr ""
 
-#: minttweaks/modules/firefox/page.py:248
+#: minttweaks/modules/terminal/integrations.py:103
+msgid "The installed fzf version could not be identified."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:149
+msgid "The installed tool version could not be verified: {tool}"
+msgstr ""
+
+#: minttweaks/modules/terminal/integrations.py:215
+msgid "The integration plan changed. Review a new preview."
+msgstr ""
+
+#: minttweaks/modules/services/page.py:286
+msgid "The journal could not be read: {error}"
+msgstr ""
+
+#: minttweaks/modules/services/page.py:302
+msgid "The journal may be incomplete: {error}"
+msgstr ""
+
+#: minttweaks/modules/maintenance/page.py:170
+msgid "The kernel list could not be read: {error}"
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:311
+msgid "The login shell change could not be verified. Its previous value was saved."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:118
+msgid "The login shell is separate from the terminal application. A change affects future login sessions; your current terminals stay open."
+msgstr ""
+
+#: minttweaks/modules/terminal/status.py:73
+msgid "The managed block differs from the expected integration. Review it before updating."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:201
+msgid "The managed prompt block is malformed. The file was preserved."
+msgstr ""
+
+#: minttweaks/modules/terminal/status.py:37
+#: minttweaks/modules/terminal/status.py:57
+msgid "The managed settings file is missing or modified; review the configuration."
+msgstr ""
+
+#: minttweaks/modules/firefox/page.py:255
 msgid "The MintTweaks Firefox policy entries were removed."
+msgstr ""
+
+#: minttweaks/modules/maintenance/page.py:299
+#: minttweaks/modules/services/page.py:259
+#: minttweaks/ui/widgets.py:375
+msgid "The operation failed."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:630
@@ -1177,19 +2361,48 @@ msgstr ""
 msgid "The password must not start or end with a space."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:313
+#: minttweaks/modules/terminal/configuration.py:254
+msgid "The personal configuration changed. Review a new preview."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:327
+msgid "The previous value could not be verified after recovery."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:297
+msgid "The previous value will be saved. Administrator authorization is required. Start a new login session afterwards."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:227
+msgid "The profile could not be saved."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:331
+msgid "The profile was applied and its values were verified."
+msgstr ""
+
+#: minttweaks/modules/maintenance/page.py:134
+#: minttweaks/modules/maintenance/page.py:148
+msgid "The removal preview could not be read. Re-analyse before removing packages."
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:204
+msgid "The requested package version was not verified after installation."
+msgstr ""
+
+#: minttweaks/modules/home/backend.py:316
 msgid "The root filesystem is almost full: {percent}% used, {free} free."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:321
+#: minttweaks/modules/home/backend.py:324
 msgid "The root filesystem is filling up: {percent}% used, {free} free."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:328
+#: minttweaks/modules/home/backend.py:331
 msgid "The root filesystem is {percent}% used, {free} free."
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:105
+#: minttweaks/modules/maintenance/page.py:107
 msgid "The running kernel and the newest one are always kept. Linux Mint's Update Manager can also remove kernels; both tools are safe to use."
 msgstr ""
 
@@ -1197,8 +2410,30 @@ msgstr ""
 msgid "The Samba account could not be updated"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:268
-msgid "The service state could not be read: {sample}"
+#: minttweaks/modules/setup/backend.py:138
+msgid "The saved checklist could not be read and was preserved: {error}"
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:208
+msgid "The selected packages were installed and their versions verified."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:294
+#: minttweaks/modules/cinnamon/page.py:190
+msgid "The selected profile already matches the current appearance."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:125
+msgid "The selected tool is already installed: {tool}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:280
+msgid "The setting did not keep the requested value: {setting}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:198
+#: minttweaks/modules/cinnamon/page.py:127
+msgid "The settings could not all be read. Refresh before saving a profile."
 msgstr ""
 
 #: minttweaks/core/smbconf.py:369
@@ -1209,63 +2444,167 @@ msgstr ""
 msgid "The share name must not end with a space."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:339
+#: minttweaks/modules/terminal/page.py:346
+msgid "The shell or terminal operation failed."
+msgstr ""
+
+#: minttweaks/modules/software/page.py:123
+msgid "The software installation was not fully verified."
+msgstr ""
+
+#: minttweaks/modules/software/page.py:130
+msgid "The software operation failed."
+msgstr ""
+
+#: minttweaks/modules/home/backend.py:348
 msgid "The system must restart to finish applying updates."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:150
+msgid "The terminal tools were installed and verified."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:145
+msgid "The tool installation failed. Check APT before retrying."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:604
 msgid "The Unix account and its files are kept."
 msgstr ""
 
+#: minttweaks/modules/cinnamon/backend.py:318
+msgid "The value changed outside this operation; it was not overwritten."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:71
+msgid "Theme"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:563
 msgid "This account has no Unix user behind it."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:225
+#: minttweaks/modules/terminal/configuration.py:75
+msgid "This alias name is invalid or reserved: {name}"
+msgstr ""
+
+#: minttweaks/modules/services/page.py:240
 msgid "This changes the running system immediately."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:669
+#: minttweaks/modules/setup/page.py:35
+msgid "This guide opens the existing modules. It does not install software or change settings by itself."
+msgstr ""
+
+#: minttweaks/modules/terminal/transfer.py:105
+msgid "This imported tool is unavailable in the configured APT sources: {tool}"
+msgstr ""
+
+#: minttweaks/modules/terminal/status.py:63
+msgid "This integration does not apply to this shell."
+msgstr ""
+
+#: minttweaks/modules/terminal/backend.py:304
+msgid "This is already your login shell."
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:88
+msgid "This package has an incomplete state. Check it in Maintenance first."
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:171
+msgid "This package is already installed: {name}"
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:674
 msgid "This runs 'ufw allow Samba'."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:818
+#: minttweaks/modules/cinnamon/backend.py:260
+msgid "This setting cannot be changed: {setting}"
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:823
 msgid "This share cannot be saved"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:53
+#: minttweaks/modules/software/backend.py:126
+msgid "This source has no supported package for architecture {architecture}."
+msgstr ""
+
+#: minttweaks/modules/maintenance/page.py:55
 msgid "Thumbnail cache"
 msgstr ""
 
-#: minttweaks/modules/maintenance/backend.py:231
+#: minttweaks/modules/maintenance/backend.py:245
 msgid "Time-based vacuum, usually the better choice on a laptop."
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:54
+#: minttweaks/modules/setup/page.py:17
+msgid "To do"
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:17
+msgid "To retry"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:63
+msgid "Tool settings"
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:38
+msgid "Track source changes and work with Git repositories."
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:56
+msgid "Traditional shell, normally already installed on Mint."
+msgstr ""
+
+#: minttweaks/modules/terminal/catalog.py:43
+msgid "Transfer data and inspect HTTP responses."
+msgstr ""
+
+#: minttweaks/modules/maintenance/page.py:56
 msgid "Trash"
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:72
+msgid "Tree view"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:381
 msgid "ufw not installed"
 msgstr ""
 
+#: minttweaks/modules/cinnamon/page.py:124
+msgid "Unavailable: {error}"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:256
 msgid "Unix account"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:124
-#: minttweaks/modules/home/backend.py:151
-#: minttweaks/modules/home/backend.py:152
-#: … (+13)
+#: minttweaks/modules/home/backend.py:129
+#: minttweaks/modules/home/backend.py:181
+#: minttweaks/modules/home/backend.py:182
+#: … (+16)
 msgid "unknown"
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:41
+msgid "Unofficial Debian package built from Zen's official archive by the Masternaka APT repository."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:127
+msgid "Update personal terminal settings"
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:324
+msgid "Update terminal configuration"
 msgstr ""
 
 #: minttweaks/modules/home/page.py:56
 msgid "Uptime"
-msgstr ""
-
-#: minttweaks/modules/services/page.py:276
-msgid "Use 'Read as administrator' to read the entries: a password prompt will appear."
 msgstr ""
 
 #: minttweaks/core/smbconf.py:373
@@ -1274,6 +2613,10 @@ msgstr ""
 
 #: minttweaks/modules/samba/backend.py:549
 msgid "Use a lowercase Unix user name (letters, digits, '_', '-')."
+msgstr ""
+
+#: minttweaks/modules/setup/backend.py:81
+msgid "Use a note of up to 500 characters without control characters."
 msgstr ""
 
 #: minttweaks/modules/samba/backend.py:560
@@ -1288,6 +2631,10 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
+#: minttweaks/modules/terminal/page.py:64
+msgid "Utilities and installation"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:155
 msgid "Valid users"
 msgstr ""
@@ -1300,12 +2647,20 @@ msgstr ""
 msgid "Validated with testparm before every save."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:837
+#: minttweaks/modules/samba/page.py:842
 msgid "Validating and installing the configuration…"
 msgstr ""
 
-#: minttweaks/ui/window.py:124
+#: minttweaks/modules/setup/page.py:17
+msgid "Verified by you"
+msgstr ""
+
+#: minttweaks/ui/window.py:133
 msgid "version {version}"
+msgstr ""
+
+#: minttweaks/ui/window.py:205
+msgid "Wait for {operation} to finish before closing MintTweaks."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:434
@@ -1316,6 +2671,14 @@ msgstr ""
 msgid "Will be installed the next time Firefox starts."
 msgstr ""
 
+#: minttweaks/modules/cinnamon/backend.py:44
+msgid "Window borders"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/backend.py:48
+msgid "Window title font"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:156
 msgid "Write list"
 msgstr ""
@@ -1324,12 +2687,24 @@ msgstr ""
 msgid "Writing the Firefox extension policy…"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:54
+#: minttweaks/modules/setup/page.py:45
+msgid "Your preparation plan"
+msgstr ""
+
+#: minttweaks/modules/maintenance/page.py:56
 msgid "your user trash"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:291
-msgid "{count} error line(s) since the last boot. First entry: {sample}"
+#: minttweaks/modules/cinnamon/page.py:153
+msgid "{count} appearance backup(s)."
+msgstr ""
+
+#: minttweaks/modules/terminal/page.py:228
+msgid "{count} configuration backup(s)."
+msgstr ""
+
+#: minttweaks/modules/home/backend.py:301
+msgid "{count} error line(s) in the latest 20 entries since boot. First entry: {sample}"
 msgstr ""
 
 #: minttweaks/modules/firefox/page.py:187
@@ -1340,23 +2715,47 @@ msgstr ""
 msgid "{count} Firefox profile(s) detected."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:354
+#: minttweaks/modules/terminal/controls.py:153
+msgid "{count} managed alias(es). External startup files are not fully inspected."
+msgstr ""
+
+#: minttweaks/modules/home/backend.py:365
 msgid "{count} old kernel(s) can be removed: {versions}"
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:137
+#: minttweaks/modules/maintenance/page.py:249
+msgid "{count} package(s) are proposed for removal. The complete list is shown below. APT will be checked again before execution; if the list changes, removal will be refused."
+msgstr ""
+
+#: minttweaks/modules/maintenance/page.py:155
 msgid "{count} package(s) can be removed."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:260
+#: minttweaks/modules/cinnamon/page.py:136
+msgid "{count} saved profile(s)."
+msgstr ""
+
+#: minttweaks/modules/home/backend.py:272
 msgid "{count} service(s) failed: {names}"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:135
+#: minttweaks/modules/terminal/page.py:186
+msgid "{count} tool(s) selected. Preview before installing."
+msgstr ""
+
+#: minttweaks/modules/terminal/controls.py:52
+msgid "{count} tool(s) shown. Hidden selections are kept."
+msgstr ""
+
+#: minttweaks/modules/home/page.py:143
+msgid "{errors} error(s), {warnings} warning(s), {ok} check(s) passed, {unavailable} check(s) unavailable."
+msgstr ""
+
+#: minttweaks/modules/home/page.py:151
 msgid "{errors} error(s), {warnings} warning(s), {ok} check(s) passed."
 msgstr ""
 
-#: minttweaks/modules/maintenance/page.py:183
+#: minttweaks/modules/maintenance/page.py:211
 msgid "{kernels}\n\nEvery related package is removed (about 300 MB each)."
 msgstr ""
 
@@ -1368,14 +2767,26 @@ msgstr ""
 msgid "{names}\n\nFirefox must be restarted after this. The add-ons are downloaded from addons.mozilla.org."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:211
+#: minttweaks/modules/services/page.py:226
 msgid "{state} · startup: {enabled}"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:112
+#: minttweaks/modules/terminal/integrations.py:153
+msgid "{tool}: applies to {shell} only; not changed here."
+msgstr ""
+
+#: minttweaks/modules/terminal/integrations.py:151
+msgid "{tool}: ready with its default configuration; no shell hook is needed."
+msgstr ""
+
+#: minttweaks/modules/home/page.py:120
 msgid "{used} / {total} ({percent}% used)"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:122
+#: minttweaks/modules/home/page.py:130
 msgid "{used} / {total} ({percent}% used, {free} free)"
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:134
+msgid "{verified} of {total} step(s) verified by you."
 msgstr ""

@@ -10,6 +10,7 @@ to genuine backend output (computed with ``FakeRunner``) without raising.
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import Mock, patch
 
 from tests import fakegi
 
@@ -17,6 +18,10 @@ fakegi.install()
 
 from minttweaks.modules.firefox import backend as firefox  # noqa: E402
 from minttweaks.modules.firefox.page import FirefoxPage  # noqa: E402
+from minttweaks.modules.cinnamon.page import CinnamonPage  # noqa: E402
+from minttweaks.modules.setup.page import SetupPage  # noqa: E402
+from minttweaks.modules.software.page import SoftwarePage  # noqa: E402
+from minttweaks.modules.terminal.page import TerminalPage  # noqa: E402
 from minttweaks.modules.home import backend as home  # noqa: E402
 from minttweaks.modules.home.page import HomePage  # noqa: E402
 from minttweaks.modules.maintenance import backend as maint  # noqa: E402
@@ -51,17 +56,17 @@ class ConstructionTests(unittest.TestCase):
         self.ctx = widgets.AppContext(make_runner())
 
     def test_pages_can_be_built(self):
-        for page_class in (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage):
+        for page_class in (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage, CinnamonPage, SetupPage, SoftwarePage, TerminalPage):
             page = page_class(self.ctx)
             self.assertIsInstance(page, widgets.Page)
 
     def test_window_can_be_built(self):
         context = widgets.AppContext(make_runner())
         window = MainWindow(None, context)
-        self.assertEqual(len(window.pages), 5)
+        self.assertEqual(len(window.pages), 9)
         self.assertEqual(
             [page.page_name for page in window.pages],
-            ["home", "maintenance", "services", "samba", "firefox"],
+            ["home", "maintenance", "services", "samba", "firefox", "cinnamon", "setup", "software", "terminal"],
         )
 
     def test_pages_start_empty_and_load_lazily(self):
@@ -97,8 +102,74 @@ class MaintenanceStateTests(unittest.TestCase):
         self.page._on_kernel_toggle(_Toggle(False), removable[0])
         self.assertEqual(self.page.selected_kernels, [])
 
+    def test_generic_autoremove_button_uses_the_preview_flow(self):
+        with patch.object(self.page, "_on_autoremove") as preview, patch.object(self.page, "_execute") as execute:
+            self.page._run_task(maint.TASK_BY_ID["apt_autoremove"])
+        preview.assert_called_once_with()
+        execute.assert_not_called()
+
+    def test_confirmation_keeps_all_packages_and_passes_the_approved_plan(self):
+        packages = [f"package-{number}" for number in range(40)]
+        with patch.object(widgets, "confirm_list", return_value=True) as confirm, \
+                patch.object(self.page, "_execute") as execute:
+            self.page._confirm_autoremove(packages)
+        self.assertEqual(confirm.call_args.args[2], packages)
+        execute.assert_called_once_with(maint.TASK_BY_ID["apt_autoremove"], approved_packages=packages)
+
+    def test_cancelled_preview_does_not_execute(self):
+        self.page._busy = True
+        with patch.object(widgets, "confirm_list", return_value=False), patch.object(self.page, "_execute") as execute:
+            self.page._confirm_autoremove(["keep-me"])
+        self.assertFalse(self.page._busy)
+        execute.assert_not_called()
+
+    def test_empty_preview_does_not_execute(self):
+        self.page._busy = True
+        with patch.object(self.page, "info"), patch.object(self.page, "refresh"), \
+                patch.object(self.page, "_execute") as execute:
+            self.page._confirm_autoremove([])
+        self.assertFalse(self.page._busy)
+        execute.assert_not_called()
+
+    def test_confirmation_widget_preserves_the_complete_list(self):
+        packages = [f"long-package-name-{number}" for number in range(500)]
+        buffer = Mock()
+        with patch.object(widgets, "text_view", return_value=(Mock(), Mock(), buffer)):
+            widgets.confirm_list(None, "Preview", packages, "All packages")
+        buffer.set_text.assert_called_once_with("\n".join(packages))
+
+    def test_failed_preview_restores_controls(self):
+        self.page._busy = True
+        with patch.object(self.page, "error") as error:
+            self.page._on_operation_error(maint.PreviewError("APT locked"))
+        self.assertFalse(self.page._busy)
+        error.assert_called_once()
+
+    def test_busy_state_does_not_enable_root_actions_without_escalation(self):
+        with patch.object(widgets, "escalation_available", return_value=False), \
+                patch.object(self.page._task_buttons["apt_clean"], "set_sensitive") as sensitive:
+            self.page._set_busy(False)
+        sensitive.assert_called_once_with(False)
+
 
 class ServicesStateTests(unittest.TestCase):
+    def test_failed_refresh_marks_previous_units_as_stale_and_prevents_actions(self):
+        units = [svc.Unit("smbd.service", active="active")]
+        self.page._apply_units(units)
+        self.page._units_failed(svc.ReadError("D-Bus unavailable"))
+        self.assertEqual(self.page.units, units)
+        self.assertFalse(self.page._units_current)
+        self.page.selected = units[0]
+        with patch.object(self.page, "run_operation") as run:
+            self.page._control("restart")
+        run.assert_not_called()
+
+    def test_partial_journal_retains_its_failure_hint(self):
+        self.page.selected = svc.Unit("smbd.service")
+        with patch.object(self.page.log_hint, "set_text") as hint:
+            self.page._apply_logs("smbd.service", svc.Result("journalctl", 124, stdout="partial logs", stderr="Timeout"))
+        self.assertIn("Timeout", hint.call_args.args[0])
+
     def setUp(self):
         self.ctx = widgets.AppContext(make_runner())
         self.page = ServicesPage(self.ctx)
@@ -110,7 +181,7 @@ class ServicesStateTests(unittest.TestCase):
         self.assertTrue(any(unit.failed for unit in self.page.units))
 
     def test_boot_analysis_renders(self):
-        self.page._apply_boot(("Startup finished in 4.2s", [("5.1s", "foo.service")], "chain"))
+        self.page._apply_boot(svc.BootReport("Startup finished in 4.2s", [("5.1s", "foo.service")], "chain"))
         self.assertTrue(self.page.boot_summary)
 
     def test_journal_failure_shows_a_hint(self):
@@ -121,6 +192,25 @@ class ServicesStateTests(unittest.TestCase):
 
 
 class HomeStateTests(unittest.TestCase):
+    def test_refresh_passes_the_context_runner_to_the_diagnostic(self):
+        report = home.HomeReport(home.SystemSummary(), [])
+
+        def immediate(work, on_done, **kwargs):
+            on_done(work())
+
+        with patch.object(home, "collect_report", return_value=report) as collect, \
+                patch.object(self.ctx, "run_async", side_effect=immediate):
+            self.page.refresh()
+        collect.assert_called_once_with(self.ctx.runner)
+        self.assertIs(self.page.report, report)
+
+    def test_unavailable_checks_do_not_produce_an_all_passed_message(self):
+        report = home.HomeReport(home.SystemSummary(), [home.Finding("info", "Unavailable", completed=False)])
+        with patch.object(self.page.checks_label, "set_text") as text:
+            self.page._apply_report(report)
+        self.assertIn("1 check(s) unavailable", text.call_args.args[0])
+        self.assertNotIn("All", text.call_args.args[0])
+
     def setUp(self):
         self.ctx = widgets.AppContext(make_runner())
         self.page = HomePage(self.ctx)

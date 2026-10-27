@@ -3,6 +3,7 @@
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from minttweaks.modules.home import backend as home
 from tests.fakes import FakeRunner
@@ -89,6 +90,38 @@ class SummaryTests(unittest.TestCase):
 
 
 class CheckTests(unittest.TestCase):
+    def test_failed_checks_do_not_report_healthy_or_verified_results(self):
+        for check, command in (
+            (home.check_package_database, ["dpkg"]),
+            (home.check_dependencies, ["apt-get"]),
+            (home.check_failed_services, ["systemctl"]),
+            (home.check_boot_errors, ["journalctl"]),
+        ):
+            with self.subTest(check=check.__name__):
+                runner = FakeRunner().add(command, returncode=124, stderr="Timed out")
+                finding = check(runner)
+                self.assertFalse(finding.completed)
+                self.assertNotEqual(finding.severity, "ok")
+                self.assertIn("Timed out", finding.detail)
+
+    def test_locked_apt_is_unavailable_not_a_broken_dependency_diagnosis(self):
+        runner = FakeRunner().add(["apt-get"], returncode=100, stderr="Could not get lock /var/lib/dpkg/lock")
+        finding = home.check_dependencies(runner)
+        self.assertFalse(finding.completed)
+        self.assertNotEqual(finding.severity, "error")
+
+    def test_restricted_successful_journal_is_not_reported_as_no_system_errors(self):
+        runner = FakeRunner().add(["journalctl"], stdout="-- No entries --\n", stderr="You are currently not seeing messages from other users and the system.")
+        finding = home.check_boot_errors(runner)
+        self.assertFalse(finding.completed)
+        self.assertNotEqual(finding.severity, "ok")
+
+    def test_unidentified_running_kernel_is_not_used_to_propose_removals(self):
+        runner = FakeRunner().add(["dpkg-query"], stdout="linux-image-6.8.0-40-generic\t1\tinstall ok installed\n")
+        runner.add(["uname"], returncode=124)
+        finding = home.check_kernels(runner)
+        self.assertFalse(finding.completed)
+
     def test_disk_thresholds(self):
         self.assertEqual(home.disk_finding(95, "1.0 GB").severity, "error")
         self.assertEqual(home.disk_finding(85, "1.0 GB").severity, "warn")
@@ -121,6 +154,22 @@ class CheckTests(unittest.TestCase):
 
 
 class ReportTests(unittest.TestCase):
+    def test_one_failed_check_does_not_hide_other_findings(self):
+        with patch.object(home, "check_package_database", side_effect=OSError("unreadable database")):
+            report = self.report(make_runner())
+        self.assertEqual(len(report.findings), 7)
+        self.assertEqual(report.unavailable, 1)
+        self.assertGreater(report.passed, 0)
+        self.assertIn("unreadable database", self.by_title(report)["Package database"].detail)
+
+    def test_simulated_commands_are_never_counted_as_successful_checks(self):
+        runner = make_runner()
+        runner.dry_run = True
+        report = self.report(runner)
+        self.assertEqual(report.unavailable, 5)
+        self.assertFalse(runner.commands())
+        self.assertEqual(report.summary.kernel, "unknown")
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)

@@ -35,6 +35,7 @@ test:
 # Syntax-check everything, keep the catalogue and translations in sync.
 check:
 	PYTHONPYCACHEPREFIX=$${TMPDIR:-/tmp}/mtk-pycache $(PYTHON) -m compileall -q $(PKG) tests data/mtk-root data/mtk-firefox tools
+	bash -n tools/publish-release.sh
 	$(PYTHON) tools/extract_strings.py --check
 	$(PYTHON) tools/compile_mo.py --check po/fr.po
 	$(MAKE) translations

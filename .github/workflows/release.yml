@@ -3,6 +3,7 @@ name: Validate and release Debian package
 on:
   push:
     branches: [main]
+    tags: ['v*']
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -17,47 +18,29 @@ jobs:
     outputs:
       tag: ${{ steps.version.outputs.tag }}
       version: ${{ steps.version.outputs.version }}
+      channel: ${{ steps.version.outputs.channel }}
+      publish: ${{ steps.version.outputs.publish }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - name: Validate source
         run: |
           make test
           make check
+      - name: Plan release and stamp build version
+        id: version
+        run: python3 tools/release_plan.py --apply >> "$GITHUB_OUTPUT"
+      - name: Check stable tag belongs to main
+        if: steps.version.outputs.channel == 'stable'
+        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main
       - name: Install packaging tools
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: steps.version.outputs.publish == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends debhelper dh-python devscripts
-      - name: Set build version
-        id: version
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-        shell: bash
-        run: |
-          base=$(python3 -c 'from minttweaks import __version__; print(__version__)')
-          version="${base}+git${GITHUB_RUN_NUMBER}.${GITHUB_RUN_ATTEMPT}.${GITHUB_SHA:0:12}"
-          tag="v${base}-build.${GITHUB_RUN_NUMBER}.${GITHUB_RUN_ATTEMPT}"
-          export BUILD_BASE="$base" BUILD_VERSION="$version"
-          python3 - <<'PY'
-          import os
-          from pathlib import Path
-
-          base, version = os.environ['BUILD_BASE'], os.environ['BUILD_VERSION']
-          replacements = {
-              'debian/changelog': (f'minttweaks ({base})', f'minttweaks ({version})'),
-              'minttweaks/__init__.py': (f'__version__ = "{base}"', f'__version__ = "{version}"'),
-              'data/minttweaks.1': (f'"minttweaks {base}"', f'"minttweaks {version}"'),
-          }
-          for name, (old, new) in replacements.items():
-              path = Path(name)
-              text = path.read_text()
-              if text.count(old) != 1:
-                  raise SystemExit(f'Expected exactly one version marker in {name}')
-              path.write_text(text.replace(old, new, 1))
-          PY
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
       - name: Build package and source archive
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: steps.version.outputs.publish == 'true'
         env:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
@@ -69,7 +52,7 @@ jobs:
             -czf "dist/minttweaks_${VERSION}_source.tar.gz"
           (cd dist && sha256sum ./*.deb ./*.tar.gz > SHA256SUMS)
       - name: Save release assets
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: steps.version.outputs.publish == 'true'
         uses: actions/upload-artifact@v6
         with:
           name: release-assets
@@ -78,12 +61,15 @@ jobs:
 
   publish:
     needs: build
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: needs.build.outputs.publish == 'true'
     runs-on: ubuntu-22.04
     timeout-minutes: 5
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
       - uses: actions/download-artifact@v7
         with:
           name: release-assets
@@ -94,13 +80,5 @@ jobs:
           GH_REPO: ${{ github.repository }}
           RELEASE_TAG: ${{ needs.build.outputs.tag }}
           VERSION: ${{ needs.build.outputs.version }}
-        run: |
-          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
-            gh release upload "$RELEASE_TAG" dist/* --clobber
-            exit 0
-          fi
-          gh release create "$RELEASE_TAG" dist/* \
-            --target "$GITHUB_SHA" \
-            --title "MintTweaks $VERSION" \
-            --latest \
-            --notes "Automatic main build from commit $GITHUB_SHA. Includes the Debian package, matching source archive with build version metadata, and SHA256SUMS."
+          CHANNEL: ${{ needs.build.outputs.channel }}
+        run: bash tools/publish-release.sh "$CHANNEL" "$RELEASE_TAG" "$VERSION" "$GITHUB_SHA" dist

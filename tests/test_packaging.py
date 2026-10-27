@@ -118,9 +118,10 @@ class DebianFilesTests(unittest.TestCase):
         self.assertIsNotNone(match, f"malformed changelog trailer: {trailer!r}")
         self.assertIsNotNone(email.utils.parsedate_to_datetime(match.group("date")))
 
-    def test_docs_file_lists_existing_files(self):
+    def test_docs_file_lists_existing_documents_or_directories(self):
         for name in (DEBIAN / "minttweaks.docs").read_text(encoding="utf-8").split():
-            self.assertTrue((ROOT / name).is_file(), f"{name} is listed in .docs but does not exist")
+            document = ROOT / name
+            self.assertTrue(document.is_file() or document.is_dir(), f"{name} is listed in .docs but does not exist")
 
     def test_copyright_follows_dep5(self):
         text = (DEBIAN / "copyright").read_text(encoding="utf-8")

@@ -79,26 +79,34 @@ class HomePage(Page):
 
     def _build_modules(self) -> Gtk.Box:
         outer, body = widgets.card(_("Modules"), _("Jump to a section."))
-        buttons = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        buttons = Gtk.FlowBox()
+        buttons.set_selection_mode(Gtk.SelectionMode.NONE)
+        buttons.set_min_children_per_line(1)
+        buttons.set_max_children_per_line(3)
+        buttons.set_row_spacing(6)
+        buttons.set_column_spacing(6)
         for label, page_name in (
             (_("Maintenance"), "maintenance"),
             (_("Services"), "services"),
             (_("Samba sharing"), "samba"),
             (_("Firefox"), "firefox"),
+            (_("Cinnamon profiles"), "cinnamon"),
+            (_("After installation"), "setup"),
+            (_("Native software"), "software"),
+            (_("Shells and terminals"), "terminal"),
         ):
-            buttons.pack_start(
-                widgets.button(label, lambda name=page_name: self._open_page(name)),
-                False,
-                False,
-                0,
-            )
+            buttons.insert(widgets.button(label, lambda name=page_name: self._open_page(name)), -1)
         body.pack_start(buttons, False, False, 0)
         return outer
 
     # -- data loading ------------------------------------------------------
     def refresh(self) -> None:
         self.checks_label.set_text(_("Analysing the system, one moment…"))
-        self.ctx.run_async(home.collect_report, on_done=self._apply_report)
+        self.ctx.run_async(lambda: home.collect_report(self.ctx.runner), on_done=self._apply_report, on_error=self._report_failed)
+
+    def _report_failed(self, exc: BaseException) -> None:
+        self.checks_label.set_text(_("The analysis failed. Previous results, if any, have not been updated."))
+        self.ctx.log(str(exc), "error")
 
     def _apply_report(self, report: home.HomeReport) -> None:
         self.report = report
@@ -130,7 +138,15 @@ class HomePage(Page):
             self._summary_labels["disk"].set_text(_("unknown"))
 
         self._rebuild_findings(report.findings)
-        if report.errors or report.warnings:
+        if report.unavailable:
+            self.checks_label.set_text(
+                _("{errors} error(s), {warnings} warning(s), {ok} check(s) passed, {unavailable} check(s) unavailable.").format(
+                    errors=report.errors, warnings=report.warnings, ok=report.passed, unavailable=report.unavailable,
+                )
+            )
+        elif not report.findings:
+            self.checks_label.set_text(_("No check was run."))
+        elif report.errors or report.warnings:
             self.checks_label.set_text(
                 _("{errors} error(s), {warnings} warning(s), {ok} check(s) passed.").format(
                     errors=report.errors,
@@ -141,7 +157,7 @@ class HomePage(Page):
         else:
             self.checks_label.set_text(_("All {count} checks passed.").format(count=report.passed))
 
-        level = "error" if report.errors else "warn" if report.warnings else "ok"
+        level = "error" if report.errors else "warn" if report.warnings or report.unavailable else "ok"
         self.ctx.log(_("Analysis finished."), level)
 
     def _rebuild_findings(self, findings: List[home.Finding]) -> None:

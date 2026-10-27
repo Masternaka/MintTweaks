@@ -624,7 +624,7 @@ def control_service(runner: BaseRunner, unit: str, action: str, on_line=None) ->
         return Result(f"systemctl {action} {unit}", 2, stderr=f"Refusing to drive unit '{unit}'.")
     if action not in ("start", "stop", "restart", "reload", "enable", "disable"):
         return Result(f"systemctl {action} {unit}", 2, stderr=f"Unsupported action '{action}'.")
-    return runner.stream(cmd("systemctl", action, unit, root=True), on_line=on_line)
+    return runner.stream(cmd("systemctl", action, unit, root=True), on_line=on_line, timeout=120)
 
 
 def unit_exists(runner: BaseRunner, unit: str) -> bool:

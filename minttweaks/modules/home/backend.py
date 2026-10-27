@@ -14,7 +14,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-from ...core.runner import BaseRunner, cmd
+from ...core.runner import BaseRunner, ReadError, cmd
 from ...i18n import _
 from ..maintenance import backend as maintenance
 from ..services import backend as services
@@ -34,6 +34,7 @@ class Finding:
     detail_msgid: str = ""
     values: Dict[str, object] = field(default_factory=dict)
     page: Optional[str] = None
+    completed: bool = True
 
     @property
     def title(self) -> str:
@@ -78,7 +79,11 @@ class HomeReport:
 
     @property
     def passed(self) -> int:
-        return sum(1 for finding in self.findings if finding.severity == "ok")
+        return sum(1 for finding in self.findings if finding.severity == "ok" and finding.completed)
+
+    @property
+    def unavailable(self) -> int:
+        return sum(1 for finding in self.findings if not finding.completed)
 
 
 # --------------------------------------------------------------------------- #
@@ -147,9 +152,15 @@ def collect_summary(
     except OSError:
         summary.os_name = _("unknown")
 
-    kernel = runner.run(cmd("uname", "-r"), timeout=10)
-    summary.kernel = kernel.stdout.strip() if kernel.ok and kernel.stdout.strip() else _("unknown")
-    summary.hostname = socket.gethostname() or _("unknown")
+    try:
+        kernel = runner.run(cmd("uname", "-r"), timeout=10) if not runner.dry_run else None
+        summary.kernel = kernel.stdout.strip() if kernel is not None and kernel.ok and kernel.stdout.strip() else _("unknown")
+    except Exception:
+        summary.kernel = _("unknown")
+    try:
+        summary.hostname = socket.gethostname() or _("unknown")
+    except OSError:
+        summary.hostname = _("unknown")
     summary.uptime = format_uptime(read_uptime(uptime_file))
 
     try:
@@ -157,7 +168,7 @@ def collect_summary(
     except OSError:
         total, available = None, None
     if total:
-        if available is None:
+        if available is None or not 0 <= available <= total:
             summary.memory_used = _("unknown")
             summary.memory_total = maintenance.human_bytes(total)
             summary.memory_measured = False
@@ -185,6 +196,9 @@ def collect_summary(
         summary.disk_free = maintenance.human_bytes(usage.free)
         if usage.total:
             summary.disk_percent = round(usage.used * 100 / usage.total)
+        else:
+            summary.disk_percent = -1
+            summary.disk_measured = False
 
     return summary
 
@@ -201,7 +215,9 @@ def _sample(text: str, limit: int = 180) -> str:
 def check_package_database(runner: BaseRunner) -> Finding:
     result = runner.run(cmd("dpkg", "--audit"), timeout=60)
     if result.returncode == 127:
-        return Finding("info", _("Package database"), _("dpkg is not available on this system."))
+        return Finding("info", _("Package database"), _("dpkg is not available on this system."), completed=False)
+    if not result.ok:
+        return unavailable(_("Package database"), result.output or result.command, "maintenance")
     output = result.output.strip()
     if output:
         return Finding(
@@ -211,23 +227,17 @@ def check_package_database(runner: BaseRunner) -> Finding:
             {"sample": _sample(output)},
             page="maintenance",
         )
-    if not result.ok:
-        return Finding(
-            "warn",
-            _("Package database"),
-            _("dpkg --audit failed: {sample}"),
-            {"sample": _sample(result.output) or result.command},
-            page="maintenance",
-        )
     return Finding("ok", _("Package database"), _("No half-configured package was found."))
 
 
 def check_dependencies(runner: BaseRunner) -> Finding:
     result = runner.run(cmd("apt-get", "check"), timeout=120)
     if result.returncode == 127:
-        return Finding("info", _("Dependencies"), _("apt-get is not available on this system."))
+        return Finding("info", _("Dependencies"), _("apt-get is not available on this system."), completed=False)
     if result.ok:
         return Finding("ok", _("Dependencies"), _("apt-get check found no broken dependency."))
+    if result.returncode != 100 or not any(marker in result.output.lower() for marker in ("unmet dependencies", "broken dependencies")):
+        return unavailable(_("Dependencies"), result.output or result.command, "maintenance")
     return Finding(
         "error",
         _("Dependencies"),
@@ -250,7 +260,9 @@ def check_failed_services(runner: BaseRunner) -> Finding:
         timeout=30,
     )
     if result.returncode == 127:
-        return Finding("info", _("Failed services"), _("systemctl is not available on this system."))
+        return Finding("info", _("Failed services"), _("systemctl is not available on this system."), completed=False)
+    if not result.ok:
+        return unavailable(_("Failed services"), result.output or result.command, "services")
     units = [unit for unit in services.parse_list_units(result.stdout).values() if unit.failed]
     if units:
         names = ", ".join(unit.name for unit in units[:6])
@@ -259,14 +271,6 @@ def check_failed_services(runner: BaseRunner) -> Finding:
             _("Failed services"),
             _("{count} service(s) failed: {names}"),
             {"count": len(units), "names": names},
-            page="services",
-        )
-    if not result.ok:
-        return Finding(
-            "warn",
-            _("Failed services"),
-            _("The service state could not be read: {sample}"),
-            {"sample": _sample(result.output) or result.command},
             page="services",
         )
     return Finding("ok", _("Failed services"), _("No service has failed."))
@@ -278,7 +282,13 @@ def check_boot_errors(runner: BaseRunner) -> Finding:
         timeout=60,
     )
     if result.returncode == 127:
-        return Finding("info", _("Boot errors"), _("journalctl is not available on this system."))
+        return Finding("info", _("Boot errors"), _("journalctl is not available on this system."), completed=False)
+    if not result.ok:
+        return unavailable(_("Boot errors"), result.output or result.command, "services")
+    # journalctl may succeed while warning that only the user's journal is
+    # visible. An empty restricted view does not prove the system is healthy.
+    if result.stderr.strip():
+        return unavailable(_("Boot errors"), result.output, "services")
     lines = [
         line.strip()
         for line in result.stdout.splitlines()
@@ -288,15 +298,8 @@ def check_boot_errors(runner: BaseRunner) -> Finding:
         return Finding(
             "warn",
             _("Boot errors"),
-            _("{count} error line(s) since the last boot. First entry: {sample}"),
+            _("{count} error line(s) in the latest 20 entries since boot. First entry: {sample}"),
             {"count": len(lines), "sample": lines[0][:180]},
-            page="services",
-        )
-    if not result.ok:
-        return Finding(
-            "info",
-            _("Boot errors"),
-            _("The journal is not readable without administrator rights."),
             page="services",
         )
     return Finding("ok", _("Boot errors"), _("No error was logged since the last boot."))
@@ -304,7 +307,7 @@ def check_boot_errors(runner: BaseRunner) -> Finding:
 
 def disk_finding(percent: int, free: str) -> Finding:
     if percent < 0:
-        return Finding("info", _("Disk space"), _("Disk usage could not be measured."), page="maintenance")
+        return Finding("info", _("Disk space"), _("Disk usage could not be measured."), page="maintenance", completed=False)
     values = {"percent": percent, "free": free}
     if percent >= 95:
         return Finding(
@@ -332,19 +335,27 @@ def disk_finding(percent: int, free: str) -> Finding:
 
 
 def check_reboot(path: Path = REBOOT_REQUIRED) -> Finding:
-    if path.exists():
+    try:
+        path.stat()
+    except FileNotFoundError:
+        return Finding("ok", _("Restart required"), _("No restart is pending."))
+    except OSError as exc:
+        return unavailable(_("Restart required"), str(exc))
+    else:
         return Finding(
             "warn",
             _("Restart required"),
             _("The system must restart to finish applying updates."),
         )
-    return Finding("ok", _("Restart required"), _("No restart is pending."))
 
 
 def check_kernels(runner: BaseRunner) -> Finding:
-    kernels = maintenance.installed_kernels(runner)
+    try:
+        kernels = maintenance.installed_kernels(runner)
+    except ReadError as exc:
+        return unavailable(_("Old kernels"), str(exc), "maintenance")
     if not kernels:
-        return Finding("info", _("Old kernels"), _("The kernel list could not be read."), page="maintenance")
+        return Finding("info", _("Old kernels"), _("No installed kernel package was found."), page="maintenance")
     removable = maintenance.removable_kernels(kernels, keep=1)
     if removable:
         versions = ", ".join(kernel.version for kernel in removable[:4])
@@ -367,14 +378,28 @@ def collect_report(
     reboot_file: Path = REBOOT_REQUIRED,
 ) -> HomeReport:
     summary = collect_summary(runner, os_release, meminfo, uptime_file, root)
-    findings = [
-        check_package_database(runner),
-        check_dependencies(runner),
-        check_failed_services(runner),
-        check_boot_errors(runner),
-        disk_finding(summary.disk_percent, summary.disk_free),
-        check_reboot(reboot_file),
-        check_kernels(runner),
-    ]
+    findings = []
+    checks = (
+        (_("Package database"), "maintenance", lambda: check_package_database(runner), True),
+        (_("Dependencies"), "maintenance", lambda: check_dependencies(runner), True),
+        (_("Failed services"), "services", lambda: check_failed_services(runner), True),
+        (_("Boot errors"), "services", lambda: check_boot_errors(runner), True),
+        (_("Disk space"), "maintenance", lambda: disk_finding(summary.disk_percent, summary.disk_free), False),
+        (_("Restart required"), None, lambda: check_reboot(reboot_file), False),
+        (_("Old kernels"), "maintenance", lambda: check_kernels(runner), True),
+    )
+    for title, page, check, needs_command in checks:
+        try:
+            if runner.dry_run and needs_command:
+                finding = Finding("info", title, _("Not checked in simulation mode."), page=page, completed=False)
+            else:
+                finding = check()
+        except Exception as exc:
+            finding = unavailable(title, str(exc), page)
+        findings.append(finding)
     findings.sort(key=lambda finding: SEVERITY_ORDER.get(finding.severity, 99))
     return HomeReport(summary, findings)
+
+
+def unavailable(title: str, detail: str, page: Optional[str] = None) -> Finding:
+    return Finding("info", title, _("Could not verify: {sample}"), {"sample": _sample(detail)}, page=page, completed=False)
