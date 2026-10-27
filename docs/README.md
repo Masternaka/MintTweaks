@@ -18,6 +18,7 @@ Le [README principal](../README.md) présente l’installation et les modules.
 - [Architecture, commandes de développement, traductions et privilèges](developpement/architecture.md)
 - [Versions et publications](developpement/publication.md)
 - [Feuille de route et périmètre retenu](roadmap.md)
+- [Analyse du projet et avis du 27 octobre 2026](analyse-projet-2026-10-27.md)
 
 ## Validation réelle
 
