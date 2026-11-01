@@ -18,6 +18,8 @@ Guarantees:
 """
 
 import os
+import json
+import re
 import shutil
 import subprocess
 import sys
@@ -195,6 +197,36 @@ def check_smbconf(source):
     return EXIT_OK if valid else EXIT_REJECTED
 
 
+def configure_samba_firewall(enable_if_inactive):
+    """Check UFW before adding Samba rules; enable only with explicit consent."""
+    def ufw(*args):
+        result = subprocess.run(["/usr/sbin/ufw", *args], capture_output=True, text=True, timeout=60,
+            env={"PATH": "/usr/sbin:/usr/bin:/sbin:/bin", "LC_ALL": "C"})
+        if result.returncode:
+            raise RuntimeError(result.stderr or result.stdout or "UFW failed")
+        return result.stdout
+    try:
+        status = ufw("status")
+        if not re.search(r"^Status: (?:active|inactive)\s*$", status, re.MULTILINE):
+            raise RuntimeError("Could not determine whether UFW is active.")
+        inactive = bool(re.search(r"^Status: inactive\s*$", status, re.MULTILINE))
+        if inactive and not enable_if_inactive:
+            raise RuntimeError("UFW is inactive. Confirm firewall activation before adding Samba rules.")
+        # A missing Samba profile must not leave a newly enabled firewall behind.
+        ufw("app", "info", "Samba")
+        if inactive:
+            ufw("--force", "enable")
+        ufw("allow", "Samba")
+        status = ufw("status")
+        if not re.search(r"^Status: active\s*$", status, re.MULTILINE) or not re.search(r"^Samba\b.*ALLOW", status, re.MULTILINE):
+            raise RuntimeError("UFW configuration could not be verified. Check the firewall rules.")
+        log("UFW is active and Samba is allowed")
+        return EXIT_OK
+    except (OSError, subprocess.SubprocessError, RuntimeError) as exc:
+        warn(str(exc))
+        return EXIT_IO
+
+
 def main(argv):
     if os.geteuid() != 0:
         warn("this helper must run as root, through pkexec")
@@ -204,10 +236,36 @@ def main(argv):
         return EXIT_USAGE
 
     command, args = argv[1], argv[2:]
+    if command in ("install-samba", "read-samba-status", "allow-samba-firewall", "enable-samba-firewall"):
+        if args:
+            return EXIT_USAGE
+        if command == "install-samba":
+            for apt_args in (("update", "-qq"), ("install", "-y", "--no-install-recommends", "samba", "smbclient", "cifs-utils")):
+                completed = subprocess.run(["/usr/bin/apt-get", *apt_args], timeout=1800,
+                    env={"PATH": "/usr/sbin:/usr/bin:/sbin:/bin", "LC_ALL": "C", "DEBIAN_FRONTEND": "noninteractive"})
+                if completed.returncode:
+                    return completed.returncode
+        if command in ("allow-samba-firewall", "enable-samba-firewall"):
+            rc = configure_samba_firewall(command == "enable-samba-firewall")
+            if rc:
+                return rc
+        snapshot = {}
+        for key, command_args in (("users", ["/usr/bin/pdbedit", "-L", "-v"]),
+                                  ("firewall", ["/usr/sbin/ufw", "status"])):
+            try:
+                completed = subprocess.run(command_args, capture_output=True, text=True, timeout=30,
+                    env={"PATH": "/usr/sbin:/usr/bin:/sbin:/bin", "LC_ALL": "C"})
+                snapshot[key] = [completed.returncode, completed.stdout, completed.stderr]
+            except (OSError, subprocess.SubprocessError) as exc:
+                snapshot[key] = [127, "", str(exc)]
+        print("MTK_SAMBA_STATUS=" + json.dumps(snapshot), flush=True)
+        return EXIT_OK
     if command == "configure-browser-repository":
         if len(args) != 1:
             return EXIT_USAGE
-        sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+        helper_dir = Path(__file__).resolve().parent
+        package_dir = helper_dir if (helper_dir / "minttweaks").is_dir() else helper_dir.parent
+        sys.path.insert(0, str(package_dir))
         from minttweaks.modules.software.repositories import configure
         try:
             configure(args[0])

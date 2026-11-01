@@ -93,6 +93,11 @@ class SambaPage(Page):
             self.status_labels[key] = value
             status_body.pack_start(widgets.action_row(heading, "", value), False, False, 0)
         container.pack_start(status_card, False, False, 0)
+        self.admin_status_hint = widgets.label(_("Protected details are read after installation or with the button below. Ordinary refreshes do not request a password."), wrap=True)
+        container.pack_start(self.admin_status_hint, False, False, 0)
+        self.admin_status_button = widgets.button(_("Read administrator status"), self._on_admin_status)
+        self.admin_status_button.set_sensitive(self._can_escalate)
+        container.pack_start(self.admin_status_button, False, False, 0)
 
         actions_card, actions_body = widgets.card(
             _("Serve files on the network"), _("All of these need administrator rights.")
@@ -106,7 +111,7 @@ class SambaPage(Page):
         for heading, subtitle, control in (
             (_("Start sharing"), _("Enables smbd and nmbd, then starts them."), self.start_button),
             (_("Apply configuration"), _("Reloads smbd so new shares are served at once."), self.reload_button),
-            (_("Firewall"), _("Adds the Samba application profile to ufw."), self.firewall_button),
+            (_("Firewall"), _("Checks UFW, offers to enable it if needed, then allows Samba."), self.firewall_button),
             (_("Diagnostics"), _("Lists who is connected right now."), self.connections_button),
         ):
             actions_body.pack_start(widgets.action_row(heading, subtitle, control), False, False, 0)
@@ -225,6 +230,7 @@ class SambaPage(Page):
         left.set_margin_top(10)
         left.set_margin_bottom(10)
         left.pack_start(widgets.title(_("Samba accounts")), False, False, 0)
+        left.pack_start(widgets.label(_("Accounts reflect the last administrator status read. Use the overview button to refresh them."), wrap=True), False, False, 0)
         self.user_list = Gtk.ListBox()
         self.user_list.set_selection_mode(Gtk.SelectionMode.SINGLE)
         self.user_list.connect("row-selected", self._on_user_selected)
@@ -335,11 +341,12 @@ class SambaPage(Page):
     def refresh(self) -> None:
         def work():
             status = backend.collect_status(self.ctx.runner)
-            doc = backend.load_document(self.ctx.runner)
-            users = backend.list_users(self.ctx.runner) if status.installed else []
+            doc = backend.load_document(self.ctx.runner, allow_escalation=False)
+            users = backend.list_users(self.ctx.runner) if status.installed and getattr(self.ctx.runner, "samba_admin_status", None) else []
             return status, doc, users
 
-        self.ctx.run_async(work, on_done=self._apply_state)
+        self.ctx.run_async(work, on_done=self._apply_state,
+                           on_error=lambda exc: self.error(_("Samba status could not be refreshed"), str(exc)))
 
     def _apply_state(self, payload) -> None:
         status, doc, users = payload
@@ -382,12 +389,14 @@ class SambaPage(Page):
         )
         if not status.firewall_available:
             self.status_labels["firewall"].set_text(_("ufw not installed"))
+        elif status.firewall_active is None:
+            self.status_labels["firewall"].set_text(_("Administrator status has not been read."))
         else:
             state = _("active") if status.firewall_active else _("inactive")
             allowed = _("Samba allowed") if status.firewall_allows_samba else _("Samba not allowed")
             self.status_labels["firewall"].set_text(f"{state} · {allowed}")
         self.firewall_button.set_sensitive(
-            status.installed and status.firewall_available and self._can_escalate and not status.firewall_allows_samba
+            status.installed and status.firewall_available and self._can_escalate and not (status.firewall_active and status.firewall_allows_samba)
         )
         self.start_button.set_sensitive(status.installed and self._can_escalate)
         self.reload_button.set_sensitive(status.installed and self._can_escalate)
@@ -629,6 +638,19 @@ class SambaPage(Page):
     # ------------------------------------------------------------------ #
     # Overview actions
     # ------------------------------------------------------------------ #
+    def _on_admin_status(self):
+        self.admin_status_button.set_sensitive(False)
+        def finished(result):
+            self.admin_status_button.set_sensitive(self._can_escalate)
+            if not result.ok:
+                self.error(_("Samba status could not be refreshed"), result.output)
+            else:
+                self.refresh()
+        def failed(exc):
+            self.admin_status_button.set_sensitive(self._can_escalate)
+            self.error(_("Samba status could not be refreshed"), str(exc))
+        self.run_operation(lambda: backend.read_admin_status(self.ctx.runner), on_done=finished, on_error=failed)
+
     def _on_install(self) -> None:
         if not self.confirm(
             _("Install Samba?"),
@@ -686,10 +708,14 @@ class SambaPage(Page):
     def _on_firewall(self) -> None:
         if not self.status or not self.status.installed:
             return
-        if not self.confirm(_("Allow Samba through the firewall?"), _("This runs 'ufw allow Samba'.")):
+        enable = self.status.firewall_active is not True
+        heading = _("Enable the firewall if needed and allow Samba?") if enable else _("Allow Samba through the firewall?")
+        detail = (_("UFW will be checked first. If it is inactive, this action enables it before adding the Samba rules. Enabling the firewall applies its existing rules to all network connections.") if enable else
+                  _("UFW will be checked before adding the Samba rules. If it is no longer active, no rules will be added and activation will require confirmation."))
+        if not self.confirm(heading, detail):
             return
         self.run_operation(
-            lambda: backend.allow_samba_in_firewall(self.ctx.runner),
+            lambda: backend.allow_samba_in_firewall(self.ctx.runner, enable_if_inactive=enable),
             on_done=lambda result: self._report_simple([result]),
         )
 

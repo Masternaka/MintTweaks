@@ -15,6 +15,7 @@ Design notes:
 from __future__ import annotations
 
 import datetime
+import json
 import os
 import pwd
 import re
@@ -137,12 +138,38 @@ def samba_installed(runner: BaseRunner) -> bool:
 
 
 def install_packages(runner: BaseRunner, on_line=None) -> Result:
-    packages = missing_packages(runner) or list(PACKAGES)
-    runner.run(cmd("apt-get", "update", "-qq", root=True), timeout=300)
-    return runner.stream(
-        cmd("apt-get", "install", "-y", "--no-install-recommends", *packages, root=True),
-        on_line=on_line,
-    )
+    return _samba_helper(runner, "install-samba", on_line)
+
+
+def read_admin_status(runner: BaseRunner) -> Result:
+    return _samba_helper(runner, "read-samba-status")
+
+
+def _samba_helper(runner, action, on_line=None):
+    helper = helper_path()
+    if helper is None:
+        return Result(action, 127, stderr=_("The Samba helper is missing. Reinstall MintTweaks."))
+    marker = "MTK_SAMBA_STATUS="
+    def output(line):
+        if on_line is not None and not line.startswith(marker):
+            on_line(line)
+    result = runner.stream(cmd(str(helper), action, root=True), on_line=output, timeout=1800)
+    if result.ok and not runner.dry_run:
+        try:
+            snapshot = json.loads(next(line[len(marker):] for line in result.stdout.splitlines() if line.startswith(marker)))
+            for key in ("users", "firewall"):
+                rc, stdout, stderr = snapshot[key]
+                if type(rc) is not int or not isinstance(stdout, str) or not isinstance(stderr, str):
+                    raise ValueError("Invalid diagnostic result")
+            runner.samba_admin_status = snapshot
+        except (StopIteration, ValueError, KeyError, TypeError):
+            return Result(result.command, 1, stderr=_("Samba diagnostics could not be read. Refresh administrator status before continuing."))
+    return result
+
+
+def _cached_status(runner, key):
+    value = getattr(runner, "samba_admin_status", {}).get(key)
+    return Result(key, *value) if value is not None else None
 
 
 # --------------------------------------------------------------------------- #
@@ -166,7 +193,7 @@ def conf_path(path: Optional[Path] = None) -> Path:
     return Path(path) if path is not None else paths.SMB_CONF
 
 
-def load_document(runner: BaseRunner, path: Optional[Path] = None) -> Document:
+def load_document(runner: BaseRunner, path: Optional[Path] = None, allow_escalation=True) -> Document:
     """Read ``smb.conf``, falling back to a sane template when absent."""
     target = conf_path(path)
     text: Optional[str] = None
@@ -175,6 +202,8 @@ def load_document(runner: BaseRunner, path: Optional[Path] = None) -> Document:
     except FileNotFoundError:
         return Document(target, default_conf(), "", existed=False)
     except PermissionError:
+        if not allow_escalation:
+            raise PermissionError(_("The Samba configuration cannot be read without administrator rights."))
         result = runner.run(cmd("cat", str(target), root=True))
         if not result.ok:
             return Document(target, default_conf(), "", existed=False)
@@ -505,7 +534,9 @@ def unix_user_exists(username: str) -> bool:
 
 def list_users(runner: BaseRunner) -> List[SambaUser]:
     """Samba accounts from the passdb, annotated with the Unix account state."""
-    result = runner.run(cmd("pdbedit", "-L", "-v", root=True), timeout=30)
+    result = _cached_status(runner, "users")
+    if result is None:
+        result = runner.run(cmd("pdbedit", "-L", "-v", root=True), timeout=30)
     users: List[SambaUser] = []
     if result.ok and result.stdout.strip():
         for block in re.split(r"\n\s*\n", result.stdout):
@@ -525,6 +556,8 @@ def list_users(runner: BaseRunner) -> List[SambaUser]:
     elif result.ok:
         return []
     else:
+        if getattr(runner, "samba_admin_status", None) is not None:
+            raise RuntimeError(result.output)
         # Older or trimmed builds: "name:uid:fullname" one per line.
         listing = runner.run(cmd("pdbedit", "-L", root=True), timeout=30)
         if listing.ok:
@@ -658,15 +691,20 @@ def firewall_state(runner: BaseRunner) -> Tuple[bool, bool, bool]:
     """``(available, active, allows_samba)`` for ufw."""
     if shutil.which("ufw") is None:
         return False, False, False
-    result = runner.run(cmd("ufw", "status", root=True), timeout=20)
+    result = _cached_status(runner, "firewall")
+    if result is None:
+        result = runner.run(cmd("ufw", "status"), timeout=20)
+    if not result.ok:
+        return True, None, None
     output = result.stdout or result.stderr
     active = "status: active" in output.lower()
     allows = bool(re.search(r"^Samba\b.*ALLOW", output, re.IGNORECASE | re.MULTILINE))
     return True, active, allows
 
 
-def allow_samba_in_firewall(runner: BaseRunner) -> Result:
-    return runner.run(cmd("ufw", "allow", "Samba", root=True), timeout=30)
+def allow_samba_in_firewall(runner: BaseRunner, enable_if_inactive=False) -> Result:
+    getattr(runner, "samba_admin_status", {}).pop("firewall", None)
+    return _samba_helper(runner, "enable-samba-firewall" if enable_if_inactive else "allow-samba-firewall")
 
 
 def smbstatus_text(runner: BaseRunner) -> Result:

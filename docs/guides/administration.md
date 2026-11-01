@@ -30,6 +30,23 @@ La présence des seuls outils clients, comme `smbpasswd`, ne suffit pas. Après 
 démarrage, les services sont vérifiés avant d’annoncer un succès ; `smbd` est
 obligatoire et `nmbd` est démarré lorsqu’il est disponible.
 
+L’installation regroupe l’actualisation APT, l’installation des paquets et la
+lecture des comptes et du pare-feu dans un seul appel administrateur. Elle ne
+demande donc qu’une autorisation polkit. Les rechargements ordinaires ne
+demandent plus de mot de passe : les comptes et informations protégées reflètent
+la dernière lecture. **Lire l’état en administrateur** les actualise explicitement
+avec une nouvelle autorisation. Les autres modifications restent autorisées
+séparément ; aucune permission administrateur permanente n’est conservée.
+
+**Autoriser Samba dans le pare-feu** vérifie d’abord l’état réel d’UFW. Si l’état
+connu est inactif ou encore inconnu, la confirmation propose son activation si
+nécessaire, puis l’ajout des règles Samba. Le profil Samba est vérifié avant
+l’activation ; un échec d’activation empêche l’ajout des règles. Si le pare-feu
+était annoncé actif mais ne l’est plus lors de l’opération, l’action s’arrête et
+demande une nouvelle confirmation. L’état actif et les règles sont vérifiés après
+modification. Ce parcours utilise une seule autorisation administrateur.
+Un échec après activation ne désactive pas automatiquement le pare-feu.
+
 - Installation de `samba`, `smbclient` et `cifs-utils` depuis l’application.
 - Gestion complète des partages : création, modification, renommage et suppression, sélection de dossier, visibilité, lecture seule, accès invité, `valid users`, `write list`, masques et `force group`.
 - Gestion des comptes Samba : création, changement de mot de passe, activation, désactivation et suppression. Les mots de passe passent par l’**entrée standard** de `smbpasswd`, jamais par la ligne de commande.

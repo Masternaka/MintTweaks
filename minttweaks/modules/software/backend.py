@@ -158,7 +158,7 @@ def configure_repository(runner, app_id, on_line=None):
     arch = architecture(runner)
     if arch not in app.architectures:
         raise SoftwareError(_("This source has no supported package for architecture {architecture}.").format(architecture=arch))
-    candidates = (paths.PKG_DIR / "mtk-root", paths.PKG_DIR.parent / "data" / "mtk-root")
+    candidates = (paths.PKG_DIR.parent / "mtk-root", paths.PKG_DIR.parent / "data" / "mtk-root")
     helper = next((path for path in candidates if path.is_file()), None)
     if helper is None:
         raise SoftwareError(_("The repository setup helper is missing. Reinstall MintTweaks."))
