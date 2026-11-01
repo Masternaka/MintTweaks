@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Domain: minttweaks\n"
 
-#: minttweaks/modules/samba/page.py:794
+#: minttweaks/modules/samba/page.py:795
 msgid "\n\nSamba already ignores every value but the last one."
 msgstr "\n\nDe toute façon, Samba ignore toutes les valeurs sauf la dernière."
 
@@ -21,11 +21,11 @@ msgstr "\n\nDe toute façon, Samba ignore toutes les valeurs sauf la dernière."
 msgid "\n\nThis cannot be undone from MintTweaks."
 msgstr "\n\nCette action est irréversible depuis MintTweaks."
 
-#: minttweaks/modules/samba/page.py:766
+#: minttweaks/modules/samba/page.py:767
 msgid "\n\nWarnings:\n"
 msgstr "\n\nAvertissements :\n"
 
-#: minttweaks/modules/samba/page.py:791
+#: minttweaks/modules/samba/page.py:792
 msgid "\n… and {count} more"
 msgstr "\n… et {count} de plus"
 
@@ -45,7 +45,7 @@ msgstr ", … (+{count})"
 msgid "A Samba account needs an existing Unix account: sharing a folder does not work without one. Passwords are sent to smbpasswd on its standard input, never on a command line."
 msgstr "Un compte Samba a besoin d'un compte Unix existant : sans lui, le partage ne fonctionne pas. Les mots de passe sont transmis à smbpasswd sur son entrée standard, jamais sur une ligne de commande."
 
-#: minttweaks/modules/samba/page.py:881
+#: minttweaks/modules/samba/page.py:882
 msgid "A save is already in progress."
 msgstr "Un enregistrement est déjà en cours."
 
@@ -53,7 +53,7 @@ msgstr "Un enregistrement est déjà en cours."
 msgid "A section named '{name}' already exists."
 msgstr "Une section nommée « {name} » existe déjà."
 
-#: minttweaks/ui/window.py:103
+#: minttweaks/ui/window.py:108
 msgid "About"
 msgstr "À propos"
 
@@ -70,11 +70,11 @@ msgstr "Compte {user} : {state}."
 msgid "active"
 msgstr "actif"
 
-#: minttweaks/modules/samba/page.py:732
+#: minttweaks/modules/samba/page.py:733
 msgid "Active Samba connections:"
 msgstr "Connexions Samba actives :"
 
-#: minttweaks/modules/samba/page.py:858
+#: minttweaks/modules/samba/page.py:859
 msgid "Administrator rights are required"
 msgstr "Droits d'administration requis"
 
@@ -157,11 +157,11 @@ msgstr "Nettoyer les doublons"
 msgid "Cleanup tasks"
 msgstr "Tâches de nettoyage"
 
-#: minttweaks/ui/window.py:154
+#: minttweaks/ui/window.py:160
 msgid "Clear"
 msgstr "Effacer"
 
-#: minttweaks/ui/window.py:102
+#: minttweaks/ui/window.py:107
 msgid "Clear output"
 msgstr "Effacer la sortie"
 
@@ -173,15 +173,15 @@ msgstr "Vider le cache des miniatures"
 msgid "Comment"
 msgstr "Commentaire"
 
-#: minttweaks/modules/samba/page.py:768
+#: minttweaks/modules/samba/page.py:769
 msgid "Configuration is valid"
 msgstr "Configuration valide"
 
-#: minttweaks/modules/samba/page.py:764
+#: minttweaks/modules/samba/page.py:765
 msgid "Configuration is valid."
 msgstr "La configuration est valide."
 
-#: minttweaks/modules/samba/page.py:776
+#: minttweaks/modules/samba/page.py:777
 msgid "Configuration saved."
 msgstr "Configuration enregistrée."
 
@@ -250,7 +250,7 @@ msgstr "Désactiver"
 msgid "disabled"
 msgstr "désactivé"
 
-#: minttweaks/modules/samba/page.py:807
+#: minttweaks/modules/samba/page.py:808
 msgid "Discard your changes?"
 msgstr "Abandonner vos modifications ?"
 
@@ -258,7 +258,7 @@ msgstr "Abandonner vos modifications ?"
 msgid "Disk usage"
 msgstr "Occupation disque"
 
-#: minttweaks/modules/samba/page.py:741
+#: minttweaks/modules/samba/page.py:742
 msgid "Done."
 msgstr "Terminé."
 
@@ -336,7 +336,7 @@ msgstr "Groupe forcé"
 msgid "Guest access"
 msgstr "Accès invité"
 
-#: minttweaks/ui/window.py:153
+#: minttweaks/ui/window.py:159
 msgid "Hide"
 msgstr "Masquer"
 
@@ -381,11 +381,11 @@ msgstr "conservé"
 msgid "Lists who is connected right now."
 msgstr "Liste les personnes connectées en ce moment."
 
-#: minttweaks/ui/window.py:92
+#: minttweaks/ui/window.py:97
 msgid "Menu"
 msgstr "Menu"
 
-#: minttweaks/modules/samba/page.py:819
+#: minttweaks/modules/samba/page.py:820
 msgid "MintTweaks keeps its backups in {folder}."
 msgstr "MintTweaks conserve ses sauvegardes dans {folder}."
 
@@ -408,15 +408,15 @@ msgstr "Nouveau partage"
 msgid "No account selected"
 msgstr "Aucun compte sélectionné"
 
-#: minttweaks/modules/samba/page.py:818
+#: minttweaks/modules/samba/page.py:819
 msgid "No backup found"
 msgstr "Aucune sauvegarde trouvée"
 
-#: minttweaks/modules/samba/page.py:854
+#: minttweaks/modules/samba/page.py:855
 msgid "No configuration loaded"
 msgstr "Aucune configuration chargée"
 
-#: minttweaks/modules/samba/page.py:785
+#: minttweaks/modules/samba/page.py:786
 msgid "No duplicate parameter"
 msgstr "Aucun paramètre en double"
 
@@ -432,7 +432,7 @@ msgstr "Aucun paquet linux-image trouvé."
 msgid "No polkit authentication agent answered. Make sure a keyring/polkit agent is running in your desktop session."
 msgstr "Aucun agent d'authentification polkit n'a répondu. Vérifiez qu'un agent keyring/polkit tourne dans votre session de bureau."
 
-#: minttweaks/modules/samba/page.py:786
+#: minttweaks/modules/samba/page.py:787
 msgid "No section of this configuration repeats the same key, so there is nothing to clean up."
 msgstr "Aucune section de cette configuration ne répète la même clé : il n'y a rien à nettoyer."
 
@@ -468,8 +468,8 @@ msgstr "Disponible seulement si Flatpak est installé. Libère les runtimes qu'a
 msgid "Orphaned packages"
 msgstr "Paquets orphelins"
 
-#: minttweaks/ui/window.py:152
-#: minttweaks/ui/window.py:177
+#: minttweaks/ui/window.py:158
+#: minttweaks/ui/window.py:183
 msgid "Output"
 msgstr "Sortie"
 
@@ -530,7 +530,7 @@ msgstr "Lire en administrateur"
 msgid "Read only"
 msgstr "Lecture seule"
 
-#: minttweaks/ui/window.py:169
+#: minttweaks/ui/window.py:175
 msgid "Ready."
 msgstr "Prêt."
 
@@ -538,11 +538,11 @@ msgstr "Prêt."
 msgid "rebuilt automatically by the file manager"
 msgstr "reconstruit automatiquement par le gestionnaire de fichiers"
 
-#: minttweaks/modules/samba/page.py:854
+#: minttweaks/modules/samba/page.py:855
 msgid "Refresh the page and try again."
 msgstr "Rechargez la page et réessayez."
 
-#: minttweaks/ui/window.py:100
+#: minttweaks/ui/window.py:105
 msgid "Refresh this page"
 msgstr "Recharger cette page"
 
@@ -585,7 +585,7 @@ msgstr "Supprimer les paquets orphelins ?"
 msgid "Remove unused Flatpak runtimes"
 msgstr "Supprimer les runtimes Flatpak inutilisés"
 
-#: minttweaks/modules/samba/page.py:793
+#: minttweaks/modules/samba/page.py:794
 msgid "Remove {count} duplicate parameter(s)?"
 msgstr "Supprimer {count} paramètre(s) en double ?"
 
@@ -593,7 +593,7 @@ msgstr "Supprimer {count} paramètre(s) en double ?"
 msgid "Remove {count} package(s)"
 msgstr "Supprimer {count} paquet(s)"
 
-#: minttweaks/modules/samba/page.py:799
+#: minttweaks/modules/samba/page.py:800
 msgid "Removed {count} duplicate parameter(s)."
 msgstr "{count} paramètre(s) en double supprimé(s)."
 
@@ -609,7 +609,7 @@ msgstr "Nécessite les droits d'administration, et l'élévation de privilèges 
 msgid "Restart"
 msgstr "Redémarrer"
 
-#: minttweaks/modules/samba/page.py:822
+#: minttweaks/modules/samba/page.py:823
 msgid "Restore a backup"
 msgstr "Restaurer une sauvegarde"
 
@@ -731,11 +731,12 @@ msgstr "Partages"
 msgid "Show"
 msgstr "Afficher"
 
-#: minttweaks/ui/window.py:101
+#: minttweaks/ui/window.py:106
 msgid "Show / hide output"
 msgstr "Afficher / masquer la sortie"
 
 #: minttweaks/modules/samba/page.py:108
+#: minttweaks/modules/samba/page.py:728
 msgid "Show active connections"
 msgstr "Afficher les connexions actives"
 
@@ -775,20 +776,20 @@ msgstr "Journal système"
 msgid "systemd-analyze returned nothing."
 msgstr "systemd-analyze n'a rien renvoyé."
 
-#: minttweaks/modules/samba/page.py:771
+#: minttweaks/modules/samba/page.py:772
 msgid "testparm rejected the configuration."
 msgstr "testparm a rejeté la configuration."
 
-#: minttweaks/modules/samba/page.py:772
+#: minttweaks/modules/samba/page.py:773
 msgid "testparm rejected this configuration"
 msgstr "testparm a rejeté cette configuration"
 
-#: minttweaks/modules/samba/page.py:847
+#: minttweaks/modules/samba/page.py:848
 msgid "The backup could not be restored"
 msgstr "La sauvegarde n'a pas pu être restaurée"
 
-#: minttweaks/modules/samba/page.py:899
-#: minttweaks/modules/samba/page.py:914
+#: minttweaks/modules/samba/page.py:900
+#: minttweaks/modules/samba/page.py:915
 msgid "The configuration was not saved"
 msgstr "La configuration n'a pas été enregistrée"
 
@@ -796,7 +797,7 @@ msgstr "La configuration n'a pas été enregistrée"
 msgid "The editor has unsaved changes; the file on disk has changed since."
 msgstr "L'éditeur contient des modifications non enregistrées ; le fichier sur disque a changé depuis."
 
-#: minttweaks/modules/samba/page.py:807
+#: minttweaks/modules/samba/page.py:808
 msgid "The editor is reloaded from the file on disk."
 msgstr "L'éditeur est rechargé depuis le fichier sur disque."
 
@@ -864,7 +865,7 @@ msgstr "Ce compte n'a pas d'utilisateur Unix associé."
 msgid "This changes the running system immediately."
 msgstr "Cela modifie immédiatement le système en cours."
 
-#: minttweaks/modules/samba/page.py:866
+#: minttweaks/modules/samba/page.py:867
 msgid "This share cannot be saved"
 msgstr "Ce partage ne peut pas être enregistré"
 
@@ -927,11 +928,11 @@ msgstr "Valider"
 msgid "Validated with testparm before every save."
 msgstr "Validée par testparm avant chaque enregistrement."
 
-#: minttweaks/modules/samba/page.py:885
+#: minttweaks/modules/samba/page.py:886
 msgid "Validating and installing the configuration…"
 msgstr "Validation et installation de la configuration…"
 
-#: minttweaks/ui/window.py:134
+#: minttweaks/ui/window.py:139
 msgid "version {version}"
 msgstr "version {version}"
 
@@ -1025,11 +1026,11 @@ msgstr "Installer ces extensions Firefox ?"
 msgid "Installed."
 msgstr "Installée."
 
-#: minttweaks/ui/window.py:64
+#: minttweaks/ui/window.py:66
 msgid "Maintenance, services, Samba and Firefox for Linux Mint"
 msgstr "Entretien, services, Samba et Firefox pour Linux Mint"
 
-#: minttweaks/ui/window.py:268
+#: minttweaks/ui/window.py:285
 msgid "Maintenance, services, Samba and Firefox management for Linux Mint.\nInspired by the ArchLinux Tweak Tool."
 msgstr "Gestion de l'entretien, des services, de Samba et de Firefox pour Linux Mint.\nInspiré d'ArchLinux Tweak Tool."
 
@@ -1384,7 +1385,7 @@ msgstr "{count} paquet(s) proposé(s) à la suppression. La liste complète figu
 msgid "The operation failed."
 msgstr "L’opération a échoué."
 
-#: minttweaks/ui/window.py:62
+#: minttweaks/ui/window.py:64
 msgid "Simulation: no commands or cleanup actions will be executed."
 msgstr "Simulation : aucune commande ni action de nettoyage ne sera exécutée."
 
@@ -1392,15 +1393,15 @@ msgstr "Simulation : aucune commande ni action de nettoyage ne sera exécutée."
 msgid "An operation is already running: {operation}. Wait for it to finish."
 msgstr "Une opération est déjà en cours : {operation}. Attendez sa fin."
 
-#: minttweaks/ui/window.py:196
+#: minttweaks/ui/window.py:202
 msgid "In progress: {operation}"
 msgstr "En cours : {operation}"
 
-#: minttweaks/ui/window.py:205
+#: minttweaks/ui/window.py:211
 msgid "An operation is still running."
 msgstr "Une opération est encore en cours."
 
-#: minttweaks/ui/window.py:206
+#: minttweaks/ui/window.py:212
 msgid "Wait for {operation} to finish before closing MintTweaks."
 msgstr "Attendez la fin de l’opération {operation} avant de fermer MintTweaks."
 

@@ -263,6 +263,12 @@ class ServiceTests(unittest.TestCase):
 
 
 class PackageTests(unittest.TestCase):
+    def test_active_connections_request_administrator_rights(self):
+        runner = FakeRunner().add(["smbstatus"], stdout="No connections")
+        self.assertTrue(backend.smbstatus_text(runner).ok)
+        self.assertEqual(runner.commands(), [("smbstatus", "-b", "-L", "--numeric")])
+        self.assertTrue(runner.calls[0].needs_root)
+
     def test_client_tools_do_not_count_as_an_installed_server(self):
         runner = FakeRunner().add(["dpkg-query"], stdout="deinstall ok config-files")
         with patch.object(backend.shutil, "which", return_value="/usr/bin/smbpasswd"):

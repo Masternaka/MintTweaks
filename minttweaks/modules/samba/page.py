@@ -400,7 +400,7 @@ class SambaPage(Page):
         )
         self.start_button.set_sensitive(status.installed and self._can_escalate)
         self.reload_button.set_sensitive(status.installed and self._can_escalate)
-        self.connections_button.set_sensitive(status.installed)
+        self.connections_button.set_sensitive(status.installed and self._can_escalate)
 
     def _fill_share_list(self) -> None:
         for child in self.share_list.get_children():
@@ -720,11 +720,12 @@ class SambaPage(Page):
         )
 
     def _on_connections(self) -> None:
-        if not self.status or not self.status.installed:
+        if not self.status or not self.status.installed or not self._can_escalate:
             return
-        self.ctx.run_async(
+        self.run_operation(
             lambda: backend.smbstatus_text(self.ctx.runner),
             on_done=self._show_connections,
+            name=_("Show active connections"),
         )
 
     def _show_connections(self, result) -> None:

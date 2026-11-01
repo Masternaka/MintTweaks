@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Domain: minttweaks\n"
 
-#: minttweaks/modules/samba/page.py:794
+#: minttweaks/modules/samba/page.py:795
 msgid "\n\nSamba already ignores every value but the last one."
 msgstr ""
 
@@ -25,11 +25,11 @@ msgstr ""
 msgid "\n\nThis cannot be undone from MintTweaks."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:766
+#: minttweaks/modules/samba/page.py:767
 msgid "\n\nWarnings:\n"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:791
+#: minttweaks/modules/samba/page.py:792
 msgid "\n… and {count} more"
 msgstr ""
 
@@ -84,7 +84,7 @@ msgstr ""
 msgid "A Samba account needs an existing Unix account: sharing a folder does not work without one. Passwords are sent to smbpasswd on its standard input, never on a command line."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:881
+#: minttweaks/modules/samba/page.py:882
 msgid "A save is already in progress."
 msgstr ""
 
@@ -96,7 +96,7 @@ msgstr ""
 msgid "A setting changed during application: {setting}"
 msgstr ""
 
-#: minttweaks/ui/window.py:103
+#: minttweaks/ui/window.py:108
 msgid "About"
 msgstr ""
 
@@ -121,7 +121,7 @@ msgstr ""
 msgid "active (waiting)"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:732
+#: minttweaks/modules/samba/page.py:733
 msgid "Active Samba connections:"
 msgstr ""
 
@@ -149,7 +149,7 @@ msgstr ""
 msgid "Administrator authorization is unavailable: package state can be read, but installation is disabled."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:858
+#: minttweaks/modules/samba/page.py:859
 msgid "Administrator rights are required"
 msgstr ""
 
@@ -231,7 +231,7 @@ msgstr ""
 msgid "An operation is already running: {operation}. Wait for it to finish."
 msgstr ""
 
-#: minttweaks/ui/window.py:205
+#: minttweaks/ui/window.py:211
 msgid "An operation is still running."
 msgstr ""
 
@@ -471,11 +471,11 @@ msgstr ""
 msgid "Cleanup tasks"
 msgstr ""
 
-#: minttweaks/ui/window.py:154
+#: minttweaks/ui/window.py:160
 msgid "Clear"
 msgstr ""
 
-#: minttweaks/ui/window.py:102
+#: minttweaks/ui/window.py:107
 msgid "Clear output"
 msgstr ""
 
@@ -515,15 +515,15 @@ msgstr ""
 msgid "Configuration is previewed after installation. Cancelling that later preview keeps the packages."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:768
+#: minttweaks/modules/samba/page.py:769
 msgid "Configuration is valid"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:764
+#: minttweaks/modules/samba/page.py:765
 msgid "Configuration is valid."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:776
+#: minttweaks/modules/samba/page.py:777
 msgid "Configuration saved."
 msgstr ""
 
@@ -703,7 +703,7 @@ msgstr ""
 msgid "Discard unsaved step selection?"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:807
+#: minttweaks/modules/samba/page.py:808
 msgid "Discard your changes?"
 msgstr ""
 
@@ -738,7 +738,7 @@ msgstr ""
 msgid "Displayed information"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:741
+#: minttweaks/modules/samba/page.py:742
 msgid "Done."
 msgstr ""
 
@@ -951,7 +951,7 @@ msgstr ""
 msgid "Helium's official stable APT repository."
 msgstr ""
 
-#: minttweaks/ui/window.py:153
+#: minttweaks/ui/window.py:159
 msgid "Hide"
 msgstr ""
 
@@ -988,7 +988,7 @@ msgstr ""
 msgid "Import these personal settings?"
 msgstr ""
 
-#: minttweaks/ui/window.py:196
+#: minttweaks/ui/window.py:202
 msgid "In progress: {operation}"
 msgstr ""
 
@@ -1235,11 +1235,11 @@ msgstr ""
 msgid "Maintenance"
 msgstr ""
 
-#: minttweaks/ui/window.py:64
+#: minttweaks/ui/window.py:66
 msgid "Maintenance, services, Samba and Firefox for Linux Mint"
 msgstr ""
 
-#: minttweaks/ui/window.py:268
+#: minttweaks/ui/window.py:285
 msgid "Maintenance, services, Samba and Firefox management for Linux Mint.\nInspired by the ArchLinux Tweak Tool."
 msgstr ""
 
@@ -1259,7 +1259,7 @@ msgstr ""
 msgid "Memory"
 msgstr ""
 
-#: minttweaks/ui/window.py:92
+#: minttweaks/ui/window.py:97
 msgid "Menu"
 msgstr ""
 
@@ -1267,7 +1267,7 @@ msgstr ""
 msgid "MintTweaks currently manages {count} extension(s) in the Firefox policy."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:819
+#: minttweaks/modules/samba/page.py:820
 msgid "MintTweaks keeps its backups in {folder}."
 msgstr ""
 
@@ -1315,7 +1315,7 @@ msgstr ""
 msgid "No APT candidate. Use the project's official installation guide if needed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:818
+#: minttweaks/modules/samba/page.py:819
 msgid "No backup found"
 msgstr ""
 
@@ -1331,11 +1331,11 @@ msgstr ""
 msgid "No configuration changes are needed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:854
+#: minttweaks/modules/samba/page.py:855
 msgid "No configuration loaded"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:785
+#: minttweaks/modules/samba/page.py:786
 msgid "No duplicate parameter"
 msgstr ""
 
@@ -1383,7 +1383,7 @@ msgstr ""
 msgid "No restart is pending."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:786
+#: minttweaks/modules/samba/page.py:787
 msgid "No section of this configuration repeats the same key, so there is nothing to clean up."
 msgstr ""
 
@@ -1488,8 +1488,8 @@ msgstr ""
 msgid "Orphaned packages"
 msgstr ""
 
-#: minttweaks/ui/window.py:152
-#: minttweaks/ui/window.py:177
+#: minttweaks/ui/window.py:158
+#: minttweaks/ui/window.py:183
 msgid "Output"
 msgstr ""
 
@@ -1741,7 +1741,7 @@ msgstr ""
 msgid "Readable, highlighted diffs. Managed integration can make it the Git pager in your shell."
 msgstr ""
 
-#: minttweaks/ui/window.py:169
+#: minttweaks/ui/window.py:175
 msgid "Ready."
 msgstr ""
 
@@ -1757,11 +1757,11 @@ msgstr ""
 msgid "Refresh before saving another profile."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:854
+#: minttweaks/modules/samba/page.py:855
 msgid "Refresh the page and try again."
 msgstr ""
 
-#: minttweaks/ui/window.py:100
+#: minttweaks/ui/window.py:105
 msgid "Refresh this page"
 msgstr ""
 
@@ -1820,7 +1820,7 @@ msgstr ""
 msgid "Remove unused Flatpak runtimes"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:793
+#: minttweaks/modules/samba/page.py:794
 msgid "Remove {count} duplicate parameter(s)?"
 msgstr ""
 
@@ -1828,7 +1828,7 @@ msgstr ""
 msgid "Remove {count} package(s)"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:799
+#: minttweaks/modules/samba/page.py:800
 msgid "Removed {count} duplicate parameter(s)."
 msgstr ""
 
@@ -1871,7 +1871,7 @@ msgstr ""
 msgid "Restart required"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:822
+#: minttweaks/modules/samba/page.py:823
 msgid "Restore a backup"
 msgstr ""
 
@@ -2152,11 +2152,12 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: minttweaks/ui/window.py:101
+#: minttweaks/ui/window.py:106
 msgid "Show / hide output"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:108
+#: minttweaks/modules/samba/page.py:728
 msgid "Show active connections"
 msgstr ""
 
@@ -2184,7 +2185,7 @@ msgstr ""
 msgid "Simulation: no appearance settings or backups were written."
 msgstr ""
 
-#: minttweaks/ui/window.py:62
+#: minttweaks/ui/window.py:64
 msgid "Simulation: no commands or cleanup actions will be executed."
 msgstr ""
 
@@ -2291,11 +2292,11 @@ msgstr ""
 msgid "Terminal application with tabs, layouts and GPU rendering."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:771
+#: minttweaks/modules/samba/page.py:772
 msgid "testparm rejected the configuration."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:772
+#: minttweaks/modules/samba/page.py:773
 msgid "testparm rejected this configuration"
 msgstr ""
 
@@ -2319,7 +2320,7 @@ msgstr ""
 msgid "The appearance changed or could not be checked. Review a new preview before applying."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:847
+#: minttweaks/modules/samba/page.py:848
 msgid "The backup could not be restored"
 msgstr ""
 
@@ -2345,8 +2346,8 @@ msgstr ""
 msgid "The configuration operation failed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:899
-#: minttweaks/modules/samba/page.py:914
+#: minttweaks/modules/samba/page.py:900
+#: minttweaks/modules/samba/page.py:915
 msgid "The configuration was not saved"
 msgstr ""
 
@@ -2358,7 +2359,7 @@ msgstr ""
 msgid "The editor has unsaved changes; the file on disk has changed since."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:807
+#: minttweaks/modules/samba/page.py:808
 msgid "The editor is reloaded from the file on disk."
 msgstr ""
 
@@ -2675,7 +2676,7 @@ msgstr ""
 msgid "This setting cannot be changed: {setting}"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:866
+#: minttweaks/modules/samba/page.py:867
 msgid "This share cannot be saved"
 msgstr ""
 
@@ -2815,7 +2816,7 @@ msgstr ""
 msgid "Validated with testparm before every save."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:885
+#: minttweaks/modules/samba/page.py:886
 msgid "Validating and installing the configuration…"
 msgstr ""
 
@@ -2823,11 +2824,11 @@ msgstr ""
 msgid "Verified by you"
 msgstr ""
 
-#: minttweaks/ui/window.py:134
+#: minttweaks/ui/window.py:139
 msgid "version {version}"
 msgstr ""
 
-#: minttweaks/ui/window.py:206
+#: minttweaks/ui/window.py:212
 msgid "Wait for {operation} to finish before closing MintTweaks."
 msgstr ""
 

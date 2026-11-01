@@ -708,7 +708,7 @@ def allow_samba_in_firewall(runner: BaseRunner, enable_if_inactive=False) -> Res
 
 
 def smbstatus_text(runner: BaseRunner) -> Result:
-    return runner.run(cmd("smbstatus", "-b", "-L", "--numeric"), timeout=30)
+    return runner.run(cmd("smbstatus", "-b", "-L", "--numeric", root=True), timeout=30)
 
 
 def collect_status(runner: BaseRunner, path: Optional[Path] = None) -> SambaStatus:

@@ -43,6 +43,8 @@ class MainWindow(Gtk.ApplicationWindow):
         self.set_size_request(880, 560)
 
         self.pages: List[Page] = []
+        self._log_visible = False
+        self._log_height = 190
         self._build()
         ctx.add_sink(self._on_log)
         ctx.add_operation_sink(self._on_operation_changed)
@@ -50,7 +52,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self._install_css()
 
         self.show_all()
-        self.log_revealer.set_reveal_child(False)
+        self.log_revealer.hide()
         self.sidebar.select_row(self.sidebar.get_row_at_index(0))
 
     # -- construction ------------------------------------------------------
@@ -69,7 +71,11 @@ class MainWindow(Gtk.ApplicationWindow):
         self.add(outer)
 
         body = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
-        outer.pack_start(body, True, True, 0)
+        self.output_paned = Gtk.Paned(orientation=Gtk.Orientation.VERTICAL)
+        self.output_paned.set_wide_handle(True)
+        self.output_paned.get_style_context().add_class("output-split")
+        outer.pack_start(self.output_paned, True, True, 0)
+        self.output_paned.pack1(body, resize=True, shrink=False)
         body.pack_start(self._build_sidebar(), False, False, 0)
         body.pack_start(Gtk.Separator(orientation=Gtk.Orientation.VERTICAL), False, False, 0)
 
@@ -83,8 +89,7 @@ class MainWindow(Gtk.ApplicationWindow):
             self.pages.append(page)
             self.stack.add_named(page, page.page_name)
 
-        outer.pack_start(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL), False, False, 0)
-        outer.pack_start(self._build_log_panel(), False, False, 0)
+        self.output_paned.pack2(self._build_log_panel(), resize=False, shrink=False)
         outer.pack_start(self._build_status_bar(), False, False, 0)
 
     def _build_menu_button(self) -> Gtk.MenuButton:
@@ -139,7 +144,8 @@ class MainWindow(Gtk.ApplicationWindow):
 
     def _build_log_panel(self) -> Gtk.Widget:
         self.log_revealer = Gtk.Revealer()
-        self.log_revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_UP)
+        self.log_revealer.set_transition_type(Gtk.RevealerTransitionType.NONE)
+        self.log_revealer.set_reveal_child(True)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         box.get_style_context().add_class("output-panel")
@@ -154,7 +160,7 @@ class MainWindow(Gtk.ApplicationWindow):
         header.pack_end(widgets.button(_("Clear"), self.clear_output), False, False, 0)
         box.pack_start(header, False, False, 0)
 
-        window, self.log_view, self.log_buffer = widgets.text_view(height=150)
+        window, self.log_view, self.log_buffer = widgets.text_view(height=48)
         self.log_view.set_left_margin(8)
         for name, colour in LOG_TAG_COLOURS.items():
             self.log_buffer.create_tag(name, foreground=colour)
@@ -241,7 +247,18 @@ class MainWindow(Gtk.ApplicationWindow):
                 return
 
     def toggle_log(self) -> None:
-        self.log_revealer.set_reveal_child(not self.log_revealer.get_reveal_child())
+        self._set_log_visible(not self._log_visible)
+
+    def _set_log_visible(self, visible: bool) -> None:
+        if visible == self._log_visible:
+            return
+        if visible:
+            self.log_revealer.show()
+            self.output_paned.set_position(max(0, self.output_paned.get_allocated_height() - self._log_height))
+        else:
+            self._log_height = max(90, self.log_revealer.get_allocated_height())
+            self.log_revealer.hide()
+        self._log_visible = visible
 
     def clear_output(self) -> None:
         self.log_buffer.set_text("")
@@ -254,7 +271,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.status_label.set_text(message.splitlines()[0] if message else "Ready.")
         self._scroll_output_to_end()
         if level in ("warn", "error"):
-            self.log_revealer.set_reveal_child(True)
+            self._set_log_visible(True)
 
     def _scroll_output_to_end(self) -> None:
         mark = self.log_buffer.get_insert()
