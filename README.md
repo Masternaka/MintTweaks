@@ -30,12 +30,12 @@ dans la [recette Linux Mint](docs/validation/linux-mint.md).
 ## Installation depuis les sources
 
 Cibles prévues : Linux Mint Cinnamon, familles 20, 21 et 22, à valider séparément.
-Prérequis : Python ≥ 3.8, `python3-gi`, `gir1.2-gtk-3.0` et polkit.
+Prérequis : Python ≥ 3.8, `python3-gi`, `gir1.2-gtk-3.0`, polkit, `gpg` et `ca-certificates`.
 
 Sur la machine Mint :
 
 ```bash
-sudo apt install python3-gi gir1.2-gtk-3.0 policykit-1
+sudo apt install python3-gi gir1.2-gtk-3.0 policykit-1 gpg ca-certificates
 git clone https://github.com/Masternaka/MintTweaks.git
 cd MintTweaks
 make test

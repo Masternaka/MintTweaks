@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """Privileged helper for MintTweaks - only ever meant to run through pkexec.
 
-It exists so that the one dangerous operation, replacing ``/etc/samba/smb.conf``,
-happens with a tiny, auditable surface instead of giving the GUI a general
-"write this file as root" primitive.
+It provides scoped operations for Samba configuration and catalogued browser
+repositories, without exposing a general "write this file as root" primitive.
 
     pkexec /usr/lib/minttweaks/mtk-root install-smbconf /tmp/candidate
     pkexec /usr/lib/minttweaks/mtk-root check-smbconf   /tmp/candidate
+    pkexec /usr/lib/minttweaks/mtk-root configure-browser-repository brave
 
 Guarantees:
 
@@ -204,6 +204,18 @@ def main(argv):
         return EXIT_USAGE
 
     command, args = argv[1], argv[2:]
+    if command == "configure-browser-repository":
+        if len(args) != 1:
+            return EXIT_USAGE
+        sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+        from minttweaks.modules.software.repositories import configure
+        try:
+            configure(args[0])
+        except Exception as exc:
+            warn(str(exc))
+            return EXIT_IO
+        log("repository configured and APT metadata refreshed")
+        return EXIT_OK
     if command == "install-smbconf":
         reload = "--reload" in args
         files = [arg for arg in args if arg != "--reload"]

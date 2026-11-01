@@ -24,6 +24,12 @@
 
 ## Samba
 
+Si le paquet serveur `samba` est absent, MintTweaks propose son installation et
+désactive les actions de partage, de pare-feu et de diagnostic des connexions.
+La présence des seuls outils clients, comme `smbpasswd`, ne suffit pas. Après le
+démarrage, les services sont vérifiés avant d’annoncer un succès ; `smbd` est
+obligatoire et `nmbd` est démarré lorsqu’il est disponible.
+
 - Installation de `samba`, `smbclient` et `cifs-utils` depuis l’application.
 - Gestion complète des partages : création, modification, renommage et suppression, sélection de dossier, visibilité, lecture seule, accès invité, `valid users`, `write list`, masques et `force group`.
 - Gestion des comptes Samba : création, changement de mot de passe, activation, désactivation et suppression. Les mots de passe passent par l’**entrée standard** de `smbpasswd`, jamais par la ligne de commande.

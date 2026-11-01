@@ -2,6 +2,7 @@
 
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from minttweaks.core.smbconf import SmbConf
@@ -262,6 +263,11 @@ class ServiceTests(unittest.TestCase):
 
 
 class PackageTests(unittest.TestCase):
+    def test_client_tools_do_not_count_as_an_installed_server(self):
+        runner = FakeRunner().add(["dpkg-query"], stdout="deinstall ok config-files")
+        with patch.object(backend.shutil, "which", return_value="/usr/bin/smbpasswd"):
+            self.assertFalse(backend.samba_installed(runner))
+
     def test_package_installed(self):
         runner = FakeRunner().add(["dpkg-query"], stdout="install ok installed")
         self.assertTrue(backend.package_installed(runner, "samba"))
@@ -271,6 +277,48 @@ class PackageTests(unittest.TestCase):
     def test_missing_packages(self):
         runner = FakeRunner().add(["dpkg-query"], stdout="install ok installed")
         self.assertEqual(backend.missing_packages(runner), [])
+
+
+class SharingStartTests(unittest.TestCase):
+    def runner(self, units="smbd.service enabled enabled\n"):
+        runner = FakeRunner().add(["systemctl", "list-unit-files"], stdout=units)
+        runner.add(["systemctl", "enable"])
+        runner.add(["systemctl", "restart"])
+        runner.add(["systemctl", "is-active"], stdout="active\n")
+        runner.add(["systemctl", "is-enabled"], stdout="enabled\n")
+        return runner
+
+    def test_missing_server_never_returns_empty_success(self):
+        runner = self.runner(units="")
+        results = backend.enable_and_start_sharing(runner)
+        self.assertTrue(results)
+        self.assertFalse(results[0].ok)
+        self.assertFalse(any(call.needs_root for call in runner.calls))
+
+    def test_listing_footer_is_not_a_service(self):
+        self.assertFalse(backend.unit_exists(self.runner("0 unit files listed.\n"), "smbd"))
+
+    def test_optional_nmbd_does_not_prevent_file_sharing(self):
+        runner = self.runner()
+        results = backend.enable_and_start_sharing(runner)
+        self.assertEqual(len(results), 2)
+        self.assertTrue(all(result.ok for result in results))
+        self.assertFalse(runner.ran(["systemctl", "restart", "nmbd"]))
+        self.assertTrue(runner.ran(["systemctl", "is-active", "smbd"]))
+
+    def test_failed_enable_stops_before_restart(self):
+        runner = self.runner()
+        runner.rules = [rule for rule in runner.rules if rule[0] != ("systemctl", "enable")]
+        runner.add(["systemctl", "enable"], returncode=1, stderr="denied")
+        results = backend.enable_and_start_sharing(runner)
+        self.assertFalse(results[-1].ok)
+        self.assertFalse(runner.ran(["systemctl", "restart"]))
+
+    def test_successful_commands_without_running_service_are_failure(self):
+        runner = self.runner()
+        runner.rules = [rule for rule in runner.rules if rule[0] != ("systemctl", "is-active")]
+        runner.add(["systemctl", "is-active"], stdout="failed\n", returncode=3)
+        self.assertFalse(backend.enable_and_start_sharing(runner)[-1].ok)
 
 
 class LoadDocumentTests(unittest.TestCase):

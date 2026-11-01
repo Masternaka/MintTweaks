@@ -8,6 +8,7 @@ from tests import fakegi
 fakegi.install()
 
 from minttweaks.modules.setup import backend  # noqa: E402
+from minttweaks.modules.setup import livecheck  # noqa: E402
 from minttweaks.modules.setup.page import SetupPage  # noqa: E402
 from minttweaks.ui.widgets import AppContext  # noqa: E402
 from minttweaks.ui.window import PAGE_CLASSES  # noqa: E402
@@ -69,3 +70,28 @@ class SetupPageTests(unittest.TestCase):
         save.assert_not_called()
         self.assertFalse(self.page._busy)
         self.assertTrue(self.page._read_failed)
+
+    def test_live_check_requires_available_status_and_confirmation(self):
+        with patch.object(self.page, "confirm", return_value=False) as confirm, \
+                patch.object(self.page, "run_operation") as operation:
+            self.page._disable_live_check()
+            confirm.assert_not_called()
+            self.page._apply_live_status(livecheck.Status(True, "Installed"))
+            self.page._disable_live_check()
+            confirm.assert_called_once()
+            operation.assert_not_called()
+
+    def test_live_check_uses_shared_operation_and_reports_errors_separately(self):
+        self.page._apply_live_status(livecheck.Status(True, "Installed"))
+        with patch.object(self.page, "confirm", return_value=True), \
+                patch.object(self.page, "run_operation") as operation, \
+                patch.object(livecheck, "disable") as disable:
+            self.page._disable_live_check()
+            self.assertTrue(self.page._live_busy)
+            operation.call_args.args[0]()
+            disable.assert_called_once_with(self.ctx.runner)
+            operation.call_args.kwargs["on_error"](RuntimeError("authorization denied"))
+        self.assertFalse(self.page._live_busy)
+        self.assertFalse(self.page._live_status.available)
+        self.assertIn("authorization denied", self.page._live_status.detail)
+        self.assertFalse(self.page._read_failed)

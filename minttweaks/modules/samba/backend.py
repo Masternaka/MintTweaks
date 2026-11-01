@@ -132,7 +132,8 @@ def missing_packages(runner: BaseRunner) -> List[str]:
 
 
 def samba_installed(runner: BaseRunner) -> bool:
-    return package_installed(runner, "samba") or shutil.which("smbpasswd") is not None
+    # smbpasswd also comes with samba-common-bin, without the file server.
+    return package_installed(runner, "samba")
 
 
 def install_packages(runner: BaseRunner, on_line=None) -> Result:
@@ -629,17 +630,27 @@ def control_service(runner: BaseRunner, unit: str, action: str, on_line=None) ->
 
 def unit_exists(runner: BaseRunner, unit: str) -> bool:
     listing = runner.run(cmd("systemctl", "list-unit-files", "--no-legend", f"{unit}.service"), timeout=15)
-    return bool(listing.ok and listing.stdout.strip())
+    return listing.ok and any(line.split()[:1] == [f"{unit}.service"] for line in listing.stdout.splitlines())
 
 
 def enable_and_start_sharing(runner: BaseRunner, on_line=None) -> List[Result]:
     """Enable smbd (and nmbd when it exists) and start them."""
     results: List[Result] = []
+    if not unit_exists(runner, "smbd"):
+        return [Result("systemctl enable smbd", 1, stderr=_("The Samba file server service is unavailable. Install Samba first."))]
     for unit in ("smbd", "nmbd"):
-        if not unit_exists(runner, unit):
+        if unit == "nmbd" and not unit_exists(runner, unit):
             continue
-        results.append(control_service(runner, unit, "enable", on_line=on_line))
-        results.append(control_service(runner, unit, "restart", on_line=on_line))
+        for action in ("enable", "restart"):
+            result = control_service(runner, unit, action, on_line=on_line)
+            results.append(result)
+            if not result.ok:
+                return results
+        if not runner.dry_run:
+            state = service_state(runner, unit)
+            if not state.running or state.enabled not in ("enabled", "enabled-runtime"):
+                results.append(Result(f"systemctl status {unit}", 1, stderr=_("The Samba service {unit} could not be confirmed as enabled and running.").format(unit=unit)))
+                return results
     return results
 
 
@@ -665,7 +676,7 @@ def smbstatus_text(runner: BaseRunner) -> Result:
 def collect_status(runner: BaseRunner, path: Optional[Path] = None) -> SambaStatus:
     status = SambaStatus()
     status.installed = samba_installed(runner)
-    status.missing_packages = missing_packages(runner) if status.installed else list(PACKAGES)
+    status.missing_packages = missing_packages(runner)
     status.conf_exists = conf_path(path).exists()
     if status.installed:
         for unit in SERVICES[:2]:

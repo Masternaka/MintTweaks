@@ -12,6 +12,8 @@ Architecture: all
 Depends:
  gir1.2-gtk-3.0,
  policykit-1,
+ gpg,
+ ca-certificates,
  python3,
  python3-gi,
  ${misc:Depends},
@@ -40,7 +42,7 @@ Description: system tweaks for Linux Mint: maintenance, services, Samba, Firefox
  checklist with user-reported progress and notes. It does not run bulk changes.
  .
  A native third-party software page installs Helium, Brave and Zen from
- expected preconfigured APT repositories, with a full plan preview and
+ expected APT repositories, with explicit repository setup, a full plan preview and
  post-installation version checks. Zen uses an unofficial Debian package.
  .
  A shells and terminals page manages APT tools, the current user login shell,

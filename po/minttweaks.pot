@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Domain: minttweaks\n"
 
-#: minttweaks/modules/samba/page.py:751
+#: minttweaks/modules/samba/page.py:768
 msgid "\n\nSamba already ignores every value but the last one."
 msgstr ""
 
@@ -25,11 +25,11 @@ msgstr ""
 msgid "\n\nThis cannot be undone from MintTweaks."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:723
+#: minttweaks/modules/samba/page.py:740
 msgid "\n\nWarnings:\n"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:748
+#: minttweaks/modules/samba/page.py:765
 msgid "\n… and {count} more"
 msgstr ""
 
@@ -80,11 +80,11 @@ msgstr ""
 msgid "A required shell integration script is unavailable: {path}"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:240
+#: minttweaks/modules/samba/page.py:241
 msgid "A Samba account needs an existing Unix account: sharing a folder does not work without one. Passwords are sent to smbpasswd on its standard input, never on a command line."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:838
+#: minttweaks/modules/samba/page.py:855
 msgid "A save is already in progress."
 msgstr ""
 
@@ -100,15 +100,15 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:378
+#: minttweaks/modules/samba/page.py:381
 msgid "absent"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:591
+#: minttweaks/modules/samba/page.py:596
 msgid "Account {user} {state}."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:383
+#: minttweaks/modules/samba/page.py:386
 #: minttweaks/modules/services/backend.py:51
 msgid "active"
 msgstr ""
@@ -117,8 +117,16 @@ msgstr ""
 msgid "active (waiting)"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:689
+#: minttweaks/modules/samba/page.py:706
 msgid "Active Samba connections:"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:34
+msgid "Add the missing repository, then review and install the native APT package. Repository changes require administrator authorization."
+msgstr ""
+
+#: minttweaks/modules/software/page.py:114
+msgid "Add the signing key and APT source shown below, then refresh package metadata. Existing repository files are preserved. An installation preview will follow."
 msgstr ""
 
 #: minttweaks/modules/terminal/controls.py:130
@@ -133,19 +141,19 @@ msgstr ""
 msgid "Adds playback and appearance controls to YouTube."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:108
+#: minttweaks/modules/samba/page.py:109
 msgid "Adds the Samba application profile to ufw."
 msgstr ""
 
-#: minttweaks/modules/software/page.py:31
+#: minttweaks/modules/software/page.py:32
 msgid "Administrator authorization is unavailable: package state can be read, but installation is disabled."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:815
+#: minttweaks/modules/samba/page.py:832
 msgid "Administrator rights are required"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:117
+#: minttweaks/modules/samba/page.py:118
 msgid "Administrator rights are unavailable in this session."
 msgstr ""
 
@@ -157,16 +165,16 @@ msgstr ""
 msgid "Administrator rights are unavailable in this session: services can be inspected but not changed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:150
+#: minttweaks/modules/samba/page.py:151
 msgid "Advanced parameters"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:56
+#: minttweaks/modules/setup/page.py:67
 msgid "After checking the result in the module, mark the step as verified by you or keep it for another attempt. Opening a page never completes a step."
 msgstr ""
 
 #: minttweaks/modules/home/page.py:94
-#: minttweaks/modules/setup/page.py:22
+#: minttweaks/modules/setup/page.py:23
 msgid "After installation"
 msgstr ""
 
@@ -182,7 +190,7 @@ msgstr ""
 msgid "Alias {name} will shadow an installed command in {shell}."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:99
+#: minttweaks/modules/samba/page.py:98
 msgid "All of these need administrator rights."
 msgstr ""
 
@@ -198,12 +206,16 @@ msgstr ""
 msgid "All {count} checks passed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:103
+#: minttweaks/modules/samba/page.py:102
 msgid "Allow Samba in the firewall"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:674
+#: minttweaks/modules/samba/page.py:689
 msgid "Allow Samba through the firewall?"
+msgstr ""
+
+#: minttweaks/modules/setup/livecheck.py:34
+msgid "An installation on disk could not be confirmed. No changes are available."
 msgstr ""
 
 #: minttweaks/modules/terminal/integrations.py:44
@@ -250,7 +262,7 @@ msgstr ""
 msgid "Apply Cinnamon profile"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:107
+#: minttweaks/modules/samba/page.py:108
 msgid "Apply configuration"
 msgstr ""
 
@@ -274,11 +286,11 @@ msgstr ""
 msgid "APT candidate: {version}"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:80
+#: minttweaks/modules/software/page.py:88
 msgid "APT package installed: {version}"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:82
+#: minttweaks/modules/software/page.py:90
 msgid "APT package not installed. Candidate from the expected source: {version}"
 msgstr ""
 
@@ -286,7 +298,7 @@ msgstr ""
 msgid "APT package: {package}"
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:176
+#: minttweaks/modules/software/backend.py:200
 #: minttweaks/modules/terminal/backend.py:130
 msgid "APT proposed removals. Installation was refused."
 msgstr ""
@@ -303,7 +315,7 @@ msgstr ""
 msgid "apt-get is not available on this system."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:260
+#: minttweaks/modules/samba/page.py:261
 msgid "at least 8 characters"
 msgstr ""
 
@@ -358,19 +370,19 @@ msgstr ""
 msgid "Boot time"
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:39
+#: minttweaks/modules/software/backend.py:41
 msgid "Brave's official stable APT repository."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:197
+#: minttweaks/modules/samba/page.py:198
 msgid "Browseable"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:32
+#: minttweaks/modules/software/page.py:33
 msgid "Browsers outside Mint's official repositories"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:194
+#: minttweaks/modules/samba/page.py:195
 msgid "Browse…"
 msgstr ""
 
@@ -418,11 +430,11 @@ msgstr ""
 msgid "Choose Helium, Brave or Zen from their indicated APT sources. Review the package and dependency plan before administrator approval."
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:35
+#: minttweaks/modules/setup/page.py:46
 msgid "Choose optional steps"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:569
+#: minttweaks/modules/samba/page.py:574
 msgid "Choose the Unix account to give a Samba password to."
 msgstr ""
 
@@ -443,7 +455,7 @@ msgstr ""
 msgid "Cinnamon theme"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:319
+#: minttweaks/modules/samba/page.py:320
 msgid "Clean up duplicates"
 msgstr ""
 
@@ -475,7 +487,7 @@ msgstr ""
 msgid "Command"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:196
+#: minttweaks/modules/samba/page.py:197
 msgid "Comment"
 msgstr ""
 
@@ -495,16 +507,24 @@ msgstr ""
 msgid "Configuration is previewed after installation. Cancelling that later preview keeps the packages."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:725
+#: minttweaks/modules/samba/page.py:742
 msgid "Configuration is valid"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:721
+#: minttweaks/modules/samba/page.py:738
 msgid "Configuration is valid."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:733
+#: minttweaks/modules/samba/page.py:750
 msgid "Configuration saved."
+msgstr ""
+
+#: minttweaks/modules/software/page.py:122
+msgid "Configure an APT repository"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:45
+msgid "Configure repository and install…"
 msgstr ""
 
 #: minttweaks/modules/setup/backend.py:45
@@ -517,6 +537,10 @@ msgstr ""
 
 #: minttweaks/modules/terminal/page.py:65
 msgid "Configure supported integrations after installation"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:116
+msgid "Configure the repository for {name}?"
 msgstr ""
 
 #: minttweaks/modules/terminal/status.py:79
@@ -541,7 +565,7 @@ msgstr ""
 msgid "Could not verify: {sample}"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:271
+#: minttweaks/modules/samba/page.py:272
 msgid "Create / change password"
 msgstr ""
 
@@ -549,8 +573,8 @@ msgstr ""
 msgid "Create a separate Kitty or Alacritty profile and a MintTweaks menu entry. Your normal terminal configuration and system default terminal are not replaced."
 msgstr ""
 
-#: minttweaks/modules/samba/backend.py:426
-#: minttweaks/modules/samba/page.py:157
+#: minttweaks/modules/samba/backend.py:427
+#: minttweaks/modules/samba/page.py:158
 msgid "Create mask"
 msgstr ""
 
@@ -582,7 +606,7 @@ msgstr ""
 msgid "deactivating"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:275
+#: minttweaks/modules/samba/page.py:276
 msgid "Delete account"
 msgstr ""
 
@@ -594,15 +618,15 @@ msgstr ""
 msgid "Delete obsolete package files"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:165
+#: minttweaks/modules/samba/page.py:166
 msgid "Delete share"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:603
+#: minttweaks/modules/samba/page.py:608
 msgid "Delete the Samba account '{user}'?"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:536
+#: minttweaks/modules/samba/page.py:541
 msgid "Delete the share '{name}'?"
 msgstr ""
 
@@ -639,30 +663,39 @@ msgid "Development and data"
 msgstr ""
 
 #: minttweaks/modules/home/page.py:68
-#: minttweaks/modules/samba/page.py:109
+#: minttweaks/modules/samba/page.py:110
 msgid "Diagnostics"
 msgstr ""
 
-#: minttweaks/modules/samba/backend.py:426
-#: minttweaks/modules/samba/page.py:158
+#: minttweaks/modules/samba/backend.py:427
+#: minttweaks/modules/samba/page.py:159
 msgid "Directory mask"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:274
+#: minttweaks/modules/samba/page.py:275
 #: minttweaks/modules/services/page.py:134
 msgid "Disable"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:417
-#: minttweaks/modules/samba/page.py:592
+#: minttweaks/modules/setup/page.py:41
+#: minttweaks/modules/setup/page.py:155
+msgid "Disable the Live media check"
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:150
+msgid "Disable the Live media check?"
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:422
+#: minttweaks/modules/samba/page.py:597
 msgid "disabled"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:110
+#: minttweaks/modules/setup/page.py:124
 msgid "Discard unsaved step selection?"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:764
+#: minttweaks/modules/samba/page.py:781
 msgid "Discard your changes?"
 msgstr ""
 
@@ -697,7 +730,7 @@ msgstr ""
 msgid "Displayed information"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:698
+#: minttweaks/modules/samba/page.py:715
 msgid "Done."
 msgstr ""
 
@@ -733,12 +766,12 @@ msgstr ""
 msgid "Empty the trash"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:273
+#: minttweaks/modules/samba/page.py:274
 #: minttweaks/modules/services/page.py:133
 msgid "Enable"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:101
+#: minttweaks/modules/samba/page.py:100
 msgid "Enable and start sharing"
 msgstr ""
 
@@ -746,12 +779,12 @@ msgstr ""
 msgid "Enable or remove managed integrations for installed tools. Startup files are backed up; aliases and settings outside managed blocks are preserved. No shell file is executed by MintTweaks."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:417
-#: minttweaks/modules/samba/page.py:592
+#: minttweaks/modules/samba/page.py:422
+#: minttweaks/modules/samba/page.py:597
 msgid "enabled"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:106
+#: minttweaks/modules/samba/page.py:107
 msgid "Enables smbd and nmbd, then starts them."
 msgstr ""
 
@@ -830,11 +863,15 @@ msgstr ""
 msgid "File changes are backed up before writing. Restoring a backup has its own preview and backup. No backup is removed automatically."
 msgstr ""
 
+#: minttweaks/modules/samba/page.py:675
+msgid "File sharing is enabled and running."
+msgstr ""
+
 #: minttweaks/modules/terminal/catalog.py:21
 msgid "Files and disk space"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:497
+#: minttweaks/modules/samba/page.py:502
 msgid "Fill in a name and pick an existing folder, then save."
 msgstr ""
 
@@ -854,7 +891,7 @@ msgstr ""
 msgid "Firefox does not appear to be installed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:108
+#: minttweaks/modules/samba/page.py:109
 msgid "Firewall"
 msgstr ""
 
@@ -862,7 +899,7 @@ msgstr ""
 msgid "Fix broken dependencies"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:195
+#: minttweaks/modules/samba/page.py:196
 msgid "Folder"
 msgstr ""
 
@@ -874,7 +911,7 @@ msgstr ""
 msgid "Font size"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:159
+#: minttweaks/modules/samba/page.py:160
 msgid "Force group"
 msgstr ""
 
@@ -890,7 +927,7 @@ msgstr ""
 msgid "GPU-rendered terminal application."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:199
+#: minttweaks/modules/samba/page.py:200
 msgid "Guest access"
 msgstr ""
 
@@ -898,7 +935,7 @@ msgstr ""
 msgid "Height (%)"
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:36
+#: minttweaks/modules/software/backend.py:38
 msgid "Helium's official stable APT repository."
 msgstr ""
 
@@ -943,7 +980,7 @@ msgstr ""
 msgid "In progress: {operation}"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:383
+#: minttweaks/modules/samba/page.py:386
 #: minttweaks/modules/services/backend.py:53
 msgid "inactive"
 msgstr ""
@@ -960,7 +997,7 @@ msgstr ""
 msgid "Install missing imported tools?"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:112
+#: minttweaks/modules/software/page.py:144
 msgid "Install native software"
 msgstr ""
 
@@ -968,11 +1005,11 @@ msgstr ""
 msgid "Install native third-party software"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:78
+#: minttweaks/modules/samba/page.py:77
 msgid "Install Samba"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:629
+#: minttweaks/modules/samba/page.py:634
 msgid "Install Samba?"
 msgstr ""
 
@@ -1009,7 +1046,7 @@ msgstr ""
 msgid "Install these Firefox extensions?"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:105
+#: minttweaks/modules/software/page.py:137
 msgid "Install these native packages?"
 msgstr ""
 
@@ -1026,11 +1063,15 @@ msgstr ""
 msgid "Install this tool before configuring it: {tool}"
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:209
+#: minttweaks/modules/software/backend.py:233
 msgid "Installation failed or could not be fully verified. Check the package state; no automatic removal was performed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:366
+#: minttweaks/modules/setup/livecheck.py:46
+msgid "Installation on disk detected. You can disable the Live media check and clear its failure state."
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:369
 msgid "installed"
 msgstr ""
 
@@ -1098,7 +1139,7 @@ msgstr ""
 msgid "Jump to frequently used directories. Managed integration enables the z shortcut."
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:67
+#: minttweaks/modules/setup/page.py:78
 msgid "Keep for another attempt"
 msgstr ""
 
@@ -1134,8 +1175,20 @@ msgstr ""
 msgid "List files with colors, tree views and Git information."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:109
+#: minttweaks/modules/samba/page.py:110
 msgid "Lists who is connected right now."
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:38
+msgid "Live installation media check"
+msgstr ""
+
+#: minttweaks/modules/setup/livecheck.py:26
+msgid "Live media check changes are unavailable in simulation mode."
+msgstr ""
+
+#: minttweaks/modules/setup/livecheck.py:31
+msgid "Live session detected: keep the installation media check enabled."
 msgstr ""
 
 #: minttweaks/modules/terminal/catalog.py:50
@@ -1146,7 +1199,11 @@ msgstr ""
 msgid "Load selected alias"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:48
+#: minttweaks/modules/setup/page.py:39
+msgid "Loading service status…"
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:59
 msgid "Loading the saved checklist…"
 msgstr ""
 
@@ -1178,11 +1235,11 @@ msgstr ""
 msgid "Manual integration detected; not managed here."
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:67
+#: minttweaks/modules/setup/page.py:78
 msgid "Mark to do"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:67
+#: minttweaks/modules/setup/page.py:78
 msgid "Mark verified by you"
 msgstr ""
 
@@ -1198,11 +1255,12 @@ msgstr ""
 msgid "MintTweaks currently manages {count} extension(s) in the Firefox policy."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:776
+#: minttweaks/modules/samba/page.py:793
 msgid "MintTweaks keeps its backups in {folder}."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:366
+#: minttweaks/modules/samba/page.py:358
+#: minttweaks/modules/samba/page.py:369
 msgid "missing: {packages}"
 msgstr ""
 
@@ -1218,12 +1276,8 @@ msgstr ""
 msgid "Mouse support"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:191
+#: minttweaks/modules/samba/page.py:192
 msgid "Name"
-msgstr ""
-
-#: minttweaks/modules/software/page.py:33
-msgid "Native APT packages only. Configure the indicated repository first; this page does not add repositories or signing keys."
 msgstr ""
 
 #: minttweaks/modules/home/page.py:95
@@ -1235,13 +1289,13 @@ msgstr ""
 msgid "Navigation and search"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:135
+#: minttweaks/modules/samba/page.py:136
 msgid "New share"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:569
-#: minttweaks/modules/samba/page.py:584
-#: minttweaks/modules/samba/page.py:599
+#: minttweaks/modules/samba/page.py:574
+#: minttweaks/modules/samba/page.py:589
+#: minttweaks/modules/samba/page.py:604
 msgid "No account selected"
 msgstr ""
 
@@ -1249,7 +1303,7 @@ msgstr ""
 msgid "No APT candidate. Use the project's official installation guide if needed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:775
+#: minttweaks/modules/samba/page.py:792
 msgid "No backup found"
 msgstr ""
 
@@ -1265,11 +1319,11 @@ msgstr ""
 msgid "No configuration changes are needed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:811
+#: minttweaks/modules/samba/page.py:828
 msgid "No configuration loaded"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:742
+#: minttweaks/modules/samba/page.py:759
 msgid "No duplicate parameter"
 msgstr ""
 
@@ -1317,7 +1371,7 @@ msgstr ""
 msgid "No restart is pending."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:743
+#: minttweaks/modules/samba/page.py:760
 msgid "No section of this configuration repeats the same key, so there is nothing to clean up."
 msgstr ""
 
@@ -1329,21 +1383,21 @@ msgstr ""
 msgid "No tools selected."
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:110
+#: minttweaks/modules/software/backend.py:112
 msgid "No unambiguous candidate from the expected repository. Configure its source and refresh APT metadata first."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:419
+#: minttweaks/modules/samba/page.py:424
 msgid "no Unix account"
 msgstr ""
 
-#: minttweaks/modules/samba/backend.py:551
+#: minttweaks/modules/samba/backend.py:552
 msgid "No Unix account named '{user}'. Create the system account first."
 msgstr ""
 
 #: minttweaks/modules/cinnamon/page.py:35
 #: minttweaks/modules/maintenance/page.py:78
-#: minttweaks/modules/software/page.py:42
+#: minttweaks/modules/software/page.py:43
 #: … (+4)
 msgid "Not analysed yet."
 msgstr ""
@@ -1352,7 +1406,7 @@ msgstr ""
 msgid "Not checked in simulation mode."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:369
+#: minttweaks/modules/samba/page.py:372
 msgid "not installed"
 msgstr ""
 
@@ -1398,11 +1452,11 @@ msgstr ""
 msgid "Open a new terminal. Use mtk-eza and mtk-tmux for their managed options; mtk-tmux uses a separate server."
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:60
+#: minttweaks/modules/setup/page.py:71
 msgid "Open selected step"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:50
+#: minttweaks/modules/setup/page.py:61
 msgid "Open the next unfinished step"
 msgstr ""
 
@@ -1435,7 +1489,7 @@ msgstr ""
 msgid "Package cache"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:78
+#: minttweaks/modules/software/page.py:86
 msgid "Package check unavailable: {error}"
 msgstr ""
 
@@ -1458,7 +1512,7 @@ msgstr ""
 msgid "Packages were installed, but their configuration could not be prepared."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:573
+#: minttweaks/modules/samba/page.py:578
 msgid "Password rejected"
 msgstr ""
 
@@ -1486,8 +1540,8 @@ msgstr ""
 msgid "Personal settings configured; verify in a new terminal."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:584
-#: minttweaks/modules/samba/page.py:599
+#: minttweaks/modules/samba/page.py:589
+#: minttweaks/modules/samba/page.py:604
 msgid "Pick a Samba account in the list first."
 msgstr ""
 
@@ -1507,7 +1561,7 @@ msgstr ""
 msgid "Prepare shells and terminals"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:378
+#: minttweaks/modules/samba/page.py:381
 msgid "present"
 msgstr ""
 
@@ -1547,7 +1601,7 @@ msgstr ""
 msgid "Preview managed prompt removal"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:47
+#: minttweaks/modules/software/page.py:54
 msgid "Preview selected installations"
 msgstr ""
 
@@ -1595,7 +1649,7 @@ msgstr ""
 msgid "Profiles could not be read. Previous results have not been updated.\n{error}"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:185
+#: minttweaks/modules/setup/page.py:226
 msgid "Progress was not updated. Reload before continuing.\n{error}"
 msgstr ""
 
@@ -1639,7 +1693,7 @@ msgstr ""
 msgid "Read files with syntax highlighting. The Ubuntu/Mint command is commonly batcat."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:198
+#: minttweaks/modules/samba/page.py:199
 msgid "Read only"
 msgstr ""
 
@@ -1675,7 +1729,7 @@ msgstr ""
 msgid "rebuilt automatically by the file manager"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:56
+#: minttweaks/modules/setup/page.py:67
 msgid "Record your result"
 msgstr ""
 
@@ -1683,7 +1737,7 @@ msgstr ""
 msgid "Refresh before saving another profile."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:811
+#: minttweaks/modules/samba/page.py:828
 msgid "Refresh the page and try again."
 msgstr ""
 
@@ -1704,15 +1758,19 @@ msgstr ""
 msgid "Reload"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:102
+#: minttweaks/modules/samba/page.py:101
 msgid "Reload configuration"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:52
+#: minttweaks/modules/setup/page.py:63
 msgid "Reload saved progress"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:107
+#: minttweaks/modules/setup/page.py:43
+msgid "Reload service status"
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:108
 msgid "Reloads smbd so new shares are served at once."
 msgstr ""
 
@@ -1742,7 +1800,7 @@ msgstr ""
 msgid "Remove unused Flatpak runtimes"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:750
+#: minttweaks/modules/samba/page.py:767
 msgid "Remove {count} duplicate parameter(s)?"
 msgstr ""
 
@@ -1750,7 +1808,7 @@ msgstr ""
 msgid "Remove {count} package(s)"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:756
+#: minttweaks/modules/samba/page.py:773
 msgid "Removed {count} duplicate parameter(s)."
 msgstr ""
 
@@ -1766,8 +1824,16 @@ msgstr ""
 msgid "Removing the MintTweaks Firefox policy…"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:44
+#: minttweaks/modules/software/backend.py:167
+msgid "Repository setup failed."
+msgstr ""
+
+#: minttweaks/modules/software/page.py:51
 msgid "Repository setup instructions"
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:157
+msgid "Repository setup is unavailable in simulation mode."
 msgstr ""
 
 #: minttweaks/modules/maintenance/page.py:99
@@ -1785,11 +1851,11 @@ msgstr ""
 msgid "Restart required"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:779
+#: minttweaks/modules/samba/page.py:796
 msgid "Restore a backup"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:320
+#: minttweaks/modules/samba/page.py:321
 msgid "Restore a backup…"
 msgstr ""
 
@@ -1809,11 +1875,11 @@ msgstr ""
 msgid "Restore this appearance?"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:64
+#: minttweaks/modules/setup/page.py:75
 msgid "Result or error to remember"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:318
+#: minttweaks/modules/samba/page.py:319
 msgid "Revert"
 msgstr ""
 
@@ -1825,7 +1891,7 @@ msgstr ""
 msgid "Review all file differences. A private backup is saved before writing."
 msgstr ""
 
-#: minttweaks/modules/software/page.py:106
+#: minttweaks/modules/software/page.py:138
 msgid "Review the complete APT simulation, including dependencies and upgrades. Removals are refused. The plan will be checked again before installation; repository configuration is not changed."
 msgstr ""
 
@@ -1833,7 +1899,7 @@ msgstr ""
 msgid "Review the full file differences. A private backup is saved before writing; close and reopen your terminal after the change."
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:45
+#: minttweaks/modules/setup/page.py:56
 msgid "Review the purpose and source of each step. Exact changes are chosen in its module."
 msgstr ""
 
@@ -1858,44 +1924,45 @@ msgstr ""
 msgid "Runs 'apt-get -f install', the usual cure for a half-configured system."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:611
+#: minttweaks/modules/samba/page.py:616
 msgid "Samba account {user} deleted."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:226
+#: minttweaks/modules/samba/page.py:227
 msgid "Samba accounts"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:384
+#: minttweaks/modules/samba/page.py:387
 msgid "Samba allowed"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:642
-#: minttweaks/modules/samba/page.py:650
+#: minttweaks/modules/samba/page.py:647
+#: minttweaks/modules/samba/page.py:655
 msgid "Samba could not be installed"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:647
+#: minttweaks/modules/samba/page.py:652
 msgid "Samba installed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:76
+#: minttweaks/modules/samba/page.py:75
+#: minttweaks/modules/samba/page.py:358
 msgid "Samba is not installed on this system."
 msgstr ""
 
-#: minttweaks/modules/samba/backend.py:575
+#: minttweaks/modules/samba/backend.py:576
 msgid "Samba is not installed. Install it first."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:384
+#: minttweaks/modules/samba/page.py:387
 msgid "Samba not allowed"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:266
+#: minttweaks/modules/samba/page.py:267
 msgid "Samba password"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:578
+#: minttweaks/modules/samba/page.py:583
 msgid "Samba password set for {user}."
 msgstr ""
 
@@ -1903,11 +1970,11 @@ msgstr ""
 msgid "Samba sharing"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:360
+#: minttweaks/modules/samba/page.py:363
 msgid "Samba status refreshed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:317
+#: minttweaks/modules/samba/page.py:318
 #: minttweaks/modules/terminal/controls.py:185
 msgid "Save"
 msgstr ""
@@ -1928,15 +1995,15 @@ msgstr ""
 msgid "Save or apply a Cinnamon profile. Applying changes user settings after a preview and backup; themes and fonts must already be installed."
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:179
+#: minttweaks/modules/setup/page.py:220
 msgid "Save preparation progress"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:41
+#: minttweaks/modules/setup/page.py:52
 msgid "Save selected steps"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:164
+#: minttweaks/modules/samba/page.py:165
 msgid "Save share"
 msgstr ""
 
@@ -1977,7 +2044,7 @@ msgstr ""
 msgid "Selected add-ons are downloaded from addons.mozilla.org and installed the next time Firefox starts. Installing an extension grants it the permissions listed on its addons.mozilla.org page."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:99
+#: minttweaks/modules/samba/page.py:98
 msgid "Serve files on the network"
 msgstr ""
 
@@ -1987,6 +2054,10 @@ msgstr ""
 
 #: minttweaks/modules/services/page.py:211
 msgid "Service state unavailable. Previous results, if any, have not been updated.\n{error}"
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:145
+msgid "Service status could not be updated. Reload before continuing.\n{error}"
 msgstr ""
 
 #: minttweaks/modules/home/page.py:90
@@ -2001,21 +2072,25 @@ msgstr ""
 msgid "Set up sharing, if needed"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:545
+#: minttweaks/modules/samba/page.py:550
 msgid "Share '{name}' deleted."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:544
+#: minttweaks/modules/samba/page.py:549
 msgid "Share '{name}' not found."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:529
+#: minttweaks/modules/samba/page.py:534
 msgid "Share '{name}' saved."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:130
+#: minttweaks/modules/samba/page.py:131
 #: minttweaks/modules/samba/page.py:59
 msgid "Shares"
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:671
+msgid "Sharing could not be started"
 msgstr ""
 
 #: minttweaks/modules/terminal/catalog.py:24
@@ -2043,7 +2118,7 @@ msgstr ""
 msgid "Short command examples. The client may need to download its page cache."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:261
+#: minttweaks/modules/samba/page.py:262
 msgid "Show"
 msgstr ""
 
@@ -2051,7 +2126,7 @@ msgstr ""
 msgid "Show / hide output"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:104
+#: minttweaks/modules/samba/page.py:103
 msgid "Show active connections"
 msgstr ""
 
@@ -2071,6 +2146,10 @@ msgstr ""
 msgid "Shrink the system journal to 200 MB"
 msgstr ""
 
+#: minttweaks/modules/samba/page.py:673
+msgid "Simulation complete. Sharing was not started."
+msgstr ""
+
 #: minttweaks/modules/cinnamon/backend.py:289
 msgid "Simulation: no appearance settings or backups were written."
 msgstr ""
@@ -2084,7 +2163,7 @@ msgstr ""
 msgid "Simulation: no configuration files changed."
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:194
+#: minttweaks/modules/software/backend.py:218
 msgid "Simulation: no software was installed."
 msgstr ""
 
@@ -2108,11 +2187,7 @@ msgstr ""
 msgid "Slowest units:"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:664
-msgid "smbd and nmbd are enabled and running."
-msgstr ""
-
-#: minttweaks/modules/software/backend.py:72
+#: minttweaks/modules/software/backend.py:74
 msgid "Software availability is not checked in simulation mode."
 msgstr ""
 
@@ -2132,7 +2207,7 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:106
+#: minttweaks/modules/samba/page.py:107
 msgid "Start sharing"
 msgstr ""
 
@@ -2140,7 +2215,7 @@ msgstr ""
 msgid "Stashes tabs into a list you can restore later."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:83
+#: minttweaks/modules/samba/page.py:82
 msgid "Status"
 msgstr ""
 
@@ -2186,11 +2261,11 @@ msgstr ""
 msgid "Terminal application with tabs, layouts and GPU rendering."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:728
+#: minttweaks/modules/samba/page.py:745
 msgid "testparm rejected the configuration."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:729
+#: minttweaks/modules/samba/page.py:746
 msgid "testparm rejected this configuration"
 msgstr ""
 
@@ -2214,7 +2289,7 @@ msgstr ""
 msgid "The appearance changed or could not be checked. Review a new preview before applying."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:804
+#: minttweaks/modules/samba/page.py:821
 msgid "The backup could not be restored"
 msgstr ""
 
@@ -2231,7 +2306,7 @@ msgstr ""
 msgid "The Cinnamon profile operation failed."
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:179
+#: minttweaks/modules/software/backend.py:203
 #: minttweaks/modules/terminal/backend.py:133
 msgid "The complete installation plan could not be read."
 msgstr ""
@@ -2240,8 +2315,8 @@ msgstr ""
 msgid "The configuration operation failed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:856
-#: minttweaks/modules/samba/page.py:871
+#: minttweaks/modules/samba/page.py:873
+#: minttweaks/modules/samba/page.py:888
 msgid "The configuration was not saved"
 msgstr ""
 
@@ -2249,11 +2324,11 @@ msgstr ""
 msgid "The current appearance could not all be read. Nothing was changed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:427
+#: minttweaks/modules/samba/page.py:432
 msgid "The editor has unsaved changes; the file on disk has changed since."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:764
+#: minttweaks/modules/samba/page.py:781
 msgid "The editor is reloaded from the file on disk."
 msgstr ""
 
@@ -2269,7 +2344,7 @@ msgstr ""
 msgid "The final appearance could not be verified."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:537
+#: minttweaks/modules/samba/page.py:542
 msgid "The folder and its files are kept; only the Samba share is removed."
 msgstr ""
 
@@ -2293,7 +2368,7 @@ msgstr ""
 msgid "The imported configuration plan changed. Review a new preview."
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:197
+#: minttweaks/modules/software/backend.py:221
 #: minttweaks/modules/terminal/backend.py:142
 msgid "The installation plan changed. Review a new preview before continuing."
 msgstr ""
@@ -2320,6 +2395,22 @@ msgstr ""
 
 #: minttweaks/modules/maintenance/page.py:170
 msgid "The kernel list could not be read: {error}"
+msgstr ""
+
+#: minttweaks/modules/setup/livecheck.py:57
+msgid "The Live media check change failed. Reload its status before retrying."
+msgstr ""
+
+#: minttweaks/modules/setup/livecheck.py:43
+msgid "The Live media check is already disabled."
+msgstr ""
+
+#: minttweaks/modules/setup/livecheck.py:41
+msgid "The Live media check service is not installed."
+msgstr ""
+
+#: minttweaks/modules/setup/livecheck.py:45
+msgid "The Live media check service state could not be confirmed. No changes are available."
 msgstr ""
 
 #: minttweaks/modules/terminal/backend.py:311
@@ -2353,15 +2444,15 @@ msgstr ""
 msgid "The operation failed."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:630
+#: minttweaks/modules/samba/page.py:635
 msgid "The packages samba, smbclient and cifs-utils are installed with apt."
 msgstr ""
 
-#: minttweaks/modules/samba/backend.py:558
+#: minttweaks/modules/samba/backend.py:559
 msgid "The password cannot be empty."
 msgstr ""
 
-#: minttweaks/modules/samba/backend.py:562
+#: minttweaks/modules/samba/backend.py:563
 msgid "The password must not start or end with a space."
 msgstr ""
 
@@ -2390,7 +2481,11 @@ msgstr ""
 msgid "The removal preview could not be read. Re-analyse before removing packages."
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:204
+#: minttweaks/modules/software/backend.py:164
+msgid "The repository setup helper is missing. Reinstall MintTweaks."
+msgstr ""
+
+#: minttweaks/modules/software/backend.py:228
 msgid "The requested package version was not verified after installation."
 msgstr ""
 
@@ -2410,15 +2505,24 @@ msgstr ""
 msgid "The running kernel and the newest one are always kept. Linux Mint's Update Manager can also remove kernels; both tools are safe to use."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:622
+#: minttweaks/modules/samba/page.py:627
 msgid "The Samba account could not be updated"
+msgstr ""
+
+#: minttweaks/modules/samba/backend.py:640
+#: minttweaks/modules/samba/page.py:669
+msgid "The Samba file server service is unavailable. Install Samba first."
+msgstr ""
+
+#: minttweaks/modules/samba/backend.py:652
+msgid "The Samba service {unit} could not be confirmed as enabled and running."
 msgstr ""
 
 #: minttweaks/modules/setup/backend.py:138
 msgid "The saved checklist could not be read and was preserved: {error}"
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:208
+#: minttweaks/modules/software/backend.py:232
 msgid "The selected packages were installed and their versions verified."
 msgstr ""
 
@@ -2452,11 +2556,11 @@ msgstr ""
 msgid "The shell or terminal operation failed."
 msgstr ""
 
-#: minttweaks/modules/software/page.py:123
+#: minttweaks/modules/software/page.py:155
 msgid "The software installation was not fully verified."
 msgstr ""
 
-#: minttweaks/modules/software/page.py:130
+#: minttweaks/modules/software/page.py:162
 msgid "The software operation failed."
 msgstr ""
 
@@ -2472,7 +2576,7 @@ msgstr ""
 msgid "The tool installation failed. Check APT before retrying."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:604
+#: minttweaks/modules/samba/page.py:609
 msgid "The Unix account and its files are kept."
 msgstr ""
 
@@ -2484,7 +2588,7 @@ msgstr ""
 msgid "Theme"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:563
+#: minttweaks/modules/samba/page.py:568
 msgid "This account has no Unix user behind it."
 msgstr ""
 
@@ -2496,7 +2600,7 @@ msgstr ""
 msgid "This changes the running system immediately."
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:35
+#: minttweaks/modules/setup/page.py:46
 msgid "This guide opens the existing modules. It does not install software or change settings by itself."
 msgstr ""
 
@@ -2512,28 +2616,42 @@ msgstr ""
 msgid "This is already your login shell."
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:88
+#: minttweaks/modules/software/backend.py:90
 msgid "This package has an incomplete state. Check it in Maintenance first."
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:171
+#: minttweaks/modules/software/backend.py:195
 msgid "This package is already installed: {name}"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:674
+#: minttweaks/modules/software/backend.py:155
+#: minttweaks/modules/software/page.py:50
+msgid "This repository is still being prepared. Automatic setup is not available yet."
+msgstr ""
+
+#: minttweaks/modules/samba/page.py:689
 msgid "This runs 'ufw allow Samba'."
+msgstr ""
+
+#: minttweaks/modules/setup/livecheck.py:10
+msgid "This service checks the files on the Linux Mint installation USB drive or DVD. It is unnecessary once Mint is installed on disk and may report an error when the installation media is absent. Disabling it does not affect disk filesystem checks."
 msgstr ""
 
 #: minttweaks/modules/cinnamon/backend.py:260
 msgid "This setting cannot be changed: {setting}"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:823
+#: minttweaks/modules/samba/page.py:840
 msgid "This share cannot be saved"
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:126
+#: minttweaks/modules/software/backend.py:160
+#: minttweaks/modules/software/backend.py:128
 msgid "This source has no supported package for architecture {architecture}."
+msgstr ""
+
+#: minttweaks/modules/setup/page.py:150
+msgid "This stops and disables casper-md5check.service and clears its failure state. Administrator authorization is required."
 msgstr ""
 
 #: minttweaks/modules/maintenance/page.py:55
@@ -2548,11 +2666,11 @@ msgstr ""
 msgid "Timers schedule services: a service can be inactive while its timer is active (waiting)."
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:17
+#: minttweaks/modules/setup/page.py:18
 msgid "To do"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:17
+#: minttweaks/modules/setup/page.py:18
 msgid "To retry"
 msgstr ""
 
@@ -2580,7 +2698,7 @@ msgstr ""
 msgid "Tree view"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:381
+#: minttweaks/modules/samba/page.py:384
 msgid "ufw not installed"
 msgstr ""
 
@@ -2588,7 +2706,7 @@ msgstr ""
 msgid "Unavailable: {error}"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:256
+#: minttweaks/modules/samba/page.py:257
 msgid "Unix account"
 msgstr ""
 
@@ -2599,7 +2717,7 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: minttweaks/modules/software/backend.py:41
+#: minttweaks/modules/software/backend.py:43
 msgid "Unofficial Debian package built from Zen's official archive by the Masternaka APT repository."
 msgstr ""
 
@@ -2619,7 +2737,7 @@ msgstr ""
 msgid "Use 1-80 characters from letters, digits, spaces, '.', '_', '-' or a trailing '$'. The name must start with a letter or a digit."
 msgstr ""
 
-#: minttweaks/modules/samba/backend.py:549
+#: minttweaks/modules/samba/backend.py:550
 msgid "Use a lowercase Unix user name (letters, digits, '_', '-')."
 msgstr ""
 
@@ -2627,11 +2745,11 @@ msgstr ""
 msgid "Use a note of up to 500 characters without control characters."
 msgstr ""
 
-#: minttweaks/modules/samba/backend.py:560
+#: minttweaks/modules/samba/backend.py:561
 msgid "Use at least 8 characters."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:300
+#: minttweaks/modules/samba/page.py:301
 msgid "user"
 msgstr ""
 
@@ -2643,23 +2761,23 @@ msgstr ""
 msgid "Utilities and installation"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:155
+#: minttweaks/modules/samba/page.py:156
 msgid "Valid users"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:316
+#: minttweaks/modules/samba/page.py:317
 msgid "Validate"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:438
+#: minttweaks/modules/samba/page.py:443
 msgid "Validated with testparm before every save."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:842
+#: minttweaks/modules/samba/page.py:859
 msgid "Validating and installing the configuration…"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:17
+#: minttweaks/modules/setup/page.py:18
 msgid "Verified by you"
 msgstr ""
 
@@ -2671,7 +2789,7 @@ msgstr ""
 msgid "Wait for {operation} to finish before closing MintTweaks."
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:434
+#: minttweaks/modules/samba/page.py:439
 msgid "Warning: these sections are defined twice and Samba merges them: "
 msgstr ""
 
@@ -2687,7 +2805,7 @@ msgstr ""
 msgid "Window title font"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:156
+#: minttweaks/modules/samba/page.py:157
 msgid "Write list"
 msgstr ""
 
@@ -2695,7 +2813,7 @@ msgstr ""
 msgid "Writing the Firefox extension policy…"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:45
+#: minttweaks/modules/setup/page.py:56
 msgid "Your preparation plan"
 msgstr ""
 
@@ -2771,7 +2889,7 @@ msgstr ""
 msgid "{kernels}\n\nEvery related package is removed (about 300 MB each)."
 msgstr ""
 
-#: minttweaks/modules/samba/backend.py:428
+#: minttweaks/modules/samba/backend.py:429
 msgid "{label} must be an octal mode such as 0664 or 2775."
 msgstr ""
 
@@ -2799,6 +2917,6 @@ msgstr ""
 msgid "{used} / {total} ({percent}% used, {free} free)"
 msgstr ""
 
-#: minttweaks/modules/setup/page.py:134
+#: minttweaks/modules/setup/page.py:175
 msgid "{verified} of {total} step(s) verified by you."
 msgstr ""

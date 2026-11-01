@@ -23,6 +23,7 @@ class SoftwarePage(Page):
         self.status = {}
         self.checks = {}
         self.labels = {}
+        self.repository_buttons = {}
         self._loading = False
         self._busy = False
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
@@ -30,7 +31,7 @@ class SoftwarePage(Page):
         if not widgets.escalation_available(self.ctx.runner):
             box.pack_start(widgets.info_bar(_("Administrator authorization is unavailable: package state can be read, but installation is disabled.")), False, False, 0)
         catalog, body = widgets.card(_("Browsers outside Mint's official repositories"),
-            _("Native APT packages only. Configure the indicated repository first; this page does not add repositories or signing keys."))
+            _("Add the missing repository, then review and install the native APT package. Repository changes require administrator authorization."))
         for app in backend.CATALOG:
             check = Gtk.CheckButton(label=app.name)
             check.set_sensitive(False)
@@ -41,6 +42,12 @@ class SoftwarePage(Page):
             body.pack_start(widgets.label(app.origin, dim=True, wrap=True, selectable=True), False, False, 0)
             self.labels[app.id] = widgets.label(_("Not analysed yet."), wrap=True)
             body.pack_start(self.labels[app.id], False, False, 0)
+            button = widgets.button(_("Configure repository and install…"), lambda key=app.id: self._on_repository(key))
+            button.set_sensitive(False)
+            self.repository_buttons[app.id] = button
+            body.pack_start(button, False, False, 0)
+            if app.id not in backend.RECIPES:
+                body.pack_start(widgets.label(_("This repository is still being prepared. Automatic setup is not available yet."), wrap=True), False, False, 0)
             body.pack_start(Gtk.LinkButton.new_with_label(app.guide, _("Repository setup instructions")), False, False, 0)
         self.reload_button = widgets.button(_("Re-analyse"), self.refresh)
         body.pack_start(self.reload_button, False, False, 0)
@@ -59,6 +66,7 @@ class SoftwarePage(Page):
         allowed = ready and widgets.escalation_available(self.ctx.runner)
         for key, check in self.checks.items():
             check.set_sensitive(bool(allowed and key in self.status and self.status[key].installable))
+            self.repository_buttons[key].set_sensitive(bool(allowed and key in backend.RECIPES and key in self.status and not self.status[key].installed and not self.status[key].installable))
         self.install_button.set_sensitive(bool(allowed and self._selected()))
         self.reload_button.set_sensitive(not self._loading and not self._busy)
 
@@ -95,6 +103,30 @@ class SoftwarePage(Page):
         self._update_controls()
         self.ctx.run_async(lambda: backend.preview_install(self.ctx.runner, selected),
                            on_done=self._confirm_install, on_error=self._failed)
+
+    def _on_repository(self, key):
+        if self._loading or self._busy or self.ctx.runner.dry_run or not widgets.escalation_available(self.ctx.runner):
+            return
+        if key not in backend.RECIPES:
+            return
+        app = backend.APP_BY_ID[key]
+        recipe = backend.RECIPES[key]
+        detail = _("Add the signing key and APT source shown below, then refresh package metadata. Existing repository files are preserved. An installation preview will follow.")
+        detail += "\n\n" + app.source + "\n" + app.origin + "\n" + recipe.key_url
+        if not self.confirm(_("Configure the repository for {name}?").format(name=app.name), detail):
+            return
+        self._busy = True
+        self._update_controls()
+        self.run_operation(lambda: backend.configure_repository(self.ctx.runner, key, on_line=self.ctx.log),
+                           on_done=lambda status: self._repository_ready(key, status),
+                           on_error=self._failed, name=_("Configure an APT repository"))
+
+    def _repository_ready(self, key, status):
+        self._busy = False
+        self._apply_status(status)
+        if status[key].installable:
+            self.checks[key].set_active(True)
+            self._on_install()
 
     def _confirm_install(self, plan):
         lines = []

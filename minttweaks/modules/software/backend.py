@@ -1,7 +1,7 @@
 """Install a small allowlist of native third-party browser packages.
 
-Repositories must already be configured. No repository, key or download script
-is added implicitly. All candidate versions are checked against their source.
+Repositories can be configured explicitly. All candidate versions are checked
+against their source before installation.
 """
 
 from __future__ import annotations
@@ -12,6 +12,8 @@ from typing import Dict, List, Tuple
 
 from ...core.runner import BaseRunner, Result, cmd, read_command
 from ...i18n import _
+from ...core import paths
+from .repositories import RECIPES
 
 
 @dataclass(frozen=True)
@@ -145,6 +147,28 @@ def selected_apps(ids) -> List[Application]:
     if len(set(ids)) != len(ids):
         raise SoftwareError("Duplicate application selection.")
     return [APP_BY_ID[key] for key in ids]
+
+
+def configure_repository(runner, app_id, on_line=None):
+    app = selected_apps([app_id])[0]
+    if app_id not in RECIPES:
+        raise SoftwareError(_("This repository is still being prepared. Automatic setup is not available yet."))
+    if runner.dry_run:
+        raise SoftwareError(_("Repository setup is unavailable in simulation mode."))
+    arch = architecture(runner)
+    if arch not in app.architectures:
+        raise SoftwareError(_("This source has no supported package for architecture {architecture}.").format(architecture=arch))
+    candidates = (paths.PKG_DIR / "mtk-root", paths.PKG_DIR.parent / "data" / "mtk-root")
+    helper = next((path for path in candidates if path.is_file()), None)
+    if helper is None:
+        raise SoftwareError(_("The repository setup helper is missing. Reinstall MintTweaks."))
+    result = runner.stream(cmd(str(helper), "configure-browser-repository", app_id, root=True), on_line=on_line)
+    if not result.ok:
+        raise SoftwareError(result.output or _("Repository setup failed."))
+    status = check_application(runner, app, arch)
+    if status.error:
+        raise SoftwareError(status.error)
+    return collect_status(runner)
 
 
 def apt_command(specs, simulate=False):

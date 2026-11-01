@@ -72,9 +72,8 @@ class SambaPage(Page):
         self.install_bar.set_message_type(Gtk.MessageType.WARNING)
         self.install_bar.set_show_close_button(False)
         install_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
-        install_box.pack_start(
-            widgets.label(_("Samba is not installed on this system."), wrap=True), True, True, 0
-        )
+        self.install_label = widgets.label(_("Samba is not installed on this system."), wrap=True)
+        install_box.pack_start(self.install_label, True, True, 0)
         self.install_button = widgets.button(_("Install Samba"), self._on_install, "suggested-action")
         install_box.pack_start(self.install_button, False, False, 0)
         self.install_bar.get_content_area().add(install_box)
@@ -102,6 +101,8 @@ class SambaPage(Page):
         self.reload_button = widgets.button(_("Reload configuration"), self._on_reload)
         self.firewall_button = widgets.button(_("Allow Samba in the firewall"), self._on_firewall)
         self.connections_button = widgets.button(_("Show active connections"), self._on_connections)
+        for button in (self.start_button, self.reload_button, self.firewall_button, self.connections_button):
+            button.set_sensitive(False)
         for heading, subtitle, control in (
             (_("Start sharing"), _("Enables smbd and nmbd, then starts them."), self.start_button),
             (_("Apply configuration"), _("Reloads smbd so new shares are served at once."), self.reload_button),
@@ -353,8 +354,10 @@ class SambaPage(Page):
         self._fill_config(doc)
 
         installed = status.installed
-        self.install_bar.set_revealed(not installed)
-        for index in (1, 2):  # Shares, Users
+        self.install_bar.set_revealed(not installed or bool(status.missing_packages))
+        self.install_label.set_text(_("missing: {packages}").format(packages=", ".join(status.missing_packages)) if installed else _("Samba is not installed on this system."))
+        self.install_button.set_sensitive(self._can_escalate)
+        for index in (1, 2, 3):  # Shares, Users, Configuration
             self.notebook.get_nth_page(index).set_sensitive(installed)
         self._set_share_buttons_sensitive(installed and self._can_escalate and bool(self.shares))
         self.ctx.log(_("Samba status refreshed."), "ok")
@@ -384,8 +387,10 @@ class SambaPage(Page):
             allowed = _("Samba allowed") if status.firewall_allows_samba else _("Samba not allowed")
             self.status_labels["firewall"].set_text(f"{state} · {allowed}")
         self.firewall_button.set_sensitive(
-            status.firewall_available and self._can_escalate and not status.firewall_allows_samba
+            status.installed and status.firewall_available and self._can_escalate and not status.firewall_allows_samba
         )
+        self.start_button.set_sensitive(status.installed and self._can_escalate)
+        self.reload_button.set_sensitive(status.installed and self._can_escalate)
         self.connections_button.set_sensitive(status.installed)
 
     def _fill_share_list(self) -> None:
@@ -651,6 +656,8 @@ class SambaPage(Page):
         self.refresh()
 
     def _on_enable_sharing(self) -> None:
+        if not self.status or not self.status.installed:
+            return
         self.run_operation(
             lambda: backend.enable_and_start_sharing(self.ctx.runner, on_line=self.ctx.log),
             on_done=self._after_enable_sharing,
@@ -658,19 +665,27 @@ class SambaPage(Page):
 
     def _after_enable_sharing(self, results) -> None:
         failures = [result for result in results if not result.ok]
-        if failures:
-            self.ctx.log(f"Starting Samba failed: {failures[0].output}", "error")
+        if failures or not results:
+            message = failures[0].output if failures else _("The Samba file server service is unavailable. Install Samba first.")
+            self.ctx.log(f"Starting Samba failed: {message}", "error")
+            self.error(_("Sharing could not be started"), message)
+        elif self.ctx.runner.dry_run:
+            self.ctx.log(_("Simulation complete. Sharing was not started."), "info")
         else:
-            self.ctx.log(_("smbd and nmbd are enabled and running."), "ok")
+            self.ctx.log(_("File sharing is enabled and running."), "ok")
         self.refresh()
 
     def _on_reload(self) -> None:
+        if not self.status or not self.status.installed:
+            return
         self.run_operation(
             lambda: backend.restart_after_change(self.ctx.runner, on_line=self.ctx.log),
             on_done=lambda results: self._report_simple(results),
         )
 
     def _on_firewall(self) -> None:
+        if not self.status or not self.status.installed:
+            return
         if not self.confirm(_("Allow Samba through the firewall?"), _("This runs 'ufw allow Samba'.")):
             return
         self.run_operation(
@@ -679,6 +694,8 @@ class SambaPage(Page):
         )
 
     def _on_connections(self) -> None:
+        if not self.status or not self.status.installed:
+            return
         self.ctx.run_async(
             lambda: backend.smbstatus_text(self.ctx.runner),
             on_done=self._show_connections,

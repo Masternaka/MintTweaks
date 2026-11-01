@@ -4,6 +4,25 @@ L’assistant est un parcours guidé facultatif vers les modules disponibles. Il
 conserve une sélection d’étapes et leur progression déclarée par l’utilisateur.
 Il ne lance pas de série automatique d’installations ou de modifications.
 
+## Vérification du support d’installation Live
+
+Une section dédiée explique le rôle de `casper-md5check.service` : vérifier les
+fichiers de la clé USB ou du DVD d’installation. Sur une installation sur disque,
+ce contrôle est inutile et peut échouer lorsque le fichier de sommes MD5 du
+support est absent. Cela ne signifie pas que des fichiers corrompus ont été détectés.
+
+**Désactiver la vérification du support Live** arrête et désactive uniquement ce
+service, puis efface son état d’échec. L’action demande confirmation et une
+autorisation administrateur. Elle ne modifie pas les vérifications du système de
+fichiers du disque et reste indépendante de la progression du parcours.
+
+Le bouton est indisponible en session Live, en simulation, si le service est
+absent ou déjà désactivé et inactif, ou si les diagnostics ne permettent pas de
+confirmer une installation sur disque et l’état du service. Ces conditions sont
+revérifiées avant la modification. **Recharger l’état du service** permet de
+réessayer la lecture après une erreur. Le service reste visible dans **Services** ;
+cette option ne masque aucun échec.
+
 ## Étapes disponibles
 
 | Étape | Module ouvert | Objectif et changements possibles |
@@ -76,6 +95,10 @@ Les tests automatisés couvrent la sélection, la réouverture, la reprise aprè
 résultat à reprendre, la conservation des étapes vérifiées, les révisions
 périmées, les erreurs d’écriture, les fichiers invalides et la navigation sans
 validation implicite. Les états GTK sont vérifiés avec les doublures existantes.
+Les tests du contrôle Live couvrent le refus en session Live, les diagnostics
+indisponibles, la simulation, le périmètre des commandes administrateur et les
+erreurs d’autorisation. Sur la machine de test, vérifier aussi l’explication
+visible, la confirmation et le rechargement dans **Services** après désactivation.
 
 Les essais réels sous Mint restent à effectuer : sélection et récapitulatif,
 navigation vers chaque module, déclaration d’un résultat avec une note,

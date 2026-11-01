@@ -8,6 +8,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk  # noqa: E402
 
 from . import backend  # noqa: E402
+from . import livecheck  # noqa: E402
 from ...i18n import _  # noqa: E402
 from ...ui import widgets  # noqa: E402
 from ...ui.widgets import Page  # noqa: E402
@@ -30,8 +31,18 @@ class SetupPage(Page):
         self._dirty = False
         self._read_failed = False
         self.checks = {}
+        self._live_busy = False
+        self._live_status = None
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
         box.set_border_width(18)
+        live, body = widgets.card(_("Live installation media check"), _(livecheck.EXPLANATION))
+        self.live_status_label = widgets.label(_("Loading service status…"), wrap=True)
+        body.pack_start(self.live_status_label, False, False, 0)
+        self.live_disable_button = widgets.button(_("Disable the Live media check"), self._disable_live_check)
+        body.pack_start(self.live_disable_button, False, False, 0)
+        self.live_reload_button = widgets.button(_("Reload service status"), self._refresh_live_check)
+        body.pack_start(self.live_reload_button, False, False, 0)
+        box.pack_start(live, False, False, 0)
         choose, body = widgets.card(_("Choose optional steps"), _("This guide opens the existing modules. It does not install software or change settings by itself."))
         for step in backend.STEPS:
             check = Gtk.CheckButton(label=step.title)
@@ -90,6 +101,8 @@ class SetupPage(Page):
         self.summary_buffer.set_text("\n".join(lines))
 
     def _update_controls(self):
+        self.live_disable_button.set_sensitive(bool(self._live_status and self._live_status.available and not self._live_busy and not self.ctx.runner.dry_run))
+        self.live_reload_button.set_sensitive(not self._live_busy)
         loaded = self.plan is not None and not self._read_failed
         editing = loaded and not self._busy and not self.ctx.runner.dry_run
         selected = loaded and self.step_combo.get_active_id() in self.plan.selected
@@ -105,6 +118,7 @@ class SetupPage(Page):
             button.set_sensitive(bool(editing and selected and not self._dirty))
 
     def refresh(self):
+        self._refresh_live_check()
         if self._busy:
             return
         if self._dirty and not self.confirm(_("Discard unsaved step selection?")):
@@ -112,6 +126,33 @@ class SetupPage(Page):
         self._busy = True
         self._update_controls()
         self.ctx.run_async(backend.load_plan, on_done=self._apply_plan, on_error=self._failed)
+
+    def _refresh_live_check(self):
+        if self._live_busy:
+            return
+        self._live_busy = True
+        self._update_controls()
+        self.ctx.run_async(lambda: livecheck.inspect(self.ctx.runner),
+                           on_done=self._apply_live_status, on_error=self._live_failed)
+
+    def _apply_live_status(self, status):
+        self._live_status = status
+        self._live_busy = False
+        self.live_status_label.set_text(status.detail)
+        self._update_controls()
+
+    def _live_failed(self, exc):
+        self._apply_live_status(livecheck.Status(False, _("Service status could not be updated. Reload before continuing.\n{error}").format(error=exc)))
+
+    def _disable_live_check(self):
+        if self._live_busy or self.ctx.runner.dry_run or not self._live_status or not self._live_status.available:
+            return
+        if not self.confirm(_("Disable the Live media check?"), _(livecheck.EXPLANATION) + "\n\n" + _("This stops and disables casper-md5check.service and clears its failure state. Administrator authorization is required.")):
+            return
+        self._live_busy = True
+        self._update_controls()
+        self.run_operation(lambda: livecheck.disable(self.ctx.runner), on_done=self._apply_live_status,
+                           on_error=self._live_failed, name=_("Disable the Live media check"))
 
     def _apply_plan(self, plan):
         self.plan = plan

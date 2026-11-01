@@ -19,22 +19,36 @@ Masternaka à partir de l’archive amont. Les [instructions officielles Zen](ht
 proposent notamment une archive native ; elles ne décrivent pas ce paquet comme
 un `.deb` officiel. Le module distingue ces provenances dans la page et l’aperçu.
 
-La disponibilité réelle du dépôt central n’est pas établie par ce catalogue.
-Sa publication, sa signature, son activation et sa validation Linux relèvent du
-projet de dépôt. Il n’est pas modifié ni activé par MintTweaks.
+Le dépôt Masternaka est encore en préparation. Zen reste dans le catalogue,
+avec cette explication visible ; sa configuration automatique est indisponible.
+Une installation reste possible si sa source est configurée séparément et qu’un
+candidat valide est trouvé.
 
-## Préparer la source
+## Ajouter une source depuis MintTweaks
 
-Chaque dépôt doit être configuré séparément selon son guide, avec sa clé de
-signature, puis les métadonnées APT doivent être actualisées avec les outils de
-Mint. Les liens **Instructions de configuration du dépôt** ouvrent ces guides.
-Ils ne modifient pas la configuration automatiquement.
+Pour Helium et Brave, **Configurer le dépôt et installer…** affiche la provenance,
+l’URL du dépôt et celle de sa clé. Après confirmation et autorisation
+administrateur, MintTweaks télécharge la clé par HTTPS, vérifie son format avec
+GPG et ajoute une source limitée à cette clé par `signed-by`. Aucun script distant
+n’est exécuté. Les recettes suivent les guides officiels liés dans le catalogue.
 
-MintTweaks n’ajoute ni fichier de source, ni clé, ni script d’installation. Une
-architecture non prise en charge, un candidat absent, une suite de préversion ou
-une source différente empêche l’installation. Si une même version candidate est
-proposée par plusieurs sources distinctes, le module refuse de choisir à la
-place de l’utilisateur et demande de clarifier la configuration APT.
+Les nouveaux fichiers sont nommés `minttweaks-helium.gpg` ou
+`minttweaks-brave.gpg` dans `/usr/share/keyrings`, et `minttweaks-<application>.list`
+dans `/etc/apt/sources.list.d`. Les fichiers existants ne sont pas remplacés.
+Si une source mentionne déjà le dépôt, seule l’actualisation APT est effectuée ;
+un conflit dans cette configuration reste à corriger avec les outils de Mint.
+
+L’actualisation APT est suivie d’une nouvelle vérification du candidat, puis de
+l’aperçu d’installation. Annuler l’installation conserve le dépôt configuré pour
+les futures installations et mises à jour. Si l’ajout ou l’actualisation échoue,
+les fichiers nouvellement créés par cette opération sont retirés ; les sources
+préexistantes sont conservées.
+
+Les liens **Instructions de configuration du dépôt** restent disponibles pour
+une configuration manuelle. Une architecture non prise en charge, un candidat
+absent, une suite de préversion ou une source différente empêche l’installation.
+Si une même version candidate est proposée par plusieurs sources distinctes, le
+module demande de clarifier la configuration APT.
 
 La vérification repose sur les métadonnées APT configurées. Les téléchargements
 et les contrôles de confiance restent gérés par APT ; aucun contournement des
@@ -42,7 +56,7 @@ signatures ou des contrôles APT n’est ajouté.
 
 ## Parcours d’installation
 
-1. Ouvrir **Logiciels natifs**, puis **Réanalyser**.
+1. Ouvrir **Logiciels natifs**. Si la source manque, choisir **Configurer le dépôt et installer…**, puis confirmer. Sinon, utiliser **Réanalyser**.
 2. Contrôler la source, l’état du paquet et sa version candidate. La détection
    porte sur le paquet Debian nommé dans le catalogue, pas sur toutes les copies
    du navigateur éventuellement installées manuellement ou dans un autre format.
@@ -89,7 +103,7 @@ le [guide de l’assistant](assistant-apres-installation.md#persistance-et-limit
 Les tests automatisés utilisent un exécuteur APT simulé. Ils couvrent les
 origines, suites et architectures, les aperçus, les changements de plan, les
 refus de suppression, les erreurs polkit/APT et la vérification finale des
-versions. Aucune installation réelle n’a été effectuée sur ce Mac.
+versions. Aucun dépôt ni paquet système réel n’est modifié par ces tests. Ils couvrent aussi la conservation des sources existantes, les erreurs de clé et le retrait des fichiers créés après un échec APT.
 
 La [recette Mint](../validation/linux-mint.md) doit vérifier les sources configurées,
 une installation de chaque navigateur, son lancement, un refus polkit, un échec
