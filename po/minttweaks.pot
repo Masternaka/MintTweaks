@@ -37,16 +37,12 @@ msgstr ""
 msgid "'{name}' is a reserved Samba section name."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/cinnamon/page.py:122
 #: minttweaks/modules/cinnamon/page.py:167
 msgid "(empty value)"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:335
-=======
-#: minttweaks/modules/services/page.py:315
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:343
 msgid "(not available)"
 msgstr ""
 
@@ -54,13 +50,8 @@ msgstr ""
 msgid ", … (+{count})"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/maintenance/page.py:53
-msgid "/var/cache/apt/archives - downloaded .deb files"
-=======
-#: minttweaks/modules/maintenance/page.py:51
 msgid "/var/cache/apt/archives - completed downloads, excluding partial/"
->>>>>>> Stashed changes
 msgstr ""
 
 #: minttweaks/modules/cinnamon/page.py:67
@@ -101,15 +92,11 @@ msgstr ""
 msgid "A section named '{name}' already exists."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/cinnamon/backend.py:302
 msgid "A setting changed during application: {setting}"
 msgstr ""
 
-#: minttweaks/ui/window.py:102
-=======
-#: minttweaks/ui/window.py:94
->>>>>>> Stashed changes
+#: minttweaks/ui/window.py:103
 msgid "About"
 msgstr ""
 
@@ -126,15 +113,11 @@ msgstr ""
 msgid "active"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/samba/page.py:689
-=======
 #: minttweaks/modules/services/backend.py:50
 msgid "active (waiting)"
 msgstr ""
 
-#: minttweaks/modules/samba/page.py:684
->>>>>>> Stashed changes
+#: minttweaks/modules/samba/page.py:689
 msgid "Active Samba connections:"
 msgstr ""
 
@@ -170,11 +153,7 @@ msgstr ""
 msgid "Administrator rights are unavailable in this session: extensions can be inspected but not installed."
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/services/page.py:72
-=======
-#: minttweaks/modules/services/page.py:75
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:80
 msgid "Administrator rights are unavailable in this session: services can be inspected but not changed."
 msgstr ""
 
@@ -227,7 +206,6 @@ msgstr ""
 msgid "Allow Samba through the firewall?"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/integrations.py:44
 #: minttweaks/modules/terminal/integrations.py:49
 msgid "An integration block is malformed. The startup file was preserved."
@@ -237,14 +215,11 @@ msgstr ""
 msgid "An operation is already running: {operation}. Wait for it to finish."
 msgstr ""
 
-#: minttweaks/ui/window.py:204
+#: minttweaks/ui/window.py:205
 msgid "An operation is still running."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:162
-=======
-#: minttweaks/modules/services/page.py:165
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:170
 msgid "Analyse boot"
 msgstr ""
 
@@ -279,7 +254,6 @@ msgstr ""
 msgid "Apply configuration"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/page.py:320
 msgid "Apply these configuration changes?"
 msgstr ""
@@ -317,26 +291,15 @@ msgstr ""
 msgid "APT proposed removals. Installation was refused."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:238
-msgid "apt-get check found no broken dependency."
-msgstr ""
-
 #: minttweaks/modules/home/backend.py:244
-msgid "apt-get check reported a problem: {sample}"
-msgstr ""
-
-#: minttweaks/modules/home/backend.py:236
-=======
-#: minttweaks/modules/home/backend.py:236
 msgid "apt-get check found no broken dependency."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:240
+#: minttweaks/modules/home/backend.py:250
 msgid "apt-get check reported a problem: {sample}"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:234
->>>>>>> Stashed changes
+#: minttweaks/modules/home/backend.py:242
 msgid "apt-get is not available on this system."
 msgstr ""
 
@@ -376,41 +339,22 @@ msgstr ""
 msgid "Bookmark manager for links, articles and files."
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/services/page.py:165
+#: minttweaks/modules/services/page.py:173
 msgid "Boot"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:339
+#: minttweaks/modules/services/page.py:347
 msgid "Boot analysis updated."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:305
-#: minttweaks/modules/home/backend.py:285
-#: minttweaks/modules/home/backend.py:287
+#: minttweaks/modules/home/backend.py:311
+#: minttweaks/modules/home/backend.py:291
+#: minttweaks/modules/home/backend.py:293
 #: … (+3)
 msgid "Boot errors"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:159
-=======
-#: minttweaks/modules/services/page.py:168
-msgid "Boot"
-msgstr ""
-
-#: minttweaks/modules/services/page.py:317
-msgid "Boot analysis updated."
-msgstr ""
-
-#: minttweaks/modules/home/backend.py:308
-#: minttweaks/modules/home/backend.py:287
-#: minttweaks/modules/home/backend.py:296
-#: … (+1)
-msgid "Boot errors"
-msgstr ""
-
-#: minttweaks/modules/services/page.py:162
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:167
 msgid "Boot time"
 msgstr ""
 
@@ -507,19 +451,11 @@ msgstr ""
 msgid "Cleanup tasks"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/ui/window.py:153
+#: minttweaks/ui/window.py:154
 msgid "Clear"
 msgstr ""
 
-#: minttweaks/ui/window.py:101
-=======
-#: minttweaks/ui/window.py:145
-msgid "Clear"
-msgstr ""
-
-#: minttweaks/ui/window.py:93
->>>>>>> Stashed changes
+#: minttweaks/ui/window.py:102
 msgid "Clear output"
 msgstr ""
 
@@ -596,12 +532,12 @@ msgstr ""
 msgid "Could not update the Firefox policy."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:329
 #: minttweaks/modules/services/page.py:337
+#: minttweaks/modules/services/page.py:345
 msgid "Could not verify {part}: {error}"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:405
+#: minttweaks/modules/home/backend.py:411
 msgid "Could not verify: {sample}"
 msgstr ""
 
@@ -622,8 +558,7 @@ msgstr ""
 msgid "Creates and applies custom Firefox colour themes."
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/services/page.py:335
+#: minttweaks/modules/services/page.py:343
 msgid "Critical chain:"
 msgstr ""
 
@@ -643,14 +578,7 @@ msgstr ""
 msgid "Dark"
 msgstr ""
 
-#: minttweaks/modules/services/backend.py:53
-=======
-#: minttweaks/modules/services/page.py:315
-msgid "Critical chain:"
-msgstr ""
-
 #: minttweaks/modules/services/backend.py:55
->>>>>>> Stashed changes
 msgid "deactivating"
 msgstr ""
 
@@ -682,20 +610,14 @@ msgstr ""
 msgid "Deletes packages that were installed automatically and are no longer needed by anything. The list is shown before you confirm."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/integrations.py:205
 msgid "Delta becomes the Git pager in this shell when GIT_PAGER is unset; Git configuration files are preserved."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:243
-#: minttweaks/modules/home/backend.py:236
-#: minttweaks/modules/home/backend.py:238
+#: minttweaks/modules/home/backend.py:249
+#: minttweaks/modules/home/backend.py:242
+#: minttweaks/modules/home/backend.py:244
 #: … (+2)
-=======
-#: minttweaks/modules/home/backend.py:239
-#: minttweaks/modules/home/backend.py:234
-#: minttweaks/modules/home/backend.py:236
->>>>>>> Stashed changes
 msgid "Dependencies"
 msgstr ""
 
@@ -727,11 +649,7 @@ msgid "Directory mask"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:274
-<<<<<<< Updated upstream
-#: minttweaks/modules/services/page.py:126
-=======
-#: minttweaks/modules/services/page.py:129
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:134
 msgid "Disable"
 msgstr ""
 
@@ -752,17 +670,10 @@ msgstr ""
 msgid "Disk (/)"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/home/backend.py:330
-#: minttweaks/modules/home/backend.py:310
-#: minttweaks/modules/home/backend.py:315
+#: minttweaks/modules/home/backend.py:336
+#: minttweaks/modules/home/backend.py:316
+#: minttweaks/modules/home/backend.py:321
 #: … (+2)
-=======
-#: minttweaks/modules/home/backend.py:333
-#: minttweaks/modules/home/backend.py:313
-#: minttweaks/modules/home/backend.py:318
-#: … (+1)
->>>>>>> Stashed changes
 msgid "Disk space"
 msgstr ""
 
@@ -770,11 +681,7 @@ msgstr ""
 msgid "Disk usage"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/home/backend.py:310
-=======
-#: minttweaks/modules/home/backend.py:313
->>>>>>> Stashed changes
+#: minttweaks/modules/home/backend.py:316
 msgid "Disk usage could not be measured."
 msgstr ""
 
@@ -827,11 +734,7 @@ msgid "Empty the trash"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:273
-<<<<<<< Updated upstream
-#: minttweaks/modules/services/page.py:125
-=======
-#: minttweaks/modules/services/page.py:128
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:133
 msgid "Enable"
 msgstr ""
 
@@ -912,17 +815,10 @@ msgstr ""
 msgid "Failed only"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/home/backend.py:276
-#: minttweaks/modules/home/backend.py:263
-#: minttweaks/modules/home/backend.py:265
+#: minttweaks/modules/home/backend.py:282
+#: minttweaks/modules/home/backend.py:269
+#: minttweaks/modules/home/backend.py:271
 #: … (+2)
-=======
-#: minttweaks/modules/home/backend.py:278
-#: minttweaks/modules/home/backend.py:259
-#: minttweaks/modules/home/backend.py:265
-#: … (+1)
->>>>>>> Stashed changes
 msgid "Failed services"
 msgstr ""
 
@@ -970,11 +866,7 @@ msgstr ""
 msgid "Folder"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/services/page.py:137
-=======
-#: minttweaks/modules/services/page.py:140
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:145
 msgid "Follow"
 msgstr ""
 
@@ -1002,7 +894,6 @@ msgstr ""
 msgid "Guest access"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/controls.py:69
 msgid "Height (%)"
 msgstr ""
@@ -1011,10 +902,7 @@ msgstr ""
 msgid "Helium's official stable APT repository."
 msgstr ""
 
-#: minttweaks/ui/window.py:152
-=======
-#: minttweaks/ui/window.py:144
->>>>>>> Stashed changes
+#: minttweaks/ui/window.py:153
 msgid "Hide"
 msgstr ""
 
@@ -1051,7 +939,7 @@ msgstr ""
 msgid "Import these personal settings?"
 msgstr ""
 
-#: minttweaks/ui/window.py:195
+#: minttweaks/ui/window.py:196
 msgid "In progress: {operation}"
 msgstr ""
 
@@ -1158,7 +1046,6 @@ msgstr ""
 msgid "Installed."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/status.py:85
 msgid "Installed; integration not configured for this shell."
 msgstr ""
@@ -1187,18 +1074,11 @@ msgstr ""
 msgid "Interface font"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:136
+#: minttweaks/modules/services/page.py:144
 msgid "Journal"
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:285
-=======
-#: minttweaks/modules/services/page.py:139
-msgid "Journal"
-msgstr ""
-
-#: minttweaks/modules/home/backend.py:287
->>>>>>> Stashed changes
+#: minttweaks/modules/home/backend.py:291
 msgid "journalctl is not available on this system."
 msgstr ""
 
@@ -1286,19 +1166,11 @@ msgstr ""
 msgid "Maintenance"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/ui/window.py:63
+#: minttweaks/ui/window.py:64
 msgid "Maintenance, services, Samba and Firefox for Linux Mint"
 msgstr ""
 
-#: minttweaks/ui/window.py:266
-=======
-#: minttweaks/ui/window.py:55
-msgid "Maintenance, services, Samba and Firefox for Linux Mint"
-msgstr ""
-
-#: minttweaks/ui/window.py:234
->>>>>>> Stashed changes
+#: minttweaks/ui/window.py:268
 msgid "Maintenance, services, Samba and Firefox management for Linux Mint.\nInspired by the ArchLinux Tweak Tool."
 msgstr ""
 
@@ -1318,11 +1190,7 @@ msgstr ""
 msgid "Memory"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/ui/window.py:91
-=======
-#: minttweaks/ui/window.py:83
->>>>>>> Stashed changes
+#: minttweaks/ui/window.py:92
 msgid "Menu"
 msgstr ""
 
@@ -1405,11 +1273,7 @@ msgstr ""
 msgid "No duplicate parameter"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/home/backend.py:305
-=======
-#: minttweaks/modules/home/backend.py:308
->>>>>>> Stashed changes
+#: minttweaks/modules/home/backend.py:311
 msgid "No error was logged since the last boot."
 msgstr ""
 
@@ -1421,19 +1285,15 @@ msgstr ""
 msgid "No half-configured package was found."
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/home/backend.py:358
+#: minttweaks/modules/home/backend.py:364
 msgid "No installed kernel package was found."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:300
+#: minttweaks/modules/services/page.py:308
 msgid "No journal entries could be verified."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:307
-=======
-#: minttweaks/modules/services/page.py:279
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:315
 msgid "No journal entry for this service."
 msgstr ""
 
@@ -1441,15 +1301,11 @@ msgstr ""
 msgid "No linux-image package found."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/backend.py:319
 msgid "No login shell backup is available."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:369
-=======
-#: minttweaks/modules/home/backend.py:364
->>>>>>> Stashed changes
+#: minttweaks/modules/home/backend.py:375
 msgid "No old kernel is waiting for removal."
 msgstr ""
 
@@ -1465,11 +1321,7 @@ msgstr ""
 msgid "No section of this configuration repeats the same key, so there is nothing to clean up."
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/home/backend.py:276
-=======
-#: minttweaks/modules/home/backend.py:278
->>>>>>> Stashed changes
+#: minttweaks/modules/home/backend.py:282
 msgid "No service has failed."
 msgstr ""
 
@@ -1496,7 +1348,7 @@ msgstr ""
 msgid "Not analysed yet."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:394
+#: minttweaks/modules/home/backend.py:400
 msgid "Not checked in simulation mode."
 msgstr ""
 
@@ -1514,16 +1366,10 @@ msgstr ""
 msgid "Nothing to remove: every installed package is still needed."
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/home/backend.py:369
-#: minttweaks/modules/home/backend.py:358
+#: minttweaks/modules/home/backend.py:375
 #: minttweaks/modules/home/backend.py:364
+#: minttweaks/modules/home/backend.py:370
 #: … (+2)
-=======
-#: minttweaks/modules/home/backend.py:364
-#: minttweaks/modules/home/backend.py:353
-#: minttweaks/modules/home/backend.py:359
->>>>>>> Stashed changes
 msgid "Old kernels"
 msgstr ""
 
@@ -1576,13 +1422,8 @@ msgstr ""
 msgid "Orphaned packages"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/ui/window.py:151
-#: minttweaks/ui/window.py:176
-=======
-#: minttweaks/ui/window.py:143
-#: minttweaks/ui/window.py:163
->>>>>>> Stashed changes
+#: minttweaks/ui/window.py:152
+#: minttweaks/ui/window.py:177
 msgid "Output"
 msgstr ""
 
@@ -1786,15 +1627,11 @@ msgstr ""
 msgid "Re-analyse"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/cinnamon/page.py:50
 msgid "Read all settings before saving a profile."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:141
-=======
-#: minttweaks/modules/services/page.py:144
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:149
 msgid "Read as administrator"
 msgstr ""
 
@@ -1822,7 +1659,6 @@ msgstr ""
 msgid "Read-only snapshot of this machine."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/cinnamon/page.py:33
 msgid "Read-only values. Missing settings are never replaced with defaults."
 msgstr ""
@@ -1831,10 +1667,7 @@ msgstr ""
 msgid "Readable, highlighted diffs. Managed integration can make it the Git pager in your shell."
 msgstr ""
 
-#: minttweaks/ui/window.py:168
-=======
-#: minttweaks/ui/window.py:160
->>>>>>> Stashed changes
+#: minttweaks/ui/window.py:169
 msgid "Ready."
 msgstr ""
 
@@ -1854,11 +1687,7 @@ msgstr ""
 msgid "Refresh the page and try again."
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/ui/window.py:99
-=======
-#: minttweaks/ui/window.py:91
->>>>>>> Stashed changes
+#: minttweaks/ui/window.py:100
 msgid "Refresh this page"
 msgstr ""
 
@@ -1870,13 +1699,8 @@ msgstr ""
 msgid "Refusing to export the filesystem root."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/services/page.py:64
-#: minttweaks/modules/services/page.py:140
-=======
-#: minttweaks/modules/services/page.py:63
-#: minttweaks/modules/services/page.py:143
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:148
 msgid "Reload"
 msgstr ""
 
@@ -1950,22 +1774,14 @@ msgstr ""
 msgid "Requires administrator rights, and privilege escalation is unavailable."
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/services/page.py:124
-=======
-#: minttweaks/modules/services/page.py:127
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:132
 msgid "Restart"
 msgstr ""
 
+#: minttweaks/modules/home/backend.py:353
+#: minttweaks/modules/home/backend.py:394
 #: minttweaks/modules/home/backend.py:347
-<<<<<<< Updated upstream
-#: minttweaks/modules/home/backend.py:388
-#: minttweaks/modules/home/backend.py:341
 #: … (+1)
-=======
-#: minttweaks/modules/home/backend.py:344
->>>>>>> Stashed changes
 msgid "Restart required"
 msgstr ""
 
@@ -2025,13 +1841,8 @@ msgstr ""
 msgid "Run"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/maintenance/page.py:187
-#: minttweaks/modules/services/backend.py:49
-=======
-#: minttweaks/modules/maintenance/page.py:161
 #: minttweaks/modules/services/backend.py:51
->>>>>>> Stashed changes
 msgid "running"
 msgstr ""
 
@@ -2141,7 +1952,6 @@ msgstr ""
 msgid "Saves web pages to an Obsidian vault."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/controls.py:22
 msgid "Search by tool, package or description"
 msgstr ""
@@ -2150,12 +1960,8 @@ msgstr ""
 msgid "Search shell history. Managed local integration is available; account sync remains optional and manual."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:114
-#: minttweaks/modules/services/page.py:220
-=======
-#: minttweaks/modules/services/page.py:117
-#: minttweaks/modules/services/page.py:213
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:122
+#: minttweaks/modules/services/page.py:228
 msgid "Select a service"
 msgstr ""
 
@@ -2175,15 +1981,11 @@ msgstr ""
 msgid "Serve files on the network"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/services/page.py:151
-=======
-#: minttweaks/modules/services/page.py:154
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:159
 msgid "Service"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:203
+#: minttweaks/modules/services/page.py:211
 msgid "Service state unavailable. Previous results, if any, have not been updated.\n{error}"
 msgstr ""
 
@@ -2245,11 +2047,7 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/ui/window.py:100
-=======
-#: minttweaks/ui/window.py:92
->>>>>>> Stashed changes
+#: minttweaks/ui/window.py:101
 msgid "Show / hide output"
 msgstr ""
 
@@ -2277,7 +2075,7 @@ msgstr ""
 msgid "Simulation: no appearance settings or backups were written."
 msgstr ""
 
-#: minttweaks/ui/window.py:61
+#: minttweaks/ui/window.py:62
 msgid "Simulation: no commands or cleanup actions will be executed."
 msgstr ""
 
@@ -2306,11 +2104,7 @@ msgstr ""
 msgid "Skips sponsor segments in YouTube videos."
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/services/page.py:332
-=======
-#: minttweaks/modules/services/page.py:312
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:340
 msgid "Slowest units:"
 msgstr ""
 
@@ -2318,7 +2112,6 @@ msgstr ""
 msgid "smbd and nmbd are enabled and running."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/software/backend.py:72
 msgid "Software availability is not checked in simulation mode."
 msgstr ""
@@ -2335,10 +2128,7 @@ msgstr ""
 msgid "Starship is already initialized outside the managed block. The file was preserved."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:122
-=======
-#: minttweaks/modules/services/page.py:125
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:130
 msgid "Start"
 msgstr ""
 
@@ -2354,15 +2144,11 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/controls.py:73
 msgid "Status bar position"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:123
-=======
-#: minttweaks/modules/services/page.py:126
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:131
 msgid "Stop"
 msgstr ""
 
@@ -2378,19 +2164,11 @@ msgstr ""
 msgid "System journal"
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/home/backend.py:263
+#: minttweaks/modules/home/backend.py:269
 msgid "systemctl is not available on this system."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:330
-=======
-#: minttweaks/modules/home/backend.py:259
-msgid "systemctl is not available on this system."
-msgstr ""
-
-#: minttweaks/modules/services/page.py:311
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:338
 msgid "systemd-analyze returned nothing."
 msgstr ""
 
@@ -2511,7 +2289,6 @@ msgstr ""
 msgid "The folder path must not contain control characters."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/transfer.py:186
 msgid "The imported configuration plan changed. Review a new preview."
 msgstr ""
@@ -2519,15 +2296,6 @@ msgstr ""
 #: minttweaks/modules/software/backend.py:197
 #: minttweaks/modules/terminal/backend.py:142
 msgid "The installation plan changed. Review a new preview before continuing."
-=======
-#: minttweaks/modules/home/backend.py:305
-#: minttweaks/modules/services/page.py:282
-msgid "The journal is not readable without administrator rights."
-msgstr ""
-
-#: minttweaks/modules/home/backend.py:353
-msgid "The kernel list could not be read."
->>>>>>> Stashed changes
 msgstr ""
 
 #: minttweaks/modules/terminal/integrations.py:103
@@ -2542,11 +2310,11 @@ msgstr ""
 msgid "The integration plan changed. Review a new preview."
 msgstr ""
 
-#: minttweaks/modules/services/page.py:286
+#: minttweaks/modules/services/page.py:294
 msgid "The journal could not be read: {error}"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:302
+#: minttweaks/modules/services/page.py:310
 msgid "The journal may be incomplete: {error}"
 msgstr ""
 
@@ -2580,7 +2348,7 @@ msgid "The MintTweaks Firefox policy entries were removed."
 msgstr ""
 
 #: minttweaks/modules/maintenance/page.py:299
-#: minttweaks/modules/services/page.py:259
+#: minttweaks/modules/services/page.py:267
 #: minttweaks/ui/widgets.py:375
 msgid "The operation failed."
 msgstr ""
@@ -2597,7 +2365,6 @@ msgstr ""
 msgid "The password must not start or end with a space."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/configuration.py:254
 msgid "The personal configuration changed. Review a new preview."
 msgstr ""
@@ -2627,26 +2394,15 @@ msgstr ""
 msgid "The requested package version was not verified after installation."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:316
+#: minttweaks/modules/home/backend.py:322
 msgid "The root filesystem is almost full: {percent}% used, {free} free."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:324
+#: minttweaks/modules/home/backend.py:330
 msgid "The root filesystem is filling up: {percent}% used, {free} free."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:331
-=======
-#: minttweaks/modules/home/backend.py:319
-msgid "The root filesystem is almost full: {percent}% used, {free} free."
-msgstr ""
-
-#: minttweaks/modules/home/backend.py:327
-msgid "The root filesystem is filling up: {percent}% used, {free} free."
-msgstr ""
-
-#: minttweaks/modules/home/backend.py:334
->>>>>>> Stashed changes
+#: minttweaks/modules/home/backend.py:337
 msgid "The root filesystem is {percent}% used, {free} free."
 msgstr ""
 
@@ -2658,7 +2414,6 @@ msgstr ""
 msgid "The Samba account could not be updated"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/setup/backend.py:138
 msgid "The saved checklist could not be read and was preserved: {error}"
 msgstr ""
@@ -2683,10 +2438,6 @@ msgstr ""
 #: minttweaks/modules/cinnamon/backend.py:198
 #: minttweaks/modules/cinnamon/page.py:127
 msgid "The settings could not all be read. Refresh before saving a profile."
-=======
-#: minttweaks/modules/home/backend.py:274
-msgid "The service state could not be read: {sample}"
->>>>>>> Stashed changes
 msgstr ""
 
 #: minttweaks/core/smbconf.py:369
@@ -2697,7 +2448,6 @@ msgstr ""
 msgid "The share name must not end with a space."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/page.py:346
 msgid "The shell or terminal operation failed."
 msgstr ""
@@ -2710,10 +2460,7 @@ msgstr ""
 msgid "The software operation failed."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:348
-=======
-#: minttweaks/modules/home/backend.py:345
->>>>>>> Stashed changes
+#: minttweaks/modules/home/backend.py:354
 msgid "The system must restart to finish applying updates."
 msgstr ""
 
@@ -2741,15 +2488,11 @@ msgstr ""
 msgid "This account has no Unix user behind it."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/configuration.py:75
 msgid "This alias name is invalid or reserved: {name}"
 msgstr ""
 
-#: minttweaks/modules/services/page.py:240
-=======
-#: minttweaks/modules/services/page.py:233
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:248
 msgid "This changes the running system immediately."
 msgstr ""
 
@@ -2801,7 +2544,10 @@ msgstr ""
 msgid "Time-based vacuum, usually the better choice on a laptop."
 msgstr ""
 
-<<<<<<< Updated upstream
+#: minttweaks/modules/services/page.py:71
+msgid "Timers schedule services: a service can be inactive while its timer is active (waiting)."
+msgstr ""
+
 #: minttweaks/modules/setup/page.py:17
 msgid "To do"
 msgstr ""
@@ -2827,13 +2573,6 @@ msgid "Transfer data and inspect HTTP responses."
 msgstr ""
 
 #: minttweaks/modules/maintenance/page.py:56
-=======
-#: minttweaks/modules/services/page.py:66
-msgid "Timers schedule services: a service can be inactive while its timer is active (waiting)."
-msgstr ""
-
-#: minttweaks/modules/maintenance/page.py:54
->>>>>>> Stashed changes
 msgid "Trash"
 msgstr ""
 
@@ -2876,13 +2615,6 @@ msgstr ""
 msgid "Uptime"
 msgstr ""
 
-<<<<<<< Updated upstream
-=======
-#: minttweaks/modules/services/page.py:284
-msgid "Use 'Read as administrator' to read the entries: a password prompt will appear."
-msgstr ""
-
->>>>>>> Stashed changes
 #: minttweaks/core/smbconf.py:373
 msgid "Use 1-80 characters from letters, digits, spaces, '.', '_', '-' or a trailing '$'. The name must start with a letter or a digit."
 msgstr ""
@@ -2927,19 +2659,15 @@ msgstr ""
 msgid "Validating and installing the configuration…"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/setup/page.py:17
 msgid "Verified by you"
 msgstr ""
 
-#: minttweaks/ui/window.py:133
-=======
-#: minttweaks/ui/window.py:125
->>>>>>> Stashed changes
+#: minttweaks/ui/window.py:134
 msgid "version {version}"
 msgstr ""
 
-#: minttweaks/ui/window.py:205
+#: minttweaks/ui/window.py:206
 msgid "Wait for {operation} to finish before closing MintTweaks."
 msgstr ""
 
@@ -2975,7 +2703,6 @@ msgstr ""
 msgid "your user trash"
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/cinnamon/page.py:153
 msgid "{count} appearance backup(s)."
 msgstr ""
@@ -2984,12 +2711,8 @@ msgstr ""
 msgid "{count} configuration backup(s)."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:301
+#: minttweaks/modules/home/backend.py:307
 msgid "{count} error line(s) in the latest 20 entries since boot. First entry: {sample}"
-=======
-#: minttweaks/modules/home/backend.py:297
-msgid "{count} error line(s) since the last boot. First entry: {sample}"
->>>>>>> Stashed changes
 msgstr ""
 
 #: minttweaks/modules/firefox/page.py:187
@@ -3000,15 +2723,11 @@ msgstr ""
 msgid "{count} Firefox profile(s) detected."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/terminal/controls.py:153
 msgid "{count} managed alias(es). External startup files are not fully inspected."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:365
-=======
-#: minttweaks/modules/home/backend.py:360
->>>>>>> Stashed changes
+#: minttweaks/modules/home/backend.py:371
 msgid "{count} old kernel(s) can be removed: {versions}"
 msgstr ""
 
@@ -3020,19 +2739,15 @@ msgstr ""
 msgid "{count} package(s) can be removed."
 msgstr ""
 
-<<<<<<< Updated upstream
 #: minttweaks/modules/cinnamon/page.py:136
 msgid "{count} saved profile(s)."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:272
-=======
-#: minttweaks/modules/services/page.py:207
+#: minttweaks/modules/services/page.py:222
 msgid "{count} service and timer units loaded."
 msgstr ""
 
-#: minttweaks/modules/home/backend.py:266
->>>>>>> Stashed changes
+#: minttweaks/modules/home/backend.py:278
 msgid "{count} service(s) failed: {names}"
 msgstr ""
 
@@ -3064,11 +2779,7 @@ msgstr ""
 msgid "{names}\n\nFirefox must be restarted after this. The add-ons are downloaded from addons.mozilla.org."
 msgstr ""
 
-<<<<<<< Updated upstream
-#: minttweaks/modules/services/page.py:226
-=======
-#: minttweaks/modules/services/page.py:219
->>>>>>> Stashed changes
+#: minttweaks/modules/services/page.py:234
 msgid "{state} · startup: {enabled}"
 msgstr ""
 

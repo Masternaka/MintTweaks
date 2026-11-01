@@ -108,13 +108,8 @@ def parse_unit_files(text: str) -> Dict[str, str]:
 
 
 def list_units(runner: BaseRunner) -> List[Unit]:
-<<<<<<< Updated upstream
-    """All service units, merging runtime state with enablement state."""
-    runtime = read_command(runner,
-=======
     """Services and timers, merging runtime state with enablement state."""
-    runtime = runner.run(
->>>>>>> Stashed changes
+    runtime = read_command(runner,
         cmd(
             "systemctl",
             "list-units",
@@ -126,13 +121,8 @@ def list_units(runner: BaseRunner) -> List[Unit]:
         ),
         timeout=45,
     )
-<<<<<<< Updated upstream
     files = read_command(runner,
-        cmd("systemctl", "list-unit-files", "--type=service", "--no-pager", "--no-legend", "--plain"),
-=======
-    files = runner.run(
         cmd("systemctl", "list-unit-files", "--type=service,timer", "--no-pager", "--no-legend", "--plain"),
->>>>>>> Stashed changes
         timeout=45,
     )
 

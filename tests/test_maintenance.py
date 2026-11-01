@@ -291,7 +291,6 @@ class RegistryTests(unittest.TestCase):
 
 
 class ProbeTests(unittest.TestCase):
-<<<<<<< Updated upstream
     def test_unreadable_cache_size_is_unknown_not_zero(self):
         with tempfile.TemporaryDirectory() as tmp:
             with patch.object(backend.os, "walk", side_effect=PermissionError("denied")):
@@ -315,7 +314,7 @@ class ProbeTests(unittest.TestCase):
             probe = backend.collect_probe(runner, Path(tmp))
         self.assertEqual(probe.autoremove_packages, [])
         self.assertIn("APT locked", probe.autoremove_error)
-=======
+
     def test_cache_estimate_excludes_incomplete_downloads(self):
         with tempfile.TemporaryDirectory() as tmp:
             cache = Path(tmp)
@@ -333,7 +332,6 @@ class ProbeTests(unittest.TestCase):
             self.assertIsNotNone(size)
             self.assertGreaterEqual(size, 2048)
             self.assertLess(size, 2048 + 8192)
->>>>>>> Stashed changes
 
     def test_probe_collects_sizes(self):
         runner = FakeRunner()
