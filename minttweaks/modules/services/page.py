@@ -63,9 +63,19 @@ class ServicesPage(Page):
 
         toolbar.pack_start(widgets.button(_("Reload"), self.refresh), False, False, 0)
 
+<<<<<<< Updated upstream
         self.units_hint = widgets.label("", wrap=True)
         self.units_hint.set_no_show_all(True)
         self.pack_start(self.units_hint, False, False, 0)
+=======
+        hint = widgets.label(
+            _("Timers schedule services: a service can be inactive while its timer is active (waiting)."),
+            dim=True, wrap=True,
+        )
+        hint.set_margin_start(12)
+        hint.set_margin_end(12)
+        self.pack_start(hint, False, False, 0)
+>>>>>>> Stashed changes
 
         if not self._can_escalate:
             warning = widgets.info_bar(
@@ -211,7 +221,7 @@ class ServicesPage(Page):
         self.units_hint.hide()
         self.units = units
         self._refill()
-        self.ctx.log(f"{len(units)} service units loaded.", "ok")
+        self.ctx.log(_("{count} service and timer units loaded.").format(count=len(units)), "ok")
 
     def _on_selection_changed(self, selection: Gtk.TreeSelection) -> None:
         model, tree_iter = selection.get_selected()

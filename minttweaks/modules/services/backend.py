@@ -16,7 +16,7 @@ from ...core.runner import BaseRunner, ReadError, Result, cmd, read_command
 from ...i18n import _
 
 #: A systemd unit name we are willing to hand to ``systemctl``.
-UNIT_RE = re.compile(r"^[A-Za-z0-9:_.@\\-]+\.service$")
+UNIT_RE = re.compile(r"^[A-Za-z0-9:_.@\\-]+\.(?:service|timer)$")
 
 ACTIONS = ("start", "stop", "restart", "reload", "enable", "disable")
 
@@ -46,6 +46,8 @@ class Unit:
         if self.failed:
             return _("failed")
         if self.running:
+            if self.name.endswith(".timer") and self.sub == "waiting":
+                return _("active (waiting)")
             return _("running") if self.sub == "running" else _("active")
         if self.active == "inactive":
             return _("inactive")
@@ -68,7 +70,7 @@ def _fields(line: str) -> List[str]:
 
 
 def parse_list_units(text: str) -> Dict[str, Unit]:
-    """Parse ``systemctl list-units --type=service --all --plain --no-legend``."""
+    """Parse the runtime service and timer table from systemctl."""
     units: Dict[str, Unit] = {}
     for raw in text.splitlines():
         line = raw.strip()
@@ -90,7 +92,7 @@ def parse_list_units(text: str) -> Dict[str, Unit]:
 
 
 def parse_unit_files(text: str) -> Dict[str, str]:
-    """Parse ``systemctl list-unit-files --type=service`` into name -> state."""
+    """Parse systemctl's service and timer unit files into name -> state."""
     states: Dict[str, str] = {}
     for raw in text.splitlines():
         line = raw.strip()
@@ -106,12 +108,17 @@ def parse_unit_files(text: str) -> Dict[str, str]:
 
 
 def list_units(runner: BaseRunner) -> List[Unit]:
+<<<<<<< Updated upstream
     """All service units, merging runtime state with enablement state."""
     runtime = read_command(runner,
+=======
+    """Services and timers, merging runtime state with enablement state."""
+    runtime = runner.run(
+>>>>>>> Stashed changes
         cmd(
             "systemctl",
             "list-units",
-            "--type=service",
+            "--type=service,timer",
             "--all",
             "--no-pager",
             "--no-legend",
@@ -119,8 +126,13 @@ def list_units(runner: BaseRunner) -> List[Unit]:
         ),
         timeout=45,
     )
+<<<<<<< Updated upstream
     files = read_command(runner,
         cmd("systemctl", "list-unit-files", "--type=service", "--no-pager", "--no-legend", "--plain"),
+=======
+    files = runner.run(
+        cmd("systemctl", "list-unit-files", "--type=service,timer", "--no-pager", "--no-legend", "--plain"),
+>>>>>>> Stashed changes
         timeout=45,
     )
 

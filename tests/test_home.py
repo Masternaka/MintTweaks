@@ -90,6 +90,7 @@ class SummaryTests(unittest.TestCase):
 
 
 class CheckTests(unittest.TestCase):
+<<<<<<< Updated upstream
     def test_failed_checks_do_not_report_healthy_or_verified_results(self):
         for check, command in (
             (home.check_package_database, ["dpkg"]),
@@ -121,6 +122,15 @@ class CheckTests(unittest.TestCase):
         runner.add(["uname"], returncode=124)
         finding = home.check_kernels(runner)
         self.assertFalse(finding.completed)
+=======
+    def test_dependency_check_needs_no_root_lock_or_cache_writes(self):
+        runner = FakeRunner().add(["apt-get", "check"])
+        self.assertEqual(home.check_dependencies(runner).severity, "ok")
+        command = runner.calls[-1]
+        self.assertFalse(command.needs_root)
+        for option in ("Debug::NoLocking=1", "Dir::Cache::pkgcache=", "Dir::Cache::srcpkgcache="):
+            self.assertIn(option, command.argv)
+>>>>>>> Stashed changes
 
     def test_disk_thresholds(self):
         self.assertEqual(home.disk_finding(95, "1.0 GB").severity, "error")

@@ -76,9 +76,9 @@ def directory_size(path: Path) -> Optional[int]:
     return total
 
 
-def _du_bytes(runner: BaseRunner, path: Path) -> Optional[int]:
+def _du_bytes(runner: BaseRunner, path: Path, exclude: Sequence[str] = ()) -> Optional[int]:
     """Ask GNU ``du`` for a size; None when it cannot tell us."""
-    result = runner.run(cmd("du", "-sb", str(path)))
+    result = runner.run(cmd("du", "-sb", str(path), *(f"--exclude={name}" for name in exclude)))
     if not result.ok:
         return None
     digits = result.stdout.split("\t")[0].split()[0] if result.stdout.strip() else ""
@@ -365,7 +365,9 @@ def collect_probe(runner: BaseRunner, home: Optional[Path] = None) -> Probe:
     except PreviewError as exc:
         packages, preview_error = [], str(exc)
     return Probe(
-        apt_archives_bytes=_du_bytes(runner, APT_ARCHIVES),
+        # APT owns partial/ with restricted permissions. Only completed
+        # downloads are included in the cache estimate; no escalation needed.
+        apt_archives_bytes=_du_bytes(runner, APT_ARCHIVES, exclude=("partial",)),
         journal_bytes=_du_bytes(runner, JOURNAL_DIR),
         thumbnails_bytes=directory_size(base / THUMBNAILS),
         trash_bytes=directory_size(base / TRASH),

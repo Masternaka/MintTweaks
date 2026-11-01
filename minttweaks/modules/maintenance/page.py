@@ -50,7 +50,7 @@ class MaintenancePage(Page):
             _("Sizes are measured, not estimated. Nothing is removed from this card."),
         )
         for key, heading, subtitle in (
-            ("apt", _("Package cache"), _("/var/cache/apt/archives - downloaded .deb files")),
+            ("apt", _("Package cache"), _("/var/cache/apt/archives - completed downloads, excluding partial/")),
             ("journal", _("System journal"), _("journald logs, shrinkable without losing the last weeks")),
             ("thumbnails", _("Thumbnail cache"), _("rebuilt automatically by the file manager")),
             ("trash", _("Trash"), _("your user trash")),

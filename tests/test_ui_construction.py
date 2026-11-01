@@ -9,6 +9,7 @@ to genuine backend output (computed with ``FakeRunner``) without raising.
 
 import tempfile
 import unittest
+from unittest.mock import Mock
 from pathlib import Path
 from unittest.mock import Mock, patch
 
@@ -31,7 +32,7 @@ from minttweaks.modules.samba.page import SambaPage  # noqa: E402
 from minttweaks.modules.services import backend as svc  # noqa: E402
 from minttweaks.modules.services.page import ServicesPage  # noqa: E402
 from minttweaks.ui import widgets  # noqa: E402
-from minttweaks.ui.window import MainWindow  # noqa: E402
+from minttweaks.ui.window import LOG_TAG_COLOURS, MainWindow  # noqa: E402
 
 from tests.fakes import LIST_UNIT_FILES, LIST_UNITS, FakeRunner, pdbedit_listv  # noqa: E402
 
@@ -68,6 +69,20 @@ class ConstructionTests(unittest.TestCase):
             [page.page_name for page in window.pages],
             ["home", "maintenance", "services", "samba", "firefox", "cinnamon", "setup", "software", "terminal"],
         )
+
+    def test_default_log_level_has_a_registered_gtk_tag(self):
+        window = MainWindow(None, widgets.AppContext(make_runner()))
+        buffer = Mock()
+        # Reproduce GTK's rejection of any unregistered tag, which fakegi
+        # normally cannot detect.
+        def insert(_end, _message, tag):
+            if tag not in LOG_TAG_COLOURS:
+                raise ValueError(f"unknown text tag: {tag}")
+        buffer.insert_with_tags_by_name.side_effect = insert
+        window.log_buffer = buffer
+        window._on_log("Diagnostic finished", "info")
+        window._on_log("Unexpected level", "other")
+        self.assertEqual(buffer.insert_with_tags_by_name.call_count, 2)
 
     def test_pages_start_empty_and_load_lazily(self):
         page = MaintenancePage(self.ctx)

@@ -1,6 +1,7 @@
 """Tests for the maintenance backend."""
 
 import tempfile
+import subprocess
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -290,6 +291,7 @@ class RegistryTests(unittest.TestCase):
 
 
 class ProbeTests(unittest.TestCase):
+<<<<<<< Updated upstream
     def test_unreadable_cache_size_is_unknown_not_zero(self):
         with tempfile.TemporaryDirectory() as tmp:
             with patch.object(backend.os, "walk", side_effect=PermissionError("denied")):
@@ -313,6 +315,25 @@ class ProbeTests(unittest.TestCase):
             probe = backend.collect_probe(runner, Path(tmp))
         self.assertEqual(probe.autoremove_packages, [])
         self.assertIn("APT locked", probe.autoremove_error)
+=======
+    def test_cache_estimate_excludes_incomplete_downloads(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = Path(tmp)
+            (cache / "complete.deb").write_bytes(b"x" * 2048)
+            (cache / "partial").mkdir()
+            (cache / "partial" / "incomplete.deb").write_bytes(b"x" * 8192)
+
+            def measure(command):
+                from minttweaks.core.runner import Result
+                result = subprocess.run(command.argv, capture_output=True, text=True)
+                return Result(str(command), result.returncode, result.stdout, result.stderr)
+
+            runner = FakeRunner().add_callable(["du"], measure)
+            size = backend._du_bytes(runner, cache, exclude=("partial",))
+            self.assertIsNotNone(size)
+            self.assertGreaterEqual(size, 2048)
+            self.assertLess(size, 2048 + 8192)
+>>>>>>> Stashed changes
 
     def test_probe_collects_sizes(self):
         runner = FakeRunner()
@@ -324,6 +345,9 @@ class ProbeTests(unittest.TestCase):
         self.assertEqual(probe.apt_archives_bytes, 2048)
         self.assertEqual(probe.journal_bytes, 1024)
         self.assertEqual(probe.autoremove_count, 3)
+        apt_measure = next(call for call in runner.calls if str(backend.APT_ARCHIVES) in call.argv)
+        self.assertIn("--exclude=partial", apt_measure.argv)
+        self.assertFalse(apt_measure.needs_root)
 
     def test_du_failure_is_reported_as_unknown(self):
         self.assertIsNone(backend._du_bytes(FakeRunner().add(["du"], returncode=1), Path("/var")))

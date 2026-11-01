@@ -59,13 +59,31 @@ class ParseTests(unittest.TestCase):
         runner = FakeRunner().add(["systemctl", "--failed"], stdout=LIST_UNITS)
         self.assertEqual([unit.name for unit in backend.failed_units(runner)], ["weird-fail.service"])
 
+    def test_fstrim_service_and_timer_have_independent_states(self):
+        runner = FakeRunner()
+        runner.add(["systemctl", "list-units"], stdout=(
+            "fstrim.service loaded inactive dead Discard unused blocks\n"
+            "fstrim.timer loaded active waiting Discard unused blocks weekly\n"
+        ))
+        runner.add(["systemctl", "list-unit-files"], stdout=(
+            "fstrim.service static -\nfstrim.timer enabled enabled\n"
+        ))
+        units = {unit.name: unit for unit in backend.list_units(runner)}
+        self.assertEqual(units["fstrim.service"].state_label, "inactive")
+        timer = units["fstrim.timer"]
+        self.assertEqual(timer.state_label, "active (waiting)")
+        self.assertEqual(timer.enabled, "enabled")
+        self.assertTrue(timer.running)
+        self.assertFalse(timer.failed)
+        self.assertTrue(all("--type=service,timer" in argv for argv in runner.commands()))
+
     def test_failed_units_empty(self):
         self.assertEqual(backend.failed_units(FakeRunner().add(["systemctl", "--failed"], stdout="")), [])
 
 
 class ActionTests(unittest.TestCase):
     def test_valid_unit_names(self):
-        for name in ("smbd.service", "getty@tty1.service", "systemd-fsck@dev-disk.service"):
+        for name in ("smbd.service", "getty@tty1.service", "systemd-fsck@dev-disk.service", "fstrim.timer"):
             self.assertTrue(backend.valid_unit(name), name)
 
     def test_invalid_unit_names(self):
@@ -84,6 +102,14 @@ class ActionTests(unittest.TestCase):
         self.assertFalse(backend.control(runner, "smbd.service", "explode").ok)
         self.assertFalse(backend.control(runner, "nope", "start").ok)
         self.assertFalse(runner.ran(["systemctl"]))
+
+    def test_timer_actions_and_journal_use_the_timer_name(self):
+        runner = FakeRunner().add(["systemctl"]).add(["journalctl"])
+        self.assertTrue(backend.control(runner, "fstrim.timer", "enable").ok)
+        self.assertTrue(runner.calls[-1].needs_root)
+        self.assertEqual(runner.commands()[-1], ("systemctl", "enable", "fstrim.timer"))
+        self.assertTrue(backend.journal(runner, "fstrim.timer").ok)
+        self.assertEqual(runner.commands()[-1][-2:], ("-u", "fstrim.timer"))
 
     def test_journal_refuses_bad_unit(self):
         self.assertFalse(backend.journal(FakeRunner(), "smbd.service -u evil").ok)

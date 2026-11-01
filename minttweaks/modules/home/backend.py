@@ -231,7 +231,13 @@ def check_package_database(runner: BaseRunner) -> Finding:
 
 
 def check_dependencies(runner: BaseRunner) -> Finding:
-    result = runner.run(cmd("apt-get", "check"), timeout=120)
+    # Checking dependencies must not acquire dpkg's root-only frontend lock or
+    # write APT's binary caches during the automatic, read-only diagnostics.
+    result = runner.run(
+        cmd("apt-get", "check", "-o", "Debug::NoLocking=1",
+            "-o", "Dir::Cache::pkgcache=", "-o", "Dir::Cache::srcpkgcache="),
+        timeout=120,
+    )
     if result.returncode == 127:
         return Finding("info", _("Dependencies"), _("apt-get is not available on this system."), completed=False)
     if result.ok:

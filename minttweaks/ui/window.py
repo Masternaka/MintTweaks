@@ -26,6 +26,7 @@ from ..i18n import _  # noqa: E402
 PAGE_CLASSES = (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage, CinnamonPage, SetupPage, SoftwarePage, TerminalPage)
 
 LOG_TAG_COLOURS = {
+    "info": "#555555",
     "ok": "#1c7c3c",
     "warn": "#a35b00",
     "error": "#c02b2b",
@@ -248,7 +249,8 @@ class MainWindow(Gtk.ApplicationWindow):
     def _on_log(self, message: str, level: str) -> None:
         prefix = {"ok": "✓ ", "warn": "! ", "error": "✗ "}.get(level, "")
         end = self.log_buffer.get_end_iter()
-        self.log_buffer.insert_with_tags_by_name(end, f"{prefix}{message}\n", level)
+        tag = level if level in LOG_TAG_COLOURS else "info"
+        self.log_buffer.insert_with_tags_by_name(end, f"{prefix}{message}\n", tag)
         self.status_label.set_text(message.splitlines()[0] if message else "Ready.")
         self._scroll_output_to_end()
         if level in ("warn", "error"):
