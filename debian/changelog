@@ -1,3 +1,12 @@
+minttweaks (0.1.4) unstable; urgency=medium
+
+  * Add explicit setup of the signed Masternaka APT repository.
+  * Trigger APT publication after stable releases and verify public package bytes.
+  * Add application, font, Cinnamon theme and dotfiles management.
+  * Extend automated coverage and document the remaining Linux Mint checks.
+
+ -- Gabriel Chapdelaine <gabriel@localhost>  Mon, 02 Nov 2026 17:23:48 -0500
+
 minttweaks (0.1.3) unstable; urgency=medium
 
   * Initial release.
