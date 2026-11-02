@@ -82,3 +82,22 @@ jobs:
           VERSION: ${{ needs.build.outputs.version }}
           CHANNEL: ${{ needs.build.outputs.channel }}
         run: bash tools/publish-release.sh "$CHANNEL" "$RELEASE_TAG" "$VERSION" "$GITHUB_SHA" dist
+
+  update-apt-repository:
+    name: Confirm stable release availability in APT
+    needs: [build, publish]
+    if: needs.build.outputs.channel == 'stable'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 12
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Trigger APT publication and verify the public package
+        env:
+          APT_REPOSITORY_DISPATCH_TOKEN: ${{ secrets.APT_REPOSITORY_DISPATCH_TOKEN }}
+          RELEASE_TAG: ${{ needs.build.outputs.tag }}
+          VERSION: ${{ needs.build.outputs.version }}
+        run: python3 tools/update_apt_repository.py --tag "$RELEASE_TAG" --version "$VERSION"

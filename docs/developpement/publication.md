@@ -66,6 +66,52 @@ automatiquement.
 Le tag exprime la décision de publier une version stable ; le workflow ne prouve
 pas à lui seul que la recette Linux Mint a été effectuée.
 
+## Diffusion rapide vers le dépôt APT
+
+Le job `update-apt-repository` est prévu après la publication réussie d’une
+version **stable**. Il vérifie la Release et son unique paquet Debian attendu,
+déclenche `Signed APT repository` sur `main` dans
+`Masternaka/masternaka-repository`, puis attend la présence de cette version et
+du même SHA-256 dans le manifeste public et vérifie le paquet téléchargé.
+Les préversions ne déclenchent pas cette diffusion. La vérification ne force
+aucune mise à jour des machines clientes et n’installe rien sur leurs systèmes.
+
+Ce mécanisme ajoute un job Ubuntu standard par Release stable, sans nouvelle
+planification et sans cache supplémentaire. Les runners standard des dépôts
+publics sont [gratuits](https://docs.github.com/en/actions/concepts/billing-and-usage).
+Le passage toutes les six heures du dépôt central est conservé comme rattrapage
+et pour les mises à jour d’Helium et Zen ; il reste sujet aux délais GitHub.
+
+### Configuration unique
+
+Créer un jeton personnel **fine-grained**, limité au seul dépôt
+`Masternaka/masternaka-repository`, avec **Actions: Read and write** et une
+expiration adaptée. L’enregistrer comme secret Actions
+`APT_REPOSITORY_DISPATCH_TOKEN` dans **Masternaka/MintTweaks**. Aucun droit
+d’administration ou d’écriture du code ni aucune clé privée APT n’est nécessaire
+dans ce nouveau secret. Ne jamais le placer dans Git ou dans un message.
+
+Le jeton `GITHUB_TOKEN` de MintTweaks ne permet pas d’écrire dans l’autre dépôt.
+Voir les permissions de l’API [workflow dispatch](https://docs.github.com/en/rest/actions/workflows#create-a-workflow-dispatch-event).
+
+### Vérification et reprise
+
+La notification n’est pas assimilée à une publication APT réussie. Le job attend
+jusqu’à dix minutes le manifeste attendu, puis vérifie le `.deb` public. En cas
+de jeton absent/expiré, d’échec HTTP ou d’attente dépassée, il échoue explicitement
+avec un lien vers les workflows du dépôt central. La Release GitHub déjà publiée
+reste disponible ; elle n’est pas supprimée ou réécrite.
+
+Corriger le secret ou l’erreur du dépôt APT et relancer **uniquement le job
+échoué**. Ne pas relancer le job de publication de la Release stable existante,
+qui refuse volontairement de la remplacer. Un déclenchement manuel du workflow
+central sur `main` reste possible. Sur le client, `apt update` et l’installation
+ou le gestionnaire de mises à jour restent nécessaires.
+
+La disponibilité du `.deb` et son SHA-256 sont vérifiés depuis GitHub Pages ; les
+signatures et le téléchargement APT sont validés par le workflow central. Ces
+contrôles ne remplacent pas un essai réel de mise à jour sous Linux Mint.
+
 ## Relances et publications existantes
 
 - Une nouvelle construction de développement possède un tag propre au numéro
