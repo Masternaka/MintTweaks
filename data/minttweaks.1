@@ -95,6 +95,11 @@ nouvelle validation par
 .I /usr/lib/minttweaks/mtk-firefox
 Programme exécuté en tant que root pour fusionner la politique d’extensions
 Firefox, après vérification des identifiants et des URL officielles.
+.TP
+.I /usr/lib/minttweaks/mtk-repository
+Ajoute uniquement le dépôt APT signé Masternaka et sa clé publique épinglée,
+après confirmation et autorisation polkit, puis actualise les métadonnées.
+Les fichiers existants différents sont refusés. Aucun paquet n’est installé.
 .SH VOIR AUSSI
 .BR apt-get (8),
 .BR journalctl (1),

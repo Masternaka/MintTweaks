@@ -10,6 +10,7 @@ Homepage: https://github.com/gabrielchapdelaine/MintTweaks
 Package: minttweaks
 Architecture: all
 Depends:
+ apt,
  gir1.2-gtk-3.0,
  policykit-1,
  gpg,

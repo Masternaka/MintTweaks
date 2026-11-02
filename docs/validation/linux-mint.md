@@ -200,6 +200,8 @@ provoquer volontairement ce dépassement.
 | M24 | Vérifier Zen avec puis sans dépôt central disponible et configuré | Installation proposée uniquement si le candidat attendu existe ; mention du paquet non officiel ; lancement vérifié après installation |
 | M25 | Annuler polkit, simuler une panne réseau ou changer le plan avant confirmation | Aucun faux succès ; état APT réactualisé ; aucune suppression automatique après une installation partielle |
 | M26 | Ouvrir un parcours enregistré au format 1, puis ajouter Logiciels natifs | Sélections et notes conservées ; nouvelle étape non sélectionnée initialement ; format 2 écrit à la sauvegarde explicite |
+| M27 | Ajouter Masternaka depuis Logiciels natifs, puis répéter l’action | Confirmation URL/empreinte/fichiers ; autorisation polkit ; clé limitée avec Signed-By ; APT actualisé ; aucun paquet installé ; fichiers conformes conservés |
+| M28 | Annuler l’ajout de Masternaka, refuser polkit, couper le réseau, puis essayer avec une source existante différente | Aucun faux succès ; nouveaux fichiers retirés après échec APT ; fichiers préexistants préservés ; conflit signalé sans écrasement |
 
 La comparaison APT avant suppression ne verrouille pas l’état des paquets jusqu’à
 l’exécution. Noter cette limite dans le compte rendu. Si un scénario d’échec ou

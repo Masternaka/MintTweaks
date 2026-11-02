@@ -149,11 +149,19 @@ msgstr ""
 msgid "Active Samba connections:"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:34
+#: minttweaks/modules/software/page.py:90
+msgid "Add or refresh the Masternaka repository?"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:44
 msgid "Add the missing repository, then review and install the native APT package. Repository changes require administrator authorization."
 msgstr ""
 
-#: minttweaks/modules/software/page.py:114
+#: minttweaks/modules/software/page.py:34
+msgid "Add the signed repository for MintTweaks updates and the packages distributed by Masternaka. No application is installed by this action."
+msgstr ""
+
+#: minttweaks/modules/software/page.py:156
 msgid "Add the signing key and APT source shown below, then refresh package metadata. Existing repository files are preserved. An installation preview will follow."
 msgstr ""
 
@@ -341,11 +349,11 @@ msgid "APT candidate: {version}"
 msgstr ""
 
 #: minttweaks/modules/applications/page.py:106
-#: minttweaks/modules/software/page.py:88
+#: minttweaks/modules/software/page.py:130
 msgid "APT package installed: {version}"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:90
+#: minttweaks/modules/software/page.py:132
 msgid "APT package not installed. Candidate from the expected source: {version}"
 msgstr ""
 
@@ -452,7 +460,7 @@ msgstr ""
 msgid "Browseable"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:33
+#: minttweaks/modules/software/page.py:43
 msgid "Browsers outside Mint's official repositories"
 msgstr ""
 
@@ -679,11 +687,19 @@ msgstr ""
 msgid "Configurations to restore:"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:122
+#: minttweaks/modules/software/page.py:164
 msgid "Configure an APT repository"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:45
+#: minttweaks/modules/software/page.py:100
+msgid "Configure Masternaka repository"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:40
+msgid "Configure or refresh the Masternaka repository"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:55
 msgid "Configure repository and install…"
 msgstr ""
 
@@ -699,7 +715,7 @@ msgstr ""
 msgid "Configure supported integrations after installation"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:116
+#: minttweaks/modules/software/page.py:158
 msgid "Configure the repository for {name}?"
 msgstr ""
 
@@ -1138,6 +1154,10 @@ msgstr ""
 msgid "Fonts use APT first. A separate GitHub download is offered only when their official package is missing."
 msgstr ""
 
+#: minttweaks/modules/software/page.py:60
+msgid "For Zen, configure the Masternaka repository using the section above."
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:165
 msgid "Force group"
 msgstr ""
@@ -1273,7 +1293,7 @@ msgstr ""
 msgid "Install missing imported tools?"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:144
+#: minttweaks/modules/software/page.py:186
 msgid "Install native software"
 msgstr ""
 
@@ -1326,7 +1346,7 @@ msgstr ""
 msgid "Install these Firefox extensions?"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:137
+#: minttweaks/modules/software/page.py:179
 msgid "Install these native packages?"
 msgstr ""
 
@@ -1582,6 +1602,14 @@ msgstr ""
 
 #: minttweaks/modules/setup/page.py:78
 msgid "Mark verified by you"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:33
+msgid "Masternaka APT repository"
+msgstr ""
+
+#: minttweaks/modules/software/page.py:110
+msgid "Masternaka repository configured and APT metadata refreshed. No application was installed."
 msgstr ""
 
 #: minttweaks/modules/home/page.py:57
@@ -1899,7 +1927,7 @@ msgstr ""
 msgid "Package cache"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:86
+#: minttweaks/modules/software/page.py:128
 msgid "Package check unavailable: {error}"
 msgstr ""
 
@@ -2015,7 +2043,7 @@ msgstr ""
 msgid "Preview selected applications"
 msgstr ""
 
-#: minttweaks/modules/software/page.py:54
+#: minttweaks/modules/software/page.py:64
 msgid "Preview selected installations"
 msgstr ""
 
@@ -2267,7 +2295,7 @@ msgstr ""
 msgid "Repository setup failed."
 msgstr ""
 
-#: minttweaks/modules/software/page.py:51
+#: minttweaks/modules/software/page.py:61
 msgid "Repository setup instructions"
 msgstr ""
 
@@ -2342,7 +2370,7 @@ msgstr ""
 msgid "Review the APT plan. Administrator authorization is required."
 msgstr ""
 
-#: minttweaks/modules/software/page.py:138
+#: minttweaks/modules/software/page.py:180
 msgid "Review the complete APT simulation, including dependencies and upgrades. Removals are refused. The plan will be checked again before installation; repository configuration is not changed."
 msgstr ""
 
@@ -2628,6 +2656,11 @@ msgstr ""
 msgid "Shrink the system journal to 200 MB"
 msgstr ""
 
+#: minttweaks/modules/software/page.py:88
+#: minttweaks/modules/software/page.py:36
+msgid "Signing key fingerprint: {fingerprint}"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:695
 msgid "Simulation complete. Sharing was not started."
 msgstr ""
@@ -2667,6 +2700,10 @@ msgstr ""
 
 #: minttweaks/modules/applications/fonts.py:237
 msgid "Simulation: no GitHub fonts were downloaded or installed."
+msgstr ""
+
+#: minttweaks/modules/software/page.py:105
+msgid "Simulation: no repository was changed."
 msgstr ""
 
 #: minttweaks/modules/dotfiles/backend.py:39
@@ -3164,6 +3201,10 @@ msgstr ""
 msgid "The repository does not contain a complete generated Cinnamon theme."
 msgstr ""
 
+#: minttweaks/modules/software/repository.py:19
+msgid "The repository helper is missing. Reinstall MintTweaks."
+msgstr ""
+
 #: minttweaks/modules/software/backend.py:164
 msgid "The repository setup helper is missing. Reinstall MintTweaks."
 msgstr ""
@@ -3265,12 +3306,16 @@ msgstr ""
 msgid "The shell or terminal operation failed."
 msgstr ""
 
-#: minttweaks/modules/software/page.py:155
+#: minttweaks/modules/software/page.py:197
 msgid "The software installation was not fully verified."
 msgstr ""
 
-#: minttweaks/modules/software/page.py:162
+#: minttweaks/modules/software/page.py:204
 msgid "The software operation failed."
+msgstr ""
+
+#: minttweaks/modules/software/page.py:38
+msgid "The source and its public key are added only after confirmation."
 msgstr ""
 
 #: minttweaks/modules/cinnamon/themes.py:143
@@ -3422,7 +3467,6 @@ msgid "This package is already installed: {name}"
 msgstr ""
 
 #: minttweaks/modules/software/backend.py:155
-#: minttweaks/modules/software/page.py:50
 msgid "This repository is still being prepared. Automatic setup is not available yet."
 msgstr ""
 
@@ -3445,6 +3489,10 @@ msgstr ""
 
 #: minttweaks/modules/setup/page.py:150
 msgid "This stops and disables casper-md5check.service and clears its failure state. Administrator authorization is required."
+msgstr ""
+
+#: minttweaks/modules/software/page.py:91
+msgid "This third-party source can provide package updates through APT and Mint. Its bundled public key is checked and restricted to this repository with Signed-By. Existing different files are refused. If APT refresh fails, newly created files are removed. Administrator authorization is required; no package is installed or upgraded."
 msgstr ""
 
 #: minttweaks/modules/maintenance/page.py:55

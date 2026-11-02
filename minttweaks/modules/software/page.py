@@ -7,7 +7,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk  # noqa: E402
 
-from . import backend  # noqa: E402
+from . import backend, repository  # noqa: E402
 from ...i18n import _  # noqa: E402
 from ...ui import widgets  # noqa: E402
 from ...ui.widgets import Page  # noqa: E402
@@ -30,6 +30,16 @@ class SoftwarePage(Page):
         box.set_border_width(18)
         if not widgets.escalation_available(self.ctx.runner):
             box.pack_start(widgets.info_bar(_("Administrator authorization is unavailable: package state can be read, but installation is disabled.")), False, False, 0)
+        repo_card, repo_body = widgets.card(_("Masternaka APT repository"),
+            _("Add the signed repository for MintTweaks updates and the packages distributed by Masternaka. No application is installed by this action."))
+        repo_body.pack_start(widgets.label(repository.URL, wrap=True, selectable=True), False, False, 0)
+        repo_body.pack_start(widgets.label(_("Signing key fingerprint: {fingerprint}").format(
+            fingerprint=repository.FINGERPRINT), wrap=True, selectable=True), False, False, 0)
+        self.repository_label = widgets.label(_("The source and its public key are added only after confirmation."), wrap=True)
+        repo_body.pack_start(self.repository_label, False, False, 0)
+        self.repository_button = widgets.button(_("Configure or refresh the Masternaka repository"), self._on_masternaka_repository)
+        repo_body.pack_start(self.repository_button, False, False, 0)
+        box.pack_start(repo_card, False, False, 0)
         catalog, body = widgets.card(_("Browsers outside Mint's official repositories"),
             _("Add the missing repository, then review and install the native APT package. Repository changes require administrator authorization."))
         for app in backend.CATALOG:
@@ -47,7 +57,7 @@ class SoftwarePage(Page):
             self.repository_buttons[app.id] = button
             body.pack_start(button, False, False, 0)
             if app.id not in backend.RECIPES:
-                body.pack_start(widgets.label(_("This repository is still being prepared. Automatic setup is not available yet."), wrap=True), False, False, 0)
+                body.pack_start(widgets.label(_("For Zen, configure the Masternaka repository using the section above."), wrap=True), False, False, 0)
             body.pack_start(Gtk.LinkButton.new_with_label(app.guide, _("Repository setup instructions")), False, False, 0)
         self.reload_button = widgets.button(_("Re-analyse"), self.refresh)
         body.pack_start(self.reload_button, False, False, 0)
@@ -56,6 +66,7 @@ class SoftwarePage(Page):
         body.pack_start(self.install_button, False, False, 0)
         box.pack_start(catalog, False, False, 0)
         self.pack_start(widgets.scrolled(box), True, True, 0)
+        self._update_controls()
 
     def _selected(self):
         return [app.id for app in backend.CATALOG if self.checks[app.id].get_active()
@@ -68,7 +79,38 @@ class SoftwarePage(Page):
             check.set_sensitive(bool(allowed and key in self.status and self.status[key].installable))
             self.repository_buttons[key].set_sensitive(bool(allowed and key in backend.RECIPES and key in self.status and not self.status[key].installed and not self.status[key].installable))
         self.install_button.set_sensitive(bool(allowed and self._selected()))
+        self.repository_button.set_sensitive(bool(allowed))
         self.reload_button.set_sensitive(not self._loading and not self._busy)
+
+    def _on_masternaka_repository(self):
+        if self._loading or self._busy or self.ctx.runner.dry_run:
+            return
+        lines = [repository.URL, _("Signing key fingerprint: {fingerprint}").format(
+            fingerprint=repository.FINGERPRINT), str(repository.KEY_PATH), str(repository.SOURCE_PATH)]
+        if not widgets.confirm_list(self.window, _("Add or refresh the Masternaka repository?"), lines,
+            _("This third-party source can provide package updates through APT and Mint. "
+              "Its bundled public key is checked and restricted to this repository with Signed-By. "
+              "Existing different files are refused. If APT refresh fails, newly created files are removed. "
+              "Administrator authorization is required; no package is installed or upgraded.")):
+            return
+        self._busy = True
+        self._update_controls()
+        self.run_operation(lambda: repository.install(self.ctx.runner, on_line=self.ctx.log),
+                           on_done=self._after_repository, on_error=self._failed,
+                           name=_("Configure Masternaka repository"))
+
+    def _after_repository(self, result):
+        self._busy = False
+        if result is None:
+            text = _("Simulation: no repository was changed.")
+        elif not result.ok:
+            self._failed(RuntimeError(result.output))
+            return
+        else:
+            text = _("Masternaka repository configured and APT metadata refreshed. No application was installed.")
+        self.repository_label.set_text(text)
+        self.ctx.log(text, "ok")
+        self.refresh()
 
     def refresh(self):
         if self._loading or self._busy:

@@ -16,7 +16,7 @@ par son application dédiée.
 | [Profils Cinnamon](docs/guides/profils-cinnamon.md) | Clonage et installation de Catppuccin ; capture, application et restauration des réglages d’apparence |
 | [Après installation](docs/guides/assistant-apres-installation.md) | Parcours facultatif avec progression déclarée par l’utilisateur |
 | [Applications](docs/guides/applications.md) | 34 entrées personnelles, installation APT officielle et repli GitHub pour les polices absentes |
-| [Logiciels natifs](docs/guides/logiciels-natifs.md) | Helium, Brave et Zen depuis les sources APT tierces attendues |
+| [Logiciels natifs](docs/guides/logiciels-natifs.md) | Ajout du dépôt APT signé Masternaka ; Helium, Brave et Zen depuis les sources attendues |
 | [Shells et terminaux](docs/guides/shells-et-terminaux.md) | 32 outils, intégrations, réglages personnels, alias et export/import ; Kitty et Alacritty |
 | [Dotfiles](docs/guides/dotfiles.md) | Clonage GitHub, installation de Git/Stow, sauvegarde avant activation et annulation avec restauration |
 

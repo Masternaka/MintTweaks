@@ -19,12 +19,13 @@ Masternaka à partir de l’archive amont. Les [instructions officielles Zen](ht
 proposent notamment une archive native ; elles ne décrivent pas ce paquet comme
 un `.deb` officiel. Le module distingue ces provenances dans la page et l’aperçu.
 
-Le dépôt Masternaka est encore en préparation. Zen reste dans le catalogue,
-avec cette explication visible ; sa configuration automatique est indisponible.
-Une installation reste possible si sa source est configurée séparément et qu’un
-candidat valide est trouvé.
+La publication du dépôt central reste gérée par son projet séparé. MintTweaks
+peut désormais ajouter sa source sur la machine cliente ; cela ne modifie pas
+le dépôt GitHub, ses secrets ou sa publication.
 
-## Ajouter une source depuis MintTweaks
+## Préparer la source
+
+### Helium et Brave
 
 Pour Helium et Brave, **Configurer le dépôt et installer…** affiche la provenance,
 l’URL du dépôt et celle de sa clé. Après confirmation et autorisation
@@ -50,13 +51,53 @@ absent, une suite de préversion ou une source différente empêche l’installa
 Si une même version candidate est proposée par plusieurs sources distinctes, le
 module demande de clarifier la configuration APT.
 
+### Masternaka
+
+Dans **Logiciels natifs**, le bouton **Configurer ou actualiser le dépôt
+Masternaka** affiche une confirmation avec l’URL, l’empreinte et les fichiers
+concernés. Après autorisation polkit, il ajoute uniquement :
+
+- `/etc/apt/keyrings/masternaka.asc` : la clé publique fournie avec MintTweaks ;
+- `/etc/apt/sources.list.d/masternaka.list` : la source HTTPS plate, avec `signed-by`.
+
+Empreinte : `86A7954635E2B4A77CAC8F00E25B26CC99FBDB1C`. Les octets de la clé
+publique incluse sont contrôlés par SHA-256 avant toute écriture. Aucune clé
+privée ni phrase secrète n’est requise ou distribuée. La clé n’est pas ajoutée
+aux trousseaux de confiance globaux d’APT. Une rotation de clé nécessite une
+mise à jour du fichier public inclus et de son empreinte et SHA-256 épinglés.
+
+Le helper dédié n’accepte qu’une action fixe, sans chemin ou URL fournis par
+l’utilisateur. Il refuse les liens symboliques, les chemins système modifiables
+par un utilisateur et les fichiers existants différents. Il préserve les fichiers
+déjà conformes et peut compléter une configuration partielle. Les nouveaux
+fichiers sont publiés sans écrasement ; aucune configuration personnalisée
+existante n’est remplacée. Un verrou évite deux ajouts simultanés par ce helper.
+
+L’action actualise uniquement les métadonnées de cette source avec APT, en
+conservant les vérifications de signature. Si l’actualisation échoue, les fichiers
+créés pendant cette tentative sont retirés ; les fichiers préexistants restent
+en place. Les métadonnées APT éventuellement téléchargées ne sont pas effacées.
+Un échec laisse un message explicite dans le journal. Aucun paquet n’est installé
+ou mis à niveau ; les mises à jour suivantes passent par les outils APT/Mint
+selon leur configuration. Le mode simulation ne change aucun fichier et ne
+contacte pas le réseau.
+
+Les sources officielles Helium et Brave conservent leurs boutons dédiés décrits ci-dessus. Les liens
+**Instructions de configuration du dépôt** ouvrent ces guides sans les exécuter.
+Le catalogue Helium continue de viser sa source officielle, et Brave la sienne ;
+l’ajout de Masternaka ne remplace pas ces choix par une autre provenance. Une
+architecture non prise en charge, un candidat absent, une suite de préversion ou
+une source différente empêche l’installation. Si une même version candidate est
+proposée par plusieurs sources distinctes, le module refuse de choisir à la
+place de l’utilisateur et demande de clarifier la configuration APT.
+
 La vérification repose sur les métadonnées APT configurées. Les téléchargements
 et les contrôles de confiance restent gérés par APT ; aucun contournement des
 signatures ou des contrôles APT n’est ajouté.
 
 ## Parcours d’installation
 
-1. Ouvrir **Logiciels natifs**. Si la source manque, choisir **Configurer le dépôt et installer…**, puis confirmer. Sinon, utiliser **Réanalyser**.
+1. Ouvrir **Logiciels natifs**. Si la source manque, utiliser le bouton Masternaka en haut de page pour Zen, ou **Configurer le dépôt et installer…** pour Helium et Brave, puis confirmer. Sinon, utiliser **Réanalyser**.
 2. Contrôler la source, l’état du paquet et sa version candidate. La détection
    porte sur le paquet Debian nommé dans le catalogue, pas sur toutes les copies
    du navigateur éventuellement installées manuellement ou dans un autre format.
@@ -103,7 +144,16 @@ le [guide de l’assistant](assistant-apres-installation.md#persistance-et-limit
 Les tests automatisés utilisent un exécuteur APT simulé. Ils couvrent les
 origines, suites et architectures, les aperçus, les changements de plan, les
 refus de suppression, les erreurs polkit/APT et la vérification finale des
+### Helium et Brave
+
 versions. Aucun dépôt ni paquet système réel n’est modifié par ces tests. Ils couvrent aussi la conservation des sources existantes, les erreurs de clé et le retrait des fichiers créés après un échec APT.
+
+### Masternaka
+
+versions. Les tests du helper de dépôt utilisent des fichiers temporaires et
+APT simulé : clé altérée, chemins non sûrs, conflit, ajout répété et retour
+arrière après erreur ou délai dépassé. Aucune installation réelle n’a été
+effectuée sur ce Mac.
 
 La [recette Mint](../validation/linux-mint.md) doit vérifier les sources configurées,
 une installation de chaque navigateur, son lancement, un refus polkit, un échec

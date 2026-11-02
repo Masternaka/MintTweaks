@@ -8,6 +8,7 @@ from tests import fakegi
 fakegi.install()
 
 from minttweaks.modules.software import backend  # noqa: E402
+from minttweaks.modules.software import repository  # noqa: E402
 from minttweaks.modules.software.page import SoftwarePage  # noqa: E402
 from minttweaks.ui.widgets import AppContext  # noqa: E402
 from tests.test_software import BrowserRunner  # noqa: E402
@@ -18,6 +19,43 @@ class SoftwarePageTests(unittest.TestCase):
         self.runner = BrowserRunner()
         self.ctx = AppContext(self.runner)
         self.page = SoftwarePage(self.ctx)
+
+    def test_repository_cancel_does_not_request_root(self):
+        with patch("minttweaks.ui.widgets.confirm_list", return_value=False), patch.object(repository, "install") as install:
+            self.page._on_masternaka_repository()
+        install.assert_not_called()
+        self.assertFalse(self.page._busy)
+
+    def test_repository_confirmation_shows_url_key_and_destination_paths(self):
+        with patch("minttweaks.ui.widgets.confirm_list", return_value=False) as confirm:
+            self.page._on_masternaka_repository()
+        text = "\n".join(confirm.call_args.args[2])
+        self.assertIn(repository.URL, text)
+        self.assertIn(repository.FINGERPRINT, text)
+        self.assertIn(str(repository.SOURCE_PATH), text)
+
+    def test_repository_obeys_shared_operation_reservation(self):
+        with patch.object(self.ctx, "run_async"):
+            self.ctx.run_operation("Other operation", lambda: None)
+        self.page.error = Mock()
+        with patch("minttweaks.ui.widgets.confirm_list", return_value=True), patch.object(repository, "install") as install:
+            self.page._on_masternaka_repository()
+        install.assert_not_called()
+        self.page.error.assert_called_once()
+        self.assertFalse(self.page._busy)
+
+    def test_repository_failure_does_not_report_success(self):
+        from minttweaks.core.runner import Result
+        with patch.object(self.page, "error") as error:
+            self.page._after_repository(Result("helper", 4, stderr="APT refresh failed"))
+        self.assertIn("APT refresh failed", error.call_args.args[1])
+        self.assertFalse(self.page._busy)
+
+    def test_repository_simulation_does_not_start_work(self):
+        self.runner.dry_run = True
+        with patch.object(self.page, "run_operation") as run:
+            self.page._on_masternaka_repository()
+        run.assert_not_called()
 
     def test_cancelled_preview_does_not_start_installation(self):
         self.page._busy = True

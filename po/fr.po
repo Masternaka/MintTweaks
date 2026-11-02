@@ -1921,48 +1921,48 @@ msgstr "Cette source ne propose aucun paquet pris en charge pour l’architectur
 msgid "This package is already installed: {name}"
 msgstr "Ce paquet est déjà installé : {name}"
 
-#: minttweaks/modules/software/page.py:33
+#: minttweaks/modules/software/page.py:43
 msgid "Browsers outside Mint's official repositories"
 msgstr "Navigateurs hors des dépôts officiels de Mint"
 
-#: minttweaks/modules/software/page.py:54
+#: minttweaks/modules/software/page.py:64
 msgid "Preview selected installations"
 msgstr "Prévisualiser les installations sélectionnées"
 
-#: minttweaks/modules/software/page.py:162
+#: minttweaks/modules/software/page.py:204
 msgid "The software operation failed."
 msgstr "L’opération sur les logiciels a échoué."
 
-#: minttweaks/modules/software/page.py:137
+#: minttweaks/modules/software/page.py:179
 msgid "Install these native packages?"
 msgstr "Installer ces paquets natifs ?"
 
-#: minttweaks/modules/software/page.py:138
+#: minttweaks/modules/software/page.py:180
 msgid "Review the complete APT simulation, including dependencies and upgrades. Removals are refused. The plan will be checked again before installation; repository configuration is not changed."
 msgstr "Consultez la simulation APT complète, avec les dépendances et mises à niveau. Les suppressions sont refusées. Le plan sera revérifié avant l’installation ; la configuration des dépôts n’est pas modifiée."
 
-#: minttweaks/modules/software/page.py:144
+#: minttweaks/modules/software/page.py:186
 msgid "Install native software"
 msgstr "Installer des logiciels natifs"
 
-#: minttweaks/modules/software/page.py:155
+#: minttweaks/modules/software/page.py:197
 msgid "The software installation was not fully verified."
 msgstr "L’installation des logiciels n’a pas été entièrement vérifiée."
 
-#: minttweaks/modules/software/page.py:51
+#: minttweaks/modules/software/page.py:61
 msgid "Repository setup instructions"
 msgstr "Instructions de configuration du dépôt"
 
-#: minttweaks/modules/software/page.py:86
+#: minttweaks/modules/software/page.py:128
 msgid "Package check unavailable: {error}"
 msgstr "Vérification du paquet indisponible : {error}"
 
 #: minttweaks/modules/applications/page.py:106
-#: minttweaks/modules/software/page.py:88
+#: minttweaks/modules/software/page.py:130
 msgid "APT package installed: {version}"
 msgstr "Paquet APT installé : {version}"
 
-#: minttweaks/modules/software/page.py:90
+#: minttweaks/modules/software/page.py:132
 msgid "APT package not installed. Candidate from the expected source: {version}"
 msgstr "Paquet APT non installé. Version candidate de la source attendue : {version}"
 
@@ -2884,23 +2884,23 @@ msgstr "Simulation terminée. Le partage n’a pas été démarré."
 msgid "File sharing is enabled and running."
 msgstr "Le partage de fichiers est activé et en cours d’exécution."
 
-#: minttweaks/modules/software/page.py:34
+#: minttweaks/modules/software/page.py:44
 msgid "Add the missing repository, then review and install the native APT package. Repository changes require administrator authorization."
 msgstr "Ajoutez le dépôt manquant, puis vérifiez et installez le paquet APT natif. La configuration du dépôt nécessite une autorisation administrateur."
 
-#: minttweaks/modules/software/page.py:114
+#: minttweaks/modules/software/page.py:156
 msgid "Add the signing key and APT source shown below, then refresh package metadata. Existing repository files are preserved. An installation preview will follow."
 msgstr "Ajouter la clé de signature et la source APT indiquées ci-dessous, puis actualiser les métadonnées des paquets. Les fichiers de dépôt existants sont conservés. Un aperçu de l’installation sera ensuite proposé."
 
-#: minttweaks/modules/software/page.py:122
+#: minttweaks/modules/software/page.py:164
 msgid "Configure an APT repository"
 msgstr "Configurer un dépôt APT"
 
-#: minttweaks/modules/software/page.py:45
+#: minttweaks/modules/software/page.py:55
 msgid "Configure repository and install…"
 msgstr "Configurer le dépôt et installer…"
 
-#: minttweaks/modules/software/page.py:116
+#: minttweaks/modules/software/page.py:158
 msgid "Configure the repository for {name}?"
 msgstr "Configurer le dépôt pour {name} ?"
 
@@ -2917,7 +2917,6 @@ msgid "The repository setup helper is missing. Reinstall MintTweaks."
 msgstr "L’outil de configuration des dépôts est absent. Réinstallez MintTweaks."
 
 #: minttweaks/modules/software/backend.py:155
-#: minttweaks/modules/software/page.py:50
 msgid "This repository is still being prepared. Automatic setup is not available yet."
 msgstr "Ce dépôt est encore en préparation. La configuration automatique n’est pas encore disponible."
 
@@ -3796,3 +3795,52 @@ msgstr "Utilitaires"
 #: … (+1)
 msgid "Virtualization"
 msgstr "Virtualisation"
+
+#: minttweaks/modules/software/repository.py:19
+msgid "The repository helper is missing. Reinstall MintTweaks."
+msgstr "L’auxiliaire du dépôt est introuvable. Réinstallez MintTweaks."
+
+#: minttweaks/modules/software/page.py:33
+msgid "Masternaka APT repository"
+msgstr "Dépôt APT Masternaka"
+
+#: minttweaks/modules/software/page.py:34
+msgid "Add the signed repository for MintTweaks updates and the packages distributed by Masternaka. No application is installed by this action."
+msgstr "Ajoutez le dépôt signé pour les mises à jour de MintTweaks et les paquets distribués par Masternaka. Cette action n’installe aucune application."
+
+#: minttweaks/modules/software/page.py:88
+#: minttweaks/modules/software/page.py:36
+msgid "Signing key fingerprint: {fingerprint}"
+msgstr "Empreinte de la clé de signature : {fingerprint}"
+
+#: minttweaks/modules/software/page.py:38
+msgid "The source and its public key are added only after confirmation."
+msgstr "La source et sa clé publique ne sont ajoutées qu’après confirmation."
+
+#: minttweaks/modules/software/page.py:40
+msgid "Configure or refresh the Masternaka repository"
+msgstr "Configurer ou actualiser le dépôt Masternaka"
+
+#: minttweaks/modules/software/page.py:90
+msgid "Add or refresh the Masternaka repository?"
+msgstr "Ajouter ou actualiser le dépôt Masternaka ?"
+
+#: minttweaks/modules/software/page.py:91
+msgid "This third-party source can provide package updates through APT and Mint. Its bundled public key is checked and restricted to this repository with Signed-By. Existing different files are refused. If APT refresh fails, newly created files are removed. Administrator authorization is required; no package is installed or upgraded."
+msgstr "Cette source tierce peut fournir des mises à jour de paquets via APT et Mint. Sa clé publique incluse est vérifiée et limitée à ce dépôt avec Signed-By. Les fichiers existants différents sont refusés. Si l’actualisation APT échoue, les nouveaux fichiers sont retirés. Une autorisation administrateur est requise ; aucun paquet n’est installé ou mis à niveau."
+
+#: minttweaks/modules/software/page.py:100
+msgid "Configure Masternaka repository"
+msgstr "Configurer le dépôt Masternaka"
+
+#: minttweaks/modules/software/page.py:105
+msgid "Simulation: no repository was changed."
+msgstr "Simulation : aucun dépôt n’a été modifié."
+
+#: minttweaks/modules/software/page.py:110
+msgid "Masternaka repository configured and APT metadata refreshed. No application was installed."
+msgstr "Dépôt Masternaka configuré et métadonnées APT actualisées. Aucune application n’a été installée."
+
+#: minttweaks/modules/software/page.py:60
+msgid "For Zen, configure the Masternaka repository using the section above."
+msgstr "Pour Zen, configurez le dépôt Masternaka dans la section ci-dessus."

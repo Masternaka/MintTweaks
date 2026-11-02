@@ -172,6 +172,8 @@ class MakefileTests(unittest.TestCase):
             "bin/minttweaks",
             "data/mtk-root",
             "data/mtk-firefox",
+            "data/mtk-repository",
+            "data/masternaka-archive-keyring.asc",
             "data/minttweaks.desktop",
             "data/minttweaks.svg",
             "data/minttweaks.1",

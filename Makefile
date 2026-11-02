@@ -34,7 +34,7 @@ test:
 
 # Syntax-check everything, keep the catalogue and translations in sync.
 check:
-	PYTHONPYCACHEPREFIX=$${TMPDIR:-/tmp}/mtk-pycache $(PYTHON) -m compileall -q $(PKG) tests data/mtk-root data/mtk-firefox tools
+	PYTHONPYCACHEPREFIX=$${TMPDIR:-/tmp}/mtk-pycache $(PYTHON) -m compileall -q $(PKG) tests data/mtk-root data/mtk-firefox data/mtk-repository tools
 	bash -n tools/publish-release.sh
 	$(PYTHON) tools/extract_strings.py --check
 	$(PYTHON) tools/compile_mo.py --check po/fr.po
@@ -58,6 +58,8 @@ install: translations
 	cp -r $(PKG) $(LIBDIR)/$(PKG)/
 	$(INSTALL) -m 0755 data/mtk-root $(LIBDIR)/$(PKG)/mtk-root
 	$(INSTALL) -m 0755 data/mtk-firefox $(LIBDIR)/$(PKG)/mtk-firefox
+	$(INSTALL) -m 0755 data/mtk-repository $(LIBDIR)/$(PKG)/mtk-repository
+	$(INSTALL) -m 0644 data/masternaka-archive-keyring.asc $(LIBDIR)/$(PKG)/masternaka-archive-keyring.asc
 	$(INSTALL) -d $(BINDIR)
 	$(INSTALL) -m 0755 bin/minttweaks $(BINDIR)/minttweaks
 	$(INSTALL) -d $(APPDIR)

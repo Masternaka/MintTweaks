@@ -55,6 +55,14 @@ Les extensions Firefox passent par l’auxiliaire `data/mtk-firefox`, limité à
 
 ## Modèle de sécurité
 
+L’ajout explicite du dépôt Masternaka utilise `data/mtk-repository`, installé
+avec sa clé publique. Cet auxiliaire n’accepte que `install`, avec URL et chemins
+fixes ; il vérifie le SHA-256 de la clé incluse, refuse les chemins non sûrs et
+les fichiers existants différents, puis actualise cette seule source avec APT.
+La clé est limitée par `Signed-By`. Un échec retire uniquement les nouveaux
+fichiers de cette tentative, sans installer de paquet. Voir le
+[guide Logiciels natifs](../guides/logiciels-natifs.md#préparer-la-source).
+
 - **Aucun shell.** Chaque commande est une liste d’arguments transmise à `subprocess` sans `shell=True`, ce qu’un test vérifie. Les noms de partage, chemins et noms d’unité sont validés selon des règles strictes avant toute commande.
 - **Validation avant écriture.** `smb.conf` passe deux fois par `testparm`, dans l’interface et dans l’auxiliaire root. Une configuration refusée laisse la mémoire et le disque inchangés.
 - **Sauvegarde avant modification.** La configuration Samba est copiée dans `~/.local/share/minttweaks/backups/` avant chaque enregistrement ; ces sauvegardes sont lisibles par l’utilisateur et restaurables depuis l’interface.
