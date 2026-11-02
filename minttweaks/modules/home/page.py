@@ -92,8 +92,10 @@ class HomePage(Page):
             (_("Firefox"), "firefox"),
             (_("Cinnamon profiles"), "cinnamon"),
             (_("After installation"), "setup"),
+            (_("Applications"), "applications"),
             (_("Native software"), "software"),
             (_("Shells and terminals"), "terminal"),
+            (_("Dotfiles"), "dotfiles"),
         ):
             buttons.insert(widgets.button(label, lambda name=page_name: self._open_page(name)), -1)
         body.pack_start(buttons, False, False, 0)

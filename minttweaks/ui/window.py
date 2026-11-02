@@ -10,7 +10,9 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, Gtk, Pango  # noqa: E402
 
 from .. import APP_NAME, __version__  # noqa: E402
+from ..modules.applications.page import ApplicationsPage  # noqa: E402
 from ..modules.cinnamon.page import CinnamonPage  # noqa: E402
+from ..modules.dotfiles.page import DotfilesPage  # noqa: E402
 from ..modules.firefox.page import FirefoxPage  # noqa: E402
 from ..modules.home.page import HomePage  # noqa: E402
 from ..modules.maintenance.page import MaintenancePage  # noqa: E402
@@ -23,7 +25,7 @@ from . import widgets  # noqa: E402
 from .widgets import AppContext, Page  # noqa: E402
 from ..i18n import _  # noqa: E402
 
-PAGE_CLASSES = (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage, CinnamonPage, SetupPage, SoftwarePage, TerminalPage)
+PAGE_CLASSES = (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage, CinnamonPage, SetupPage, ApplicationsPage, SoftwarePage, TerminalPage, DotfilesPage)
 
 LOG_TAG_COLOURS = {
     "info": "#555555",

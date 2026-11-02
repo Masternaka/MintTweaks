@@ -10,12 +10,13 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk  # noqa: E402
 
 from . import backend  # noqa: E402
+from .theme_controls import ThemeControls  # noqa: E402
 from ...i18n import _  # noqa: E402
 from ...ui import widgets  # noqa: E402
 from ...ui.widgets import Page  # noqa: E402
 
 
-class CinnamonPage(Page):
+class CinnamonPage(ThemeControls, Page):
     page_name = "cinnamon"
     page_title = _("Cinnamon profiles")
     page_icon = "preferences-desktop-theme-symbolic"
@@ -29,6 +30,7 @@ class CinnamonPage(Page):
         self._saving = False
         container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
         container.set_border_width(18)
+        self._build_themes(container)
         self._values = {}
         current, body = widgets.card(_("Current appearance"), _("Read-only values. Missing settings are never replaced with defaults."))
         for setting in backend.SETTINGS:
@@ -89,6 +91,7 @@ class CinnamonPage(Page):
         self._update_actions()
 
     def _update_actions(self):
+        self._update_theme_controls()
         allowed = bool(self.snapshot is not None and self.snapshot.complete and
                        not self._loading and not self._saving and not self.ctx.runner.dry_run)
         self.apply_button.set_sensitive(allowed and self.profile_combo.get_active_id() in self.profiles)

@@ -37,8 +37,8 @@ msgstr ""
 msgid "'{name}' is a reserved Samba section name."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:122
-#: minttweaks/modules/cinnamon/page.py:167
+#: minttweaks/modules/cinnamon/page.py:125
+#: minttweaks/modules/cinnamon/page.py:170
 msgid "(empty value)"
 msgstr ""
 
@@ -54,12 +54,17 @@ msgstr ""
 msgid "/var/cache/apt/archives - completed downloads, excluding partial/"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:67
+#: minttweaks/modules/cinnamon/page.py:69
 msgid "A backup is saved before every change, including restoration."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:196
+#: minttweaks/modules/cinnamon/page.py:199
 msgid "A backup will be saved before changing these values. The referenced themes and fonts must already be installed. If settings changed since this preview, the operation will be refused."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:94
+#: minttweaks/modules/dotfiles/deployments.py:69
+msgid "A configuration cannot create links inside its own repository."
 msgstr ""
 
 #: minttweaks/modules/terminal/backend.py:192
@@ -96,7 +101,18 @@ msgstr ""
 msgid "A setting changed during application: {setting}"
 msgstr ""
 
-#: minttweaks/ui/window.py:108
+#: minttweaks/modules/dotfiles/deployments.py:194
+#: minttweaks/modules/dotfiles/deployments.py:207
+#: minttweaks/modules/dotfiles/deployments.py:321
+#: … (+1)
+msgid "A target changed outside MintTweaks and was preserved: {path}"
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:168
+msgid "A unique GitHub font archive could not be identified."
+msgstr ""
+
+#: minttweaks/ui/window.py:110
 msgid "About"
 msgstr ""
 
@@ -110,6 +126,14 @@ msgstr ""
 
 #: minttweaks/modules/samba/page.py:233
 msgid "Accounts reflect the last administrator status read. Use the overview button to refresh them."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:192
+msgid "Activate this dotfiles configuration?"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:272
+msgid "Activation failed; the previous configuration was restored. Backup: {path}\n{error}"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:395
@@ -145,6 +169,7 @@ msgstr ""
 msgid "Adds playback and appearance controls to YouTube."
 msgstr ""
 
+#: minttweaks/modules/applications/page.py:40
 #: minttweaks/modules/software/page.py:32
 msgid "Administrator authorization is unavailable: package state can be read, but installation is disabled."
 msgstr ""
@@ -198,7 +223,7 @@ msgstr ""
 msgid "All of these need administrator rights."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:126
+#: minttweaks/modules/cinnamon/page.py:129
 msgid "All settings were read. Saving will capture them again."
 msgstr ""
 
@@ -206,7 +231,7 @@ msgstr ""
 msgid "All tools"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:158
+#: minttweaks/modules/home/page.py:160
 msgid "All {count} checks passed."
 msgstr ""
 
@@ -231,21 +256,29 @@ msgstr ""
 msgid "An operation is already running: {operation}. Wait for it to finish."
 msgstr ""
 
-#: minttweaks/ui/window.py:211
+#: minttweaks/ui/window.py:213
 msgid "An operation is still running."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:96
+msgid "Analyse again after changing the repository or target."
 msgstr ""
 
 #: minttweaks/modules/services/page.py:170
 msgid "Analyse boot"
 msgstr ""
 
+#: minttweaks/modules/dotfiles/page.py:48
+msgid "Analyse configurations"
+msgstr ""
+
 #: minttweaks/modules/home/page.py:71
-#: minttweaks/modules/home/page.py:104
+#: minttweaks/modules/home/page.py:106
 #: minttweaks/modules/maintenance/page.py:119
 msgid "Analysing the system, one moment…"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:161
+#: minttweaks/modules/home/page.py:163
 #: minttweaks/modules/maintenance/page.py:174
 msgid "Analysis finished."
 msgstr ""
@@ -258,11 +291,24 @@ msgstr ""
 msgid "Application failed; the values changed by this operation were restored."
 msgstr ""
 
+#: minttweaks/modules/applications/backend.py:168
+msgid "Application installation failed or could not be fully verified. Check the package state before retrying."
+msgstr ""
+
+#: minttweaks/modules/applications/page.py:148
+msgid "Application installation was not fully verified."
+msgstr ""
+
 #: minttweaks/modules/cinnamon/backend.py:43
 msgid "Application theme"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:206
+#: minttweaks/modules/applications/page.py:14
+#: minttweaks/modules/home/page.py:95
+msgid "Applications"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:209
 msgid "Apply Cinnamon profile"
 msgstr ""
 
@@ -282,14 +328,19 @@ msgstr ""
 msgid "Apply these shell integrations?"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:195
+#: minttweaks/modules/cinnamon/page.py:198
 msgid "Apply this appearance?"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:36
+msgid "Apply variant to the desktop"
 msgstr ""
 
 #: minttweaks/modules/terminal/page.py:210
 msgid "APT candidate: {version}"
 msgstr ""
 
+#: minttweaks/modules/applications/page.py:106
 #: minttweaks/modules/software/page.py:88
 msgid "APT package installed: {version}"
 msgstr ""
@@ -298,12 +349,18 @@ msgstr ""
 msgid "APT package not installed. Candidate from the expected source: {version}"
 msgstr ""
 
+#: minttweaks/modules/applications/page.py:110
+msgid "APT package used: {package}"
+msgstr ""
+
 #: minttweaks/modules/terminal/page.py:96
 msgid "APT package: {package}"
 msgstr ""
 
+#: minttweaks/modules/applications/backend.py:130
+#: minttweaks/modules/dotfiles/backend.py:208
 #: minttweaks/modules/software/backend.py:200
-#: minttweaks/modules/terminal/backend.py:130
+#: … (+1)
 msgid "APT proposed removals. Installation was refused."
 msgstr ""
 
@@ -327,15 +384,28 @@ msgstr ""
 msgid "Atuin records new command history locally and takes Ctrl+R after fzf. No account, sync or history import is configured."
 msgstr ""
 
+#: minttweaks/modules/dotfiles/page.py:106
+#: minttweaks/modules/dotfiles/page.py:107
+msgid "Available"
+msgstr ""
+
+#: minttweaks/modules/applications/page.py:108
+msgid "Available from official repositories: {version}"
+msgstr ""
+
 #: minttweaks/modules/terminal/controls.py:26
 msgid "Available to install"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:213
+#: minttweaks/modules/cinnamon/page.py:216
 msgid "Backup: {id}"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:146
+#: minttweaks/modules/dotfiles/page.py:207
+msgid "Backup: {path}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:149
 msgid "Backups could not be read: {error}"
 msgstr ""
 
@@ -394,6 +464,18 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+#: minttweaks/modules/cinnamon/theme_controls.py:15
+msgid "Catppuccin for Cinnamon"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:56
+msgid "Catppuccin repository cloned. Choose a variant to install."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:34
+msgid "Catppuccin variant"
+msgstr ""
+
 #: minttweaks/modules/terminal/page.py:300
 msgid "Change login shell"
 msgstr ""
@@ -414,6 +496,24 @@ msgstr ""
 msgid "Checks UFW, offers to enable it if needed, then allows Samba."
 msgstr ""
 
+#: minttweaks/modules/cinnamon/themes.py:26
+msgid "Choose a Catppuccin variant from the list."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:49
+#: minttweaks/modules/dotfiles/page.py:71
+msgid "Choose a directory"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:32
+#: minttweaks/modules/dotfiles/backend.py:16
+msgid "Choose a directory first."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:43
+msgid "Choose a new clone directory inside an existing parent folder."
+msgstr ""
+
 #: minttweaks/modules/terminal/transfer.py:89
 msgid "Choose a new export filename; existing files are preserved."
 msgstr ""
@@ -422,12 +522,20 @@ msgstr ""
 msgid "Choose an executable shell listed in /etc/shells."
 msgstr ""
 
+#: minttweaks/modules/dotfiles/backend.py:19
+msgid "Choose an existing directory, not a symbolic link."
+msgstr ""
+
 #: minttweaks/modules/terminal/controls.py:169
 msgid "Choose an existing managed alias to remove."
 msgstr ""
 
 #: minttweaks/modules/terminal/backend.py:247
 msgid "Choose an installed font from the list."
+msgstr ""
+
+#: minttweaks/modules/applications/page.py:25
+msgid "Choose applications from your personal list to install through Linux Mint's official repositories. Already installed applications are kept."
 msgstr ""
 
 #: minttweaks/modules/setup/backend.py:43
@@ -442,6 +550,18 @@ msgstr ""
 msgid "Choose optional steps"
 msgstr ""
 
+#: minttweaks/modules/cinnamon/theme_controls.py:24
+msgid "Choose the clone parent folder…"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:42
+msgid "Choose the link target…"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:38
+msgid "Choose the parent folder for cloning…"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:583
 msgid "Choose the Unix account to give a Samba password to."
 msgstr ""
@@ -454,7 +574,7 @@ msgstr ""
 msgid "Choose your appearance"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:20
+#: minttweaks/modules/cinnamon/page.py:21
 #: minttweaks/modules/home/page.py:93
 msgid "Cinnamon profiles"
 msgstr ""
@@ -471,11 +591,11 @@ msgstr ""
 msgid "Cleanup tasks"
 msgstr ""
 
-#: minttweaks/ui/window.py:160
+#: minttweaks/ui/window.py:162
 msgid "Clear"
 msgstr ""
 
-#: minttweaks/ui/window.py:107
+#: minttweaks/ui/window.py:109
 msgid "Clear output"
 msgstr ""
 
@@ -485,6 +605,34 @@ msgstr ""
 
 #: minttweaks/modules/maintenance/backend.py:251
 msgid "Clear the thumbnail cache"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:137
+msgid "Clone a repository or open an existing dotfiles directory to begin."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:26
+msgid "Clone Catppuccin repository"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:39
+msgid "Clone repository"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:96
+msgid "Clone the Catppuccin theme repository?"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:171
+msgid "Clone this repository?"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:31
+msgid "Clone your GitHub repository, then activate each configuration. Existing files are backed up before Stow; Undo Stow restores them."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:16
+msgid "Clone your theme repository, install a variant, then apply it to the desktop. Git is required for cloning."
 msgstr ""
 
 #: minttweaks/modules/terminal/controls.py:69
@@ -527,6 +675,10 @@ msgstr ""
 msgid "Configuration saved."
 msgstr ""
 
+#: minttweaks/modules/dotfiles/page.py:204
+msgid "Configurations to restore:"
+msgstr ""
+
 #: minttweaks/modules/software/page.py:122
 msgid "Configure an APT repository"
 msgstr ""
@@ -557,6 +709,10 @@ msgstr ""
 
 #: minttweaks/modules/firefox/backend.py:62
 msgid "Content blocker for ads, trackers and malware domains."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:43
+msgid "Convert dot- names to hidden files (--dotfiles)"
 msgstr ""
 
 #: minttweaks/modules/firefox/page.py:245
@@ -594,7 +750,7 @@ msgstr ""
 msgid "Critical chain:"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:33
+#: minttweaks/modules/cinnamon/page.py:35
 msgid "Current appearance"
 msgstr ""
 
@@ -664,6 +820,11 @@ msgstr ""
 #: minttweaks/modules/firefox/page.py:63
 #: minttweaks/modules/firefox/page.py:107
 msgid "Detecting Firefox profiles…"
+msgstr ""
+
+#: minttweaks/modules/applications/catalog.py:47
+#: minttweaks/modules/applications/catalog.py:48
+msgid "Development"
 msgstr ""
 
 #: minttweaks/modules/terminal/catalog.py:22
@@ -742,8 +903,31 @@ msgstr ""
 msgid "Done."
 msgstr ""
 
+#: minttweaks/modules/dotfiles/page.py:18
+#: minttweaks/modules/dotfiles/page.py:30
+#: minttweaks/modules/dotfiles/page.py:115
+#: … (+1)
+msgid "Dotfiles"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:271
+msgid "Dotfiles recovery is incomplete. Backup: {path}\n{error}"
+msgstr ""
+
+#: minttweaks/modules/applications/page.py:173
+msgid "Download and install this GitHub font?"
+msgstr ""
+
 #: minttweaks/modules/terminal/catalog.py:44
 msgid "Download files from the command line."
+msgstr ""
+
+#: minttweaks/modules/applications/page.py:171
+msgid "Download size: {size:.1f} MiB"
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:248
+msgid "Downloading font file {current}/{total}."
 msgstr ""
 
 #: minttweaks/modules/firefox/backend.py:132
@@ -809,6 +993,18 @@ msgstr ""
 
 #: minttweaks/modules/terminal/page.py:98
 msgid "Example: {command}"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:152
+msgid "Existing configuration: {count} path(s) to review for backup."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:178
+msgid "Existing files or unsafe directories: {paths}"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:47
+msgid "Expected layout: bash/.bashrc or kitty/.config/kitty/kitty.conf. If packages are in a stow/ subdirectory, open that directory. Repository scripts are never executed."
 msgstr ""
 
 #: minttweaks/modules/terminal/catalog.py:36
@@ -883,6 +1079,10 @@ msgstr ""
 msgid "Files and disk space"
 msgstr ""
 
+#: minttweaks/modules/dotfiles/page.py:190
+msgid "Files to back up before activation:"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:511
 msgid "Fill in a name and pick an existing folder, then save."
 msgstr ""
@@ -919,8 +1119,23 @@ msgstr ""
 msgid "Follow"
 msgstr ""
 
+#: minttweaks/modules/applications/page.py:102
+msgid "Font installed for your user account from GitHub: {version}"
+msgstr ""
+
 #: minttweaks/modules/terminal/page.py:165
 msgid "Font size"
+msgstr ""
+
+#: minttweaks/modules/applications/catalog.py:49
+#: minttweaks/modules/applications/catalog.py:50
+#: minttweaks/modules/applications/catalog.py:51
+#: … (+3)
+msgid "Fonts"
+msgstr ""
+
+#: minttweaks/modules/applications/page.py:26
+msgid "Fonts use APT first. A separate GitHub download is offered only when their official package is missing."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:165
@@ -931,8 +1146,32 @@ msgstr ""
 msgid "Generates dark themes for every website."
 msgstr ""
 
+#: minttweaks/modules/applications/page.py:54
+msgid "Get this font from GitHub…"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:223
+msgid "Git and Stow are available."
+msgstr ""
+
 #: minttweaks/modules/terminal/controls.py:72
 msgid "Git information"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:105
+msgid "Git: {git} · Stow: {stow}"
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:68
+msgid "GitHub font metadata exceeds the size limit."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:286
+msgid "GitHub fonts installed for your user account: {path}"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:35
+msgid "GitHub repository URL"
 msgstr ""
 
 #: minttweaks/modules/terminal/catalog.py:60
@@ -951,7 +1190,7 @@ msgstr ""
 msgid "Helium's official stable APT repository."
 msgstr ""
 
-#: minttweaks/ui/window.py:159
+#: minttweaks/ui/window.py:161
 msgid "Hide"
 msgstr ""
 
@@ -988,7 +1227,7 @@ msgstr ""
 msgid "Import these personal settings?"
 msgstr ""
 
-#: minttweaks/ui/window.py:202
+#: minttweaks/ui/window.py:204
 msgid "In progress: {operation}"
 msgstr ""
 
@@ -1001,8 +1240,33 @@ msgstr ""
 msgid "Inspect and manage running processes interactively."
 msgstr ""
 
+#: minttweaks/modules/applications/page.py:139
+msgid "Install applications"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:113
+#: minttweaks/modules/cinnamon/theme_controls.py:73
+msgid "Install Catppuccin theme"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:34
+msgid "Install Git and Stow"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:179
+msgid "Install Git and Stow?"
+msgstr ""
+
+#: minttweaks/modules/applications/page.py:182
+msgid "Install GitHub fonts"
+msgstr ""
+
 #: minttweaks/modules/terminal/controls.py:228
 msgid "Install imported terminal tools"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:105
+msgid "Install into: {path}"
 msgstr ""
 
 #: minttweaks/modules/terminal/controls.py:224
@@ -1054,6 +1318,10 @@ msgstr ""
 msgid "Install the target shell before configuring its integrations."
 msgstr ""
 
+#: minttweaks/modules/applications/page.py:133
+msgid "Install these applications?"
+msgstr ""
+
 #: minttweaks/modules/firefox/page.py:212
 msgid "Install these Firefox extensions?"
 msgstr ""
@@ -1064,6 +1332,14 @@ msgstr ""
 
 #: minttweaks/modules/terminal/page.py:247
 msgid "Install these terminal tools?"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:177
+msgid "Install this Catppuccin variant before applying it."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:108
+msgid "Install this Catppuccin variant?"
 msgstr ""
 
 #: minttweaks/modules/terminal/transfer.py:100
@@ -1127,6 +1403,39 @@ msgstr ""
 msgid "Interface font"
 msgstr ""
 
+#: minttweaks/modules/applications/backend.py:40
+msgid "Invalid application package request."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:91
+#: minttweaks/modules/dotfiles/deployments.py:65
+msgid "Invalid dot- filename in this configuration."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:119
+#: minttweaks/modules/dotfiles/deployments.py:126
+#: minttweaks/modules/dotfiles/deployments.py:310
+#: … (+2)
+msgid "Invalid dotfiles backup."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:28
+msgid "Invalid dotfiles target path."
+msgstr ""
+
+#: minttweaks/modules/applications/backend.py:25
+msgid "Invalid or duplicate application catalog entry."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:103
+msgid "Invalid path in the downloaded font files."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:75
+#: minttweaks/modules/dotfiles/deployments.py:290
+msgid "Invalid Stow package name."
+msgstr ""
+
 #: minttweaks/modules/services/page.py:144
 msgid "Journal"
 msgstr ""
@@ -1183,6 +1492,14 @@ msgstr ""
 msgid "Light"
 msgstr ""
 
+#: minttweaks/modules/dotfiles/page.py:41
+msgid "Link target directory"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:202
+msgid "Links to remove:"
+msgstr ""
+
 #: minttweaks/modules/terminal/catalog.py:34
 msgid "List files with colors, tree views and Git information."
 msgstr ""
@@ -1219,6 +1536,14 @@ msgstr ""
 msgid "Loading the saved checklist…"
 msgstr ""
 
+#: minttweaks/modules/dotfiles/page.py:37
+msgid "Local dotfiles directory"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:19
+msgid "Local theme repository"
+msgstr ""
+
 #: minttweaks/modules/terminal/page.py:118
 msgid "Login shell"
 msgstr ""
@@ -1235,12 +1560,16 @@ msgstr ""
 msgid "Maintenance"
 msgstr ""
 
-#: minttweaks/ui/window.py:66
+#: minttweaks/ui/window.py:68
 msgid "Maintenance, services, Samba and Firefox for Linux Mint"
 msgstr ""
 
-#: minttweaks/ui/window.py:285
+#: minttweaks/ui/window.py:287
 msgid "Maintenance, services, Samba and Firefox management for Linux Mint.\nInspired by the ArchLinux Tweak Tool."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:154
+msgid "Managed by MintTweaks. Its backup is kept for undo."
 msgstr ""
 
 #: minttweaks/modules/terminal/status.py:83
@@ -1259,7 +1588,7 @@ msgstr ""
 msgid "Memory"
 msgstr ""
 
-#: minttweaks/ui/window.py:97
+#: minttweaks/ui/window.py:99
 msgid "Menu"
 msgstr ""
 
@@ -1269,6 +1598,11 @@ msgstr ""
 
 #: minttweaks/modules/samba/page.py:820
 msgid "MintTweaks keeps its backups in {folder}."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:106
+#: minttweaks/modules/dotfiles/page.py:107
+msgid "Missing"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:365
@@ -1288,11 +1622,21 @@ msgstr ""
 msgid "Mouse support"
 msgstr ""
 
+#: minttweaks/modules/applications/catalog.py:39
+#: minttweaks/modules/applications/catalog.py:40
+#: minttweaks/modules/applications/catalog.py:41
+msgid "Multimedia"
+msgstr ""
+
+#: minttweaks/modules/applications/page.py:24
+msgid "My applications"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:197
 msgid "Name"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:95
+#: minttweaks/modules/home/page.py:96
 #: minttweaks/modules/software/page.py:18
 msgid "Native software"
 msgstr ""
@@ -1319,8 +1663,8 @@ msgstr ""
 msgid "No backup found"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:148
-#: minttweaks/modules/home/page.py:168
+#: minttweaks/modules/home/page.py:150
+#: minttweaks/modules/home/page.py:170
 msgid "No check was run."
 msgstr ""
 
@@ -1335,6 +1679,10 @@ msgstr ""
 msgid "No configuration loaded"
 msgstr ""
 
+#: minttweaks/modules/dotfiles/deployments.py:303
+msgid "No dotfiles links were found to undo."
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:786
 msgid "No duplicate parameter"
 msgstr ""
@@ -1343,12 +1691,25 @@ msgstr ""
 msgid "No error was logged since the last boot."
 msgstr ""
 
+#: minttweaks/modules/dotfiles/page.py:191
+msgid "No existing files need a backup."
+msgstr ""
+
 #: minttweaks/modules/firefox/page.py:120
 msgid "No Firefox profile was found. Start Firefox once so MintTweaks can detect installed extensions."
 msgstr ""
 
+#: minttweaks/modules/applications/fonts.py:95
+msgid "No GitHub font source is configured for this package."
+msgstr ""
+
 #: minttweaks/modules/home/backend.py:230
 msgid "No half-configured package was found."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:149
+#: minttweaks/modules/applications/fonts.py:275
+msgid "No installable fonts were found in the GitHub source."
 msgstr ""
 
 #: minttweaks/modules/home/backend.py:364
@@ -1371,6 +1732,14 @@ msgstr ""
 msgid "No login shell backup is available."
 msgstr ""
 
+#: minttweaks/modules/dotfiles/deployments.py:229
+msgid "No new dotfiles links are needed."
+msgstr ""
+
+#: minttweaks/modules/applications/page.py:104
+msgid "No official APT candidate. This font can be retrieved from its upstream GitHub source."
+msgstr ""
+
 #: minttweaks/modules/home/backend.py:375
 msgid "No old kernel is waiting for removal."
 msgstr ""
@@ -1391,6 +1760,10 @@ msgstr ""
 msgid "No service has failed."
 msgstr ""
 
+#: minttweaks/modules/applications/fonts.py:165
+msgid "No stable GitHub font release is available."
+msgstr ""
+
 #: minttweaks/modules/terminal/page.py:76
 msgid "No tools selected."
 msgstr ""
@@ -1407,10 +1780,10 @@ msgstr ""
 msgid "No Unix account named '{user}'. Create the system account first."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:35
-#: minttweaks/modules/maintenance/page.py:78
-#: minttweaks/modules/software/page.py:43
-#: … (+4)
+#: minttweaks/modules/applications/page.py:50
+#: minttweaks/modules/cinnamon/page.py:37
+#: minttweaks/modules/dotfiles/page.py:49
+#: … (+6)
 msgid "Not analysed yet."
 msgstr ""
 
@@ -1432,6 +1805,15 @@ msgstr ""
 msgid "Nothing to remove: every installed package is still needed."
 msgstr ""
 
+#: minttweaks/modules/applications/backend.py:44
+#: minttweaks/modules/applications/backend.py:52
+msgid "Official repository information could not be verified."
+msgstr ""
+
+#: minttweaks/modules/applications/backend.py:50
+msgid "Official source unavailable: {error}"
+msgstr ""
+
 #: minttweaks/modules/home/backend.py:375
 #: minttweaks/modules/home/backend.py:364
 #: minttweaks/modules/home/backend.py:370
@@ -1447,11 +1829,19 @@ msgstr ""
 msgid "Only managed choices and alias commands are exported, without startup scripts or command history. Review personal paths and sensitive values before sharing."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:41
+#: minttweaks/modules/dotfiles/deployments.py:44
+msgid "Only regular files and individual links can be backed up: {path}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:43
 msgid "Only setting values are saved. Theme, icon and font files are not copied."
 msgstr ""
 
-#: minttweaks/modules/home/page.py:191
+#: minttweaks/modules/dotfiles/page.py:209
+msgid "Only this configuration's links are removed. Saved files are restored, backups and repository files are kept. External changes block restoration."
+msgstr ""
+
+#: minttweaks/modules/home/page.py:193
 #: minttweaks/modules/terminal/controls.py:185
 msgid "Open"
 msgstr ""
@@ -1462,6 +1852,14 @@ msgstr ""
 
 #: minttweaks/modules/terminal/configuration.py:231
 msgid "Open a new terminal. Use mtk-eza and mtk-tmux for their managed options; mtk-tmux uses a separate server."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:40
+msgid "Open an existing dotfiles directory…"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:25
+msgid "Open an existing theme repository…"
 msgstr ""
 
 #: minttweaks/modules/setup/page.py:71
@@ -1488,8 +1886,8 @@ msgstr ""
 msgid "Orphaned packages"
 msgstr ""
 
-#: minttweaks/ui/window.py:158
-#: minttweaks/ui/window.py:183
+#: minttweaks/ui/window.py:160
+#: minttweaks/ui/window.py:185
 msgid "Output"
 msgstr ""
 
@@ -1585,11 +1983,11 @@ msgstr ""
 msgid "Preview alias save"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:60
+#: minttweaks/modules/cinnamon/page.py:62
 msgid "Preview and apply profile"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:73
+#: minttweaks/modules/cinnamon/page.py:75
 msgid "Preview and restore backup"
 msgstr ""
 
@@ -1613,6 +2011,10 @@ msgstr ""
 msgid "Preview managed prompt removal"
 msgstr ""
 
+#: minttweaks/modules/applications/page.py:35
+msgid "Preview selected applications"
+msgstr ""
+
 #: minttweaks/modules/software/page.py:54
 msgid "Preview selected installations"
 msgstr ""
@@ -1633,6 +2035,10 @@ msgstr ""
 msgid "Preview terminal profile"
 msgstr ""
 
+#: minttweaks/modules/cinnamon/theme_controls.py:35
+msgid "Preview theme installation"
+msgstr ""
+
 #: minttweaks/modules/terminal/page.py:75
 msgid "Preview tool installation"
 msgstr ""
@@ -1641,15 +2047,24 @@ msgstr ""
 msgid "Previews links in a popup without leaving the page."
 msgstr ""
 
+#: minttweaks/modules/cinnamon/theme_controls.py:107
+#: minttweaks/modules/cinnamon/themes.py:169
+msgid "Previous theme backup: {path}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:165
+msgid "Previous theme: {path}"
+msgstr ""
+
 #: minttweaks/core/privilege.py:78
 msgid "Privilege escalation is unavailable: 'pkexec' (polkit) is not installed. Install the 'policykit-1' package to enable administrative actions."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:43
+#: minttweaks/modules/cinnamon/page.py:45
 msgid "Profile name"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:239
+#: minttweaks/modules/cinnamon/page.py:242
 msgid "Profile saved: {name}"
 msgstr ""
 
@@ -1657,7 +2072,7 @@ msgstr ""
 msgid "Profiles are not saved in simulation mode."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:130
+#: minttweaks/modules/cinnamon/page.py:133
 msgid "Profiles could not be read. Previous results have not been updated.\n{error}"
 msgstr ""
 
@@ -1690,10 +2105,10 @@ msgstr ""
 msgid "Purge these kernels?"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:38
+#: minttweaks/modules/applications/page.py:37
+#: minttweaks/modules/cinnamon/page.py:40
 #: minttweaks/modules/firefox/page.py:72
-#: minttweaks/modules/home/page.py:77
-#: … (+3)
+#: … (+4)
 msgid "Re-analyse"
 msgstr ""
 
@@ -1701,7 +2116,7 @@ msgstr ""
 msgid "Read administrator status"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:50
+#: minttweaks/modules/cinnamon/page.py:52
 msgid "Read all settings before saving a profile."
 msgstr ""
 
@@ -1733,7 +2148,7 @@ msgstr ""
 msgid "Read-only snapshot of this machine."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:33
+#: minttweaks/modules/cinnamon/page.py:35
 msgid "Read-only values. Missing settings are never replaced with defaults."
 msgstr ""
 
@@ -1741,7 +2156,7 @@ msgstr ""
 msgid "Readable, highlighted diffs. Managed integration can make it the Git pager in your shell."
 msgstr ""
 
-#: minttweaks/ui/window.py:175
+#: minttweaks/ui/window.py:177
 msgid "Ready."
 msgstr ""
 
@@ -1753,7 +2168,7 @@ msgstr ""
 msgid "Record your result"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:246
+#: minttweaks/modules/cinnamon/page.py:249
 msgid "Refresh before saving another profile."
 msgstr ""
 
@@ -1761,7 +2176,7 @@ msgstr ""
 msgid "Refresh the page and try again."
 msgstr ""
 
-#: minttweaks/ui/window.py:105
+#: minttweaks/ui/window.py:107
 msgid "Refresh this page"
 msgstr ""
 
@@ -1844,6 +2259,10 @@ msgstr ""
 msgid "Removing the MintTweaks Firefox policy…"
 msgstr ""
 
+#: minttweaks/modules/dotfiles/backend.py:43
+msgid "Repository cloned. You can now analyse its configurations."
+msgstr ""
+
 #: minttweaks/modules/software/backend.py:167
 msgid "Repository setup failed."
 msgstr ""
@@ -1871,6 +2290,10 @@ msgstr ""
 msgid "Restart required"
 msgstr ""
 
+#: minttweaks/modules/dotfiles/deployments.py:219
+msgid "Restoration could not be verified: {path}"
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:823
 msgid "Restore a backup"
 msgstr ""
@@ -1879,11 +2302,11 @@ msgstr ""
 msgid "Restore a backup…"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:206
+#: minttweaks/modules/cinnamon/page.py:209
 msgid "Restore Cinnamon appearance"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:67
+#: minttweaks/modules/cinnamon/page.py:69
 msgid "Restore previous appearance"
 msgstr ""
 
@@ -1891,7 +2314,7 @@ msgstr ""
 msgid "Restore the previous login shell"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:195
+#: minttweaks/modules/cinnamon/page.py:198
 msgid "Restore this appearance?"
 msgstr ""
 
@@ -1911,12 +2334,24 @@ msgstr ""
 msgid "Review all file differences. A private backup is saved before writing."
 msgstr ""
 
+#: minttweaks/modules/applications/page.py:134
+msgid "Review all packages, dependencies and official sources. Removals are refused. The plan is checked again before installation; repositories are not changed."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:180
+msgid "Review the APT plan. Administrator authorization is required."
+msgstr ""
+
 #: minttweaks/modules/software/page.py:138
 msgid "Review the complete APT simulation, including dependencies and upgrades. Removals are refused. The plan will be checked again before installation; repository configuration is not changed."
 msgstr ""
 
 #: minttweaks/modules/terminal/page.py:321
 msgid "Review the full file differences. A private backup is saved before writing; close and reopen your terminal after the change."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:193
+msgid "Review the links and backups. A dated private backup is verified before replacing existing files with links. Undo Stow restores that backup."
 msgstr ""
 
 #: minttweaks/modules/setup/page.py:56
@@ -2009,15 +2444,15 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:41
+#: minttweaks/modules/cinnamon/page.py:43
 msgid "Save a profile"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:233
+#: minttweaks/modules/cinnamon/page.py:236
 msgid "Save Cinnamon profile"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:47
+#: minttweaks/modules/cinnamon/page.py:49
 msgid "Save current appearance"
 msgstr ""
 
@@ -2037,7 +2472,7 @@ msgstr ""
 msgid "Save share"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:54
+#: minttweaks/modules/cinnamon/page.py:56
 msgid "Saved profiles"
 msgstr ""
 
@@ -2047,6 +2482,10 @@ msgstr ""
 
 #: minttweaks/modules/firefox/backend.py:97
 msgid "Saves web pages to an Obsidian vault."
+msgstr ""
+
+#: minttweaks/modules/applications/page.py:28
+msgid "Search by name, category or package"
 msgstr ""
 
 #: minttweaks/modules/terminal/controls.py:22
@@ -2064,6 +2503,10 @@ msgstr ""
 
 #: minttweaks/modules/firefox/page.py:69
 msgid "Select all missing extensions"
+msgstr ""
+
+#: minttweaks/modules/applications/backend.py:34
+msgid "Select applications from your catalog only."
 msgstr ""
 
 #: minttweaks/modules/terminal/page.py:73
@@ -2100,6 +2543,14 @@ msgstr ""
 
 #: minttweaks/modules/setup/backend.py:45
 msgid "Set up sharing, if needed"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:140
+msgid "Several active dotfiles backups require manual review."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:76
+msgid "Several source files map to the same target."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:559
@@ -2139,7 +2590,7 @@ msgstr ""
 msgid "Shells and terminal applications"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:96
+#: minttweaks/modules/home/page.py:97
 #: minttweaks/modules/terminal/page.py:21
 msgid "Shells and terminals"
 msgstr ""
@@ -2152,7 +2603,7 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: minttweaks/ui/window.py:106
+#: minttweaks/ui/window.py:108
 msgid "Show / hide output"
 msgstr ""
 
@@ -2185,13 +2636,41 @@ msgstr ""
 msgid "Simulation: no appearance settings or backups were written."
 msgstr ""
 
-#: minttweaks/ui/window.py:64
+#: minttweaks/modules/applications/backend.py:153
+msgid "Simulation: no applications were installed."
+msgstr ""
+
+#: minttweaks/ui/window.py:66
 msgid "Simulation: no commands or cleanup actions will be executed."
 msgstr ""
 
 #: minttweaks/modules/terminal/controls.py:213
 #: minttweaks/modules/terminal/page.py:332
 msgid "Simulation: no configuration files changed."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:224
+msgid "Simulation: no dotfiles links or backups were created."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:185
+msgid "Simulation: no dotfiles links were created."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:339
+msgid "Simulation: no dotfiles links were removed or backups restored."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:214
+msgid "Simulation: no dotfiles tools were installed."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:237
+msgid "Simulation: no GitHub fonts were downloaded or installed."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:39
+msgid "Simulation: no repository was cloned."
 msgstr ""
 
 #: minttweaks/modules/software/backend.py:218
@@ -2202,8 +2681,16 @@ msgstr ""
 msgid "Simulation: no terminal tools were installed."
 msgstr ""
 
+#: minttweaks/modules/cinnamon/themes.py:127
+msgid "Simulation: no theme files or backups were written."
+msgstr ""
+
 #: minttweaks/modules/terminal/backend.py:299
 msgid "Simulation: the login shell was not changed."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:52
+msgid "Simulation: the theme repository was not cloned."
 msgstr ""
 
 #: minttweaks/modules/maintenance/page.py:50
@@ -2222,12 +2709,16 @@ msgstr ""
 msgid "Software availability is not checked in simulation mode."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:155
+#: minttweaks/modules/cinnamon/page.py:158
 msgid "Some backups could not be read and were preserved:\n{errors}"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:138
+#: minttweaks/modules/cinnamon/page.py:141
 msgid "Some profile files could not be read and were preserved:\n{errors}"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:66
+msgid "Source symbolic links and special files are not supported: {path}"
 msgstr ""
 
 #: minttweaks/modules/terminal/backend.py:216
@@ -2258,8 +2749,40 @@ msgstr ""
 msgid "Stop"
 msgstr ""
 
+#: minttweaks/modules/dotfiles/page.py:155
+msgid "Stow"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:273
+msgid "Stow activated. Backup and undo record: {path}"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:192
+msgid "Stow finished. Existing files were not adopted or overwritten."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:87
+msgid "Stow proposed an unexpected link: {path}"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:90
+msgid "Stow proposed an unexpected removal."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:149
+msgid "Stow reads {path} automatically. Move this options file aside before using MintTweaks."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:347
+msgid "Stow undone. Previous configurations were restored; backups were kept."
+msgstr ""
+
 #: minttweaks/modules/terminal/catalog.py:53
 msgid "Suggest Zsh commands from history. Managed activation is available for Zsh."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:200
+msgid "Symbolic links are not accepted in font archives."
 msgstr ""
 
 #: minttweaks/modules/home/page.py:51
@@ -2284,12 +2807,23 @@ msgstr ""
 msgid "Target shell"
 msgstr ""
 
+#: minttweaks/modules/applications/catalog.py:46
+msgid "Terminal"
+msgstr ""
+
 #: minttweaks/modules/terminal/page.py:148
 msgid "Terminal appearance"
 msgstr ""
 
 #: minttweaks/modules/terminal/catalog.py:59
 msgid "Terminal application with tabs, layouts and GPU rendering."
+msgstr ""
+
+#: minttweaks/modules/applications/catalog.py:33
+#: minttweaks/modules/applications/catalog.py:34
+#: minttweaks/modules/applications/catalog.py:35
+#: … (+3)
+msgid "Terminal utilities"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:772
@@ -2312,7 +2846,7 @@ msgstr ""
 msgid "The Alacritty configuration format could not be identified."
 msgstr ""
 
-#: minttweaks/modules/home/page.py:108
+#: minttweaks/modules/home/page.py:110
 msgid "The analysis failed. Previous results, if any, have not been updated."
 msgstr ""
 
@@ -2320,8 +2854,20 @@ msgstr ""
 msgid "The appearance changed or could not be checked. Review a new preview before applying."
 msgstr ""
 
+#: minttweaks/modules/applications/page.py:155
+msgid "The application operation failed."
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:848
 msgid "The backup could not be restored"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:236
+msgid "The backup directory overlaps the configuration."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:83
+msgid "The Catppuccin theme operation failed."
 msgstr ""
 
 #: minttweaks/modules/setup/backend.py:148
@@ -2332,14 +2878,24 @@ msgstr ""
 msgid "The checklist file is a symbolic link and was left unchanged."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:248
-#: minttweaks/modules/cinnamon/page.py:218
+#: minttweaks/modules/cinnamon/page.py:251
+#: minttweaks/modules/cinnamon/page.py:221
 msgid "The Cinnamon profile operation failed."
 msgstr ""
 
+#: minttweaks/modules/dotfiles/backend.py:29
+msgid "The clone destination must be a new directory."
+msgstr ""
+
+#: minttweaks/modules/applications/backend.py:141
+#: minttweaks/modules/applications/backend.py:137
 #: minttweaks/modules/software/backend.py:203
-#: minttweaks/modules/terminal/backend.py:133
+#: … (+1)
 msgid "The complete installation plan could not be read."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:48
+msgid "The configuration file is too large to back up: {path}"
 msgstr ""
 
 #: minttweaks/modules/terminal/page.py:333
@@ -2351,8 +2907,36 @@ msgstr ""
 msgid "The configuration was not saved"
 msgstr ""
 
+#: minttweaks/modules/dotfiles/deployments.py:262
+msgid "The created dotfiles links could not be verified."
+msgstr ""
+
 #: minttweaks/modules/cinnamon/backend.py:267
+#: minttweaks/modules/cinnamon/themes.py:180
 msgid "The current appearance could not all be read. Nothing was changed."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:245
+msgid "The dotfiles backup could not be verified."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:113
+#: minttweaks/modules/dotfiles/deployments.py:123
+#: minttweaks/modules/dotfiles/deployments.py:184
+msgid "The dotfiles backup is too large."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:125
+msgid "The dotfiles operation failed."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:260
+msgid "The downloaded font checksum does not match."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:214
+#: minttweaks/modules/applications/fonts.py:268
+msgid "The downloaded font file is invalid."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:441
@@ -2395,17 +2979,68 @@ msgstr ""
 msgid "The folder path must not contain control characters."
 msgstr ""
 
+#: minttweaks/modules/applications/page.py:165
+#: minttweaks/modules/applications/page.py:180
+msgid "The font availability changed. Re-analyse before continuing."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:81
+msgid "The font download exceeds the size limit."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:252
+msgid "The font download size does not match the preview."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:50
+msgid "The font download URL is not an approved GitHub URL."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:283
+msgid "The font files were installed, but the Fontconfig cache could not be refreshed: {error}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:109
+msgid "The generated files are copied without running repository scripts. An existing theme is preserved in a dated backup. Desktop settings are changed separately."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:176
+msgid "The GitHub font digest is invalid."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:134
+msgid "The GitHub font file list is incomplete."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:131
+msgid "The GitHub font revision could not be verified."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:239
+msgid "The GitHub font source changed. Review a new preview."
+msgstr ""
+
 #: minttweaks/modules/terminal/transfer.py:186
 msgid "The imported configuration plan changed. Review a new preview."
 msgstr ""
 
+#: minttweaks/modules/applications/backend.py:156
+#: minttweaks/modules/dotfiles/backend.py:217
 #: minttweaks/modules/software/backend.py:221
-#: minttweaks/modules/terminal/backend.py:142
+#: … (+1)
 msgid "The installation plan changed. Review a new preview before continuing."
 msgstr ""
 
 #: minttweaks/modules/terminal/integrations.py:103
 msgid "The installed fzf version could not be identified."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:285
+msgid "The installed GitHub font files could not be verified."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:159
+msgid "The installed theme could not be verified."
 msgstr ""
 
 #: minttweaks/modules/terminal/backend.py:149
@@ -2456,6 +3091,11 @@ msgstr ""
 msgid "The managed block differs from the expected integration. Review it before updating."
 msgstr ""
 
+#: minttweaks/modules/applications/fonts.py:156
+#: minttweaks/modules/applications/fonts.py:279
+msgid "The managed font directory already exists. Its files were preserved."
+msgstr ""
+
 #: minttweaks/modules/terminal/backend.py:201
 msgid "The managed prompt block is malformed. The file was preserved."
 msgstr ""
@@ -2467,6 +3107,10 @@ msgstr ""
 
 #: minttweaks/modules/firefox/page.py:255
 msgid "The MintTweaks Firefox policy entries were removed."
+msgstr ""
+
+#: minttweaks/modules/applications/page.py:174
+msgid "The official APT package is unavailable. Download font files from the listed upstream repositories into your user account. No repository scripts are executed and existing fonts are preserved."
 msgstr ""
 
 #: minttweaks/modules/maintenance/page.py:299
@@ -2491,6 +3135,10 @@ msgstr ""
 msgid "The personal configuration changed. Review a new preview."
 msgstr ""
 
+#: minttweaks/modules/cinnamon/themes.py:156
+msgid "The previous theme backup could not be verified."
+msgstr ""
+
 #: minttweaks/modules/cinnamon/backend.py:327
 msgid "The previous value could not be verified after recovery."
 msgstr ""
@@ -2499,7 +3147,7 @@ msgstr ""
 msgid "The previous value will be saved. Administrator authorization is required. Start a new login session afterwards."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:227
+#: minttweaks/modules/cinnamon/page.py:230
 msgid "The profile could not be saved."
 msgstr ""
 
@@ -2512,10 +3160,15 @@ msgstr ""
 msgid "The removal preview could not be read. Re-analyse before removing packages."
 msgstr ""
 
+#: minttweaks/modules/cinnamon/themes.py:113
+msgid "The repository does not contain a complete generated Cinnamon theme."
+msgstr ""
+
 #: minttweaks/modules/software/backend.py:164
 msgid "The repository setup helper is missing. Reinstall MintTweaks."
 msgstr ""
 
+#: minttweaks/modules/applications/backend.py:163
 #: minttweaks/modules/software/backend.py:228
 msgid "The requested package version was not verified after installation."
 msgstr ""
@@ -2561,12 +3214,29 @@ msgstr ""
 msgid "The saved checklist could not be read and was preserved: {error}"
 msgstr ""
 
+#: minttweaks/modules/applications/backend.py:167
+msgid "The selected applications were installed and their versions verified."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:78
+msgid "The selected configuration is no longer available."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:207
+msgid "The selected font collection is too large or contains duplicate paths."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:180
+#: minttweaks/modules/applications/fonts.py:192
+msgid "The selected font collection is too large."
+msgstr ""
+
 #: minttweaks/modules/software/backend.py:232
 msgid "The selected packages were installed and their versions verified."
 msgstr ""
 
 #: minttweaks/modules/cinnamon/backend.py:294
-#: minttweaks/modules/cinnamon/page.py:190
+#: minttweaks/modules/cinnamon/page.py:193
 msgid "The selected profile already matches the current appearance."
 msgstr ""
 
@@ -2579,7 +3249,7 @@ msgid "The setting did not keep the requested value: {setting}"
 msgstr ""
 
 #: minttweaks/modules/cinnamon/backend.py:198
-#: minttweaks/modules/cinnamon/page.py:127
+#: minttweaks/modules/cinnamon/page.py:130
 msgid "The settings could not all be read. Refresh before saving a profile."
 msgstr ""
 
@@ -2603,16 +3273,70 @@ msgstr ""
 msgid "The software operation failed."
 msgstr ""
 
+#: minttweaks/modules/cinnamon/themes.py:143
+msgid "The staged theme copy could not be verified."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:188
+#: minttweaks/modules/dotfiles/deployments.py:227
+#: minttweaks/modules/dotfiles/deployments.py:257
+#: … (+1)
+msgid "The Stow plan changed. Review a new preview before continuing."
+msgstr ""
+
 #: minttweaks/modules/home/backend.py:354
 msgid "The system must restart to finish applying updates."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:103
+msgid "The target escapes the selected directory."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:118
+#: minttweaks/modules/dotfiles/backend.py:171
+#: minttweaks/modules/dotfiles/deployments.py:156
+msgid "The target must be outside the dotfiles directory."
 msgstr ""
 
 #: minttweaks/modules/terminal/backend.py:150
 msgid "The terminal tools were installed and verified."
 msgstr ""
 
+#: minttweaks/modules/cinnamon/themes.py:136
+msgid "The theme backup destination already exists."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:88
+msgid "The theme contains too many files."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:62
+msgid "The theme directory is missing: {path}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:76
+msgid "The theme exceeds the supported size limit."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:132
+#: minttweaks/modules/cinnamon/themes.py:148
+msgid "The theme files changed. Review a new installation preview."
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:36
+msgid "The theme path must contain ordinary directories only: {path}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:116
+msgid "The theme source and installation directory overlap."
+msgstr ""
+
 #: minttweaks/modules/terminal/backend.py:145
 msgid "The tool installation failed. Check APT before retrying."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:342
+msgid "The undo plan changed. Review a new preview before continuing."
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:618
@@ -2627,6 +3351,22 @@ msgstr ""
 msgid "Theme"
 msgstr ""
 
+#: minttweaks/modules/cinnamon/themes.py:167
+msgid "Theme installed: {path}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:104
+msgid "Theme source: {path}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/themes.py:86
+msgid "Theme symbolic links and special files are not supported: {path}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/theme_controls.py:40
+msgid "Themes are copied into ~/.themes. Existing versions are backed up. Applying changes only the Cinnamon desktop theme; application themes, icons and fonts are preserved."
+msgstr ""
+
 #: minttweaks/modules/samba/page.py:577
 msgid "This account has no Unix user behind it."
 msgstr ""
@@ -2637,6 +3377,23 @@ msgstr ""
 
 #: minttweaks/modules/services/page.py:248
 msgid "This changes the running system immediately."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:60
+msgid "This configuration contains an unsupported filename."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:69
+msgid "This configuration contains too many files."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:159
+msgid "This configuration is already managed. Undo its Stow before activating it again."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:175
+#: minttweaks/modules/dotfiles/deployments.py:163
+msgid "This configuration is empty."
 msgstr ""
 
 #: minttweaks/modules/setup/page.py:46
@@ -2659,6 +3416,7 @@ msgstr ""
 msgid "This package has an incomplete state. Check it in Maintenance first."
 msgstr ""
 
+#: minttweaks/modules/applications/backend.py:125
 #: minttweaks/modules/software/backend.py:195
 msgid "This package is already installed: {name}"
 msgstr ""
@@ -2745,8 +3503,20 @@ msgstr ""
 msgid "UFW will be checked first. If it is inactive, this action enables it before adding the Samba rules. Enabling the firewall applies its existing rules to all network connections."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:124
+#: minttweaks/modules/applications/page.py:100
+msgid "Unavailable from official repositories: {error}"
+msgstr ""
+
+#: minttweaks/modules/cinnamon/page.py:127
 msgid "Unavailable: {error}"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:158
+msgid "Undo Stow"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:208
+msgid "Undo this Stow configuration?"
 msgstr ""
 
 #: minttweaks/modules/samba/page.py:263
@@ -2764,6 +3534,27 @@ msgstr ""
 msgid "Unofficial Debian package built from Zen's official archive by the Masternaka APT repository."
 msgstr ""
 
+#: minttweaks/modules/dotfiles/deployments.py:103
+msgid "Unsafe backup directory: {path}"
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:89
+msgid "Unsafe font installation directory: {path}"
+msgstr ""
+
+#: minttweaks/modules/dotfiles/deployments.py:33
+#: minttweaks/modules/dotfiles/deployments.py:72
+msgid "Unsafe target directory: {path}"
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:145
+msgid "Unsupported file in the upstream font repository."
+msgstr ""
+
+#: minttweaks/modules/applications/fonts.py:172
+msgid "Unsupported GitHub font release asset."
+msgstr ""
+
 #: minttweaks/modules/terminal/controls.py:127
 msgid "Update personal terminal settings"
 msgstr ""
@@ -2778,6 +3569,10 @@ msgstr ""
 
 #: minttweaks/core/smbconf.py:373
 msgid "Use 1-80 characters from letters, digits, spaces, '.', '_', '-' or a trailing '$'. The name must start with a letter or a digit."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/backend.py:26
+msgid "Use a GitHub HTTPS or SSH repository URL without a token."
 msgstr ""
 
 #: minttweaks/modules/samba/backend.py:583
@@ -2798,6 +3593,21 @@ msgstr ""
 
 #: minttweaks/modules/samba/page.py:60
 msgid "Users"
+msgstr ""
+
+#: minttweaks/modules/applications/catalog.py:27
+msgid "Uses p7zip-full on distributions without the 7zip package."
+msgstr ""
+
+#: minttweaks/modules/applications/catalog.py:42
+msgid "Uses qemu-system when the qemu package is unavailable."
+msgstr ""
+
+#: minttweaks/modules/applications/catalog.py:21
+#: minttweaks/modules/applications/catalog.py:22
+#: minttweaks/modules/applications/catalog.py:23
+#: … (+9)
+msgid "Utilities"
 msgstr ""
 
 #: minttweaks/modules/terminal/page.py:64
@@ -2824,11 +3634,22 @@ msgstr ""
 msgid "Verified by you"
 msgstr ""
 
-#: minttweaks/ui/window.py:139
+#: minttweaks/ui/window.py:141
 msgid "version {version}"
 msgstr ""
 
-#: minttweaks/ui/window.py:212
+#: minttweaks/modules/cinnamon/theme_controls.py:18
+msgid "View the theme repository"
+msgstr ""
+
+#: minttweaks/modules/applications/catalog.py:42
+#: minttweaks/modules/applications/catalog.py:43
+#: minttweaks/modules/applications/catalog.py:44
+#: … (+1)
+msgid "Virtualization"
+msgstr ""
+
+#: minttweaks/ui/window.py:214
 msgid "Wait for {operation} to finish before closing MintTweaks."
 msgstr ""
 
@@ -2856,6 +3677,10 @@ msgstr ""
 msgid "Writing the Firefox extension policy…"
 msgstr ""
 
+#: minttweaks/modules/applications/page.py:31
+msgid "Your application list is empty for now."
+msgstr ""
+
 #: minttweaks/modules/setup/page.py:56
 msgid "Your preparation plan"
 msgstr ""
@@ -2864,12 +3689,16 @@ msgstr ""
 msgid "your user trash"
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:153
+#: minttweaks/modules/cinnamon/page.py:156
 msgid "{count} appearance backup(s)."
 msgstr ""
 
 #: minttweaks/modules/terminal/page.py:228
 msgid "{count} configuration backup(s)."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:144
+msgid "{count} configuration(s) found."
 msgstr ""
 
 #: minttweaks/modules/home/backend.py:307
@@ -2900,7 +3729,7 @@ msgstr ""
 msgid "{count} package(s) can be removed."
 msgstr ""
 
-#: minttweaks/modules/cinnamon/page.py:136
+#: minttweaks/modules/cinnamon/page.py:139
 msgid "{count} saved profile(s)."
 msgstr ""
 
@@ -2920,12 +3749,16 @@ msgstr ""
 msgid "{count} tool(s) shown. Hidden selections are kept."
 msgstr ""
 
-#: minttweaks/modules/home/page.py:143
+#: minttweaks/modules/home/page.py:145
 msgid "{errors} error(s), {warnings} warning(s), {ok} check(s) passed, {unavailable} check(s) unavailable."
 msgstr ""
 
-#: minttweaks/modules/home/page.py:151
+#: minttweaks/modules/home/page.py:153
 msgid "{errors} error(s), {warnings} warning(s), {ok} check(s) passed."
+msgstr ""
+
+#: minttweaks/modules/dotfiles/page.py:148
+msgid "{files} file(s), {linked} existing link(s)."
 msgstr ""
 
 #: minttweaks/modules/maintenance/page.py:211
@@ -2952,11 +3785,15 @@ msgstr ""
 msgid "{tool}: ready with its default configuration; no shell hook is needed."
 msgstr ""
 
-#: minttweaks/modules/home/page.py:120
+#: minttweaks/modules/applications/page.py:83
+msgid "{total} application(s) in your list · {selected} selected."
+msgstr ""
+
+#: minttweaks/modules/home/page.py:122
 msgid "{used} / {total} ({percent}% used)"
 msgstr ""
 
-#: minttweaks/modules/home/page.py:130
+#: minttweaks/modules/home/page.py:132
 msgid "{used} / {total} ({percent}% used, {free} free)"
 msgstr ""
 

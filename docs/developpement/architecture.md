@@ -97,7 +97,7 @@ Les commandes en continu ont un délai de 30 minutes par défaut, ramené à 2 m
 | Dossier | Rôle |
 | --- | --- |
 | `minttweaks/core/` | Commandes, privilèges, chemins, journaux, transactions de fichiers et modèle Samba |
-| `minttweaks/modules/` | Logique et interface des neuf modules |
+| `minttweaks/modules/` | Logique et interface des onze modules |
 | `minttweaks/ui/` | Fenêtre, composants communs et style GTK |
 | `bin/` | Lanceur de l’application |
 | `data/` | Auxiliaires privilégiés, entrée de menu, icône et manuel |

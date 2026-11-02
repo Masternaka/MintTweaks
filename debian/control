@@ -16,6 +16,7 @@ Depends:
  ca-certificates,
  python3,
  python3-gi,
+ python3-apt,
  ${misc:Depends},
  ${python3:Depends},
 Recommends: samba, samba-common-bin, smbclient, cifs-utils
@@ -45,8 +46,14 @@ Description: system tweaks for Linux Mint: maintenance, services, Samba, Firefox
  expected APT repositories, with explicit repository setup, a full plan preview and
  post-installation version checks. Zen uses an unofficial Debian package.
  .
+ A personal applications page installs a curated list from trusted official
+ distribution repositories, checking application and dependency origins.
+ .
  A shells and terminals page manages APT tools, the current user login shell,
  Starship and separate Kitty/Alacritty profiles with previews and file backups.
+ .
+ A dotfiles page clones GitHub repositories and activates individual GNU Stow
+ packages with a preview, private backups and undo with configuration restoration.
  .
  Privileged actions go through polkit, and every command is run as an argv
  list rather than through a shell.

@@ -10,8 +10,10 @@ Le [README principal](../README.md) présente l’installation et les modules.
 | [Administration](guides/administration.md) | Accueil, entretien, services, Samba et Firefox |
 | [Après installation](guides/assistant-apres-installation.md) | Sélection des étapes, progression et reprise |
 | [Logiciels natifs](guides/logiciels-natifs.md) | Sources APT, catalogue de navigateurs et vérifications |
+| [Applications](guides/applications.md) | Liste personnelle et installation depuis les dépôts officiels de la distribution |
 | [Profils Cinnamon](guides/profils-cinnamon.md) | Format, application et retour aux réglages précédents |
 | [Shells et terminaux](guides/shells-et-terminaux.md) | Utilitaires, intégrations, réglages, alias et transfert personnel |
+| [Dotfiles](guides/dotfiles.md) | Clonage GitHub, installation de Stow et activation par configuration |
 
 ## Développement et distribution
 

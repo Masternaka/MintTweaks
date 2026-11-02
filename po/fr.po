@@ -53,7 +53,7 @@ msgstr "Un enregistrement est déjà en cours."
 msgid "A section named '{name}' already exists."
 msgstr "Une section nommée « {name} » existe déjà."
 
-#: minttweaks/ui/window.py:108
+#: minttweaks/ui/window.py:110
 msgid "About"
 msgstr "À propos"
 
@@ -107,12 +107,12 @@ msgid "Analyse boot"
 msgstr "Analyser le démarrage"
 
 #: minttweaks/modules/home/page.py:71
-#: minttweaks/modules/home/page.py:104
+#: minttweaks/modules/home/page.py:106
 #: minttweaks/modules/maintenance/page.py:119
 msgid "Analysing the system, one moment…"
 msgstr "Analyse du système, un instant…"
 
-#: minttweaks/modules/home/page.py:161
+#: minttweaks/modules/home/page.py:163
 #: minttweaks/modules/maintenance/page.py:174
 msgid "Analysis finished."
 msgstr "Analyse terminée."
@@ -157,11 +157,11 @@ msgstr "Nettoyer les doublons"
 msgid "Cleanup tasks"
 msgstr "Tâches de nettoyage"
 
-#: minttweaks/ui/window.py:160
+#: minttweaks/ui/window.py:162
 msgid "Clear"
 msgstr "Effacer"
 
-#: minttweaks/ui/window.py:107
+#: minttweaks/ui/window.py:109
 msgid "Clear output"
 msgstr "Effacer la sortie"
 
@@ -336,7 +336,7 @@ msgstr "Groupe forcé"
 msgid "Guest access"
 msgstr "Accès invité"
 
-#: minttweaks/ui/window.py:159
+#: minttweaks/ui/window.py:161
 msgid "Hide"
 msgstr "Masquer"
 
@@ -381,7 +381,7 @@ msgstr "conservé"
 msgid "Lists who is connected right now."
 msgstr "Liste les personnes connectées en ce moment."
 
-#: minttweaks/ui/window.py:97
+#: minttweaks/ui/window.py:99
 msgid "Menu"
 msgstr "Menu"
 
@@ -444,10 +444,10 @@ msgstr "aucun compte Unix"
 msgid "No Unix account named '{user}'. Create the system account first."
 msgstr "Aucun compte Unix nommé « {user} ». Créez d'abord le compte système."
 
-#: minttweaks/modules/cinnamon/page.py:35
-#: minttweaks/modules/maintenance/page.py:78
-#: minttweaks/modules/software/page.py:43
-#: … (+4)
+#: minttweaks/modules/applications/page.py:50
+#: minttweaks/modules/cinnamon/page.py:37
+#: minttweaks/modules/dotfiles/page.py:49
+#: … (+6)
 msgid "Not analysed yet."
 msgstr "Pas encore analysé."
 
@@ -468,8 +468,8 @@ msgstr "Disponible seulement si Flatpak est installé. Libère les runtimes qu'a
 msgid "Orphaned packages"
 msgstr "Paquets orphelins"
 
-#: minttweaks/ui/window.py:158
-#: minttweaks/ui/window.py:183
+#: minttweaks/ui/window.py:160
+#: minttweaks/ui/window.py:185
 msgid "Output"
 msgstr "Sortie"
 
@@ -515,10 +515,10 @@ msgstr "Purger les noyaux sélectionnés"
 msgid "Purge these kernels?"
 msgstr "Purger ces noyaux ?"
 
-#: minttweaks/modules/cinnamon/page.py:38
+#: minttweaks/modules/applications/page.py:37
+#: minttweaks/modules/cinnamon/page.py:40
 #: minttweaks/modules/firefox/page.py:72
-#: minttweaks/modules/home/page.py:77
-#: … (+3)
+#: … (+4)
 msgid "Re-analyse"
 msgstr "Réanalyser"
 
@@ -530,7 +530,7 @@ msgstr "Lire en administrateur"
 msgid "Read only"
 msgstr "Lecture seule"
 
-#: minttweaks/ui/window.py:175
+#: minttweaks/ui/window.py:177
 msgid "Ready."
 msgstr "Prêt."
 
@@ -542,7 +542,7 @@ msgstr "reconstruit automatiquement par le gestionnaire de fichiers"
 msgid "Refresh the page and try again."
 msgstr "Rechargez la page et réessayez."
 
-#: minttweaks/ui/window.py:105
+#: minttweaks/ui/window.py:107
 msgid "Refresh this page"
 msgstr "Recharger cette page"
 
@@ -731,7 +731,7 @@ msgstr "Partages"
 msgid "Show"
 msgstr "Afficher"
 
-#: minttweaks/ui/window.py:106
+#: minttweaks/ui/window.py:108
 msgid "Show / hide output"
 msgstr "Afficher / masquer la sortie"
 
@@ -932,7 +932,7 @@ msgstr "Validée par testparm avant chaque enregistrement."
 msgid "Validating and installing the configuration…"
 msgstr "Validation et installation de la configuration…"
 
-#: minttweaks/ui/window.py:139
+#: minttweaks/ui/window.py:141
 msgid "version {version}"
 msgstr "version {version}"
 
@@ -1026,11 +1026,11 @@ msgstr "Installer ces extensions Firefox ?"
 msgid "Installed."
 msgstr "Installée."
 
-#: minttweaks/ui/window.py:66
+#: minttweaks/ui/window.py:68
 msgid "Maintenance, services, Samba and Firefox for Linux Mint"
 msgstr "Entretien, services, Samba et Firefox pour Linux Mint"
 
-#: minttweaks/ui/window.py:285
+#: minttweaks/ui/window.py:287
 msgid "Maintenance, services, Samba and Firefox management for Linux Mint.\nInspired by the ArchLinux Tweak Tool."
 msgstr "Gestion de l'entretien, des services, de Samba et de Firefox pour Linux Mint.\nInspiré d'ArchLinux Tweak Tool."
 
@@ -1139,7 +1139,7 @@ msgstr "Suppression de la politique Firefox de MintTweaks…"
 msgid "The MintTweaks Firefox policy entries were removed."
 msgstr "Les entrées de politique Firefox de MintTweaks ont été supprimées."
 
-#: minttweaks/modules/home/page.py:158
+#: minttweaks/modules/home/page.py:160
 msgid "All {count} checks passed."
 msgstr "Les {count} vérifications ont réussi."
 
@@ -1235,8 +1235,8 @@ msgstr "Mémoire"
 msgid "Modules"
 msgstr "Modules"
 
-#: minttweaks/modules/home/page.py:148
-#: minttweaks/modules/home/page.py:168
+#: minttweaks/modules/home/page.py:150
+#: minttweaks/modules/home/page.py:170
 msgid "No check was run."
 msgstr "Aucune vérification n'a été exécutée."
 
@@ -1267,7 +1267,7 @@ msgstr "Aucun service n'a échoué."
 msgid "Old kernels"
 msgstr "Anciens noyaux"
 
-#: minttweaks/modules/home/page.py:191
+#: minttweaks/modules/home/page.py:193
 #: minttweaks/modules/terminal/controls.py:185
 msgid "Open"
 msgstr "Ouvrir"
@@ -1342,15 +1342,15 @@ msgstr "{count} ancien(s) noyau(x) peuvent être supprimés : {versions}"
 msgid "{count} service(s) failed: {names}"
 msgstr "{count} service(s) en échec : {names}"
 
-#: minttweaks/modules/home/page.py:151
+#: minttweaks/modules/home/page.py:153
 msgid "{errors} error(s), {warnings} warning(s), {ok} check(s) passed."
 msgstr "{errors} erreur(s), {warnings} avertissement(s), {ok} vérification(s) réussie(s)."
 
-#: minttweaks/modules/home/page.py:120
+#: minttweaks/modules/home/page.py:122
 msgid "{used} / {total} ({percent}% used)"
 msgstr "{used} / {total} ({percent} % utilisés)"
 
-#: minttweaks/modules/home/page.py:130
+#: minttweaks/modules/home/page.py:132
 msgid "{used} / {total} ({percent}% used, {free} free)"
 msgstr "{used} / {total} ({percent} % utilisés, {free} libres)"
 
@@ -1385,7 +1385,7 @@ msgstr "{count} paquet(s) proposé(s) à la suppression. La liste complète figu
 msgid "The operation failed."
 msgstr "L’opération a échoué."
 
-#: minttweaks/ui/window.py:64
+#: minttweaks/ui/window.py:66
 msgid "Simulation: no commands or cleanup actions will be executed."
 msgstr "Simulation : aucune commande ni action de nettoyage ne sera exécutée."
 
@@ -1393,15 +1393,15 @@ msgstr "Simulation : aucune commande ni action de nettoyage ne sera exécutée."
 msgid "An operation is already running: {operation}. Wait for it to finish."
 msgstr "Une opération est déjà en cours : {operation}. Attendez sa fin."
 
-#: minttweaks/ui/window.py:202
+#: minttweaks/ui/window.py:204
 msgid "In progress: {operation}"
 msgstr "En cours : {operation}"
 
-#: minttweaks/ui/window.py:211
+#: minttweaks/ui/window.py:213
 msgid "An operation is still running."
 msgstr "Une opération est encore en cours."
 
-#: minttweaks/ui/window.py:212
+#: minttweaks/ui/window.py:214
 msgid "Wait for {operation} to finish before closing MintTweaks."
 msgstr "Attendez la fin de l’opération {operation} avant de fermer MintTweaks."
 
@@ -1421,11 +1421,11 @@ msgstr "Non vérifié en mode simulation."
 msgid "Could not verify: {sample}"
 msgstr "Impossible de vérifier : {sample}"
 
-#: minttweaks/modules/home/page.py:108
+#: minttweaks/modules/home/page.py:110
 msgid "The analysis failed. Previous results, if any, have not been updated."
 msgstr "L’analyse a échoué. Les résultats précédents, s’il y en a, n’ont pas été actualisés."
 
-#: minttweaks/modules/home/page.py:143
+#: minttweaks/modules/home/page.py:145
 msgid "{errors} error(s), {warnings} warning(s), {ok} check(s) passed, {unavailable} check(s) unavailable."
 msgstr "{errors} erreur(s), {warnings} avertissement(s), {ok} contrôle(s) réussi(s), {unavailable} contrôle(s) indisponible(s)."
 
@@ -1494,86 +1494,86 @@ msgid "Profiles are not saved in simulation mode."
 msgstr "Les profils ne sont pas enregistrés en mode simulation."
 
 #: minttweaks/modules/cinnamon/backend.py:198
-#: minttweaks/modules/cinnamon/page.py:127
+#: minttweaks/modules/cinnamon/page.py:130
 msgid "The settings could not all be read. Refresh before saving a profile."
 msgstr "Certains réglages n’ont pas pu être lus. Relancez l’analyse avant d’enregistrer un profil."
 
-#: minttweaks/modules/cinnamon/page.py:20
+#: minttweaks/modules/cinnamon/page.py:21
 #: minttweaks/modules/home/page.py:93
 msgid "Cinnamon profiles"
 msgstr "Profils Cinnamon"
 
-#: minttweaks/modules/cinnamon/page.py:33
+#: minttweaks/modules/cinnamon/page.py:35
 msgid "Current appearance"
 msgstr "Apparence actuelle"
 
-#: minttweaks/modules/cinnamon/page.py:33
+#: minttweaks/modules/cinnamon/page.py:35
 msgid "Read-only values. Missing settings are never replaced with defaults."
 msgstr "Valeurs en lecture seule. Les réglages manquants ne sont jamais remplacés par des valeurs par défaut."
 
-#: minttweaks/modules/cinnamon/page.py:41
+#: minttweaks/modules/cinnamon/page.py:43
 msgid "Save a profile"
 msgstr "Enregistrer un profil"
 
-#: minttweaks/modules/cinnamon/page.py:43
+#: minttweaks/modules/cinnamon/page.py:45
 msgid "Profile name"
 msgstr "Nom du profil"
 
-#: minttweaks/modules/cinnamon/page.py:47
+#: minttweaks/modules/cinnamon/page.py:49
 msgid "Save current appearance"
 msgstr "Enregistrer l’apparence actuelle"
 
-#: minttweaks/modules/cinnamon/page.py:50
+#: minttweaks/modules/cinnamon/page.py:52
 msgid "Read all settings before saving a profile."
 msgstr "Lisez tous les réglages avant d’enregistrer un profil."
 
-#: minttweaks/modules/cinnamon/page.py:54
+#: minttweaks/modules/cinnamon/page.py:56
 msgid "Saved profiles"
 msgstr "Profils enregistrés"
 
-#: minttweaks/modules/cinnamon/page.py:246
+#: minttweaks/modules/cinnamon/page.py:249
 msgid "Refresh before saving another profile."
 msgstr "Relancez l’analyse avant d’enregistrer un autre profil."
 
-#: minttweaks/modules/cinnamon/page.py:248
-#: minttweaks/modules/cinnamon/page.py:218
+#: minttweaks/modules/cinnamon/page.py:251
+#: minttweaks/modules/cinnamon/page.py:221
 msgid "The Cinnamon profile operation failed."
 msgstr "L’opération sur les profils Cinnamon a échoué."
 
-#: minttweaks/modules/cinnamon/page.py:126
+#: minttweaks/modules/cinnamon/page.py:129
 msgid "All settings were read. Saving will capture them again."
 msgstr "Tous les réglages ont été lus. Ils seront lus de nouveau lors de l’enregistrement."
 
-#: minttweaks/modules/cinnamon/page.py:233
+#: minttweaks/modules/cinnamon/page.py:236
 msgid "Save Cinnamon profile"
 msgstr "Enregistrer un profil Cinnamon"
 
-#: minttweaks/modules/cinnamon/page.py:227
+#: minttweaks/modules/cinnamon/page.py:230
 msgid "The profile could not be saved."
 msgstr "Le profil n’a pas pu être enregistré."
 
-#: minttweaks/modules/cinnamon/page.py:239
+#: minttweaks/modules/cinnamon/page.py:242
 msgid "Profile saved: {name}"
 msgstr "Profil enregistré : {name}"
 
-#: minttweaks/modules/cinnamon/page.py:122
-#: minttweaks/modules/cinnamon/page.py:167
+#: minttweaks/modules/cinnamon/page.py:125
+#: minttweaks/modules/cinnamon/page.py:170
 msgid "(empty value)"
 msgstr "(valeur vide)"
 
-#: minttweaks/modules/cinnamon/page.py:130
+#: minttweaks/modules/cinnamon/page.py:133
 msgid "Profiles could not be read. Previous results have not been updated.\n{error}"
 msgstr "Impossible de lire les profils. Les résultats précédents n’ont pas été actualisés.\n{error}"
 
-#: minttweaks/modules/cinnamon/page.py:136
+#: minttweaks/modules/cinnamon/page.py:139
 msgid "{count} saved profile(s)."
 msgstr "{count} profil(s) enregistré(s)."
 
-#: minttweaks/modules/cinnamon/page.py:124
+#: minttweaks/modules/cinnamon/page.py:127
 msgid "Unavailable: {error}"
 msgstr "Indisponible : {error}"
 
-#: minttweaks/modules/cinnamon/page.py:138
+#: minttweaks/modules/cinnamon/page.py:141
 msgid "Some profile files could not be read and were preserved:\n{errors}"
 msgstr "Certains fichiers de profil n’ont pas pu être lus et ont été conservés :\n{errors}"
 
@@ -1586,6 +1586,7 @@ msgid "The profile was applied and its values were verified."
 msgstr "Le profil a été appliqué et ses valeurs ont été vérifiées."
 
 #: minttweaks/modules/cinnamon/backend.py:267
+#: minttweaks/modules/cinnamon/themes.py:180
 msgid "The current appearance could not all be read. Nothing was changed."
 msgstr "Certains réglages actuels n’ont pas pu être lus. Aucune modification effectuée."
 
@@ -1598,7 +1599,7 @@ msgid "The appearance changed or could not be checked. Review a new preview befo
 msgstr "L’apparence a changé ou n’a pas pu être vérifiée. Consultez un nouvel aperçu avant l’application."
 
 #: minttweaks/modules/cinnamon/backend.py:294
-#: minttweaks/modules/cinnamon/page.py:190
+#: minttweaks/modules/cinnamon/page.py:193
 msgid "The selected profile already matches the current appearance."
 msgstr "Le profil sélectionné correspond déjà à l’apparence actuelle."
 
@@ -1630,59 +1631,59 @@ msgstr "Un réglage a changé pendant l’application : {setting}"
 msgid "The value changed outside this operation; it was not overwritten."
 msgstr "La valeur a changé en dehors de cette opération ; elle n’a pas été remplacée."
 
-#: minttweaks/modules/cinnamon/page.py:41
+#: minttweaks/modules/cinnamon/page.py:43
 msgid "Only setting values are saved. Theme, icon and font files are not copied."
 msgstr "Seules les valeurs des réglages sont enregistrées. Les fichiers de thèmes, d’icônes et de polices ne sont pas copiés."
 
-#: minttweaks/modules/cinnamon/page.py:60
+#: minttweaks/modules/cinnamon/page.py:62
 msgid "Preview and apply profile"
 msgstr "Prévisualiser et appliquer le profil"
 
-#: minttweaks/modules/cinnamon/page.py:67
+#: minttweaks/modules/cinnamon/page.py:69
 msgid "Restore previous appearance"
 msgstr "Restaurer l’apparence précédente"
 
-#: minttweaks/modules/cinnamon/page.py:67
+#: minttweaks/modules/cinnamon/page.py:69
 msgid "A backup is saved before every change, including restoration."
 msgstr "Une sauvegarde est enregistrée avant chaque modification, y compris une restauration."
 
-#: minttweaks/modules/cinnamon/page.py:73
+#: minttweaks/modules/cinnamon/page.py:75
 msgid "Preview and restore backup"
 msgstr "Prévisualiser et restaurer la sauvegarde"
 
-#: minttweaks/modules/cinnamon/page.py:196
+#: minttweaks/modules/cinnamon/page.py:199
 msgid "A backup will be saved before changing these values. The referenced themes and fonts must already be installed. If settings changed since this preview, the operation will be refused."
 msgstr "Une sauvegarde sera enregistrée avant de modifier ces valeurs. Les thèmes et polices référencés doivent déjà être installés. Si les réglages ont changé depuis cet aperçu, l’opération sera refusée."
 
-#: minttweaks/modules/cinnamon/page.py:195
+#: minttweaks/modules/cinnamon/page.py:198
 msgid "Restore this appearance?"
 msgstr "Restaurer cette apparence ?"
 
-#: minttweaks/modules/cinnamon/page.py:195
+#: minttweaks/modules/cinnamon/page.py:198
 msgid "Apply this appearance?"
 msgstr "Appliquer cette apparence ?"
 
-#: minttweaks/modules/cinnamon/page.py:206
+#: minttweaks/modules/cinnamon/page.py:209
 msgid "Restore Cinnamon appearance"
 msgstr "Restaurer l’apparence Cinnamon"
 
-#: minttweaks/modules/cinnamon/page.py:206
+#: minttweaks/modules/cinnamon/page.py:209
 msgid "Apply Cinnamon profile"
 msgstr "Appliquer un profil Cinnamon"
 
-#: minttweaks/modules/cinnamon/page.py:213
+#: minttweaks/modules/cinnamon/page.py:216
 msgid "Backup: {id}"
 msgstr "Sauvegarde : {id}"
 
-#: minttweaks/modules/cinnamon/page.py:146
+#: minttweaks/modules/cinnamon/page.py:149
 msgid "Backups could not be read: {error}"
 msgstr "Impossible de lire les sauvegardes : {error}"
 
-#: minttweaks/modules/cinnamon/page.py:153
+#: minttweaks/modules/cinnamon/page.py:156
 msgid "{count} appearance backup(s)."
 msgstr "{count} sauvegarde(s) d’apparence."
 
-#: minttweaks/modules/cinnamon/page.py:155
+#: minttweaks/modules/cinnamon/page.py:158
 msgid "Some backups could not be read and were preserved:\n{errors}"
 msgstr "Certaines sauvegardes n’ont pas pu être lues et ont été conservées :\n{errors}"
 
@@ -1835,7 +1836,7 @@ msgstr "{verified} étape(s) sur {total} vérifiée(s) par vous."
 msgid "Progress was not updated. Reload before continuing.\n{error}"
 msgstr "La progression n’a pas été actualisée. Rechargez-la avant de continuer.\n{error}"
 
-#: minttweaks/modules/home/page.py:95
+#: minttweaks/modules/home/page.py:96
 #: minttweaks/modules/software/page.py:18
 msgid "Native software"
 msgstr "Logiciels natifs"
@@ -1880,13 +1881,17 @@ msgstr "La disponibilité des logiciels n’est pas vérifiée en mode simulatio
 msgid "No unambiguous candidate from the expected repository. Configure its source and refresh APT metadata first."
 msgstr "Aucune version candidate sans ambiguïté depuis le dépôt attendu. Configurez sa source et actualisez d’abord les métadonnées APT."
 
+#: minttweaks/modules/applications/backend.py:130
+#: minttweaks/modules/dotfiles/backend.py:208
 #: minttweaks/modules/software/backend.py:200
-#: minttweaks/modules/terminal/backend.py:130
+#: … (+1)
 msgid "APT proposed removals. Installation was refused."
 msgstr "APT a proposé des suppressions. L’installation a été refusée."
 
+#: minttweaks/modules/applications/backend.py:141
+#: minttweaks/modules/applications/backend.py:137
 #: minttweaks/modules/software/backend.py:203
-#: minttweaks/modules/terminal/backend.py:133
+#: … (+1)
 msgid "The complete installation plan could not be read."
 msgstr "Le plan complet d’installation n’a pas pu être lu."
 
@@ -1894,11 +1899,14 @@ msgstr "Le plan complet d’installation n’a pas pu être lu."
 msgid "Simulation: no software was installed."
 msgstr "Simulation : aucun logiciel n’a été installé."
 
+#: minttweaks/modules/applications/backend.py:156
+#: minttweaks/modules/dotfiles/backend.py:217
 #: minttweaks/modules/software/backend.py:221
-#: minttweaks/modules/terminal/backend.py:142
+#: … (+1)
 msgid "The installation plan changed. Review a new preview before continuing."
 msgstr "Le plan d’installation a changé. Consultez un nouvel aperçu avant de continuer."
 
+#: minttweaks/modules/applications/backend.py:163
 #: minttweaks/modules/software/backend.py:228
 msgid "The requested package version was not verified after installation."
 msgstr "La version demandée du paquet n’a pas été vérifiée après l’installation."
@@ -1908,6 +1916,7 @@ msgstr "La version demandée du paquet n’a pas été vérifiée après l’ins
 msgid "This source has no supported package for architecture {architecture}."
 msgstr "Cette source ne propose aucun paquet pris en charge pour l’architecture {architecture}."
 
+#: minttweaks/modules/applications/backend.py:125
 #: minttweaks/modules/software/backend.py:195
 msgid "This package is already installed: {name}"
 msgstr "Ce paquet est déjà installé : {name}"
@@ -1948,6 +1957,7 @@ msgstr "Instructions de configuration du dépôt"
 msgid "Package check unavailable: {error}"
 msgstr "Vérification du paquet indisponible : {error}"
 
+#: minttweaks/modules/applications/page.py:106
 #: minttweaks/modules/software/page.py:88
 msgid "APT package installed: {version}"
 msgstr "Paquet APT installé : {version}"
@@ -1956,6 +1966,7 @@ msgstr "Paquet APT installé : {version}"
 msgid "APT package not installed. Candidate from the expected source: {version}"
 msgstr "Paquet APT non installé. Version candidate de la source attendue : {version}"
 
+#: minttweaks/modules/applications/page.py:40
 #: minttweaks/modules/software/page.py:32
 msgid "Administrator authorization is unavailable: package state can be read, but installation is disabled."
 msgstr "L’autorisation administrateur est indisponible : l’état des paquets peut être consulté, mais l’installation est désactivée."
@@ -2117,7 +2128,7 @@ msgstr "Vérifiez toutes les dépendances et mises à jour. Les suppressions son
 msgid "Review the full file differences. A private backup is saved before writing; close and reopen your terminal after the change."
 msgstr "Vérifiez toutes les différences. Une sauvegarde privée précède l’écriture ; fermez et rouvrez le terminal après le changement."
 
-#: minttweaks/modules/home/page.py:96
+#: minttweaks/modules/home/page.py:97
 #: minttweaks/modules/terminal/page.py:21
 msgid "Shells and terminals"
 msgstr "Shells et terminaux"
@@ -2959,3 +2970,829 @@ msgstr "UFW sera vérifié avant d’ajouter les règles Samba. S’il n’est p
 #: minttweaks/modules/samba/page.py:713
 msgid "UFW will be checked first. If it is inactive, this action enables it before adding the Samba rules. Enabling the firewall applies its existing rules to all network connections."
 msgstr "UFW sera d’abord vérifié. S’il est inactif, cette action l’activera avant d’ajouter les règles Samba. L’activation du pare-feu applique ses règles existantes à toutes les connexions réseau."
+
+#: minttweaks/modules/dotfiles/backend.py:94
+#: minttweaks/modules/dotfiles/deployments.py:69
+msgid "A configuration cannot create links inside its own repository."
+msgstr "Une configuration ne peut pas créer de liens dans son propre dépôt."
+
+#: minttweaks/modules/dotfiles/page.py:192
+msgid "Activate this dotfiles configuration?"
+msgstr "Activer cette configuration de dotfiles ?"
+
+#: minttweaks/modules/dotfiles/page.py:96
+msgid "Analyse again after changing the repository or target."
+msgstr "Relancez l’analyse après avoir modifié le dépôt ou la cible."
+
+#: minttweaks/modules/dotfiles/page.py:48
+msgid "Analyse configurations"
+msgstr "Analyser les configurations"
+
+#: minttweaks/modules/dotfiles/page.py:106
+#: minttweaks/modules/dotfiles/page.py:107
+msgid "Available"
+msgstr "Disponible"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:49
+#: minttweaks/modules/dotfiles/page.py:71
+msgid "Choose a directory"
+msgstr "Choisir un dossier"
+
+#: minttweaks/modules/cinnamon/themes.py:32
+#: minttweaks/modules/dotfiles/backend.py:16
+msgid "Choose a directory first."
+msgstr "Choisissez d’abord un dossier."
+
+#: minttweaks/modules/dotfiles/backend.py:19
+msgid "Choose an existing directory, not a symbolic link."
+msgstr "Choisissez un dossier existant qui n’est pas un lien symbolique."
+
+#: minttweaks/modules/dotfiles/page.py:42
+msgid "Choose the link target…"
+msgstr "Choisir la cible des liens…"
+
+#: minttweaks/modules/dotfiles/page.py:38
+msgid "Choose the parent folder for cloning…"
+msgstr "Choisir le dossier parent pour le clonage…"
+
+#: minttweaks/modules/dotfiles/page.py:39
+msgid "Clone repository"
+msgstr "Cloner le dépôt"
+
+#: minttweaks/modules/dotfiles/page.py:171
+msgid "Clone this repository?"
+msgstr "Cloner ce dépôt ?"
+
+#: minttweaks/modules/dotfiles/page.py:43
+msgid "Convert dot- names to hidden files (--dotfiles)"
+msgstr "Convertir les noms dot- en fichiers cachés (--dotfiles)"
+
+#: minttweaks/modules/dotfiles/page.py:18
+#: minttweaks/modules/dotfiles/page.py:30
+#: minttweaks/modules/dotfiles/page.py:115
+#: … (+1)
+msgid "Dotfiles"
+msgstr "Dotfiles"
+
+#: minttweaks/modules/dotfiles/backend.py:178
+msgid "Existing files or unsafe directories: {paths}"
+msgstr "Fichiers existants ou dossiers non sûrs : {paths}"
+
+#: minttweaks/modules/dotfiles/page.py:47
+msgid "Expected layout: bash/.bashrc or kitty/.config/kitty/kitty.conf. If packages are in a stow/ subdirectory, open that directory. Repository scripts are never executed."
+msgstr "Structure attendue : bash/.bashrc ou kitty/.config/kitty/kitty.conf. Si les configurations sont dans un sous-dossier stow/, ouvrez ce dossier. Les scripts du dépôt ne sont jamais exécutés."
+
+#: minttweaks/modules/dotfiles/backend.py:223
+msgid "Git and Stow are available."
+msgstr "Git et Stow sont disponibles."
+
+#: minttweaks/modules/dotfiles/page.py:105
+msgid "Git: {git} · Stow: {stow}"
+msgstr "Git : {git} · Stow : {stow}"
+
+#: minttweaks/modules/dotfiles/page.py:35
+msgid "GitHub repository URL"
+msgstr "URL du dépôt GitHub"
+
+#: minttweaks/modules/dotfiles/page.py:34
+msgid "Install Git and Stow"
+msgstr "Installer Git et Stow"
+
+#: minttweaks/modules/dotfiles/page.py:179
+msgid "Install Git and Stow?"
+msgstr "Installer Git et Stow ?"
+
+#: minttweaks/modules/dotfiles/backend.py:91
+#: minttweaks/modules/dotfiles/deployments.py:65
+msgid "Invalid dot- filename in this configuration."
+msgstr "Nom de fichier dot- non valide dans cette configuration."
+
+#: minttweaks/modules/dotfiles/backend.py:75
+#: minttweaks/modules/dotfiles/deployments.py:290
+msgid "Invalid Stow package name."
+msgstr "Nom de configuration Stow non valide."
+
+#: minttweaks/modules/dotfiles/page.py:41
+msgid "Link target directory"
+msgstr "Dossier cible des liens"
+
+#: minttweaks/modules/dotfiles/page.py:37
+msgid "Local dotfiles directory"
+msgstr "Dossier local des dotfiles"
+
+#: minttweaks/modules/dotfiles/page.py:106
+#: minttweaks/modules/dotfiles/page.py:107
+msgid "Missing"
+msgstr "Absent"
+
+#: minttweaks/modules/dotfiles/page.py:40
+msgid "Open an existing dotfiles directory…"
+msgstr "Ouvrir un dossier de dotfiles existant…"
+
+#: minttweaks/modules/dotfiles/backend.py:43
+msgid "Repository cloned. You can now analyse its configurations."
+msgstr "Dépôt cloné. Vous pouvez maintenant analyser ses configurations."
+
+#: minttweaks/modules/dotfiles/page.py:180
+msgid "Review the APT plan. Administrator authorization is required."
+msgstr "Vérifiez le plan APT. Une autorisation administrateur est nécessaire."
+
+#: minttweaks/modules/dotfiles/backend.py:185
+msgid "Simulation: no dotfiles links were created."
+msgstr "Simulation : aucun lien de dotfiles n’a été créé."
+
+#: minttweaks/modules/dotfiles/backend.py:214
+msgid "Simulation: no dotfiles tools were installed."
+msgstr "Simulation : aucun outil de gestion des dotfiles n’a été installé."
+
+#: minttweaks/modules/dotfiles/backend.py:39
+msgid "Simulation: no repository was cloned."
+msgstr "Simulation : aucun dépôt n’a été cloné."
+
+#: minttweaks/modules/dotfiles/backend.py:66
+msgid "Source symbolic links and special files are not supported: {path}"
+msgstr "Les liens symboliques sources et les fichiers spéciaux ne sont pas pris en charge : {path}"
+
+#: minttweaks/modules/dotfiles/page.py:155
+msgid "Stow"
+msgstr "Stow"
+
+#: minttweaks/modules/dotfiles/backend.py:192
+msgid "Stow finished. Existing files were not adopted or overwritten."
+msgstr "Stow a terminé. Aucun fichier existant n’a été adopté ni écrasé."
+
+#: minttweaks/modules/dotfiles/backend.py:149
+msgid "Stow reads {path} automatically. Move this options file aside before using MintTweaks."
+msgstr "Stow lit automatiquement {path}. Déplacez temporairement ce fichier d’options avant d’utiliser MintTweaks."
+
+#: minttweaks/modules/dotfiles/backend.py:29
+msgid "The clone destination must be a new directory."
+msgstr "La destination du clonage doit être un nouveau dossier."
+
+#: minttweaks/modules/dotfiles/page.py:125
+msgid "The dotfiles operation failed."
+msgstr "L’opération sur les dotfiles a échoué."
+
+#: minttweaks/modules/dotfiles/backend.py:78
+msgid "The selected configuration is no longer available."
+msgstr "La configuration sélectionnée n’est plus disponible."
+
+#: minttweaks/modules/dotfiles/backend.py:188
+#: minttweaks/modules/dotfiles/deployments.py:227
+#: minttweaks/modules/dotfiles/deployments.py:257
+#: … (+1)
+msgid "The Stow plan changed. Review a new preview before continuing."
+msgstr "Le plan Stow a changé. Vérifiez un nouvel aperçu avant de continuer."
+
+#: minttweaks/modules/dotfiles/backend.py:103
+msgid "The target escapes the selected directory."
+msgstr "La cible sort du dossier sélectionné."
+
+#: minttweaks/modules/dotfiles/backend.py:118
+#: minttweaks/modules/dotfiles/backend.py:171
+#: minttweaks/modules/dotfiles/deployments.py:156
+msgid "The target must be outside the dotfiles directory."
+msgstr "La cible doit être à l’extérieur du dossier des dotfiles."
+
+#: minttweaks/modules/dotfiles/backend.py:69
+msgid "This configuration contains too many files."
+msgstr "Cette configuration contient trop de fichiers."
+
+#: minttweaks/modules/dotfiles/backend.py:175
+#: minttweaks/modules/dotfiles/deployments.py:163
+msgid "This configuration is empty."
+msgstr "Cette configuration est vide."
+
+#: minttweaks/modules/dotfiles/backend.py:26
+msgid "Use a GitHub HTTPS or SSH repository URL without a token."
+msgstr "Utilisez une URL de dépôt GitHub HTTPS ou SSH sans jeton."
+
+#: minttweaks/modules/dotfiles/page.py:144
+msgid "{count} configuration(s) found."
+msgstr "{count} configuration(s) trouvée(s)."
+
+#: minttweaks/modules/dotfiles/page.py:148
+msgid "{files} file(s), {linked} existing link(s)."
+msgstr "{files} fichier(s), {linked} lien(s) existant(s)."
+
+#: minttweaks/modules/dotfiles/page.py:137
+msgid "Clone a repository or open an existing dotfiles directory to begin."
+msgstr "Clonez un dépôt ou ouvrez un dossier de dotfiles existant pour commencer."
+
+#: minttweaks/modules/dotfiles/deployments.py:194
+#: minttweaks/modules/dotfiles/deployments.py:207
+#: minttweaks/modules/dotfiles/deployments.py:321
+#: … (+1)
+msgid "A target changed outside MintTweaks and was preserved: {path}"
+msgstr "Une cible a été modifiée en dehors de MintTweaks et a été préservée : {path}"
+
+#: minttweaks/modules/dotfiles/deployments.py:272
+msgid "Activation failed; the previous configuration was restored. Backup: {path}\n{error}"
+msgstr "L’activation a échoué ; la configuration précédente a été restaurée. Sauvegarde : {path}\n{error}"
+
+#: minttweaks/modules/dotfiles/page.py:207
+msgid "Backup: {path}"
+msgstr "Sauvegarde : {path}"
+
+#: minttweaks/modules/dotfiles/page.py:31
+msgid "Clone your GitHub repository, then activate each configuration. Existing files are backed up before Stow; Undo Stow restores them."
+msgstr "Clonez votre dépôt GitHub, puis activez chaque configuration. Les fichiers existants sont sauvegardés avant Stow ; Annuler le Stow permet de les restaurer."
+
+#: minttweaks/modules/dotfiles/page.py:204
+msgid "Configurations to restore:"
+msgstr "Configurations à restaurer :"
+
+#: minttweaks/modules/dotfiles/deployments.py:271
+msgid "Dotfiles recovery is incomplete. Backup: {path}\n{error}"
+msgstr "La récupération des dotfiles est incomplète. Sauvegarde : {path}\n{error}"
+
+#: minttweaks/modules/dotfiles/page.py:152
+msgid "Existing configuration: {count} path(s) to review for backup."
+msgstr "Configuration existante : {count} chemin(s) à vérifier pour la sauvegarde."
+
+#: minttweaks/modules/dotfiles/page.py:190
+msgid "Files to back up before activation:"
+msgstr "Fichiers à sauvegarder avant l’activation :"
+
+#: minttweaks/modules/dotfiles/deployments.py:119
+#: minttweaks/modules/dotfiles/deployments.py:126
+#: minttweaks/modules/dotfiles/deployments.py:310
+#: … (+2)
+msgid "Invalid dotfiles backup."
+msgstr "Sauvegarde de dotfiles non valide."
+
+#: minttweaks/modules/dotfiles/deployments.py:28
+msgid "Invalid dotfiles target path."
+msgstr "Chemin cible des dotfiles non valide."
+
+#: minttweaks/modules/dotfiles/page.py:202
+msgid "Links to remove:"
+msgstr "Liens à retirer :"
+
+#: minttweaks/modules/dotfiles/page.py:154
+msgid "Managed by MintTweaks. Its backup is kept for undo."
+msgstr "Gérée par MintTweaks. Sa sauvegarde est conservée pour l’annulation."
+
+#: minttweaks/modules/dotfiles/deployments.py:303
+msgid "No dotfiles links were found to undo."
+msgstr "Aucun lien de dotfiles à annuler n’a été trouvé."
+
+#: minttweaks/modules/dotfiles/page.py:191
+msgid "No existing files need a backup."
+msgstr "Aucun fichier existant ne nécessite de sauvegarde."
+
+#: minttweaks/modules/dotfiles/deployments.py:229
+msgid "No new dotfiles links are needed."
+msgstr "Aucun nouveau lien de dotfiles n’est nécessaire."
+
+#: minttweaks/modules/dotfiles/deployments.py:44
+msgid "Only regular files and individual links can be backed up: {path}"
+msgstr "Seuls les fichiers ordinaires et les liens individuels peuvent être sauvegardés : {path}"
+
+#: minttweaks/modules/dotfiles/page.py:209
+msgid "Only this configuration's links are removed. Saved files are restored, backups and repository files are kept. External changes block restoration."
+msgstr "Seuls les liens de cette configuration sont retirés. Les fichiers sauvegardés sont restaurés, les sauvegardes et les fichiers du dépôt sont conservés. Les modifications externes bloquent la restauration."
+
+#: minttweaks/modules/dotfiles/deployments.py:219
+msgid "Restoration could not be verified: {path}"
+msgstr "La restauration n’a pas pu être vérifiée : {path}"
+
+#: minttweaks/modules/dotfiles/page.py:193
+msgid "Review the links and backups. A dated private backup is verified before replacing existing files with links. Undo Stow restores that backup."
+msgstr "Vérifiez les liens et les sauvegardes. Une sauvegarde privée datée est vérifiée avant de remplacer les fichiers existants par des liens. Annuler le Stow permet de restaurer cette sauvegarde."
+
+#: minttweaks/modules/dotfiles/deployments.py:140
+msgid "Several active dotfiles backups require manual review."
+msgstr "Plusieurs sauvegardes actives de dotfiles nécessitent une vérification manuelle."
+
+#: minttweaks/modules/dotfiles/deployments.py:76
+msgid "Several source files map to the same target."
+msgstr "Plusieurs fichiers sources correspondent à la même cible."
+
+#: minttweaks/modules/dotfiles/deployments.py:224
+msgid "Simulation: no dotfiles links or backups were created."
+msgstr "Simulation : aucun lien de dotfiles ni aucune sauvegarde n’a été créé."
+
+#: minttweaks/modules/dotfiles/deployments.py:339
+msgid "Simulation: no dotfiles links were removed or backups restored."
+msgstr "Simulation : aucun lien de dotfiles n’a été retiré ni aucune sauvegarde restaurée."
+
+#: minttweaks/modules/dotfiles/deployments.py:273
+msgid "Stow activated. Backup and undo record: {path}"
+msgstr "Stow activé. Sauvegarde et journal d’annulation : {path}"
+
+#: minttweaks/modules/dotfiles/deployments.py:87
+msgid "Stow proposed an unexpected link: {path}"
+msgstr "Stow a proposé un lien inattendu : {path}"
+
+#: minttweaks/modules/dotfiles/deployments.py:90
+msgid "Stow proposed an unexpected removal."
+msgstr "Stow a proposé une suppression inattendue."
+
+#: minttweaks/modules/dotfiles/deployments.py:347
+msgid "Stow undone. Previous configurations were restored; backups were kept."
+msgstr "Stow annulé. Les configurations précédentes ont été restaurées ; les sauvegardes ont été conservées."
+
+#: minttweaks/modules/dotfiles/deployments.py:236
+msgid "The backup directory overlaps the configuration."
+msgstr "Le dossier de sauvegarde chevauche la configuration."
+
+#: minttweaks/modules/dotfiles/deployments.py:48
+msgid "The configuration file is too large to back up: {path}"
+msgstr "Le fichier de configuration est trop volumineux pour être sauvegardé : {path}"
+
+#: minttweaks/modules/dotfiles/deployments.py:262
+msgid "The created dotfiles links could not be verified."
+msgstr "Les liens de dotfiles créés n’ont pas pu être vérifiés."
+
+#: minttweaks/modules/dotfiles/deployments.py:245
+msgid "The dotfiles backup could not be verified."
+msgstr "La sauvegarde des dotfiles n’a pas pu être vérifiée."
+
+#: minttweaks/modules/dotfiles/deployments.py:113
+#: minttweaks/modules/dotfiles/deployments.py:123
+#: minttweaks/modules/dotfiles/deployments.py:184
+msgid "The dotfiles backup is too large."
+msgstr "La sauvegarde des dotfiles est trop volumineuse."
+
+#: minttweaks/modules/dotfiles/deployments.py:342
+msgid "The undo plan changed. Review a new preview before continuing."
+msgstr "Le plan d’annulation a changé. Vérifiez un nouvel aperçu avant de continuer."
+
+#: minttweaks/modules/dotfiles/deployments.py:60
+msgid "This configuration contains an unsupported filename."
+msgstr "Cette configuration contient un nom de fichier non pris en charge."
+
+#: minttweaks/modules/dotfiles/deployments.py:159
+msgid "This configuration is already managed. Undo its Stow before activating it again."
+msgstr "Cette configuration est déjà gérée. Annulez son Stow avant de l’activer à nouveau."
+
+#: minttweaks/modules/dotfiles/page.py:158
+msgid "Undo Stow"
+msgstr "Annuler le Stow"
+
+#: minttweaks/modules/dotfiles/page.py:208
+msgid "Undo this Stow configuration?"
+msgstr "Annuler cette configuration Stow ?"
+
+#: minttweaks/modules/dotfiles/deployments.py:103
+msgid "Unsafe backup directory: {path}"
+msgstr "Dossier de sauvegarde non sûr : {path}"
+
+#: minttweaks/modules/dotfiles/deployments.py:33
+#: minttweaks/modules/dotfiles/deployments.py:72
+msgid "Unsafe target directory: {path}"
+msgstr "Dossier cible non sûr : {path}"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:36
+msgid "Apply variant to the desktop"
+msgstr "Appliquer la variante au bureau"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:15
+msgid "Catppuccin for Cinnamon"
+msgstr "Catppuccin pour Cinnamon"
+
+#: minttweaks/modules/cinnamon/themes.py:56
+msgid "Catppuccin repository cloned. Choose a variant to install."
+msgstr "Dépôt Catppuccin cloné. Choisissez une variante à installer."
+
+#: minttweaks/modules/cinnamon/theme_controls.py:34
+msgid "Catppuccin variant"
+msgstr "Variante Catppuccin"
+
+#: minttweaks/modules/cinnamon/themes.py:26
+msgid "Choose a Catppuccin variant from the list."
+msgstr "Choisissez une variante Catppuccin dans la liste."
+
+#: minttweaks/modules/cinnamon/themes.py:43
+msgid "Choose a new clone directory inside an existing parent folder."
+msgstr "Choisissez un nouveau dossier de clonage dans un dossier parent existant."
+
+#: minttweaks/modules/cinnamon/theme_controls.py:24
+msgid "Choose the clone parent folder…"
+msgstr "Choisir le dossier parent du clone…"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:26
+msgid "Clone Catppuccin repository"
+msgstr "Cloner le dépôt Catppuccin"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:96
+msgid "Clone the Catppuccin theme repository?"
+msgstr "Cloner le dépôt du thème Catppuccin ?"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:16
+msgid "Clone your theme repository, install a variant, then apply it to the desktop. Git is required for cloning."
+msgstr "Clonez votre dépôt de thème, installez une variante, puis appliquez-la au bureau. Git est nécessaire pour le clonage."
+
+#: minttweaks/modules/cinnamon/theme_controls.py:113
+#: minttweaks/modules/cinnamon/theme_controls.py:73
+msgid "Install Catppuccin theme"
+msgstr "Installer le thème Catppuccin"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:105
+msgid "Install into: {path}"
+msgstr "Installer dans : {path}"
+
+#: minttweaks/modules/cinnamon/themes.py:177
+msgid "Install this Catppuccin variant before applying it."
+msgstr "Installez cette variante Catppuccin avant de l’appliquer."
+
+#: minttweaks/modules/cinnamon/theme_controls.py:108
+msgid "Install this Catppuccin variant?"
+msgstr "Installer cette variante Catppuccin ?"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:19
+msgid "Local theme repository"
+msgstr "Dépôt local du thème"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:25
+msgid "Open an existing theme repository…"
+msgstr "Ouvrir un dépôt de thème existant…"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:35
+msgid "Preview theme installation"
+msgstr "Prévisualiser l’installation du thème"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:107
+#: minttweaks/modules/cinnamon/themes.py:169
+msgid "Previous theme backup: {path}"
+msgstr "Sauvegarde du thème précédent : {path}"
+
+#: minttweaks/modules/cinnamon/themes.py:165
+msgid "Previous theme: {path}"
+msgstr "Thème précédent : {path}"
+
+#: minttweaks/modules/cinnamon/themes.py:127
+msgid "Simulation: no theme files or backups were written."
+msgstr "Simulation : aucun fichier de thème ni aucune sauvegarde n’a été écrit."
+
+#: minttweaks/modules/cinnamon/themes.py:52
+msgid "Simulation: the theme repository was not cloned."
+msgstr "Simulation : le dépôt du thème n’a pas été cloné."
+
+#: minttweaks/modules/cinnamon/theme_controls.py:83
+msgid "The Catppuccin theme operation failed."
+msgstr "L’opération sur le thème Catppuccin a échoué."
+
+#: minttweaks/modules/cinnamon/theme_controls.py:109
+msgid "The generated files are copied without running repository scripts. An existing theme is preserved in a dated backup. Desktop settings are changed separately."
+msgstr "Les fichiers générés sont copiés sans exécuter les scripts du dépôt. Un thème existant est conservé dans une sauvegarde datée. Les réglages du bureau sont modifiés séparément."
+
+#: minttweaks/modules/cinnamon/themes.py:159
+msgid "The installed theme could not be verified."
+msgstr "Le thème installé n’a pas pu être vérifié."
+
+#: minttweaks/modules/cinnamon/themes.py:156
+msgid "The previous theme backup could not be verified."
+msgstr "La sauvegarde du thème précédent n’a pas pu être vérifiée."
+
+#: minttweaks/modules/cinnamon/themes.py:113
+msgid "The repository does not contain a complete generated Cinnamon theme."
+msgstr "Le dépôt ne contient pas de thème Cinnamon généré complet."
+
+#: minttweaks/modules/cinnamon/themes.py:143
+msgid "The staged theme copy could not be verified."
+msgstr "La copie préparatoire du thème n’a pas pu être vérifiée."
+
+#: minttweaks/modules/cinnamon/themes.py:136
+msgid "The theme backup destination already exists."
+msgstr "La destination de sauvegarde du thème existe déjà."
+
+#: minttweaks/modules/cinnamon/themes.py:88
+msgid "The theme contains too many files."
+msgstr "Le thème contient trop de fichiers."
+
+#: minttweaks/modules/cinnamon/themes.py:62
+msgid "The theme directory is missing: {path}"
+msgstr "Le dossier du thème est absent : {path}"
+
+#: minttweaks/modules/cinnamon/themes.py:76
+msgid "The theme exceeds the supported size limit."
+msgstr "Le thème dépasse la limite de taille prise en charge."
+
+#: minttweaks/modules/cinnamon/themes.py:132
+#: minttweaks/modules/cinnamon/themes.py:148
+msgid "The theme files changed. Review a new installation preview."
+msgstr "Les fichiers du thème ont changé. Vérifiez un nouvel aperçu d’installation."
+
+#: minttweaks/modules/cinnamon/themes.py:36
+msgid "The theme path must contain ordinary directories only: {path}"
+msgstr "Le chemin du thème doit contenir uniquement des dossiers ordinaires : {path}"
+
+#: minttweaks/modules/cinnamon/themes.py:116
+msgid "The theme source and installation directory overlap."
+msgstr "La source du thème et le dossier d’installation se chevauchent."
+
+#: minttweaks/modules/cinnamon/themes.py:167
+msgid "Theme installed: {path}"
+msgstr "Thème installé : {path}"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:104
+msgid "Theme source: {path}"
+msgstr "Source du thème : {path}"
+
+#: minttweaks/modules/cinnamon/themes.py:86
+msgid "Theme symbolic links and special files are not supported: {path}"
+msgstr "Les liens symboliques et les fichiers spéciaux de thème ne sont pas pris en charge : {path}"
+
+#: minttweaks/modules/cinnamon/theme_controls.py:40
+msgid "Themes are copied into ~/.themes. Existing versions are backed up. Applying changes only the Cinnamon desktop theme; application themes, icons and fonts are preserved."
+msgstr "Les thèmes sont copiés dans ~/.themes. Les versions existantes sont sauvegardées. L’application modifie uniquement le thème du bureau Cinnamon ; les thèmes des applications, les icônes et les polices sont conservés."
+
+#: minttweaks/modules/cinnamon/theme_controls.py:18
+msgid "View the theme repository"
+msgstr "Voir le dépôt du thème"
+
+#: minttweaks/modules/applications/backend.py:168
+msgid "Application installation failed or could not be fully verified. Check the package state before retrying."
+msgstr "L’installation des applications a échoué ou n’a pas pu être entièrement vérifiée. Vérifiez l’état des paquets avant de réessayer."
+
+#: minttweaks/modules/applications/page.py:148
+msgid "Application installation was not fully verified."
+msgstr "L’installation des applications n’a pas été entièrement vérifiée."
+
+#: minttweaks/modules/applications/page.py:14
+#: minttweaks/modules/home/page.py:95
+msgid "Applications"
+msgstr "Applications"
+
+#: minttweaks/modules/applications/page.py:108
+msgid "Available from official repositories: {version}"
+msgstr "Disponible dans les dépôts officiels : {version}"
+
+#: minttweaks/modules/applications/page.py:25
+msgid "Choose applications from your personal list to install through Linux Mint's official repositories. Already installed applications are kept."
+msgstr "Choisissez les applications de votre liste personnelle à installer depuis les dépôts officiels de Linux Mint. Les applications déjà installées sont conservées."
+
+#: minttweaks/modules/applications/page.py:139
+msgid "Install applications"
+msgstr "Installer les applications"
+
+#: minttweaks/modules/applications/page.py:133
+msgid "Install these applications?"
+msgstr "Installer ces applications ?"
+
+#: minttweaks/modules/applications/backend.py:40
+msgid "Invalid application package request."
+msgstr "Demande de paquet d’application non valide."
+
+#: minttweaks/modules/applications/backend.py:25
+msgid "Invalid or duplicate application catalog entry."
+msgstr "Entrée du catalogue d’applications non valide ou en double."
+
+#: minttweaks/modules/applications/page.py:24
+msgid "My applications"
+msgstr "Mes applications"
+
+#: minttweaks/modules/applications/backend.py:44
+#: minttweaks/modules/applications/backend.py:52
+msgid "Official repository information could not be verified."
+msgstr "Les informations des dépôts officiels n’ont pas pu être vérifiées."
+
+#: minttweaks/modules/applications/backend.py:50
+msgid "Official source unavailable: {error}"
+msgstr "Source officielle indisponible : {error}"
+
+#: minttweaks/modules/applications/page.py:35
+msgid "Preview selected applications"
+msgstr "Prévisualiser les applications sélectionnées"
+
+#: minttweaks/modules/applications/page.py:134
+msgid "Review all packages, dependencies and official sources. Removals are refused. The plan is checked again before installation; repositories are not changed."
+msgstr "Vérifiez tous les paquets, les dépendances et les sources officielles. Les suppressions sont refusées. Le plan est vérifié à nouveau avant l’installation ; les dépôts ne sont pas modifiés."
+
+#: minttweaks/modules/applications/page.py:28
+msgid "Search by name, category or package"
+msgstr "Rechercher par nom, catégorie ou paquet"
+
+#: minttweaks/modules/applications/backend.py:34
+msgid "Select applications from your catalog only."
+msgstr "Sélectionnez uniquement des applications de votre catalogue."
+
+#: minttweaks/modules/applications/backend.py:153
+msgid "Simulation: no applications were installed."
+msgstr "Simulation : aucune application n’a été installée."
+
+#: minttweaks/modules/applications/page.py:155
+msgid "The application operation failed."
+msgstr "L’opération sur les applications a échoué."
+
+#: minttweaks/modules/applications/backend.py:167
+msgid "The selected applications were installed and their versions verified."
+msgstr "Les applications sélectionnées ont été installées et leurs versions vérifiées."
+
+#: minttweaks/modules/applications/page.py:100
+msgid "Unavailable from official repositories: {error}"
+msgstr "Indisponible dans les dépôts officiels : {error}"
+
+#: minttweaks/modules/applications/page.py:31
+msgid "Your application list is empty for now."
+msgstr "Votre liste d’applications est vide pour le moment."
+
+#: minttweaks/modules/applications/page.py:83
+msgid "{total} application(s) in your list · {selected} selected."
+msgstr "{total} application(s) dans votre liste · {selected} sélectionnée(s)."
+
+#: minttweaks/modules/applications/fonts.py:168
+msgid "A unique GitHub font archive could not be identified."
+msgstr "Une archive de police GitHub unique n’a pas pu être identifiée."
+
+#: minttweaks/modules/applications/page.py:110
+msgid "APT package used: {package}"
+msgstr "Paquet APT utilisé : {package}"
+
+#: minttweaks/modules/applications/catalog.py:47
+#: minttweaks/modules/applications/catalog.py:48
+msgid "Development"
+msgstr "Développement"
+
+#: minttweaks/modules/applications/page.py:173
+msgid "Download and install this GitHub font?"
+msgstr "Télécharger et installer cette police depuis GitHub ?"
+
+#: minttweaks/modules/applications/page.py:171
+msgid "Download size: {size:.1f} MiB"
+msgstr "Taille du téléchargement : {size:.1f} Mio"
+
+#: minttweaks/modules/applications/fonts.py:248
+msgid "Downloading font file {current}/{total}."
+msgstr "Téléchargement du fichier de police {current}/{total}."
+
+#: minttweaks/modules/applications/page.py:102
+msgid "Font installed for your user account from GitHub: {version}"
+msgstr "Police installée dans votre compte depuis GitHub : {version}"
+
+#: minttweaks/modules/applications/catalog.py:49
+#: minttweaks/modules/applications/catalog.py:50
+#: minttweaks/modules/applications/catalog.py:51
+#: … (+3)
+msgid "Fonts"
+msgstr "Polices"
+
+#: minttweaks/modules/applications/page.py:26
+msgid "Fonts use APT first. A separate GitHub download is offered only when their official package is missing."
+msgstr "Les polices utilisent APT en priorité. Un téléchargement GitHub séparé est proposé uniquement lorsque leur paquet officiel est absent."
+
+#: minttweaks/modules/applications/page.py:54
+msgid "Get this font from GitHub…"
+msgstr "Récupérer cette police sur GitHub…"
+
+#: minttweaks/modules/applications/fonts.py:68
+msgid "GitHub font metadata exceeds the size limit."
+msgstr "Les métadonnées de police GitHub dépassent la limite de taille."
+
+#: minttweaks/modules/applications/fonts.py:286
+msgid "GitHub fonts installed for your user account: {path}"
+msgstr "Polices GitHub installées dans votre compte : {path}"
+
+#: minttweaks/modules/applications/page.py:182
+msgid "Install GitHub fonts"
+msgstr "Installer les polices GitHub"
+
+#: minttweaks/modules/applications/fonts.py:103
+msgid "Invalid path in the downloaded font files."
+msgstr "Chemin non valide dans les fichiers de police téléchargés."
+
+#: minttweaks/modules/applications/catalog.py:39
+#: minttweaks/modules/applications/catalog.py:40
+#: minttweaks/modules/applications/catalog.py:41
+msgid "Multimedia"
+msgstr "Multimédia"
+
+#: minttweaks/modules/applications/fonts.py:95
+msgid "No GitHub font source is configured for this package."
+msgstr "Aucune source de police GitHub n’est configurée pour ce paquet."
+
+#: minttweaks/modules/applications/fonts.py:149
+#: minttweaks/modules/applications/fonts.py:275
+msgid "No installable fonts were found in the GitHub source."
+msgstr "Aucune police installable n’a été trouvée dans la source GitHub."
+
+#: minttweaks/modules/applications/page.py:104
+msgid "No official APT candidate. This font can be retrieved from its upstream GitHub source."
+msgstr "Aucun candidat APT officiel. Cette police peut être récupérée depuis son dépôt GitHub amont."
+
+#: minttweaks/modules/applications/fonts.py:165
+msgid "No stable GitHub font release is available."
+msgstr "Aucune version stable de la police n’est disponible sur GitHub."
+
+#: minttweaks/modules/applications/fonts.py:237
+msgid "Simulation: no GitHub fonts were downloaded or installed."
+msgstr "Simulation : aucune police GitHub n’a été téléchargée ni installée."
+
+#: minttweaks/modules/applications/fonts.py:200
+msgid "Symbolic links are not accepted in font archives."
+msgstr "Les liens symboliques ne sont pas acceptés dans les archives de polices."
+
+#: minttweaks/modules/applications/catalog.py:46
+msgid "Terminal"
+msgstr "Terminal"
+
+#: minttweaks/modules/applications/catalog.py:33
+#: minttweaks/modules/applications/catalog.py:34
+#: minttweaks/modules/applications/catalog.py:35
+#: … (+3)
+msgid "Terminal utilities"
+msgstr "Utilitaires terminal"
+
+#: minttweaks/modules/applications/fonts.py:176
+msgid "The GitHub font digest is invalid."
+msgstr "L’empreinte de la police GitHub n’est pas valide."
+
+#: minttweaks/modules/applications/fonts.py:134
+msgid "The GitHub font file list is incomplete."
+msgstr "La liste des fichiers de police GitHub est incomplète."
+
+#: minttweaks/modules/applications/fonts.py:131
+msgid "The GitHub font revision could not be verified."
+msgstr "La révision de la police GitHub n’a pas pu être vérifiée."
+
+#: minttweaks/modules/applications/fonts.py:239
+msgid "The GitHub font source changed. Review a new preview."
+msgstr "La source de police GitHub a changé. Vérifiez un nouvel aperçu."
+
+#: minttweaks/modules/applications/fonts.py:260
+msgid "The downloaded font checksum does not match."
+msgstr "L’empreinte de la police téléchargée ne correspond pas."
+
+#: minttweaks/modules/applications/fonts.py:214
+#: minttweaks/modules/applications/fonts.py:268
+msgid "The downloaded font file is invalid."
+msgstr "Le fichier de police téléchargé n’est pas valide."
+
+#: minttweaks/modules/applications/page.py:165
+#: minttweaks/modules/applications/page.py:180
+msgid "The font availability changed. Re-analyse before continuing."
+msgstr "La disponibilité de la police a changé. Relancez l’analyse avant de continuer."
+
+#: minttweaks/modules/applications/fonts.py:50
+msgid "The font download URL is not an approved GitHub URL."
+msgstr "L’URL de téléchargement de la police n’est pas une URL GitHub autorisée."
+
+#: minttweaks/modules/applications/fonts.py:81
+msgid "The font download exceeds the size limit."
+msgstr "Le téléchargement de la police dépasse la limite de taille."
+
+#: minttweaks/modules/applications/fonts.py:252
+msgid "The font download size does not match the preview."
+msgstr "La taille de la police téléchargée ne correspond pas à l’aperçu."
+
+#: minttweaks/modules/applications/fonts.py:283
+msgid "The font files were installed, but the Fontconfig cache could not be refreshed: {error}"
+msgstr "Les fichiers de police ont été installés, mais le cache Fontconfig n’a pas pu être actualisé : {error}"
+
+#: minttweaks/modules/applications/fonts.py:285
+msgid "The installed GitHub font files could not be verified."
+msgstr "Les fichiers de police GitHub installés n’ont pas pu être vérifiés."
+
+#: minttweaks/modules/applications/fonts.py:156
+#: minttweaks/modules/applications/fonts.py:279
+msgid "The managed font directory already exists. Its files were preserved."
+msgstr "Le dossier géré de la police existe déjà. Ses fichiers ont été préservés."
+
+#: minttweaks/modules/applications/page.py:174
+msgid "The official APT package is unavailable. Download font files from the listed upstream repositories into your user account. No repository scripts are executed and existing fonts are preserved."
+msgstr "Le paquet APT officiel est indisponible. Téléchargez les fichiers de police depuis les dépôts amont indiqués dans votre compte utilisateur. Aucun script de dépôt n’est exécuté et les polices existantes sont préservées."
+
+#: minttweaks/modules/applications/fonts.py:207
+msgid "The selected font collection is too large or contains duplicate paths."
+msgstr "La collection de polices sélectionnée est trop volumineuse ou contient des chemins en double."
+
+#: minttweaks/modules/applications/fonts.py:180
+#: minttweaks/modules/applications/fonts.py:192
+msgid "The selected font collection is too large."
+msgstr "La collection de polices sélectionnée est trop volumineuse."
+
+#: minttweaks/modules/applications/fonts.py:89
+msgid "Unsafe font installation directory: {path}"
+msgstr "Dossier d’installation de police non sûr : {path}"
+
+#: minttweaks/modules/applications/fonts.py:172
+msgid "Unsupported GitHub font release asset."
+msgstr "Fichier de version de police GitHub non pris en charge."
+
+#: minttweaks/modules/applications/fonts.py:145
+msgid "Unsupported file in the upstream font repository."
+msgstr "Fichier non pris en charge dans le dépôt amont de la police."
+
+#: minttweaks/modules/applications/catalog.py:27
+msgid "Uses p7zip-full on distributions without the 7zip package."
+msgstr "Utilise p7zip-full sur les distributions sans paquet 7zip."
+
+#: minttweaks/modules/applications/catalog.py:42
+msgid "Uses qemu-system when the qemu package is unavailable."
+msgstr "Utilise qemu-system lorsque le paquet qemu est indisponible."
+
+#: minttweaks/modules/applications/catalog.py:21
+#: minttweaks/modules/applications/catalog.py:22
+#: minttweaks/modules/applications/catalog.py:23
+#: … (+9)
+msgid "Utilities"
+msgstr "Utilitaires"
+
+#: minttweaks/modules/applications/catalog.py:42
+#: minttweaks/modules/applications/catalog.py:43
+#: minttweaks/modules/applications/catalog.py:44
+#: … (+1)
+msgid "Virtualization"
+msgstr "Virtualisation"

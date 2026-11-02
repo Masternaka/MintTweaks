@@ -32,7 +32,44 @@ système pour ces titres ; le profil ne couvre pas encore ce choix. Les sept
 lectures sont successives : éviter de changer les réglages dans un autre outil
 pendant la capture.
 
-## Parcours
+## Installer Catppuccin pour Cinnamon
+
+La carte **Catppuccin pour Cinnamon**, dans la même page, prend en charge le
+dépôt [Masternaka/Cinnamon_Catppuccin](https://github.com/Masternaka/Cinnamon_Catppuccin).
+
+1. Choisir le dossier parent du clone, ou ouvrir un dépôt déjà présent.
+   Le champ **Dépôt local du thème** contient le dossier final du clone, qui ne
+   doit pas encore exister. Git doit être installé pour le clonage.
+2. Cliquer sur **Cloner le dépôt Catppuccin**, puis confirmer l’URL et la destination.
+3. Choisir **Latte**, **Frappé**, **Macchiato** ou **Mocha**.
+4. Cliquer sur **Prévisualiser l’installation du thème**. L’aperçu indique la
+   source, la destination dans `~/.themes/` et la sauvegarde prévue si la variante
+   est déjà installée. Confirmer pour copier les fichiers.
+5. Pour l’activer, cliquer sur **Appliquer la variante au bureau**, puis confirmer
+   le changement d’apparence. Les réglages précédents sont sauvegardés dans la
+   liste **Restaurer l’apparence précédente**.
+
+Les fichiers prêts à installer proviennent de `dist/Catppuccin-<variante>/`.
+MintTweaks n’exécute ni l’installateur ni le générateur du dépôt. Si `dist/` est
+absent ou incomplet, l’installation est refusée. L’installation copie les
+fichiers du thème ; le bouton d’application change uniquement le thème du bureau
+Cinnamon, en conservant les thèmes des applications, les bordures, les icônes,
+les curseurs et les polices.
+
+Avant le remplacement, la nouvelle copie est préparée et vérifiée. Une version
+existante est conservée dans
+`~/.themes/.minttweaks-backups/<date-UTC>-<identifiant>/Catppuccin-<variante>/` ;
+son chemin est affiché dans la sortie. Aucun ancien thème n’est supprimé
+automatiquement. La restauration d’apparence rétablit les réglages, pas les
+fichiers d’une ancienne version du thème : ces copies restent disponibles pour
+une restauration manuelle.
+
+Les chemins symboliques et les fichiers spéciaux sont refusés. Une modification
+de la source ou de la destination après l’aperçu impose une nouvelle confirmation.
+L’installation se fait dans le compte utilisateur, sans droits administrateur.
+Le mode `--dry-run` ne clone, ne copie et ne sauvegarde aucun thème.
+
+## Parcours des profils
 
 1. Ouvrir **Profils Cinnamon**, puis **Réanalyser** si nécessaire.
 2. Vérifier les sept valeurs. Une capture incomplète ne peut pas être enregistrée.

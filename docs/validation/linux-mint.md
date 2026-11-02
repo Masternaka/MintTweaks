@@ -293,3 +293,58 @@ essais de nouveaux terminaux peuvent confirmer le chargement réel des hooks.
 Valider notamment le passage d’Alacritty YAML à TOML entre deux machines et la
 reprise des choix Kitty. Les alias contenant des chemins personnels nécessitent
 une vérification par l’utilisateur ; leurs commandes ne sont pas réécrites.
+
+### Dotfiles
+
+À réaliser dans un compte de test avec des configurations sans données sensibles.
+
+| ID | Essai | Résultat attendu |
+| --- | --- | --- |
+| D01 | Installer Git et Stow, puis annuler un second aperçu | Plan APT visible, outils détectés ; aucune installation à l’annulation |
+| D02 | Cloner un dépôt GitHub dans un chemin contenant des espaces | Clone dans le nouveau dossier choisi, sans exécution de scripts ; dossier existant refusé |
+| D03 | Ouvrir un dépôt existant et un sous-dossier stow/ | Une ligne par configuration, dossiers techniques exclus |
+| D04 | Activer bash/.bashrc et kitty/.config/kitty/kitty.conf vers un dossier de test | Aperçu puis liens corrects, dossiers intermédiaires ordinaires, nouvel appel idempotent |
+| D05 | Préparer un fichier cible existant, un lien source ou un dossier cible symbolique | Fichier proposé pour sauvegarde ; lien source et dossier symbolique refusés |
+| D06 | Modifier une configuration ou créer un conflit pendant la confirmation | Application refusée, nouvel aperçu nécessaire |
+| D07 | Tester dot-bashrc avec l’option de conversion, une règle .stow-local-ignore et un ~/.stowrc | Conversion correcte, exclusions visibles dans la simulation ; fichier d’options implicite refusé |
+| D08 | Annuler chaque confirmation, occuper une opération depuis une autre section et lancer --dry-run | Aucune mutation à l’annulation ou en simulation ; concurrence refusée |
+| D09 | Activer avec fichier existant, redémarrer MintTweaks, puis Annuler le Stow | Sauvegarde privée datée, liens retirés, octets et permissions restaurés, sauvegarde conservée |
+| D10 | Activer sans fichier préalable, puis annuler ; tester un lien vers un ancien dépôt | Seuls les nouveaux liens sont retirés ; ancien lien restauré sans toucher sa destination |
+| D11 | Remplacer un lien par un fichier manuel avant l’annulation | Refus avant de retirer les autres liens, fichier manuel et sauvegarde conservés |
+| D12 | Provoquer un échec après création partielle des liens | Récupération des originaux, liens partiels retirés ; chemin du journal affiché si récupération incomplète |
+
+Ces essais restent à effectuer sous Linux Mint ; les doubles GTK et de commandes
+ne valident pas le rendu ni l’exécution réelle de Git, APT ou Stow.
+
+### Thème Catppuccin
+
+| ID | Essai | Résultat attendu |
+| --- | --- | --- |
+| CT01 | Cloner Cinnamon_Catppuccin dans un chemin avec espaces, puis ouvrir un clone existant | URL fixe correcte, dossier choisi respecté, aucun script du dépôt exécuté |
+| CT02 | Installer chacune des quatre variantes | Fichiers présents dans ~/.themes et variantes visibles dans les paramètres Cinnamon |
+| CT03 | Réinstaller une variante existante | Aperçu de sauvegarde, ancienne version conservée dans .minttweaks-backups, nouvelle copie vérifiée |
+| CT04 | Appliquer une variante, puis restaurer la sauvegarde d’apparence | Thème du bureau changé puis restauré, autres réglages inchangés ; rendu contrôlé dans Cinnamon |
+| CT05 | Annuler les confirmations, modifier la destination après aperçu, puis tester --dry-run | Aucune écriture à l’annulation ou en simulation ; aperçu périmé refusé |
+| CT06 | Occuper une opération dans une autre section, tester un chemin symbolique ou un échec de copie | Refus explicite ; ancienne version préservée, contrôles utilisables après l’erreur |
+
+Le rendu des variantes et leur détection par les paramètres restent à vérifier
+dans une session Cinnamon réelle.
+
+### Applications des dépôts officiels
+
+| ID | Essai | Résultat attendu |
+| --- | --- | --- |
+| A01 | Ouvrir Applications avec le catalogue vide | Message de liste vide, aucun paquet ajouté ni installation proposée |
+| A02 | Après ajout de la liste, analyser avec paquets installés, disponibles et absents | Versions visibles, paquets installés non sélectionnables, indisponibilité explicite |
+| A03 | Rechercher par nom, catégorie et paquet après une sélection | Lignes filtrées sans effacer les sélections |
+| A04 | Prévisualiser des applications officielles avec dépendances | Versions et origines détaillées, plan complet, aucune écriture avant confirmation |
+| A05 | Tester un candidat ou une dépendance provenant d’un PPA | Installation refusée sans modification des dépôts |
+| A06 | Annuler, modifier le plan entre aperçu et application, puis tester --dry-run | Annulation sans installation, plan périmé refusé, simulation sans mutation |
+| A07 | Installer sous Mint avec un miroir officiel puis vérifier les versions | Sources reconnues via python3-apt, autorisation polkit, versions demandées confirmées |
+| A08 | Examiner les 34 entrées et leurs catégories, avec qemu ou 7zip sans candidat | Liste respectée ; qemu-system ou p7zip-full proposés seulement si nécessaires et officiels |
+| A09 | Police disponible dans APT, absente, puis diagnostic APT en erreur | Priorité à APT ; bouton GitHub seulement pour une absence confirmée |
+| A10 | Confirmer le téléchargement d’une police GitHub puis rouvrir le sélecteur de polices | Source et volume visibles, fichiers utilisateur et licences installés, Fontconfig actualisé |
+| A11 | Annuler l’aperçu GitHub, tester --dry-run et un dossier de police déjà présent | Aucun téléchargement à l’annulation, aucune mutation en simulation, fichiers existants préservés |
+
+La compatibilité LMDE du contrôle des origines est couverte par des fixtures ;
+elle ne constitue pas une validation réelle de l’application sur LMDE.

@@ -13,10 +13,12 @@ par son application dédiée.
 | [Services](docs/guides/administration.md#services) | Services systemd, journaux et analyse du démarrage |
 | [Samba](docs/guides/administration.md#samba) | Partages, comptes, validation et restauration de configuration |
 | [Firefox](docs/guides/administration.md#firefox) | Catalogue d’extensions et politique du navigateur natif |
-| [Profils Cinnamon](docs/guides/profils-cinnamon.md) | Capture, application et restauration de sept réglages d’apparence |
+| [Profils Cinnamon](docs/guides/profils-cinnamon.md) | Clonage et installation de Catppuccin ; capture, application et restauration des réglages d’apparence |
 | [Après installation](docs/guides/assistant-apres-installation.md) | Parcours facultatif avec progression déclarée par l’utilisateur |
+| [Applications](docs/guides/applications.md) | 34 entrées personnelles, installation APT officielle et repli GitHub pour les polices absentes |
 | [Logiciels natifs](docs/guides/logiciels-natifs.md) | Helium, Brave et Zen depuis les sources APT tierces attendues |
 | [Shells et terminaux](docs/guides/shells-et-terminaux.md) | 32 outils, intégrations, réglages personnels, alias et export/import ; Kitty et Alacritty |
+| [Dotfiles](docs/guides/dotfiles.md) | Clonage GitHub, installation de Git/Stow, sauvegarde avant activation et annulation avec restauration |
 
 Les changements sont précédés de confirmations et, pour les configurations
 gérées, de sauvegardes. Les opérations qui modifient le système utilisent une
@@ -30,12 +32,12 @@ dans la [recette Linux Mint](docs/validation/linux-mint.md).
 ## Installation depuis les sources
 
 Cibles prévues : Linux Mint Cinnamon, familles 20, 21 et 22, à valider séparément.
-Prérequis : Python ≥ 3.8, `python3-gi`, `gir1.2-gtk-3.0`, polkit, `gpg` et `ca-certificates`.
+Prérequis : Python ≥ 3.8, `python3-gi`, `python3-apt`, `gir1.2-gtk-3.0`, polkit, `gpg` et `ca-certificates`.
 
 Sur la machine Mint :
 
 ```bash
-sudo apt install python3-gi gir1.2-gtk-3.0 policykit-1 gpg ca-certificates
+sudo apt install python3-gi python3-apt gir1.2-gtk-3.0 policykit-1 gpg ca-certificates
 git clone https://github.com/Masternaka/MintTweaks.git
 cd MintTweaks
 make test
