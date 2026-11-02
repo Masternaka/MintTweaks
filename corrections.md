@@ -1,0 +1,3 @@
+- continuer à utiliser le répertoire masternaka-repository pour le déploiment de mes projet personnel
+- Pour les installations des applications qui ne sont pas dans les dépôts de Linux Mint, faire l'installation avec les dépôts du développeur d'origine.
+- Ajouter Cinnamon_catppuccin, CinnaFlow, Masterbash dans le répertoire masternaka-repository
