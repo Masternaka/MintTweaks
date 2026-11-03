@@ -33,7 +33,7 @@ Pour « sans objet », expliquer pourquoi le scénario ne s’applique pas.
 | Construction réelle du `.deb` | Non effectué | |
 | Contenu et métadonnées du paquet | Non effectué | |
 | Installation et import du paquet installé | Non effectué | |
-| Vrai GTK, neuf pages, français et anglais | Non effectué | |
+| Vrai GTK, douze pages, français et anglais | Non effectué | |
 | Menu Cinnamon, clavier, thèmes clair et sombre | Non effectué | |
 | Simulation CLI et variable d’environnement, témoins préservés | Non effectué | |
 | Instance simulée distincte de l’instance normale | Non effectué | |
@@ -62,7 +62,8 @@ Pour « sans objet », expliquer pourquoi le scénario ne s’applique pas.
 | M21 — Progression déclarée et reprise après réouverture | Non effectué | |
 | M22 — Assistant en simulation et petite fenêtre | Non effectué | |
 | M23 — Helium et Brave depuis leurs sources officielles | Non effectué | |
-| M24 — Disponibilité du dépôt Zen et lancement réel | Non effectué | |
+| M23b — Zen officiel depuis GitHub, lancement et mises à jour | Non effectué | |
+| M24 — Transition depuis l’ancien paquet Zen | Non effectué | |
 | M25 — Refus et échecs d’installation des logiciels | Non effectué | |
 | M26 — Conservation des parcours au format 1 | Non effectué | |
 | GitHub Actions et contrôle des pièces jointes distantes | Non effectué | Validation distincte |
@@ -110,3 +111,53 @@ mot de passe ou de données personnelles dans les pièces jointes.
 - Export privé et import sur une autre machine ou dans un autre compte :
 - Polices, formats Alacritty et chemins réellement vérifiés :
 - Aucun profil prédéfini ajouté :
+
+## Historique des opérations
+
+- H01–H06 : résultats, preuves ou raisons de non-exécution.
+- Conservation après réouverture, résultats et chemins de sauvegarde :
+- Séparation simulation/réel, filtres et pagination :
+- Rendu GTK et retour vers les modules de restauration :
+- Nouvelle page : essais réels restant à effectuer.
+
+## Rapport de diagnostic
+
+- D01–D06 : résultats, preuves ou raisons de non-exécution.
+- Correspondance aperçu/fichier et conservation des destinations existantes :
+- Exclusions et masquage vérifiés avant partage :
+- Nouvelle fonction : essais réels restant à effectuer.
+
+## Détails des installations
+
+- L01–L05 : résultats, preuves ou raisons de non-exécution.
+- Sources attendues/candidats vérifiés/origines installées non vérifiées :
+- Versions, alternatives, polices GitHub et ancien Zen :
+- Nouvelle présentation : essais GTK réels restant à effectuer.
+
+## Observations facultatives de l’assistant
+
+- O01–O06 : résultats, preuves ou raisons de non-exécution.
+- Conservation des notes et de la progression déclarée :
+- Distinction entre détection et fonctionnement réel, résultats périmés écartés :
+- Nouvelle fonction : essais GTK/Mint réels restant à effectuer.
+
+## Transfert de profils Cinnamon
+
+- C01–C06 : résultats, preuves ou raisons de non-exécution.
+- Correspondance des valeurs, nouvelle identité locale et profils conservés :
+- Import sans application puis aperçu/application/restauration :
+- Nouvelle fonction : essais GTK et transfert entre machines restant à effectuer.
+
+## Transfert de sélections Applications
+
+- SA01–SA06 : résultats, preuves ou raisons de non-exécution.
+- Choix installés préservés, indisponibles conservés et préparation sans installation :
+- Export/import entre deux versions de Mint, alternatives et polices GitHub :
+- Nouvelle fonction : essais GTK/Mint réels restant à effectuer.
+
+## Transfert des références Dotfiles
+
+- RF01–RF06 : résultats, preuves ou raisons de non-exécution.
+- Références seules, dossiers locaux choisis et absence d’action implicite :
+- Analyse puis activation et annulation avec les sauvegardes habituelles :
+- Nouvelle fonction : essais GTK et transfert entre machines Mint restant à effectuer.

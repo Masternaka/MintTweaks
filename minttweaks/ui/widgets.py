@@ -18,6 +18,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk  # noqa: E402  (must follow require_version)
 
 from ..core.runner import BaseRunner  # noqa: E402
+from ..core import history as operation_history  # noqa: E402
 from ..i18n import _  # noqa: E402
 
 
@@ -47,8 +48,10 @@ class AppContext:
     independent of each other.
     """
 
-    def __init__(self, runner: BaseRunner) -> None:
+    def __init__(self, runner: BaseRunner, history=None) -> None:
         self.runner = runner
+        self.history = history
+        self.history_warning = ""
         self._sinks: List[Callable[[str, str], None]] = []
         self._operation_lock = threading.Lock()
         self.operation_name: Optional[str] = None
@@ -64,7 +67,17 @@ class AppContext:
             except Exception:
                 traceback.print_exc()
 
-    def run_operation(self, name, work, on_done=None, on_error=None) -> threading.Thread:
+    def _history_call(self, method, *args):
+        if self.history is None:
+            return None
+        try:
+            return getattr(self.history, method)(*args)
+        except Exception:
+            self.history_warning = _("Operation history could not be saved. The operation itself is not blocked; check the History page.")
+            self.log(self.history_warning, "warn")
+            return None
+
+    def run_operation(self, name, work, on_done=None, on_error=None, *, module="application") -> threading.Thread:
         """Reserve before spawning; hold through completion on the GTK loop.
 
         Reject competing modifications instead of queueing a confirmation which
@@ -76,6 +89,29 @@ class AppContext:
             ))
         self.operation_name = name
         self._operation_changed()
+        identifier = None
+
+        def record_status(status):
+            if identifier is not None:
+                self._history_call("finish", identifier, status)
+
+        def tracked_work():
+            nonlocal identifier
+            identifier = self._history_call("begin", name, module, self.runner.dry_run)
+            recorder = (lambda path: self._history_call("add_backup", identifier, path)) if identifier else None
+            token = operation_history.backup_recorder.set(recorder)
+            try:
+                value = work()
+                status = "failed" if operation_history.result_failed(value) else "completed"
+                if self.runner.dry_run:
+                    status = "simulation" if status == "completed" else "failed"
+                record_status(status)
+                return value
+            except BaseException:
+                record_status("failed")
+                raise
+            finally:
+                operation_history.backup_recorder.reset(token)
 
         def release():
             self.operation_name = None
@@ -86,6 +122,9 @@ class AppContext:
             try:
                 if callback is not None:
                     callback(value)
+            except BaseException:
+                record_status("interface_error")
+                raise
             finally:
                 release()
 
@@ -97,7 +136,7 @@ class AppContext:
 
         try:
             return self.run_async(
-                work,
+                tracked_work,
                 on_done=lambda value: finish(on_done, value),
                 on_error=lambda exc: finish(failed, exc),
             )
@@ -375,7 +414,7 @@ class Page(Gtk.Box):
                 self.error(_("The operation failed."), str(exc))
 
         try:
-            return self.ctx.run_operation(name or _(self.page_title), work, on_done, failed)
+            return self.ctx.run_operation(name or _(self.page_title), work, on_done, failed, module=self.page_name)
         except OperationBusy as exc:
             failed(exc)
             return None

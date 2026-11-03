@@ -7,17 +7,22 @@ les modules. Cette page regroupe les priorités ; les guides décrivent l’util
 
 ## Présent dans le code
 
-- Neuf modules : accueil, entretien, services, Samba, Firefox, profils Cinnamon,
-  parcours après installation, logiciels natifs et shells/terminaux.
+- Douze modules : accueil, entretien, services, Samba, Firefox, profils Cinnamon,
+  parcours après installation, applications, logiciels natifs, shells/terminaux,
+  dotfiles et historique des opérations.
 - Simulation des commandes et des nettoyages Python ; instance de simulation
   distincte, aperçu complet et nouvelle vérification d’`autoremove`.
 - Réservation commune des modifications, protection de fermeture et suivi des
   commandes administratives jusqu’à leur fin, même après dépassement de délai.
 - Diagnostics distinguant résultat positif, anomalie et contrôle indisponible.
-- Profils Cinnamon : sept réglages, capture, différences, application et restauration.
-- Parcours facultatif de six étapes, incluant le terminal, avec notes et reprise.
-- Helium et Brave depuis leurs sources APT officielles attendues, Zen depuis le
-  paquet Debian non officiel du dépôt central ; sources préconfigurées requises.
+- Profils Cinnamon : sept réglages, capture, import/export JSON avec aperçu,
+  différences, application et restauration.
+- Parcours facultatif de six étapes, incluant le terminal, avec notes, reprise
+  et observations locales sur demande, distinctes de la progression déclarée.
+- Helium et Brave depuis leurs dépôts APT officiels avec configuration intégrée ;
+  Zen depuis son installateur GitHub officiel, dans le dossier personnel.
+- Volets d’information dans Applications et Logiciels natifs : méthode, portée,
+  source attendue, version/révision et indications de mise à jour et de retrait.
 - Catalogue de 32 outils de terminal ; intégrations Bash/Zsh/Fish, Kitty et
   Alacritty, réglages individuels, alias et export/import des choix personnels.
 - Workflow de validation et de publication : préversions sur `main`, stables sur
@@ -26,10 +31,15 @@ les modules. Cette page regroupe les priorités ; les guides décrivent l’util
 ## Priorité actuelle : valider sous Mint
 
 La [recette](validation/linux-mint.md) et le [modèle de compte rendu](validation/compte-rendu.md)
-sont prêts. Les essais réels n’ont pas encore été effectués.
+sont prêts. Des essais ont déjà été réalisés par l’utilisateur sous Linux Mint ; leurs
+résultats détaillés restent à consigner. Les nouvelles fonctions nécessitent
+leurs propres vérifications dans une session Mint.
+
+Commencer par la [checklist des nouveautés](validation/nouveautes.md), puis
+compléter la recette globale pour le candidat destiné à la publication.
 
 - [ ] Construire et installer le `.deb` exact du candidat dans une VM Cinnamon.
-- [ ] Vérifier les neuf pages, langues, thèmes, clavier et petites fenêtres.
+- [ ] Vérifier les douze pages, langues, thèmes, clavier et petites fenêtres.
 - [ ] Tester les refus polkit, les erreurs APT, les conflits entre modules et la simulation.
 - [ ] Vérifier nettoyages, protection des noyaux et sauvegardes/restaurations Samba.
 - [ ] Vérifier les réglages Cinnamon et la conservation de la progression du parcours.
@@ -44,12 +54,24 @@ sont prêts. Les essais réels n’ont pas encore été effectués.
   simulation APT et exécution.
 - [ ] Compléter le diagnostic Samba : services, configuration, permissions,
   pare-feu et accès local au partage, sans exposer les mots de passe.
-- [ ] Exporter un diagnostic avec aperçu et masquage des informations personnelles.
-- [ ] Conserver un historique structuré des opérations et de leurs résultats,
-  avec restauration des configurations lorsque c’est possible.
-- [ ] Définir un export des réglages des autres modules ; l’export personnel du
-  terminal existe déjà et ne constitue pas une sauvegarde du système.
-- [ ] Évaluer l’import de profils Cinnamon et le téléchargement facultatif de Nerd Fonts.
+- [x] Exporter un diagnostic local avec aperçu, exclusions des journaux bruts,
+  masquage des identifiants courants et sauvegarde Markdown sans écrasement.
+- [ ] Valider l’aperçu et la sélection du fichier de diagnostic sous Mint.
+- [x] Conserver un historique structuré des opérations et de leurs résultats,
+  avec références des sauvegardes et retour vers le module d’origine.
+- [ ] Valider le rendu de l’historique et les restaurations existantes sous Mint.
+- [x] Transférer une sélection du catalogue Applications par JSON avec aperçu,
+  préparation des cases APT et conservation des choix indisponibles pour la session.
+- [ ] Valider le transfert de sélections Applications entre machines Mint.
+- [x] Transférer les références Dotfiles : URL GitHub, noms de configurations
+  et option dotfiles, avec choix des chemins locaux et sans activation implicite.
+- [ ] Valider les références Dotfiles entre deux machines Mint.
+- [ ] Évaluer les transferts des autres modules ; les parcours existants restent
+  distincts et ne constituent pas une sauvegarde du système.
+- [x] Importer et exporter un profil Cinnamon avec aperçu, nouvelle identité locale
+  et conservation des profils existants ; aucune application implicite.
+- [ ] Valider les transferts Cinnamon entre deux machines Mint.
+- [ ] Évaluer le téléchargement facultatif de Nerd Fonts.
 
 ## Pistes à évaluer ensuite
 
@@ -61,7 +83,7 @@ sont prêts. Les essais réels n’ont pas encore été effectués.
 | Bureau | Applications par défaut et accès aux outils Mint existants |
 | Système | Pare-feu ufw, permissions Flatpak, informations matérielles et batterie |
 | Réglages avancés | sysctl dans un fichier dédié avec sauvegarde et restauration, à étudier plus tard |
-| Parcours | Évaluer une vérification des résultats et une orchestration facultative ; le parcours actuel reste déclaratif |
+| Parcours | Étendre les observations pour des objectifs précisément définis ; évaluer une orchestration facultative, avec progression déclarative |
 
 ## Décisions de périmètre
 
@@ -70,7 +92,9 @@ sont prêts. Les essais réels n’ont pas encore été effectués.
   « Administration ». Les réglages et exports correspondent aux choix de l’utilisateur.
 - Le module Logiciels natifs reste limité aux applications tierces natives ;
   aucun catalogue généraliste ni installation Flatpak dans ce module.
-- Les dépôts et clés APT restent configurés avec les outils de Mint et les
-  instructions des projets. Le dépôt APT central est maintenu séparément.
+- Le module Logiciels natifs peut configurer les sources fixes Helium et Brave
+  ainsi que le dépôt Masternaka après confirmation. Les autres dépôts et clés
+  restent gérés avec les outils de Mint et les instructions des projets.
+  Le contenu du dépôt APT central est maintenu séparément.
 - Ne pas recréer les gestionnaires Mint de pilotes, mises à jour, PPA et miroirs.
   Les noyaux mainline, l’édition de fstab, GRUB et sudoers restent hors du périmètre.

@@ -11,12 +11,13 @@ from gi.repository import Gtk  # noqa: E402
 
 from . import backend  # noqa: E402
 from .theme_controls import ThemeControls  # noqa: E402
+from .profile_transfer import ProfileTransferControls  # noqa: E402
 from ...i18n import _  # noqa: E402
 from ...ui import widgets  # noqa: E402
 from ...ui.widgets import Page  # noqa: E402
 
 
-class CinnamonPage(ThemeControls, Page):
+class CinnamonPage(ProfileTransferControls, ThemeControls, Page):
     page_name = "cinnamon"
     page_title = _("Cinnamon profiles")
     page_icon = "preferences-desktop-theme-symbolic"
@@ -28,6 +29,7 @@ class CinnamonPage(ThemeControls, Page):
         self.backups: Dict[str, backend.Profile] = {}
         self._loading = False
         self._saving = False
+        self._imported_profile_id = None
         container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
         container.set_border_width(18)
         self._build_themes(container)
@@ -62,6 +64,7 @@ class CinnamonPage(ThemeControls, Page):
         self.apply_button = widgets.button(_("Preview and apply profile"), lambda: self._on_preview(False))
         self.apply_button.set_sensitive(False)
         body.pack_start(self.apply_button, False, False, 0)
+        self._build_profile_transfer(body)
         scroller, _view, self.profile_buffer = widgets.text_view(height=220)
         body.pack_start(scroller, True, True, 0)
         container.pack_start(saved, False, False, 0)
@@ -92,6 +95,7 @@ class CinnamonPage(ThemeControls, Page):
 
     def _update_actions(self):
         self._update_theme_controls()
+        self._update_transfer_controls()
         allowed = bool(self.snapshot is not None and self.snapshot.complete and
                        not self._loading and not self._saving and not self.ctx.runner.dry_run)
         self.apply_button.set_sensitive(allowed and self.profile_combo.get_active_id() in self.profiles)
@@ -135,13 +139,17 @@ class CinnamonPage(ThemeControls, Page):
             self.profiles = {profile.id: profile for profile in catalog.profiles}
             self.profile_combo.remove_all()
             for profile in catalog.profiles:
-                self.profile_combo.append(profile.id, profile.name + " — " + profile.captured_at)
+                self.profile_combo.append(profile.id, profile.name + " — " + profile.captured_at + " [" + profile.id[:8] + "]")
             self.catalog_hint.set_text(_("{count} saved profile(s).").format(count=len(self.profiles)))
             if catalog.errors:
                 self.catalog_hint.set_text(_("Some profile files could not be read and were preserved:\n{errors}").format(
                     errors="\n".join(name + ": " + error for name, error in catalog.errors.items())
                 ))
-            self.profile_combo.set_active(0 if self.profiles else -1)
+            if self._imported_profile_id in self.profiles:
+                self.profile_combo.set_active_id(self._imported_profile_id)
+            else:
+                self.profile_combo.set_active(0 if self.profiles else -1)
+            self._imported_profile_id = None
             self._show_profile()
         if len(payload) > 3:
             backups, backup_error = payload[3:]
@@ -164,7 +172,7 @@ class CinnamonPage(ThemeControls, Page):
         profile = self.profiles.get(self.profile_combo.get_active_id())
         lines = []
         if profile is not None:
-            lines = [profile.name, profile.captured_at, ""]
+            lines = [profile.name, profile.captured_at, _("Local profile identifier: {id}").format(id=profile.id), ""]
             for setting in backend.SETTINGS:
                 value = profile.settings[setting.id]
                 lines.append(setting.title + ": " + (value if value else _("(empty value)")))

@@ -243,6 +243,8 @@ def activate(runner, plan, on_line=None):
     # Read-back proves that the original bytes are durable before unlinking.
     if _load(journal) != data:
         raise ValueError(_("The dotfiles backup could not be verified."))
+    from ...core.history import record_backup
+    record_backup(journal)
     try:
         for record in plan.records:
             path = plan.target / record['relative']
@@ -340,6 +342,8 @@ def undo(runner, plan):
     checked = preview_undo(plan.root, plan.target, plan.name, plan.dotfiles)
     if checked != plan:
         raise ValueError(_("The undo plan changed. Review a new preview before continuing."))
+    from ...core.history import record_backup
+    record_backup(plan.journal)
     _restore(plan.target, plan.records)
     if plan.journal:
         data = dict(plan.data, status='undone')

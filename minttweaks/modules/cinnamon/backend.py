@@ -295,6 +295,8 @@ def apply_profile(runner: BaseRunner, plan: ApplyPlan, backup_directory: Optiona
     check_writable(runner, plan.changes)
     directory = Path(backup_directory) if backup_directory is not None else paths.PROFILE_BACKUP_DIR
     backup = store_snapshot(current, _("Before changing Cinnamon appearance"), directory)
+    from ...core.history import record_backup
+    record_backup(directory / (backup.id + ".json"))
     attempted = []
     try:
         for setting in plan.changes:

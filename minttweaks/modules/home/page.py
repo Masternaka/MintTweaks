@@ -9,7 +9,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk  # noqa: E402
 
-from ...modules.home import backend as home  # noqa: E402
+from ...modules.home import backend as home, diagnostics  # noqa: E402
 from ...ui import widgets  # noqa: E402
 from ...ui.widgets import AppContext, Page  # noqa: E402
 from ...i18n import _  # noqa: E402
@@ -30,6 +30,7 @@ class HomePage(Page):
     def __init__(self, ctx: AppContext) -> None:
         super().__init__(ctx)
         self.report: Optional[home.HomeReport] = None
+        self._exporting = False
         self._summary_labels: Dict[str, Gtk.Label] = {}
 
         scroller = widgets.scrolled(self._build(), min_height=400)
@@ -44,6 +45,7 @@ class HomePage(Page):
         container.set_margin_bottom(18)
         container.pack_start(self._build_summary(), False, False, 0)
         container.pack_start(self._build_diagnostics(), False, False, 0)
+        container.pack_start(self._build_export(), False, False, 0)
         container.pack_start(self._build_modules(), False, False, 0)
         return container
 
@@ -62,6 +64,90 @@ class HomePage(Page):
             self._summary_labels[key] = value
             body.pack_start(widgets.row(widgets.label(heading), value), False, False, 0)
         return outer
+
+    def _build_export(self):
+        outer, body = widgets.card(_("Diagnostic report"),
+            _("Prepare a new local report, review its contents, then save a Markdown file to share manually. No report is sent automatically."))
+        self.include_history = Gtk.CheckButton(label=_("Include the last 20 operations (module, date and result only)"))
+        self.include_history.set_active(True)
+        body.pack_start(self.include_history, False, False, 0)
+        self.export_button = widgets.button(_("Preview diagnostic report…"), self._on_export)
+        self.export_button.set_sensitive(not self.ctx.runner.dry_run)
+        body.pack_start(self.export_button, False, False, 0)
+        self.export_status = widgets.label(_("Host and account names, backup paths and raw logs are excluded from the report."), wrap=True)
+        body.pack_start(self.export_status, False, False, 0)
+        return outer
+
+    def _export_controls(self):
+        self.export_button.set_sensitive(not self._exporting and not self.ctx.runner.dry_run)
+        self.include_history.set_sensitive(not self._exporting)
+
+    def _on_export(self):
+        if self._exporting or self.ctx.runner.dry_run:
+            return
+        include_history = self.include_history.get_active()
+        self._exporting = True
+        self._export_controls()
+        self.export_status.set_text(_("Preparing a fresh diagnostic report…"))
+        self.ctx.run_async(lambda: diagnostics.collect(self.ctx.runner, self.ctx.history, include_history=include_history),
+                           on_done=self._preview_export, on_error=self._export_failed)
+
+    def _preview_export(self, report):
+        dialog = Gtk.Dialog(title=_("Preview diagnostic report"), transient_for=self.window, modal=True)
+        dialog.add_buttons(_("Cancel"), Gtk.ResponseType.CANCEL, _("Save report…"), Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.CANCEL)
+        dialog.set_default_size(760, 560)
+        body = dialog.get_content_area()
+        body.set_border_width(12)
+        body.set_spacing(12)
+        body.pack_start(widgets.label(_("Only the text below will be saved. Review it before sharing. Existing files are preserved; choose a new filename."), wrap=True), False, False, 0)
+        scroller, _view, buffer = widgets.text_view(height=340)
+        buffer.set_text(report.text)
+        body.pack_start(scroller, True, True, 0)
+        dialog.show_all()
+        try:
+            accepted = dialog.run() == Gtk.ResponseType.OK
+        finally:
+            dialog.destroy()
+        if not accepted:
+            return self._export_cancelled()
+        filename = self._choose_report_file(report.filename)
+        if not filename:
+            return self._export_cancelled()
+        self.run_operation(lambda: diagnostics.save(self.ctx.runner, report, filename),
+                           on_done=self._export_saved, on_error=self._export_failed,
+                           name=_("Export diagnostic report"))
+
+    def _choose_report_file(self, filename):
+        dialog = Gtk.FileChooserDialog(title=_("Save diagnostic report"), transient_for=self.window,
+                                       action=Gtk.FileChooserAction.SAVE)
+        dialog.add_buttons(_("Cancel"), Gtk.ResponseType.CANCEL, _("Save"), Gtk.ResponseType.OK)
+        dialog.set_current_name(filename)
+        filter_ = Gtk.FileFilter()
+        filter_.set_name(_("Markdown files"))
+        filter_.add_pattern('*.md')
+        dialog.add_filter(filter_)
+        try:
+            return dialog.get_filename() if dialog.run() == Gtk.ResponseType.OK else None
+        finally:
+            dialog.destroy()
+
+    def _export_cancelled(self):
+        self._exporting = False
+        self._export_controls()
+        self.export_status.set_text(_("Export cancelled. No report was written."))
+
+    def _export_saved(self, message):
+        self._exporting = False
+        self._export_controls()
+        self.export_status.set_text(message)
+        self.ctx.log(message, "ok")
+
+    def _export_failed(self, exc):
+        self._exporting = False
+        self._export_controls()
+        self.export_status.set_text(_("Diagnostic export failed. No report was sent."))
+        self.error(_("The diagnostic report could not be exported."), str(exc))
 
     def _build_diagnostics(self) -> Gtk.Box:
         outer, body = widgets.card(
@@ -96,6 +182,7 @@ class HomePage(Page):
             (_("Native software"), "software"),
             (_("Shells and terminals"), "terminal"),
             (_("Dotfiles"), "dotfiles"),
+            (_("History"), "history"),
         ):
             buttons.insert(widgets.button(label, lambda name=page_name: self._open_page(name)), -1)
         body.pack_start(buttons, False, False, 0)

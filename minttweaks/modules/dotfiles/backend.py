@@ -20,10 +20,21 @@ def directory(value):
     return path.resolve()
 
 
-def clone_command(url, destination):
-    url = url.strip()
-    if not re.fullmatch(r"(?:https://github\.com/|git@github\.com:)[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+(?:\.git)?", url):
+def repository_url(url):
+    if not isinstance(url, str) or len(url) > 512:
         raise ValueError(_("Use a GitHub HTTPS or SSH repository URL without a token."))
+    url = url.strip()
+    match = re.fullmatch(r"(?:https://github\.com/|git@github\.com:)([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)", url)
+    if not match:
+        raise ValueError(_("Use a GitHub HTTPS or SSH repository URL without a token."))
+    name = match[2][:-4] if match[2].endswith('.git') else match[2]
+    if match[1] in {'.', '..'} or name in {'', '.', '..'}:
+        raise ValueError(_("Use a GitHub HTTPS or SSH repository URL without a token."))
+    return url
+
+
+def clone_command(url, destination):
+    url = repository_url(url)
     path = Path(destination).expanduser().absolute()
     if not str(destination).strip() or os.path.lexists(path):
         raise ValueError(_("The clone destination must be a new directory."))

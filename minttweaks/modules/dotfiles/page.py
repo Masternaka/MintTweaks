@@ -8,12 +8,13 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from . import backend, deployments
+from .transfer_controls import ReferenceTransferControls
 from ...i18n import _
 from ...ui import widgets
 from ...ui.widgets import Page
 
 
-class DotfilesPage(Page):
+class DotfilesPage(ReferenceTransferControls, Page):
     page_name = "dotfiles"
     page_title = _("Dotfiles")
     page_icon = "folder-symbolic"
@@ -24,6 +25,9 @@ class DotfilesPage(Page):
         self.actions = []
         self.package_buttons = []
         self.inputs = []
+        self._reference = None
+        self._analysed_packages = {}
+        self._updating_reference = False
         body = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
         body.set_border_width(18)
         self.pack_start(widgets.scrolled(body), True, True, 0)
@@ -50,6 +54,7 @@ class DotfilesPage(Page):
         body.pack_start(self.summary, False, False, 0)
         self.packages_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
         body.pack_start(self.packages_box, False, False, 0)
+        self._build_reference_transfer(body)
         self._controls()
 
     def _entry(self, body, title, value):
@@ -93,9 +98,13 @@ class DotfilesPage(Page):
         for child in self.packages_box.get_children():
             self.packages_box.remove(child)
         self.package_buttons = []
+        self._analysed_packages = {}
         self.summary.set_text(_("Analyse again after changing the repository or target."))
+        self._reference_changed()
+        self._controls()
 
     def _controls(self):
+        self._reference_controls()
         ready = not self._busy and not self.ctx.runner.dry_run
         for widget in self.actions + self.inputs:
             widget.set_sensitive(ready)
@@ -106,13 +115,13 @@ class DotfilesPage(Page):
             git=_("Available") if shutil.which("git") else _("Missing"),
             stow=_("Available") if shutil.which("stow") else _("Missing")))
 
-    def _start(self, work, done, mutation=False):
+    def _start(self, work, done, mutation=False, name=None):
         if self._busy or self.ctx.runner.dry_run:
             return
         self._busy = True
         self._controls()
         if mutation:
-            self.run_operation(work, on_done=done, on_error=self._failed, name=_("Dotfiles"))
+            self.run_operation(work, on_done=done, on_error=self._failed, name=name or _("Dotfiles"))
         else:
             self.ctx.run_async(work, on_done=done, on_error=self._failed)
 
@@ -140,11 +149,14 @@ class DotfilesPage(Page):
         self._start(lambda: backend.analyse(repository, target, dotfiles), self._show_packages)
 
     def _show_packages(self, packages):
+        self._analysed_packages = {package.name: package for package in packages}
         self._release()
         self.summary.set_text(_("{count} configuration(s) found.").format(count=len(packages)))
         for package in packages:
             row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
             row.pack_start(widgets.title(package.name), False, False, 0)
+            if self._reference is not None and package.name in self._reference.packages:
+                row.pack_start(widgets.label(_("Included in the loaded reference."), wrap=True), False, False, 0)
             row.pack_start(widgets.label(_("{files} file(s), {linked} existing link(s).").format(files=package.files, linked=package.linked), wrap=True), False, False, 0)
             if package.error:
                 row.pack_start(widgets.label(package.error, selectable=True, wrap=True), False, False, 0)
@@ -160,6 +172,7 @@ class DotfilesPage(Page):
             self.package_buttons.append((undo, bool(package.managed or package.linked), False))
             self.packages_box.pack_start(row, False, False, 0)
         self.packages_box.show_all()
+        self._update_reference_hint()
         self._controls()
 
     def _clone(self):
@@ -169,7 +182,7 @@ class DotfilesPage(Page):
         except ValueError as exc:
             return self._failed(exc)
         if self.confirm(_("Clone this repository?"), str(command)):
-            self._start(lambda: backend.clone(self.ctx.runner, url, destination, self.ctx.log), self._done, mutation=True)
+            self._start(lambda: backend.clone(self.ctx.runner, url, destination, self.ctx.log), self._done, mutation=True, name=_("Clone dotfiles repository"))
 
     def _install(self):
         self._start(lambda: backend.preview_dependencies(self.ctx.runner), self._confirm_install)
@@ -178,7 +191,7 @@ class DotfilesPage(Page):
         self._release()
         if widgets.confirm_list(self.window, _("Install Git and Stow?"), plan.output.splitlines(),
                                 _("Review the APT plan. Administrator authorization is required.")):
-            self._start(lambda: backend.install_dependencies(self.ctx.runner, plan, self.ctx.log), self._done, mutation=True)
+            self._start(lambda: backend.install_dependencies(self.ctx.runner, plan, self.ctx.log), self._done, mutation=True, name=_("Install Git and Stow"))
 
     def _stow(self, name):
         repository, target, dotfiles = self.repository.get_text(), self.target.get_text(), self.dotfiles.get_active()
@@ -191,7 +204,7 @@ class DotfilesPage(Page):
         lines += [str(plan.target / path) for path in plan.backups] or [_("No existing files need a backup.")]
         if widgets.confirm_list(self.window, _("Activate this dotfiles configuration?"), lines,
                                 _("Review the links and backups. A dated private backup is verified before replacing existing files with links. Undo Stow restores that backup.")):
-            self._start(lambda: deployments.activate(self.ctx.runner, plan, self.ctx.log), self._done, mutation=True)
+            self._start(lambda: deployments.activate(self.ctx.runner, plan, self.ctx.log), self._done, mutation=True, name=_("Activate dotfiles configuration"))
 
     def _undo(self, name):
         repository, target, dotfiles = self.repository.get_text(), self.target.get_text(), self.dotfiles.get_active()
@@ -207,4 +220,4 @@ class DotfilesPage(Page):
             lines += ["", _("Backup: {path}").format(path=plan.journal)]
         if widgets.confirm_list(self.window, _("Undo this Stow configuration?"), lines,
                                 _("Only this configuration's links are removed. Saved files are restored, backups and repository files are kept. External changes block restoration.")):
-            self._start(lambda: deployments.undo(self.ctx.runner, plan), self._done, mutation=True)
+            self._start(lambda: deployments.undo(self.ctx.runner, plan), self._done, mutation=True, name=_("Undo dotfiles configuration"))

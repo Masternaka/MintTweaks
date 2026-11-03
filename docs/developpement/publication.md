@@ -80,7 +80,8 @@ Ce mécanisme ajoute un job Ubuntu standard par Release stable, sans nouvelle
 planification et sans cache supplémentaire. Les runners standard des dépôts
 publics sont [gratuits](https://docs.github.com/en/actions/concepts/billing-and-usage).
 Le passage toutes les six heures du dépôt central est conservé comme rattrapage
-et pour les mises à jour d’Helium et Zen ; il reste sujet aux délais GitHub.
+pour les projets personnels distribués ; il reste sujet aux délais GitHub.
+Helium et Zen sont installés directement depuis leurs sources officielles.
 
 ### Configuration unique
 

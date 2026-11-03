@@ -58,8 +58,9 @@ class SoftwareTests(unittest.TestCase):
 
     def test_native_catalog_has_only_the_three_requested_browsers(self):
         self.assertEqual(set(backend.APP_BY_ID), {"helium", "brave", "zen"})
-        self.assertIn("Unofficial", backend.APP_BY_ID["zen"].source_msgid)
-        self.assertNotEqual(backend.APP_BY_ID["brave"].origin, backend.CENTRAL)
+        self.assertEqual(backend.APP_BY_ID["zen"].method, "zen")
+        self.assertIn("github.com/zen-browser", backend.APP_BY_ID["zen"].origin)
+        self.assertNotEqual(backend.APP_BY_ID["brave"].origin, "https://masternaka.github.io/masternaka-repository/")
 
     def test_package_state_distinguishes_absence_from_query_failure(self):
         self.assertFalse(backend.package_state(self.runner, "brave-browser").installed)
@@ -87,14 +88,14 @@ class SoftwareTests(unittest.TestCase):
             with self.assertRaises(backend.SoftwareError):
                 backend.preview_install(self.runner, ["brave"])
         with self.assertRaises(backend.SoftwareError):
-            backend.parse_candidate("Candidate: (none)", backend.CENTRAL)
+            backend.parse_candidate("Candidate: (none)", "https://masternaka.github.io/masternaka-repository/")
 
     def test_architecture_is_checked_per_source(self):
         self.runner.arch = "arm64"
         status = backend.collect_status(self.runner)
         self.assertTrue(status["brave"].installable)
         self.assertTrue(status["helium"].installable)
-        self.assertFalse(status["zen"].installable)
+        self.assertFalse(any(c.argv[:2] == ("apt-cache", "policy") and c.argv[-1].startswith("zen-browser") for c in self.runner.calls))
 
     def test_prerelease_suite_at_the_same_official_helium_url_is_not_accepted(self):
         self.runner.suites["helium-bin"] = "prerelease/main"
@@ -127,8 +128,8 @@ class SoftwareTests(unittest.TestCase):
         self.assertFalse(self.runner.installed)
 
     def test_flat_zen_policy_without_an_architecture_column_is_supported(self):
-        text = f"zen-browser:\n  Candidate: 1.2\n  Version table:\n     1.2 500\n        500 {backend.CENTRAL} ./ Packages\n"
-        self.assertEqual(backend.parse_candidate(text, backend.CENTRAL, "./"), "1.2")
+        text = "zen-browser:\n  Candidate: 1.2\n  Version table:\n     1.2 500\n        500 https://masternaka.github.io/masternaka-repository/ ./ Packages\n"
+        self.assertEqual(backend.parse_candidate(text, "https://masternaka.github.io/masternaka-repository/", "./"), "1.2")
 
     def test_dependency_change_requires_a_new_preview(self):
         plan = backend.preview_install(self.runner, ["brave"])
@@ -138,7 +139,7 @@ class SoftwareTests(unittest.TestCase):
         self.assertFalse(self.runner.installed)
 
     def test_install_pins_versions_refuses_removals_and_verifies_the_result(self):
-        plan = backend.preview_install(self.runner, ["helium", "brave", "zen"])
+        plan = backend.preview_install(self.runner, ["helium", "brave"])
         outcome = backend.install(self.runner, plan)
         self.assertTrue(outcome.ok)
         commands = [command for command in self.runner.calls if command.needs_root]
@@ -147,7 +148,7 @@ class SoftwareTests(unittest.TestCase):
         self.assertIn("--no-remove", commands[0].argv)
         self.assertTrue(all(spec in commands[0].argv for spec in plan.specs))
         self.assertTrue(all(":amd64=" in spec for spec in plan.specs))
-        self.assertEqual(len(self.runner.installed), 3)
+        self.assertEqual(len(self.runner.installed), 2)
 
     def test_command_success_without_installed_packages_is_not_a_verified_installation(self):
         self.runner.keep_absent = True

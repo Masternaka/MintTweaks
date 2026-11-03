@@ -306,6 +306,8 @@ def change_shell(runner, plan, backup_directory=None):
     directory.mkdir(parents=True, exist_ok=True, mode=0o700)
     receipt = directory / (uuid.uuid4().hex + ".json")
     userfiles.atomic_write(receipt, json.dumps({"user": plan.user, "before": plan.before, "after": plan.after}).encode("utf-8"))
+    from ...core.history import record_backup
+    record_backup(receipt)
     result = runner.stream(cmd("/usr/bin/chsh", "-s", plan.after, plan.user, root=True), timeout=120)
     if not result.ok or current_account() != (plan.user, plan.after):
         raise ValueError(result.output or _("The login shell change could not be verified. Its previous value was saved."))

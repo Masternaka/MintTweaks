@@ -184,7 +184,9 @@ démarrage bruts, configurations manuelles externes, historiques, données Atuin
 identité Git et shell de connexion ne sont pas exportés. Les commandes d’alias
 peuvent toutefois contenir des chemins ou valeurs sensibles ; le JSON complet est
 présenté avant écriture. Le fichier privé est créé en `0600` et un fichier
-existant n’est jamais remplacé automatiquement.
+existant, même un lien symbolique, n’est jamais remplacé. Choisir un dossier
+existant : le fichier est préparé à côté de sa destination et publié seulement
+après écriture complète ; un échec de préparation ne laisse pas d’export partiel.
 
 L’import vérifie le format, les identifiants, les types et plages des réglages,
 la compatibilité des extensions avec les shells, les polices et la disponibilité
@@ -199,7 +201,8 @@ ne sont pas réécrits. L’import fusionne les options et alias gérés, sans r
 les outils locaux ou les autres réglages gérés ; un alias importé portant le même
 nom remplace sa valeur gérée après aperçu. Il ne change ni le shell de connexion
 ni les dépôts APT et ne télécharge aucune police. Un fichier invalide est refusé
-sans remise à zéro des préférences locales.
+sans remise à zéro des préférences locales. Seuls les fichiers ordinaires de
+128 Kio au plus sont lus ; les liens symboliques et fichiers spéciaux sont refusés.
 
 ## Choisir le shell de connexion
 

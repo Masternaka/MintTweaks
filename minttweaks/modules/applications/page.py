@@ -3,13 +3,15 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
-from . import backend, fonts
+from . import backend, details, fonts
 from ...i18n import _
 from ...ui import widgets
 from ...ui.widgets import Page
+from ...ui.installations import InstallationDetails
+from .transfer_controls import SelectionTransferControls
 
 
-class ApplicationsPage(Page):
+class ApplicationsPage(SelectionTransferControls, Page):
     page_name = 'applications'
     page_title = _("Applications")
     page_icon = 'view-app-grid-symbolic'
@@ -18,6 +20,7 @@ class ApplicationsPage(Page):
         super().__init__(ctx)
         self.status, self.checks, self.labels, self.rows = {}, {}, {}, {}
         self.font_buttons = {}
+        self.details = {}
         self._loading = self._busy = False
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
         box.set_border_width(18)
@@ -36,6 +39,7 @@ class ApplicationsPage(Page):
         box.pack_start(self.install_button, False, False, 0)
         self.reload_button = widgets.button(_("Re-analyse"), self.refresh)
         box.pack_start(self.reload_button, False, False, 0)
+        self._build_selection_transfer(box)
         if not widgets.escalation_available(ctx.runner):
             box.pack_start(widgets.info_bar(_("Administrator authorization is unavailable: package state can be read, but installation is disabled.")), False, False, 0)
         for app in backend.CATALOG:
@@ -50,6 +54,9 @@ class ApplicationsPage(Page):
             label = widgets.label(_("Not analysed yet."), wrap=True)
             self.labels[app.id] = label
             row.pack_start(label, False, False, 0)
+            information = InstallationDetails(details.installation_rows(app))
+            self.details[app.id] = information
+            row.pack_start(information, False, False, 0)
             if app.package in fonts.RECIPES:
                 button = widgets.button(_("Get this font from GitHub…"), lambda key=app.id: self._on_font(key))
                 self.font_buttons[app.id] = button
@@ -72,6 +79,7 @@ class ApplicationsPage(Page):
             self.rows[app.id].set_visible(not query or query in text)
 
     def _controls(self):
+        self._transfer_controls()
         ready = not self._loading and not self._busy and not self.ctx.runner.dry_run
         allowed = ready and widgets.escalation_available(self.ctx.runner)
         for key, check in self.checks.items():
@@ -109,6 +117,7 @@ class ApplicationsPage(Page):
             if entry.package != app.package:
                 text += '\n' + _("APT package used: {package}").format(package=entry.package)
             self.labels[app.id].set_text(text)
+            self.details[app.id].update(details.installation_rows(app, entry))
             if not entry.installable:
                 self.checks[app.id].set_active(False)
         self._controls()

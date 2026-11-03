@@ -15,6 +15,7 @@ from ..modules.cinnamon.page import CinnamonPage  # noqa: E402
 from ..modules.dotfiles.page import DotfilesPage  # noqa: E402
 from ..modules.firefox.page import FirefoxPage  # noqa: E402
 from ..modules.home.page import HomePage  # noqa: E402
+from ..modules.history.page import HistoryPage  # noqa: E402
 from ..modules.maintenance.page import MaintenancePage  # noqa: E402
 from ..modules.samba.page import SambaPage  # noqa: E402
 from ..modules.services.page import ServicesPage  # noqa: E402
@@ -25,7 +26,7 @@ from . import widgets  # noqa: E402
 from .widgets import AppContext, Page  # noqa: E402
 from ..i18n import _  # noqa: E402
 
-PAGE_CLASSES = (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage, CinnamonPage, SetupPage, ApplicationsPage, SoftwarePage, TerminalPage, DotfilesPage)
+PAGE_CLASSES = (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage, CinnamonPage, SetupPage, ApplicationsPage, SoftwarePage, TerminalPage, DotfilesPage, HistoryPage)
 
 LOG_TAG_COLOURS = {
     "info": "#555555",

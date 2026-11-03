@@ -331,6 +331,9 @@ def save_document(
     except OSError as exc:
         return SaveOutcome(False, f"Could not write a backup copy: {exc}", validation=validation)
 
+    from ...core.history import record_backup
+    record_backup(backup_path)
+
     tempdir = tempfile.mkdtemp(prefix="mtk-smb-")
     staged = Path(tempdir) / "smb.conf"
     try:

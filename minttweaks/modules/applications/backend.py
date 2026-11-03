@@ -58,6 +58,7 @@ class ApplicationStatus(Availability):
     package: str = ''
     github_available: bool = False
     github_installed: bool = False
+    origins: tuple = ()
 
 
 def collect_status(runner):
@@ -96,6 +97,7 @@ def collect_status(runner):
                         if info.get('reason') == 'missing':
                             continue
                         result[key].candidate = checked_version(info)
+                        result[key].origins = tuple(info['origins'])
                         result[key].package = package
                         break
                     else:

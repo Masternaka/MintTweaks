@@ -26,22 +26,22 @@ class Application:
     source_msgid: str
     guide: str
     suite: str = "stable/main"
+    method: str = "apt"
 
     @property
     def source(self):
         return _(self.source_msgid)
 
 
-CENTRAL = "https://masternaka.github.io/masternaka-repository/"
 CATALOG = (
     Application("helium", "Helium Browser", "helium-bin", "https://pkg.helium.computer/deb/", ("amd64", "arm64"),
                 _("Helium's official stable APT repository."),
                 "https://github.com/imputnet/helium-linux#debianubuntu"),
     Application("brave", "Brave Browser", "brave-browser", "https://brave-browser-apt-release.s3.brave.com/", ("amd64", "arm64"),
                 _("Brave's official stable APT repository."), "https://brave.com/linux/"),
-    Application("zen", "Zen Browser", "zen-browser", CENTRAL, ("amd64",),
-                _("Unofficial Debian package built from Zen's official archive by the Masternaka APT repository."),
-                "https://github.com/Masternaka/masternaka-repository#installation-sur-linux-mint", suite="./"),
+    Application("zen", "Zen Browser", "zen-browser", "https://github.com/zen-browser/desktop", ("amd64", "arm64"),
+                _("Official Zen installer from GitHub, installed for the current user without administrator authorization."),
+                "https://docs.zen-browser.app/guides/install-linux", method="zen"),
 )
 APP_BY_ID = {app.id: app for app in CATALOG}
 VERSION_RE = re.compile(r"^[0-9][0-9A-Za-z.+:~\-]*$")
@@ -63,6 +63,7 @@ class Availability:
     installed_version: str = ""
     candidate: str = ""
     error: str = ""
+    installation_method: str = ""
 
     @property
     def installable(self):
@@ -118,6 +119,9 @@ def architecture(runner: BaseRunner) -> str:
 
 
 def check_application(runner: BaseRunner, app: Application, arch: str) -> Availability:
+    if app.method == "zen":
+        from . import zen
+        return zen.check_status(runner, arch)
     status = Availability()
     try:
         package = package_state(runner, app.package)
@@ -187,6 +191,8 @@ class InstallPlan:
 
 def preview_install(runner: BaseRunner, ids) -> InstallPlan:
     apps = selected_apps(ids)
+    if any(app.method != "apt" for app in apps):
+        raise SoftwareError(_("Use the dedicated GitHub installation button for Zen."))
     arch = architecture(runner)
     specs = []
     for app in apps:

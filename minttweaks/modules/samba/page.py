@@ -591,6 +591,7 @@ class SambaPage(Page):
             on_done=lambda result: self._after_user_action(
                 result, _("Samba password set for {user}.").format(user=username)
             ),
+            name=_("Set Samba password"),
         )
 
     def _on_toggle_user(self, enabled: bool) -> None:
@@ -606,6 +607,7 @@ class SambaPage(Page):
                     user=username, state=_("enabled") if enabled else _("disabled")
                 ),
             ),
+            name=_("Change Samba account status"),
         )
 
     def _on_delete_user(self) -> None:
@@ -624,6 +626,7 @@ class SambaPage(Page):
             on_done=lambda result: self._after_user_action(
                 result, _("Samba account {user} deleted.").format(user=username)
             ),
+            name=_("Delete Samba account"),
         )
 
     def _after_user_action(self, result, success_message: str) -> None:
@@ -662,6 +665,7 @@ class SambaPage(Page):
             lambda: backend.install_packages(self.ctx.runner, on_line=self.ctx.log),
             on_done=self._after_install,
             on_error=self._install_failed,
+            name=_("Install Samba"),
         )
 
     def _install_failed(self, exc: BaseException) -> None:
@@ -683,6 +687,7 @@ class SambaPage(Page):
         self.run_operation(
             lambda: backend.enable_and_start_sharing(self.ctx.runner, on_line=self.ctx.log),
             on_done=self._after_enable_sharing,
+            name=_("Enable Samba sharing"),
         )
 
     def _after_enable_sharing(self, results) -> None:
@@ -703,6 +708,7 @@ class SambaPage(Page):
         self.run_operation(
             lambda: backend.restart_after_change(self.ctx.runner, on_line=self.ctx.log),
             on_done=lambda results: self._report_simple(results),
+            name=_("Restart Samba services"),
         )
 
     def _on_firewall(self) -> None:
@@ -717,6 +723,7 @@ class SambaPage(Page):
         self.run_operation(
             lambda: backend.allow_samba_in_firewall(self.ctx.runner, enable_if_inactive=enable),
             on_done=lambda result: self._report_simple([result]),
+            name=_("Allow Samba through the firewall"),
         )
 
     def _on_connections(self) -> None:
@@ -836,6 +843,7 @@ class SambaPage(Page):
         self.run_operation(
             lambda: backend.restore_backup(self.ctx.runner, Path(selected)),
             on_done=self._after_restore,
+            name=_("Restore Samba configuration"),
         )
 
     def _after_restore(self, outcome: backend.SaveOutcome) -> None:
@@ -892,6 +900,7 @@ class SambaPage(Page):
             work,
             on_done=lambda outcome: self._after_save(outcome, text, new_conf, success_message),
             on_error=self._save_failed,
+            name=_("Save Samba configuration"),
         )
 
     def _save_failed(self, error: BaseException) -> None:

@@ -1,7 +1,8 @@
 # Logiciels natifs hors dépôts officiels de Mint
 
 Le module installe uniquement les applications de son catalogue limité, depuis
-des sources APT tierces explicitement identifiées. Il ne remplace pas le
+leurs sources officielles explicitement identifiées. Helium et Brave utilisent
+APT ; Zen utilise son installateur GitHub officiel pour le compte courant. Il ne remplace pas le
 gestionnaire de logiciels Mint. Les applications des dépôts officiels de Mint,
 les installations Flatpak et les téléchargements libres saisis par l’utilisateur
 ne font pas partie de ce module.
@@ -12,12 +13,10 @@ ne font pas partie de ce module.
 | --- | --- | --- | --- |
 | Helium Browser | `helium-bin` | [Dépôt officiel Helium](https://github.com/imputnet/helium-linux#debianubuntu), `https://pkg.helium.computer/deb/`, suite `stable/main` | amd64, arm64 |
 | Brave Browser | `brave-browser` | [Dépôt officiel Brave](https://brave.com/linux/), `https://brave-browser-apt-release.s3.brave.com/`, suite `stable/main` | amd64, arm64 |
-| Zen Browser | `zen-browser` | [Dépôt Masternaka](https://github.com/Masternaka/masternaka-repository#installation-sur-linux-mint), `https://masternaka.github.io/masternaka-repository/`, suite plate `./` | amd64 |
+| Zen Browser | Archive native utilisateur | [Installateur officiel Zen](https://docs.zen-browser.app/guides/install-linux), depuis GitHub `zen-browser/updates-server` et `zen-browser/desktop` | amd64, arm64 |
 
-La voie Zen proposée est un **paquet Debian non officiel**, construit par le dépôt
-Masternaka à partir de l’archive amont. Les [instructions officielles Zen](https://docs.zen-browser.app/guides/install-linux)
-proposent notamment une archive native ; elles ne décrivent pas ce paquet comme
-un `.deb` officiel. Le module distingue ces provenances dans la page et l’aperçu.
+Helium et Zen ne passent plus par le dépôt Masternaka. Ce dernier reste
+disponible pour MintTweaks et les projets personnels de Masternaka.
 
 La publication du dépôt central reste gérée par son projet séparé. MintTweaks
 peut désormais ajouter sa source sur la machine cliente ; cela ne modifie pas
@@ -45,11 +44,41 @@ les futures installations et mises à jour. Si l’ajout ou l’actualisation é
 les fichiers nouvellement créés par cette opération sont retirés ; les sources
 préexistantes sont conservées.
 
-Les liens **Instructions de configuration du dépôt** restent disponibles pour
+Les liens **Instructions d’installation** restent disponibles pour
 une configuration manuelle. Une architecture non prise en charge, un candidat
 absent, une suite de préversion ou une source différente empêche l’installation.
 Si une même version candidate est proposée par plusieurs sources distinctes, le
 module demande de clarifier la configuration APT.
+
+### Zen depuis GitHub
+
+Le bouton **Installer Zen depuis GitHub…** télécharge le script documenté par
+Zen, puis présente son URL, son SHA-256 et les trois destinations :
+
+- `~/.tarball-installations/zen` ;
+- `~/.local/bin/zen` ;
+- `~/.local/share/applications/zen.desktop`.
+
+Après confirmation, MintTweaks exécute exactement le script téléchargé, avec
+Bash et sans élévation de privilèges. Ce script télécharge l’archive courante de
+`zen-browser/desktop` et crée le lanceur et l’entrée du menu. Le SHA-256 affiché
+identifie les octets du script à exécuter ; il ne constitue pas une signature
+amont et ne fixe pas la version de l’archive choisie pendant son exécution.
+Les mises à jour suivantes passent par Zen. Le module vérifie la présence de
+l’exécutable, du lanceur, de l’entrée de menu et de la version dans
+`application.ini`, sans lancer le navigateur.
+
+Une installation utilisateur reconnue est affichée comme déjà installée. Des
+fichiers existants incomplets, même des liens cassés, bloquent l’opération pour
+éviter leur remplacement. Un échec peut laisser des fichiers créés par le script
+amont : les vérifier avant de réessayer. Le mode simulation ne télécharge rien,
+n’écrit rien et n’exécute pas le script.
+
+Si l’ancien paquet Debian `zen-browser` est installé, MintTweaks demande sa
+suppression avec le gestionnaire de paquets de Mint avant de proposer la voie
+officielle. Conserver les profils et sauvegarder ses données avant la transition ;
+MintTweaks ne supprime ni ne migre automatiquement de profil. Une installation
+Flatpak ou une copie placée ailleurs n’est pas détectée par cette vérification.
 
 ### Masternaka
 
@@ -83,7 +112,7 @@ selon leur configuration. Le mode simulation ne change aucun fichier et ne
 contacte pas le réseau.
 
 Les sources officielles Helium et Brave conservent leurs boutons dédiés décrits ci-dessus. Les liens
-**Instructions de configuration du dépôt** ouvrent ces guides sans les exécuter.
+**Instructions d’installation** ouvrent ces guides sans les exécuter.
 Le catalogue Helium continue de viser sa source officielle, et Brave la sienne ;
 l’ajout de Masternaka ne remplace pas ces choix par une autre provenance. Une
 architecture non prise en charge, un candidat absent, une suite de préversion ou
@@ -97,7 +126,7 @@ signatures ou des contrôles APT n’est ajouté.
 
 ## Parcours d’installation
 
-1. Ouvrir **Logiciels natifs**. Si la source manque, utiliser le bouton Masternaka en haut de page pour Zen, ou **Configurer le dépôt et installer…** pour Helium et Brave, puis confirmer. Sinon, utiliser **Réanalyser**.
+1. Ouvrir **Logiciels natifs**. Pour Zen, utiliser **Installer Zen depuis GitHub…** et suivre la confirmation dédiée. Pour Helium et Brave, utiliser **Configurer le dépôt et installer…** si la source manque, puis confirmer. Les étapes APT ci-dessous concernent Helium et Brave. Utiliser **Réanalyser** pour actualiser les états.
 2. Contrôler la source, l’état du paquet et sa version candidate. La détection
    porte sur le paquet Debian nommé dans le catalogue, pas sur toutes les copies
    du navigateur éventuellement installées manuellement ou dans un autre format.
@@ -141,22 +170,22 @@ le [guide de l’assistant](assistant-apres-installation.md#persistance-et-limit
 
 ## Validation restante
 
-Les tests automatisés utilisent un exécuteur APT simulé. Ils couvrent les
-origines, suites et architectures, les aperçus, les changements de plan, les
-refus de suppression, les erreurs polkit/APT et la vérification finale des
-### Helium et Brave
+Les tests automatisés utilisent des exécuteurs simulés et des fichiers temporaires.
+Ils couvrent les origines APT, suites et architectures, les aperçus, les changements
+de plan, les refus de suppression et les erreurs polkit/APT. Pour Zen, ils vérifient
+la source GitHub fixe, l’annulation, les conflits avec l’ancien paquet ou des
+fichiers existants, le script approuvé exécuté sans droits administrateur, les
+échecs réseau et la vérification finale. Aucun script amont ni navigateur réel
+n’est exécuté par ces tests.
 
-versions. Aucun dépôt ni paquet système réel n’est modifié par ces tests. Ils couvrent aussi la conservation des sources existantes, les erreurs de clé et le retrait des fichiers créés après un échec APT.
+La [recette Mint](../validation/linux-mint.md) doit vérifier les installations
+réelles, le lancement, les mises à jour, le sandbox et la transition depuis
+l’ancien paquet Zen. Ces essais restent à effectuer sous Linux Mint ; les tests
+sur Mac ne prouvent pas le fonctionnement graphique ni les politiques AppArmor.
 
-### Masternaka
+## Détails d’installation
 
-versions. Les tests du helper de dépôt utilisent des fichiers temporaires et
-APT simulé : clé altérée, chemins non sûrs, conflit, ajout répété et retour
-arrière après erreur ou délai dépassé. Aucune installation réelle n’a été
-effectuée sur ce Mac.
-
-La [recette Mint](../validation/linux-mint.md) doit vérifier les sources configurées,
-une installation de chaque navigateur, son lancement, un refus polkit, un échec
-réseau, un plan modifié, une installation partielle et la migration d’un ancien
-parcours. La présence d’un candidat APT ne prouve pas que son navigateur démarre
-correctement sous la version de Mint testée.
+Chaque entrée présente un volet avec sa méthode, sa portée, sa source attendue,
+les versions ou révisions disponibles et les indications de mise à jour et de
+retrait. Voir [Comprendre les installations](installations.md) pour la distinction
+entre candidat vérifié, paquet déjà installé et copie utilisateur.

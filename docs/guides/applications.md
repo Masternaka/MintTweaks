@@ -40,6 +40,80 @@ vérifiée sont signalées comme indisponibles. Aucun dépôt, PPA ou clé n’e
 La section **Logiciels natifs** conserve son catalogue distinct de navigateurs
 provenant de dépôts tiers.
 
+## Transférer une sélection entre machines
+
+La carte **Transférer une sélection d’applications** échange uniquement des choix
+du catalogue Applications. Elle ne concerne pas les navigateurs de Logiciels
+natifs, les outils du terminal ou leurs configurations.
+
+### Exporter les choix
+
+1. Cliquer sur **Choisir les applications à exporter…**. Le dialogue présente
+   tout le catalogue, indépendamment du filtre de recherche de la page.
+2. Choisir les entrées voulues. Les choix APT déjà cochés et la liste transférée
+   en mémoire sont proposés dans ce dialogue. Les logiciels installés sont
+   également sélectionnables, sans devenir candidats à la réinstallation.
+3. Pour inclure explicitement les installations reconnues lors de la dernière
+   analyse, utiliser **Ajouter les applications détectées à la dernière analyse**.
+   Ce bouton modifie seulement les cases du dialogue d’export.
+4. Valider au moins une entrée, lire l’aperçu JSON, puis choisir un nouveau fichier.
+
+Le fichier contient des identifiants et les références de paquets du catalogue,
+sans version, chemin, dépôt, réglage d’application ou donnée personnelle. Les
+références restent celles des paquets principaux : `7zip` et `qemu`, même si la
+machine utilise leurs alternatives. La machine de destination choisira ses
+versions et alternatives selon ses propres métadonnées APT.
+
+Les exports sont privés (`0600`), publiés complets et ne remplacent jamais un
+fichier ou un lien déjà présent. Annuler le dialogue de choix, la confirmation
+ou le sélecteur de fichier ne modifie pas les cases d’installation de la page.
+
+### Importer sans installer
+
+1. Choisir **Importer une sélection d’applications…**, puis le fichier JSON.
+2. Lire l’aperçu avec la disponibilité observée sur cette machine. Les états
+   distinguent les choix prêts pour APT, déjà installés, disponibles par le
+   parcours GitHub des polices ou indisponibles/non vérifiés.
+3. Confirmer. Le fichier est relu pour vérifier qu’il n’a pas changé et les états
+   sont réanalysés avant de préparer les cases d’installation.
+
+Les entrées APT disponibles sont ajoutées aux cases déjà cochées qui restent
+valides. Les applications installées sont conservées, sans réinstallation. Les
+choix indisponibles et les polices relevant du repli GitHub restent dans la liste
+transférable, sans téléchargement ni installation. L’import fusionne ses choix
+avec la liste de transfert déjà en mémoire.
+
+Pour reprendre un choix devenu disponible, utiliser **Réanalyser**, puis
+**Préparer la sélection transférée**. Cette action coche seulement les choix APT
+disponibles. Consulter ensuite l’aperçu d’installation APT habituel ; chaque
+police GitHub conserve son bouton et sa confirmation distincts. L’absence
+confirmée du paquet officiel reste nécessaire pour le repli GitHub. Le fichier
+d’import ne peut ni ajouter une source ni contourner ces contrôles.
+
+**La liste de transfert est conservée pendant la session uniquement.** Le JSON
+exporté permet de la réutiliser après réouverture. Les choix indisponibles ne
+sont pas cochés automatiquement lorsqu’une nouvelle analyse les rend disponibles.
+Le bouton de préparation reste une action explicite.
+
+### Format et protection des fichiers
+
+Le format comporte exactement `schema_version: 1`,
+`kind: "minttweaks-application-selection"` et une liste non vide `applications`.
+Chaque entrée contient uniquement `id` et `package`, qui doivent correspondre
+au catalogue de la machine de destination. Une référence inconnue, substituée
+ou dupliquée provoque un refus ; mettre le catalogue à jour si nécessaire.
+
+Les champs supplémentaires, formats futurs, clés JSON dupliquées, fichiers de
+plus de 32 Kio, liens symboliques et fichiers spéciaux sont refusés. Le fichier
+source reste conservé. Une modification après aperçu demande une nouvelle
+confirmation. Une erreur laisse la précédente liste de transfert en mémoire.
+
+Les transferts ne demandent pas de droits administrateur et n’ajoutent aucun
+dépôt. Les analyses utilisent les métadonnées APT existantes, sans actualisation
+réseau. Les écritures d’export et la confirmation d’import utilisent la réservation
+commune et apparaissent dans l’historique ; la sélection manuelle des cases reste
+une action d’interface. Les transferts sont désactivés en simulation.
+
 ## Vérification des sources et de l’installation
 
 L’inspection en lecture seule utilise `python3-apt` avec le Python système, en
@@ -119,3 +193,10 @@ Les tests automatisés utilisent des caches et commandes APT simulés : ils
 vérifient le filtrage des origines, les dépendances, les confirmations et les
 plans périmés. Le rendu GTK, la lecture du cache réel avec `python3-apt`, les
 miroirs officiels et l’installation avec polkit restent à vérifier sous Mint.
+
+## Détails d’installation
+
+Chaque entrée présente un volet avec sa méthode, sa portée, sa source attendue,
+les versions ou révisions disponibles et les indications de mise à jour et de
+retrait. Voir [Comprendre les installations](installations.md) pour la distinction
+entre candidat vérifié, paquet déjà installé et copie utilisateur.

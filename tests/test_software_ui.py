@@ -101,7 +101,7 @@ class SoftwarePageTests(unittest.TestCase):
         operation.assert_not_called()
         self.assertIn(backend.RECIPES["brave"].key_url, confirm.call_args.args[1])
 
-    def test_unfinished_zen_repository_has_no_automatic_action(self):
+    def test_zen_never_configures_an_apt_repository(self):
         with patch.object(self.page, "run_operation") as operation:
             self.page._on_repository("zen")
         operation.assert_not_called()

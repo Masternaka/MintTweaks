@@ -28,13 +28,52 @@ cette option ne masque aucun échec.
 | Étape | Module ouvert | Objectif et changements possibles |
 | --- | --- | --- |
 | Vérifier le système | Accueil | Lire les diagnostics ; aucune modification lors de cette consultation |
-| Installer des logiciels natifs tiers | Logiciels natifs | Choisir Helium, Brave ou Zen depuis leurs sources attendues ; aperçu APT et autorisation administrateur avant installation |
+| Installer des logiciels natifs tiers | Logiciels natifs | Helium et Brave par APT officiel avec aperçu ; Zen par son installateur GitHub officiel sans droits administrateur |
 | Préparer les shells et terminaux | Shells et terminaux | Installer les outils, choisir le shell de connexion et personnaliser Kitty ou Alacritty après aperçu et sauvegarde |
 | Préparer Firefox | Firefox | Choisir les extensions d’addons.mozilla.org ; écriture de la politique avec privilèges administrateur, puis redémarrage du navigateur |
 | Choisir l’apparence | Profils Cinnamon | Enregistrer ou appliquer des réglages utilisateur après aperçu et sauvegarde ; les thèmes et polices doivent déjà être installés |
 | Configurer le partage si nécessaire | Samba | Gérer les partages et comptes ; les installations, services et règles de pare-feu restent pilotés depuis Samba |
 
 Voir le [guide Shells et terminaux](shells-et-terminaux.md) pour les détails.
+
+## Observations facultatives
+
+Après avoir enregistré la sélection et choisi une étape, utiliser **Observer
+l’étape sélectionnée** pour consulter des observations locales en lecture seule.
+Le résultat est séparé de **Vérifié par vous** : il ne modifie ni la progression,
+ni une note saisie ou enregistrée, et ne valide aucune étape automatiquement.
+
+| Étape | Ce qui est observé | Confirmation qui reste manuelle |
+| --- | --- | --- |
+| Système | Résultats des diagnostics actuels de l’accueil | Anomalies à examiner dans leur contexte |
+| Logiciels natifs | Versions des paquets ou fichiers utilisateur reconnus ; ancien paquet Zen signalé | Choix des navigateurs, provenance, lancement et mises à jour |
+| Terminal | Shell de connexion, préférences enregistrées et paquets Bash/Zsh/Fish/Kitty/Alacritty | Chargement des intégrations dans une nouvelle session et outils effectivement souhaités |
+| Firefox | Exécutable natif dans PATH et extensions du catalogue configurées dans la politique système | Installation, activation et chargement effectifs des extensions dans Firefox |
+| Cinnamon | Lecture des réglages et présence de profils enregistrés | Profil réellement voulu et résultat visuel |
+| Samba | Paquet Samba, état de smbd et définitions de partages lisibles | Validité avec testparm, comptes, pare-feu, permissions et accès depuis un client |
+
+Les mentions **Détecté**, **Non détecté**, **À examiner manuellement** et
+**Indisponible** décrivent uniquement les lectures effectuées. Une lecture
+refusée ne devient pas une absence ou une réussite. Des outils ou navigateurs
+non détectés peuvent être facultatifs ou installés dans un autre format.
+
+Les observations n’installent rien, ne lancent aucun navigateur, ne chargent
+aucun script de shell et ne demandent pas de droits administrateur. Elles ne
+consultent pas les comptes Samba ni les règles de pare-feu qui exigeraient ces
+droits. Les sorties brutes, noms de partages, chemins et contenus des
+configurations ne sont pas recopiés dans le résultat ; seul le shell de connexion
+est présenté par son chemin système.
+
+Le contrôle est déclenché manuellement et horodaté dans le fuseau local. Ses
+résultats restent en mémoire, sans nouveau format du fichier de progression.
+Changer de sélection, recharger la progression ou lancer une opération dans
+MintTweaks les efface. Un résultat reçu après ces changements est écarté ;
+répéter l’observation si nécessaire. Les autres applications peuvent modifier
+le système sans notification : l’observation reste un instantané.
+
+Le bouton est désactivé en simulation, si la sélection n’est pas enregistrée ou
+si une modification est en cours. Une observation indisponible n’empêche pas
+de déclarer ensuite son propre résultat.
 
 ## Utilisation
 
@@ -84,8 +123,9 @@ laissés en place ; l’assistant ne les réinitialise pas silencieusement.
 
 Les écritures de progression utilisent la réservation commune de MintTweaks et
 n’exécutent aucune commande système. Elles sont désactivées en simulation. Le
-guide ne vérifie pas automatiquement les résultats dans les autres modules et
-ne conserve ni leurs mots de passe ni leurs sorties de commandes. La suppression
+guide propose des observations partielles uniquement sur demande ; elles ne
+valident pas les résultats des autres modules. Il ne conserve ni leurs mots de
+passe ni leurs sorties de commandes. La suppression
 automatique des anciennes notes, l’export et l’exécution groupée ne sont pas
 proposés.
 
@@ -100,7 +140,8 @@ indisponibles, la simulation, le périmètre des commandes administrateur et les
 erreurs d’autorisation. Sur la machine de test, vérifier aussi l’explication
 visible, la confirmation et le rechargement dans **Services** après désactivation.
 
-Les essais réels sous Mint restent à effectuer : sélection et récapitulatif,
+Les nouveaux contrôles facultatifs restent à vérifier sous Mint. Les essais
+détaillés du parcours restent à consigner : sélection et récapitulatif,
 navigation vers chaque module, déclaration d’un résultat avec une note,
 réouverture et reprise sans rejouer une étape, simulation et affichage sur une
 petite fenêtre. Utiliser la [recette Mint](../validation/linux-mint.md) pour consigner

@@ -18,6 +18,78 @@ configuration à la fois avec GNU Stow, dans le compte utilisateur courant.
 6. Pour revenir à la configuration précédente, cliquez sur **Annuler le Stow**
    sur la même ligne, puis confirmez les liens à retirer et les fichiers à restaurer.
 
+## Transférer les références entre machines
+
+La carte **Transférer les références Dotfiles** échange un fichier JSON contenant
+uniquement l’URL GitHub, les noms des configurations souhaitées et l’option
+`--dotfiles`. Les chemins de la machine source, les fichiers de configuration,
+les sauvegardes, les identifiants Git et les clés SSH ne sont pas copiés. Le
+fichier ne fixe ni branche ni révision du dépôt.
+
+### Exporter
+
+1. Renseigner l’URL GitHub HTTPS ou SSH sans jeton, puis analyser le dossier local.
+   Pour un dossier existant ouvert sans URL, saisir celle-ci puis réanalyser.
+2. Choisir **Exporter une référence Dotfiles…**, puis cocher les configurations
+   à inclure. Ces cases sont indépendantes des boutons **Stow** et **Annuler le Stow**.
+3. Le bouton **Ajouter les configurations gérées ou les liens détectés** permet
+   d’inclure explicitement les configurations reconnues dans la dernière analyse.
+   Sans cette action, les nouvelles configurations ne sont pas cochées automatiquement.
+4. Lire l’aperçu JSON et choisir un nouveau fichier. Son contenu correspond à
+   l’aperçu ; les permissions sont privées (`0600`) et aucun fichier existant
+   n’est remplacé.
+
+Une référence déjà importée propose ses noms dans le dialogue d’export, même si
+certains n’ont pas encore été retrouvés localement. Ils restent des choix à
+examiner et ne constituent pas une preuve de disponibilité dans le dépôt distant.
+
+### Importer et adapter les dossiers locaux
+
+1. Choisir **Importer une référence Dotfiles…**, puis sélectionner le JSON.
+2. Choisir sur cette machine le dossier local du dépôt ou une nouvelle destination
+   de clone dont le parent existe. Choisir aussi un dossier cible existant pour
+   les liens, situé en dehors du dossier du dépôt.
+3. Examiner l’URL, les noms, l’option `--dotfiles` et les deux chemins locaux dans
+   la dernière confirmation. Le fichier et les chemins sont revérifiés avant
+   de préparer les champs de la page.
+4. Cloner explicitement le dépôt si nécessaire, ou ouvrir le dossier local voulu.
+   Si ses configurations sont dans un sous-dossier `stow/`, ouvrir ce sous-dossier
+   après clonage. Une référence ne vérifie pas l’origine GitHub d’un dossier existant.
+5. Analyser les configurations. Les lignes demandées sont identifiées ; les noms
+   non retrouvés restent dans le récapitulatif. Choisir ensuite **Stow** pour
+   chaque configuration souhaitée et examiner son aperçu et ses sauvegardes.
+
+L’import ne clone rien, ne lance pas d’analyse, ne crée aucun dossier ni lien et
+ne modifie aucun fichier personnel ou journal de sauvegarde. Il prépare
+uniquement le formulaire et les noms de référence. Le clonage conserve sa propre
+confirmation ; l’activation et l’annulation conservent leurs vérifications de
+plan, sauvegardes et protections contre les modifications extérieures.
+
+Changer les dossiers locaux ou l’option invalide l’analyse, tout en conservant
+les noms demandés. Changer l’URL du dépôt retire la référence chargée de la
+session afin de ne pas associer les anciens choix à une autre URL. Le fichier
+JSON reste disponible pour la recharger. Les références ne sont pas sauvegardées
+automatiquement dans le profil utilisateur ; conserver le JSON après fermeture.
+
+### Format et refus
+
+Le document contient exactement `schema_version: 1`,
+`kind: "minttweaks-dotfiles-reference"`, `repository_url`, une liste non vide
+`packages` et le booléen `dotfiles`. Il est limité à 32 Kio et 256 noms distincts.
+Les noms suivent les règles du catalogue Stow ; les dossiers exclus comme
+`scripts`, `tools` et `docs` ne peuvent pas être ajoutés par l’import.
+
+Les URL contenant des identifiants HTTPS, paramètres ou fragments, les chemins
+absolus ou traversées dans les noms, les options supplémentaires, les champs
+inconnus, les doublons JSON, les versions de format non prises en charge, les
+liens symboliques et les fichiers spéciaux sont refusés. La source est conservée.
+Un fichier modifié, un chemin devenu non sûr ou résolu vers un autre emplacement
+après l’aperçu demande une nouvelle préparation. Annuler ne remplace pas les champs actuels.
+
+Les transferts sont désactivés en simulation et utilisent la réservation commune
+pour l’export et la préparation finale. Ils apparaissent dans l’historique, sans
+déclencher Git, Stow, un téléchargement ou une demande de droits administrateur.
+
 ## Structure du dépôt
 
 Chaque sous-dossier immédiat représente une configuration Stow :

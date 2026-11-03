@@ -7,13 +7,16 @@ Le [README principal](../README.md) présente l’installation et les modules.
 
 | Guide | Contenu |
 | --- | --- |
+| [Rapport de diagnostic](guides/diagnostic.md) | Collecte locale, masquage, aperçu et export Markdown |
 | [Administration](guides/administration.md) | Accueil, entretien, services, Samba et Firefox |
 | [Après installation](guides/assistant-apres-installation.md) | Sélection des étapes, progression et reprise |
 | [Logiciels natifs](guides/logiciels-natifs.md) | Sources APT, catalogue de navigateurs et vérifications |
-| [Applications](guides/applications.md) | Liste personnelle et installation depuis les dépôts officiels de la distribution |
-| [Profils Cinnamon](guides/profils-cinnamon.md) | Format, application et retour aux réglages précédents |
+| [Détails des installations](guides/installations.md) | Méthodes, sources, versions, mises à jour et retrait des logiciels |
+| [Applications](guides/applications.md) | Liste personnelle, transfert des sélections et installation depuis les dépôts officiels |
+| [Profils Cinnamon](guides/profils-cinnamon.md) | Format, import/export, application et retour aux réglages précédents |
 | [Shells et terminaux](guides/shells-et-terminaux.md) | Utilitaires, intégrations, réglages, alias et transfert personnel |
-| [Dotfiles](guides/dotfiles.md) | Clonage GitHub, installation de Stow et activation par configuration |
+| [Historique](guides/historique.md) | Opérations, résultats, sauvegardes associées et limites de restauration |
+| [Dotfiles](guides/dotfiles.md) | Transfert des références, clonage GitHub, installation de Stow et activation par configuration |
 
 ## Développement et distribution
 
@@ -24,6 +27,7 @@ Le [README principal](../README.md) présente l’installation et les modules.
 
 ## Validation réelle
 
+- [Checklist des nouveautés](validation/nouveautes.md), pour une première passe ciblée
 - [Recette Linux Mint](validation/linux-mint.md)
 - [Modèle de compte rendu](validation/compte-rendu.md), à copier dans le dossier de résultats des essais
 

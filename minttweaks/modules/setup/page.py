@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime
 import gi
 
 gi.require_version("Gtk", "3.0")
@@ -9,6 +10,7 @@ from gi.repository import Gtk  # noqa: E402
 
 from . import backend  # noqa: E402
 from . import livecheck  # noqa: E402
+from . import inspection  # noqa: E402
 from ...i18n import _  # noqa: E402
 from ...ui import widgets  # noqa: E402
 from ...ui.widgets import Page  # noqa: E402
@@ -33,6 +35,8 @@ class SetupPage(Page):
         self.checks = {}
         self._live_busy = False
         self._live_status = None
+        self._observing = False
+        self._observation_generation = 0
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
         box.set_border_width(18)
         live, body = widgets.card(_("Live installation media check"), _(livecheck.EXPLANATION))
@@ -80,8 +84,18 @@ class SetupPage(Page):
             self.result_buttons.append(button)
             body.pack_start(button, False, False, 0)
         box.pack_start(progress, False, False, 0)
+        observations, body = widgets.card(_("Automatic observations for the selected step"),
+            _("Optional read-only checks. They do not change your saved status or notes, and never mark a step verified by you."))
+        self.observe_button = widgets.button(_("Observe the selected step"), self._observe_selected)
+        body.pack_start(self.observe_button, False, False, 0)
+        self.observation_label = widgets.label(_("No automatic observation for this selection."), wrap=True)
+        body.pack_start(self.observation_label, False, False, 0)
+        scroller, _view, self.observation_buffer = widgets.text_view(monospace=False, height=180)
+        body.pack_start(scroller, True, True, 0)
+        box.pack_start(observations, False, False, 0)
         self.pack_start(widgets.scrolled(box), True, True, 0)
         self._update_controls()
+        self.ctx.add_operation_sink(self._operation_changed)
 
     def _selected(self):
         return [step.id for step in backend.STEPS if self.checks[step.id].get_active()]
@@ -89,6 +103,7 @@ class SetupPage(Page):
     def _selection_changed(self):
         if self._updating:
             return
+        self._invalidate_observation()
         self._dirty = self.plan is not None and self._selected() != self.plan.selected
         self._show_summary()
         self._update_controls()
@@ -116,6 +131,8 @@ class SetupPage(Page):
         self.note_entry.set_sensitive(bool(editing and selected and not self._dirty))
         for button in self.result_buttons:
             button.set_sensitive(bool(editing and selected and not self._dirty))
+        self.observe_button.set_sensitive(bool(loaded and selected and not self._busy and not self._dirty
+            and not self._observing and not self.ctx.runner.dry_run and self.ctx.operation_name is None))
 
     def refresh(self):
         self._refresh_live_check()
@@ -178,9 +195,56 @@ class SetupPage(Page):
         self._update_controls()
 
     def _show_result(self):
+        self._invalidate_observation()
         key = self.step_combo.get_active_id()
         note = self.plan.progress[key].note if self.plan is not None and key in self.plan.selected else ""
         self.note_entry.set_text(note)
+        self._update_controls()
+
+    def _invalidate_observation(self):
+        self._observation_generation += 1
+        self.observation_label.set_text(_("No automatic observation for this selection."))
+        self.observation_buffer.set_text("")
+
+    def _operation_changed(self, _name):
+        self._invalidate_observation()
+        self._update_controls()
+
+    def _observe_selected(self):
+        key = self.step_combo.get_active_id()
+        if (self.plan is None or key not in self.plan.selected or self._dirty or self._busy
+                or self._read_failed or self._observing or self.ctx.runner.dry_run or self.ctx.operation_name is not None):
+            return
+        self._invalidate_observation()
+        request = self._observation_generation
+        self._observing = True
+        self.observation_label.set_text(_("Reading observations; your saved progress is unchanged…"))
+        self._update_controls()
+        self.ctx.run_async(lambda: inspection.collect(self.ctx.runner, key),
+            on_done=lambda observation: self._apply_observation(request, key, observation),
+            on_error=lambda exc: self._observation_failed(request, exc))
+
+    def _apply_observation(self, request, key, observation):
+        self._observing = False
+        if request != self._observation_generation or key != self.step_combo.get_active_id():
+            self._update_controls()
+            return
+        labels = {'detected': _("Detected"), 'not_detected': _("Not detected"),
+                  'attention': _("Review manually"), 'unavailable': _("Unavailable")}
+        lines = []
+        for item in observation.items:
+            lines.extend([item.title + ' — ' + labels[item.state], item.detail, ''])
+        lines.append(observation.limitation)
+        self.observation_buffer.set_text('\n'.join(lines))
+        time = datetime.datetime.fromisoformat(observation.checked_at).astimezone().strftime('%Y-%m-%d %H:%M:%S')
+        self.observation_label.set_text(_("Observed at {time}. Saved progress remains your own declaration.").format(time=time))
+        self._update_controls()
+
+    def _observation_failed(self, request, _exc):
+        self._observing = False
+        if request == self._observation_generation:
+            self.observation_buffer.set_text("")
+            self.observation_label.set_text(_("Observations could not be read. Your saved progress and notes are unchanged."))
         self._update_controls()
 
     def _navigate(self, step):
@@ -221,6 +285,7 @@ class SetupPage(Page):
         )
 
     def _failed(self, exc):
+        self._invalidate_observation()
         self._busy = False
         self._read_failed = True
         self.status_label.set_text(_("Progress was not updated. Reload before continuing.\n{error}").format(error=exc))

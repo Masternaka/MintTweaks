@@ -31,6 +31,7 @@ SETUP_PLAN = DATA_DIR / "setup-plan.json"
 TERMINAL_BACKUP_DIR = DATA_DIR / "terminal-backups"
 LOG_DIR = DATA_DIR / "logs"
 LOG_FILE = LOG_DIR / "minttweaks.log"
+HISTORY_DIR = DATA_DIR / "history"
 
 # --- Bundled resources ------------------------------------------------------
 PKG_DIR = Path(__file__).resolve().parent.parent

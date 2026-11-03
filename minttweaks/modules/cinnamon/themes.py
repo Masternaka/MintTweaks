@@ -154,6 +154,8 @@ def install(runner, plan):
                 moved = True
                 if tree_snapshot(plan.backup) != plan.previous_tree:
                     raise ValueError(_("The previous theme backup could not be verified."))
+                from ...core.history import record_backup
+                record_backup(plan.backup)
             staged.rename(plan.target)
             if tree_snapshot(plan.target) != plan.source_tree:
                 raise ValueError(_("The installed theme could not be verified."))

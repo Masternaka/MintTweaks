@@ -187,6 +187,60 @@ class PersonalizationTests(unittest.TestCase):
             transfer.write(self.runner, link, document)
         self.assertEqual(path.read_text(), 'precious')
 
+    def test_failed_export_leaves_no_partial_file_or_temporary_file(self):
+        document = transfer.export_document({}, {}, home=self.home)
+        destination = self.home / 'failed.json'
+        before = set(self.home.iterdir())
+        with patch.object(transfer.os, 'fsync', side_effect=OSError('disk full')):
+            with self.assertRaises(OSError):
+                transfer.write(self.runner, destination, document)
+        self.assertFalse(destination.exists())
+        self.assertEqual(set(self.home.iterdir()), before)
+
+    def test_export_preserves_a_file_created_during_preparation(self):
+        document = transfer.export_document({}, {}, home=self.home)
+        destination = self.home / 'concurrent.json'
+        before = set(self.home.iterdir())
+        with patch.object(transfer.os, 'fsync', side_effect=lambda _fd: destination.write_text('external')):
+            with self.assertRaises(ValueError):
+                transfer.write(self.runner, destination, document)
+        self.assertEqual(destination.read_text(), 'external')
+        self.assertEqual(set(self.home.iterdir()), before | {destination})
+
+    def test_export_preserves_a_broken_symbolic_link(self):
+        document = transfer.export_document({}, {}, home=self.home)
+        destination = self.home / 'broken.json'
+        target = self.home / 'absent.json'
+        destination.symlink_to(target)
+        with self.assertRaises(ValueError):
+            transfer.write(self.runner, destination, document)
+        self.assertTrue(destination.is_symlink())
+        self.assertFalse(target.exists())
+
+    def test_import_rejects_links_special_files_and_oversized_json(self):
+        document = transfer.export_document({}, {}, home=self.home)
+        source = self.home / 'source.json'
+        transfer.write(self.runner, source, document)
+        link = self.home / 'linked.json'
+        link.symlink_to(source)
+        with self.assertRaises(OSError):
+            transfer.read(link)
+        with self.assertRaises(ValueError):
+            transfer.read(self.home)
+        fifo = self.home / 'pipe.json'
+        os.mkfifo(fifo)
+        original_open = os.open
+        def checked_open(path, flags):
+            self.assertTrue(flags & os.O_NONBLOCK)
+            self.assertTrue(flags & os.O_NOFOLLOW)
+            return original_open(path, flags)
+        with patch.object(transfer.os, 'open', side_effect=checked_open):
+            with self.assertRaises(ValueError):
+                transfer.read(fifo)
+        source.write_bytes(b' ' * (userfiles.MAX_FILE + 1))
+        with self.assertRaises(ValueError):
+            transfer.read(source)
+
     def test_import_merges_aliases_without_removing_other_local_tools(self):
         self.save('bash', aliases={'local':'echo local'})
         document = {'format':'minttweaks-terminal','schema_version':1,'tools':['bash'],'integrations':{},'preferences':{'schema_version':1,'shells':{'bash':{'settings':{},'aliases':{'remote':'echo remote'}}}}}

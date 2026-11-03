@@ -1,6 +1,9 @@
 """Portable declarations only: no exported startup scripts, paths or history."""
 import copy
 import json
+import os
+import stat
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from ...core import userfiles
@@ -42,9 +45,18 @@ def validate(value):
 
 
 def read(path):
-    raw = userfiles.read_file(Path(path))[0]
-    if raw is None:
-        raise ValueError('Export file not found.')
+    # Inspect the opened descriptor: a replaced path must not redirect the read
+    # to a link or block the worker on a FIFO between lstat() and open().
+    descriptor = os.open(Path(path), os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    try:
+        if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+            raise ValueError(_('Choose a regular JSON terminal configuration file.'))
+        with os.fdopen(descriptor, 'rb', closefd=False) as source:
+            raw = source.read(userfiles.MAX_FILE + 1)
+    finally:
+        os.close(descriptor)
+    if len(raw) > userfiles.MAX_FILE:
+        raise ValueError('Export is too large.')
     return validate(json.loads(raw, object_pairs_hook=configuration.unique_object))
 
 
@@ -74,19 +86,24 @@ def write(runner, path, document):
     validate(document)
     path = Path(path)
     # Never silently overwrite an existing file or link selected from a chooser.
-    path.parent.mkdir(parents=True, exist_ok=True)
-    import os
     data = (json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True) + '\n').encode('utf-8')
     if len(data) > userfiles.MAX_FILE:
         raise ValueError('Export is too large.')
+    staged = None
     try:
-        with path.open('xb') as output:
-            os.chmod(path, 0o600)
+        with tempfile.NamedTemporaryFile(dir=path.parent, prefix='.mtk-terminal-', delete=False) as output:
+            staged = Path(output.name)
+            os.fchmod(output.fileno(), 0o600)
             output.write(data)
             output.flush()
             os.fsync(output.fileno())
-    except FileExistsError:
-        raise ValueError(_('Choose a new export filename; existing files are preserved.'))
+        try:
+            os.link(staged, path)
+        except FileExistsError as exc:
+            raise ValueError(_('Choose a new export filename; existing files are preserved.')) from exc
+    finally:
+        if staged is not None:
+            staged.unlink(missing_ok=True)
     return userfiles.FileOutcome(True)
 
 

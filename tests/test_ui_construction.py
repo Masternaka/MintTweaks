@@ -26,6 +26,7 @@ from minttweaks.modules.software.page import SoftwarePage  # noqa: E402
 from minttweaks.modules.dotfiles.page import DotfilesPage  # noqa: E402
 from minttweaks.modules.terminal.page import TerminalPage  # noqa: E402
 from minttweaks.modules.home import backend as home  # noqa: E402
+from minttweaks.modules.history.page import HistoryPage
 from minttweaks.modules.home.page import HomePage  # noqa: E402
 from minttweaks.modules.maintenance import backend as maint  # noqa: E402
 from minttweaks.modules.maintenance.page import MaintenancePage  # noqa: E402
@@ -59,17 +60,17 @@ class ConstructionTests(unittest.TestCase):
         self.ctx = widgets.AppContext(make_runner())
 
     def test_pages_can_be_built(self):
-        for page_class in (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage, CinnamonPage, SetupPage, ApplicationsPage, SoftwarePage, TerminalPage, DotfilesPage):
+        for page_class in (HomePage, MaintenancePage, ServicesPage, SambaPage, FirefoxPage, CinnamonPage, SetupPage, ApplicationsPage, SoftwarePage, TerminalPage, DotfilesPage, HistoryPage):
             page = page_class(self.ctx)
             self.assertIsInstance(page, widgets.Page)
 
     def test_window_can_be_built(self):
         context = widgets.AppContext(make_runner())
         window = MainWindow(None, context)
-        self.assertEqual(len(window.pages), 11)
+        self.assertEqual(len(window.pages), 12)
         self.assertEqual(
             [page.page_name for page in window.pages],
-            ["home", "maintenance", "services", "samba", "firefox", "cinnamon", "setup", "applications", "software", "terminal", "dotfiles"],
+            ["home", "maintenance", "services", "samba", "firefox", "cinnamon", "setup", "applications", "software", "terminal", "dotfiles", "history"],
         )
 
     def test_default_log_level_has_a_registered_gtk_tag(self):

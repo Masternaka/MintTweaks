@@ -38,7 +38,7 @@ Le **panneau de sortie reste en anglais** : il retranscrit les commandes et les 
 
 ## Fonctionnement des privilèges
 
-MintTweaks s’exécute avec votre compte. Il ne conserve jamais les droits root et ne lance jamais de shell. Les actions nécessitant des droits d’administration passent par `pkexec`, avec la boîte de dialogue polkit habituelle de Cinnamon.
+MintTweaks s’exécute avec votre compte et ne conserve jamais les droits root. Les actions nécessitant des droits d’administration passent par `pkexec`, avec la boîte de dialogue polkit habituelle de Cinnamon.
 
 Le remplacement de `/etc/samba/smb.conf` passe par l’auxiliaire `data/mtk-root`, dont le rôle est limité à ce fichier :
 
@@ -63,7 +63,7 @@ La clé est limitée par `Signed-By`. Un échec retire uniquement les nouveaux
 fichiers de cette tentative, sans installer de paquet. Voir le
 [guide Logiciels natifs](../guides/logiciels-natifs.md#préparer-la-source).
 
-- **Aucun shell.** Chaque commande est une liste d’arguments transmise à `subprocess` sans `shell=True`, ce qu’un test vérifie. Les noms de partage, chemins et noms d’unité sont validés selon des règles strictes avant toute commande.
+- **Arguments explicites.** Chaque commande est une liste d’arguments transmise à `subprocess` sans `shell=True`, ce qu’un test vérifie. L’installation de Zen lance explicitement `bash` avec la copie du script officiel présentée dans l’aperçu, sous le compte courant. Les noms de partage, chemins et noms d’unité sont validés selon des règles strictes avant toute commande.
 - **Validation avant écriture.** `smb.conf` passe deux fois par `testparm`, dans l’interface et dans l’auxiliaire root. Une configuration refusée laisse la mémoire et le disque inchangés.
 - **Sauvegarde avant modification.** La configuration Samba est copiée dans `~/.local/share/minttweaks/backups/` avant chaque enregistrement ; ces sauvegardes sont lisibles par l’utilisateur et restaurables depuis l’interface.
 - **Aperçu des actions destructives.** `apt-get -s` simule la suppression des paquets orphelins avant toute action ; chaque noyau proposé dispose d’une case de sélection.
@@ -85,6 +85,21 @@ MTK_ROOT_CMD="sudo -n" ./bin/minttweaks      # Utiliser une autre commande d’�
 
 La suite de tests fonctionne aussi sur une machine sans GTK : la couche système utilise un `Runner` injectable (voir `tests/fakes.py`), et `tests/fakegi.py` simule PyGObject pour importer les modules graphiques, instancier leurs composants et leur fournir de vraies données de la couche système.
 
+Deux contrôles d’intégration dépendent d’outils de la machine de développement :
+
+- La comparaison des versions Debian nécessite `dpkg` et est signalée comme
+  non exécutée s’il manque.
+- L’exclusion des téléchargements APT incomplets utilise réellement GNU `du`.
+  Sous Linux, le `du` présent dans PATH doit provenir de GNU coreutils ; son
+  absence ou une autre implémentation fait échouer ce contrôle. Sur macOS,
+  le test cherche GNU `du` sous `du`, puis `gdu`, et signale explicitement son
+  absence comme un test non exécuté. Le `du` BSD système n’accepte pas les
+  options `-sb --exclude` utilisées par le module Linux.
+
+Les contrôles simulés des options de mesure et des erreurs restent exécutés sur
+les deux plateformes. Une suite locale réussie avec des tests non exécutés ne
+constitue pas une validation de ces intégrations ni de l’application sous Mint.
+
 La [recette Linux Mint](../validation/linux-mint.md) décrit la construction et
 l’installation réelles du paquet, les essais avec GTK et les scénarios manuels.
 Son [modèle de compte rendu](../validation/compte-rendu.md) permet
@@ -105,7 +120,7 @@ Les commandes en continu ont un délai de 30 minutes par défaut, ramené à 2 m
 | Dossier | Rôle |
 | --- | --- |
 | `minttweaks/core/` | Commandes, privilèges, chemins, journaux, transactions de fichiers et modèle Samba |
-| `minttweaks/modules/` | Logique et interface des onze modules |
+| `minttweaks/modules/` | Logique et interface des douze modules |
 | `minttweaks/ui/` | Fenêtre, composants communs et style GTK |
 | `bin/` | Lanceur de l’application |
 | `data/` | Auxiliaires privilégiés, entrée de menu, icône et manuel |
@@ -121,3 +136,25 @@ Chaque module sépare sa logique système de GTK. Les modules simples utilisent
 et `controls.py`. Déclarer les nouvelles pages dans `ui/window.py:PAGE_CLASSES`.
 Les noms de packages, les points d’entrée et les fichiers installés restent
 stables : ne pas les déplacer pour une réorganisation documentaire.
+
+## Historique central des opérations
+
+`core/history.py` conserve les métadonnées dans une base SQLite privée, sans
+sorties de commandes ni contenu des configurations. `AppContext.run_operation`
+enregistre le début et le résultat dans le worker ; `Page.run_operation` ajoute
+l’identifiant du module. Un échec retourné avec `ok=False` est distingué d’une
+fonction terminée sans erreur. Une erreur du callback GTK reçoit un état distinct.
+
+Les modules appellent `record_backup(path)` après création d’une sauvegarde. Un
+`ContextVar` rattache cette référence uniquement à l’opération du worker courant ;
+l’appel reste sans effet en dehors d’une opération suivie. Les références restent
+utiles après un échec. Aucun contenu de sauvegarde n’est chargé par l’historique.
+
+Les écritures SQLite utilisent des transactions et des connexions distinctes. Une
+ancienne entrée sans résultat final est affichée comme inconnue à la réouverture,
+sans la transformer en réussite ni relancer son action. La page Historique utilise
+des lectures seules, des filtres et une pagination ; une erreur de stockage ne
+bloque pas l’action système, mais produit une alerte visible.
+
+Voir le [guide Historique](../guides/historique.md) pour les données conservées,
+la séparation des simulations et les limites de restauration.

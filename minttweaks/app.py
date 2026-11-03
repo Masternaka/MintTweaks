@@ -13,7 +13,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gio, Gtk  # noqa: E402
 
 from . import APP_ID, APP_NAME, __version__, i18n  # noqa: E402
-from .core import logs, paths  # noqa: E402
+from .core import history, logs, paths  # noqa: E402
 from .core.privilege import Escalator, is_root  # noqa: E402
 from .core.runner import SubprocessRunner  # noqa: E402
 from .ui.widgets import AppContext  # noqa: E402
@@ -43,7 +43,8 @@ class MintTweaksApp(Gtk.Application):
         # A simulation must never activate an already-running live instance.
         application_id = APP_ID + ".Simulation" if runner.dry_run else APP_ID
         super().__init__(application_id=application_id, flags=Gio.ApplicationFlags.FLAGS_NONE)
-        self.ctx = AppContext(runner)
+        directory = paths.HISTORY_DIR / "simulation" if runner.dry_run else paths.HISTORY_DIR
+        self.ctx = AppContext(runner, history=history.HistoryStore(directory))
 
     # -- lifecycle ---------------------------------------------------------
     def do_startup(self) -> None:

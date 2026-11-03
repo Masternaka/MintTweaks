@@ -21,6 +21,7 @@ from minttweaks.modules.setup import page as setup_page  # noqa: E402
 from minttweaks.modules.software import page as software_page  # noqa: E402
 from minttweaks.modules.dotfiles import page as dotfiles_page  # noqa: E402
 from minttweaks.modules.terminal import page as terminal_page  # noqa: E402
+from minttweaks.modules.history import page as history_page
 from minttweaks.modules.home import page as home_page  # noqa: E402
 from minttweaks.modules.maintenance import page as maintenance_page  # noqa: E402
 from minttweaks.modules.samba import page as samba_page  # noqa: E402
@@ -31,6 +32,14 @@ from tests.fakes import FakeRunner  # noqa: E402
 
 
 class PageContractTests(unittest.TestCase):
+    @unittest.skipIf(HAS_REAL_GI, 'The real GTK namespace is not replaced by the test stub.')
+    def test_repeated_stub_install_keeps_existing_page_namespaces(self):
+        self.assertTrue(fakegi.install())
+        from gi.repository import Gtk
+        self.assertIs(Gtk, widgets.Gtk)
+        self.assertIs(Gtk, home_page.Gtk)
+        self.assertIs(Gtk, applications_page.Gtk)
+
     def test_every_page_declares_metadata(self):
         for page_class in (
             home_page.HomePage,
@@ -44,6 +53,7 @@ class PageContractTests(unittest.TestCase):
             software_page.SoftwarePage,
             terminal_page.TerminalPage,
             dotfiles_page.DotfilesPage,
+            history_page.HistoryPage,
         ):
             self.assertTrue(page_class.page_name, page_class)
             self.assertTrue(page_class.page_title, page_class)
@@ -57,7 +67,7 @@ class PageContractTests(unittest.TestCase):
     def test_every_page_class_is_registered_in_the_window(self):
         self.assertEqual(
             set(window.PAGE_CLASSES),
-            {home_page.HomePage, maintenance_page.MaintenancePage, services_page.ServicesPage, samba_page.SambaPage, firefox_page.FirefoxPage, cinnamon_page.CinnamonPage, setup_page.SetupPage, applications_page.ApplicationsPage, software_page.SoftwarePage, terminal_page.TerminalPage, dotfiles_page.DotfilesPage},
+            {home_page.HomePage, maintenance_page.MaintenancePage, services_page.ServicesPage, samba_page.SambaPage, firefox_page.FirefoxPage, cinnamon_page.CinnamonPage, setup_page.SetupPage, applications_page.ApplicationsPage, software_page.SoftwarePage, terminal_page.TerminalPage, dotfiles_page.DotfilesPage, history_page.HistoryPage},
         )
 
     def test_pages_use_known_context(self):

@@ -8,17 +8,18 @@ par son application dédiée.
 
 | Module | Fonctions |
 | --- | --- |
-| [Accueil](docs/guides/administration.md#accueil) | Résumé du système et diagnostics en lecture seule |
+| [Accueil](docs/guides/administration.md#accueil) | Résumé du système, diagnostics en lecture seule et [export avec aperçu](docs/guides/diagnostic.md) |
 | [Entretien](docs/guides/administration.md#entretien) | Espace disque, nettoyage, aperçu APT et anciens noyaux |
 | [Services](docs/guides/administration.md#services) | Services systemd, journaux et analyse du démarrage |
 | [Samba](docs/guides/administration.md#samba) | Partages, comptes, validation et restauration de configuration |
 | [Firefox](docs/guides/administration.md#firefox) | Catalogue d’extensions et politique du navigateur natif |
-| [Profils Cinnamon](docs/guides/profils-cinnamon.md) | Clonage et installation de Catppuccin ; capture, application et restauration des réglages d’apparence |
-| [Après installation](docs/guides/assistant-apres-installation.md) | Parcours facultatif avec progression déclarée par l’utilisateur |
-| [Applications](docs/guides/applications.md) | 34 entrées personnelles, installation APT officielle et repli GitHub pour les polices absentes |
-| [Logiciels natifs](docs/guides/logiciels-natifs.md) | Ajout du dépôt APT signé Masternaka ; Helium, Brave et Zen depuis les sources attendues |
+| [Profils Cinnamon](docs/guides/profils-cinnamon.md) | Clonage et installation de Catppuccin ; capture, import/export JSON, application et restauration des réglages d’apparence |
+| [Après installation](docs/guides/assistant-apres-installation.md) | Parcours facultatif avec progression déclarée et observations locales sur demande |
+| [Applications](docs/guides/applications.md) | 34 entrées personnelles, transfert des sélections, installation APT officielle et repli GitHub pour les polices absentes |
+| [Logiciels natifs](docs/guides/logiciels-natifs.md) | Ajout du dépôt APT signé Masternaka ; Helium et Brave depuis leurs dépôts officiels ; Zen directement depuis GitHub |
 | [Shells et terminaux](docs/guides/shells-et-terminaux.md) | 32 outils, intégrations, réglages personnels, alias et export/import ; Kitty et Alacritty |
-| [Dotfiles](docs/guides/dotfiles.md) | Clonage GitHub, installation de Git/Stow, sauvegarde avant activation et annulation avec restauration |
+| [Historique](docs/guides/historique.md) | Actions, résultats et sauvegardes associées ; filtres et consultation entre les lancements |
+| [Dotfiles](docs/guides/dotfiles.md) | Transfert des références, clonage GitHub, Git/Stow, sauvegarde avant activation et annulation avec restauration |
 
 Les changements sont précédés de confirmations et, pour les configurations
 gérées, de sauvegardes. Les opérations qui modifient le système utilisent une

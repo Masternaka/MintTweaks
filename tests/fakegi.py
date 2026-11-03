@@ -92,6 +92,10 @@ class FakeGI(types.ModuleType):
 def install(force: bool = False) -> bool:
     """Install the stub. Returns False when the real PyGObject is present."""
     existing = sys.modules.get("gi")
+    # Every UI test module may call install(). Keep one GTK namespace so that
+    # patches and response constants remain shared by already imported pages.
+    if isinstance(existing, FakeGI) and not force:
+        return True
     if existing is not None and not force and not isinstance(existing, FakeGI):
         return False
 

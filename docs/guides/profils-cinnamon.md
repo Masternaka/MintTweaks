@@ -1,4 +1,4 @@
-# Profils Cinnamon — capture, application et restauration
+# Profils Cinnamon — capture, transfert, application et restauration
 
 Le module lit les réglages d’apparence, les conserve dans des profils nommés,
 présente les différences puis applique un profil après confirmation. Une
@@ -88,6 +88,48 @@ fichier de profil. Il utilise la réservation commune de l’application : une a
 modification en cours entraîne un refus plutôt qu’une mise en attente. Les
 actions d’application et de restauration sont également désactivées en simulation.
 
+## Export et import entre machines
+
+Dans **Profils enregistrés**, choisir un profil puis **Exporter le profil
+sélectionné…**. L’aperçu présente le JSON complet : format, identifiant, nom,
+date de capture et sept valeurs. Après confirmation, choisir un nouveau fichier
+`.json`. Le texte écrit correspond à l’aperçu, avec des permissions `0600`.
+Un fichier existant, y compris un lien symbolique, n’est jamais remplacé.
+
+Sur l’autre machine, choisir **Importer un profil JSON…**, sélectionner le fichier
+et vérifier son nom, sa date, ses sept valeurs et le dossier local de destination.
+Confirmer ajoute une copie avec un **nouvel identifiant local**. Le nom, la date de
+capture originale et les valeurs sont conservés. Deux profils de même nom, même
+avec la même date, restent distincts ; l’identifiant abrégé dans la liste et
+l’identifiant complet dans les détails permettent de les reconnaître.
+
+Après import, le nouveau profil est sélectionné lors de l’actualisation de la
+liste. **Aucun réglage du bureau n’est appliqué par l’import.** Utiliser ensuite
+l’aperçu d’application habituel, avec sauvegarde et vérifications, pour changer
+l’apparence. Les thèmes, icônes et polices ne sont pas copiés ni installés par le
+transfert ; ils doivent être disponibles sur la machine de destination.
+
+Le fichier transféré utilise le format de profil `schema_version: 1`. Son nom
+externe est libre ; l’identifiant contenu dans le document reste validé. L’import
+refuse les formats inconnus, les valeurs ou clés non prises en charge, les
+réglages incomplets, les clés JSON dupliquées, les fichiers de plus de 64 Kio,
+les liens symboliques et les fichiers spéciaux. Le fichier source est conservé.
+Une source modifiée après l’aperçu exige une nouvelle confirmation. Les dossiers
+locaux de profils passant par des liens symboliques sont également refusés par
+le parcours d’import.
+
+L’export et l’import sont indépendants de la disponibilité des schémas Cinnamon :
+un profil enregistré peut être transféré même si les réglages actuels ne sont
+pas tous lisibles. Ils utilisent la réservation commune des opérations et sont
+désactivés en simulation. Aucun script, commande GSettings ou téléchargement
+n’est exécuté par les fonctions de transfert ; l’actualisation de la page après
+import relit normalement les réglages et les catalogues.
+
+Une collision d’identifiant ou une écriture échouée préserve les profils
+existants. Si la nouvelle copie a été écrite mais ne peut pas être vérifiée par
+relecture, elle est conservée et une erreur demande de recharger le catalogue
+avant de réessayer. Les transferts apparaissent dans l’historique des opérations.
+
 ## Vérifications et récupération
 
 Avant l’aperçu, les sept réglages doivent être lisibles et les clés à modifier
@@ -142,7 +184,8 @@ créent deux fichiers distincts. L’écriture prépare un fichier temporaire pr
 puis publie le document complet sans remplacer un fichier existant. Une collision
 d’identifiant est refusée. Les fichiers invalides, de plus de 64 Kio, symboliques
 ou d’une version inconnue sont signalés et préservés ; les autres profils restent
-lisibles. Aucune suppression, réparation automatique ni import n’est proposé.
+lisibles. Aucune suppression ni réparation automatique n’est proposée.
+L’import explicite décrit plus haut ajoute une copie, sans remplacer de profil.
 
 ## Validation à effectuer sous Mint
 
@@ -152,7 +195,8 @@ les échecs d’écriture et les états de l’interface avec GTK simulé. Elle 
 aussi l’aperçu périmé, les clés verrouillées, la sauvegarde préalable, les échecs
 partiels, la récupération incomplète et la restauration avec sa propre sauvegarde.
 
-Les essais réels restent non effectués. Ajouter à la
+Les essais de ce module, notamment les nouveaux transferts, restent à consigner.
+Ajouter à la
 [recette Linux Mint](../validation/linux-mint.md) : lecture des sept clés dans la
 session utilisateur, concordance avec les réglages Cinnamon, enregistrement puis
 réouverture, noms accentués et doublons, capture incomplète, simulation et refus

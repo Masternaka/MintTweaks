@@ -12,6 +12,7 @@ import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, Optional
+from .history import record_backup
 
 MAX_FILE = 128 * 1024
 MAX_BACKUP = 2 * 1024 * 1024
@@ -115,6 +116,7 @@ def apply(runner, targets, changes, backup_directory: Path):
         if change.slot not in targets or read_file(targets[change.slot]) != (change.before, change.mode):
             raise ValueError("Configuration changed; review a new preview.")
     backup = save_backup(backup_directory, targets, changes)
+    record_backup(backup)
     attempted = []
     try:
         for change in changes:

@@ -2,6 +2,8 @@
 
 import tempfile
 import subprocess
+import shutil
+import sys
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -316,6 +318,25 @@ class ProbeTests(unittest.TestCase):
         self.assertIn("APT locked", probe.autoremove_error)
 
     def test_cache_estimate_excludes_incomplete_downloads(self):
+        gnu_du = None
+        programs = ("du",) if sys.platform.startswith("linux") else ("du", "gdu")
+        for program in programs:
+            executable = shutil.which(program)
+            if executable is None:
+                continue
+            try:
+                version = subprocess.run([executable, "--version"], capture_output=True,
+                                         text=True, errors="replace", timeout=5, check=False)
+            except (OSError, subprocess.TimeoutExpired):
+                continue
+            if version.returncode == 0 and "GNU coreutils" in version.stdout:
+                gnu_du = executable
+                break
+        if gnu_du is None:
+            if sys.platform.startswith("linux"):
+                self.fail("GNU du is required for this Linux integration test; install coreutils.")
+            self.skipTest("GNU du is unavailable; this integration test requires du or gdu from GNU coreutils.")
+
         with tempfile.TemporaryDirectory() as tmp:
             cache = Path(tmp)
             (cache / "complete.deb").write_bytes(b"x" * 2048)
@@ -324,7 +345,8 @@ class ProbeTests(unittest.TestCase):
 
             def measure(command):
                 from minttweaks.core.runner import Result
-                result = subprocess.run(command.argv, capture_output=True, text=True)
+                result = subprocess.run([gnu_du, *command.argv[1:]], capture_output=True,
+                                        text=True, errors="replace", timeout=15, check=False)
                 return Result(str(command), result.returncode, result.stdout, result.stderr)
 
             runner = FakeRunner().add_callable(["du"], measure)

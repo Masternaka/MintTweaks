@@ -197,7 +197,8 @@ provoquer volontairement ce dépassement.
 | M21 | Marquer une étape vérifiée, une autre à reprendre avec une note, puis rouvrir l’application | Reprise à l’étape non vérifiée ; état et note conservés ; aucune validation implicite |
 | M22 | Essayer l’assistant en simulation et vérifier une petite fenêtre | Aucune progression écrite ; navigation utilisable ; raccourcis de l’accueil répartis sur plusieurs lignes |
 | M23 | Configurer les sources officielles Helium et Brave, puis installer leurs paquets depuis Logiciels natifs | Origine et suite attendues ; aperçu complet ; paquets et versions natifs vérifiés puis navigateurs réellement lancés |
-| M24 | Vérifier Zen avec puis sans dépôt central disponible et configuré | Installation proposée uniquement si le candidat attendu existe ; mention du paquet non officiel ; lancement vérifié après installation |
+| M23b | Installer Zen avec le bouton GitHub, sans droits administrateur, sur amd64 et arm64 | Annulation sans exécution ; ancien paquet et fichiers existants refusés ; version relue ; menu, lancement, sandbox et mise à jour Zen vérifiés |
+| M24 | Vérifier la transition depuis l’ancien paquet Zen et l’indépendance du dépôt central | Ancien zen-browser signalé ; profil conservé ; installation officielle après retrait manuel du paquet ; parcours disponible sans source Masternaka |
 | M25 | Annuler polkit, simuler une panne réseau ou changer le plan avant confirmation | Aucun faux succès ; état APT réactualisé ; aucune suppression automatique après une installation partielle |
 | M26 | Ouvrir un parcours enregistré au format 1, puis ajouter Logiciels natifs | Sélections et notes conservées ; nouvelle étape non sélectionnée initialement ; format 2 écrit à la sauvegarde explicite |
 | M27 | Ajouter Masternaka depuis Logiciels natifs, puis répéter l’action | Confirmation URL/empreinte/fichiers ; autorisation polkit ; clé limitée avec Signed-By ; APT actualisé ; aucun paquet installé ; fichiers conformes conservés |
@@ -350,3 +351,108 @@ dans une session Cinnamon réelle.
 
 La compatibilité LMDE du contrôle des origines est couverte par des fixtures ;
 elle ne constitue pas une validation réelle de l’application sur LMDE.
+
+## Historique des opérations
+
+- H01 : lancer une action réelle puis rouvrir MintTweaks ; vérifier module, dates
+  locales, résultat et conservation de l’entrée.
+- H02 : annuler une confirmation puis provoquer un refus polkit ; vérifier
+  respectivement l’absence d’entrée et un résultat d’échec.
+- H03 : créer une sauvegarde Samba, Cinnamon, terminal ou Stow ; vérifier sa
+  référence et le retour au module, puis sa restauration avec l’aperçu habituel.
+- H04 : utiliser une instance simulée ; vérifier la séparation des historiques.
+- H05 : sur une VM jetable, interrompre une opération sans danger puis rouvrir ;
+  vérifier le résultat inconnu et contrôler l’état réel avant toute nouvelle action.
+- H06 : tester filtre, pagination, clavier, petite fenêtre et thèmes clair/sombre ;
+  vérifier la lecture d’un historique indisponible sans remplacement de fichier.
+
+Ces scénarios concernent la nouvelle page ; ils ne constituent pas un compte
+rendu des essais Mint déjà effectués sur les autres modules.
+
+## Export du diagnostic
+
+- D01 : préparer un rapport depuis l’accueil ; comparer les versions et résultats
+  aux outils de Mint, y compris les contrôles indisponibles.
+- D02 : vérifier le texte de l’aperçu, annuler celui-ci puis annuler la sélection
+  du fichier ; aucun rapport ne doit être écrit dans ces deux cas.
+- D03 : enregistrer et comparer le contenu au texte de l’aperçu ; vérifier les
+  permissions `0600`, puis le refus de remplacer un fichier ou un lien existant.
+- D04 : inclure puis exclure les opérations récentes ; vérifier l’absence de
+  noms de machine/compte, chemins privés, noms d’opération et extraits de journaux.
+- D05 : vérifier le mode simulation, un historique indisponible, un dossier
+  non accessible et une réservation déjà occupée par une autre opération.
+- D06 : vérifier le clavier, le défilement, les thèmes clair/sombre et la lecture
+  du Markdown enregistré. Aucun envoi réseau ne doit être déclenché par l’export.
+
+## Détails des installations
+
+- L01 : comparer un candidat APT officiel et un paquet déjà installé ; vérifier
+  les sources du candidat et la mention d’origine non vérifiée de l’installation.
+- L02 : vérifier les alternatives `p7zip-full` et `qemu-system` et leur présence
+  dans les indications de retrait. Ne lancer aucun retrait pendant ce contrôle.
+- L03 : comparer une police APT, une offre GitHub et une copie GitHub reconnue ;
+  contrôler portée, révision, dépôts Noto, dossier et indications de mise à jour.
+- L04 : comparer Zen utilisateur et ancien paquet Debian ; vérifier versions,
+  portée, emplacements et blocage du parcours GitHub pour l’ancien paquet.
+- L05 : vérifier clavier, lisibilité, thèmes, petites fenêtres, réanalyse d’un
+  volet ouvert, erreur de lecture et conservation des sélections.
+
+## Observations facultatives de l’assistant
+
+- O01 : observer chaque étape sélectionnée ; comparer les mentions détectées,
+  non détectées, à examiner et indisponibles aux modules correspondants.
+- O02 : conserver une note en cours de saisie et une progression déjà vérifiée ;
+  constater qu’une observation réussie ou échouée ne les modifie pas.
+- O03 : changer l’étape ou lancer une opération pendant une lecture ; vérifier
+  que le résultat périmé n’est pas affiché et que le bouton redevient disponible.
+- O04 : vérifier une politique Firefox sans extensions encore chargées, un profil
+  Cinnamon enregistré mais non appliqué et Samba actif sans accès réseau ; les
+  observations ne doivent pas affirmer que l’usage réel est validé.
+- O05 : vérifier simulation, sélection non enregistrée, refus de lecture et
+  absence de demande polkit ; confirmer qu’aucun script de shell n’est chargé.
+- O06 : vérifier clavier, défilement, thèmes et horodatage local du nouveau volet.
+
+## Transfert de profils Cinnamon
+
+- C01 : exporter un profil puis l’importer sur une autre machine ; comparer les
+  sept valeurs, le nom et la date de capture. Vérifier le nouvel identifiant.
+- C02 : importer deux fois un profil de même nom/date ; contrôler les copies
+  distinctes, la sélection du nouvel import et la conservation des fichiers.
+- C03 : annuler les confirmations et les sélecteurs ; vérifier le refus de
+  remplacer un export existant et d’importer un fichier modifié après aperçu.
+- C04 : vérifier la simulation, l’absence de demande polkit et le transfert avec
+  des schémas GSettings indisponibles. L’import ne doit pas changer le bureau.
+- C05 : après import, installer séparément les thèmes/polices nécessaires, puis
+  utiliser l’aperçu d’application habituel et vérifier la restauration.
+- C06 : vérifier clavier, défilement, noms accentués, valeur vide et affichage
+  des identifiants dans les listes et détails.
+
+## Transfert de sélections Applications
+
+- SA01 : exporter des choix cochés et ajouter explicitement des applications
+  détectées ; vérifier que les cases d’installation de la page restent inchangées.
+- SA02 : importer sur une autre machine ; comparer choix APT disponibles,
+  installations conservées, polices GitHub et références indisponibles retenues.
+- SA03 : conserver une sélection APT antérieure, modifier un fichier après aperçu
+  et annuler chaque dialogue ; vérifier l’absence d’installation et de perte des choix.
+- SA04 : rendre disponible un choix précédemment indisponible puis réanalyser ;
+  seule la préparation explicite de la liste doit le cocher.
+- SA05 : contrôler alternatives `7zip`/`qemu`, origine APT, aperçu des dépendances
+  et confirmations séparées des polices après import.
+- SA06 : vérifier permissions privées, refus d’écrasement, simulation, réservation
+  occupée, clavier et défilement. Réouvrir le JSON après redémarrage de l’application.
+
+## Transfert des références Dotfiles
+
+- RF01 : analyser un dépôt, choisir des références et les exporter ; vérifier
+  l’absence de chemins source, fichiers personnels, authentification et sauvegardes.
+- RF02 : importer sur une autre machine et choisir les deux dossiers locaux ;
+  constater que seuls les champs sont préparés, sans dossier créé, clone ou Stow.
+- RF03 : annuler chaque dialogue et modifier la source ou un dossier après aperçu ;
+  vérifier le refus d’une préparation périmée et la conservation des champs actuels.
+- RF04 : cloner explicitement puis analyser le bon dossier, y compris un
+  sous-dossier `stow/` ; vérifier les noms retrouvés et non retrouvés.
+- RF05 : activer une configuration choisie avec son aperçu et sa sauvegarde,
+  puis annuler son Stow ; vérifier les protections existantes contre les conflits.
+- RF06 : vérifier simulation, absence de Git/Stow, refus d’écrasement,
+  réservation occupée, clavier et défilement des nouveaux dialogues.

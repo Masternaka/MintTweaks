@@ -38,7 +38,7 @@ class Step:
 
 STEPS = (
     Step("health", "home", _("Check the system"), _("Read the system summary and diagnostics. This step does not change any settings.")),
-    Step("software", "software", _("Install native third-party software"), _("Choose Helium, Brave or Zen from their indicated APT sources. Review the package and dependency plan before administrator approval.")),
+    Step("software", "software", _("Install native third-party software"), _("Install Helium and Brave from their official APT repositories, or Zen directly from GitHub. Review each installation before continuing.")),
     Step("terminal", "terminal", _("Prepare shells and terminals"), _("Install shell tools, choose your login shell and customize Kitty or Alacritty with previewed, backed-up changes.")),
     Step("firefox", "firefox", _("Prepare Firefox"), _("Choose extensions from addons.mozilla.org in the Firefox module. Its system policy requires administrator approval and a Firefox restart.")),
     Step("cinnamon", "cinnamon", _("Choose your appearance"), _("Save or apply a Cinnamon profile. Applying changes user settings after a preview and backup; themes and fonts must already be installed.")),
